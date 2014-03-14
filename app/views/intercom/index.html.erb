@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <head>
   <% content_for :header_tags do %>  
-  <%= javascript_include_tag 'underscore-min.js', 'backbone-min.js','intercom.js', :plugin => 'intercom' %>  
+  <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js','intercom.js', :plugin => 'intercom' %>  
 <% end %>
 </head>
 <body>
-	<p>
+	<p id='simpleText'>
 		This is a text.
 	</p>
 </body>
