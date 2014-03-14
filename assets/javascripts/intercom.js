@@ -1,3 +1,1 @@
-<script type="text/javascript">
-alert("hi");
-</script>
+console.log("test");
