@@ -1,10 +1,12 @@
+<!DOCTYPE html>
 <head>
-	<script type="text/javascript">
-
-	</script>
+  <% content_for :header_tags do %>  
+  <%= javascript_include_tag 'underscore.js', 'backbone.js','intercom.js', :plugin => 'intercom' %>  
+<% end %>
 </head>
 <body>
 	<p>
 		This is a text.
 	</p>
 	</body>
+	
