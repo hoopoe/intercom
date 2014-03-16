@@ -22,7 +22,11 @@ $(function(){
 				//4 read: backbone view, model
 				//5 crlf configuration
 				//_.each(this.groupList, function(g){ console.log(g); });
-				$("#simpleText").html("put groups from redmine");
+				_.each(groupList.toJSON()[0].groups, function(g) {
+					console.log(g.name);
+					$("#simpleText").append(g.name);
+				})
+				//$("#simpleText").html("put groups from redmine");
 			}
 	});
 });
