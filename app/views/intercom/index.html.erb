@@ -1,12 +1,28 @@
 <!DOCTYPE html>
 <head>
-  <% content_for :header_tags do %>  
-  <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js','intercom.js', :plugin => 'intercom' %>  
-<% end %>
+  <% content_for :header_tags do %>
+    <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js','intercom.js', :plugin => 'intercom' %>
+    <%= stylesheet_link_tag 'bootstrap.min.css', 'intercom.css', :plugin => 'intercom' %>
+  <% end %>
 </head>
 <body>
-	<p id='simpleText'>
-		This is a text.
-	</p>
+  <div id="container-fluid" >
+    <div class="col-md-2">
+    </div>
+
+    <div class="col-md-2 left-menu">
+      <p>
+        Left menu
+      </p>
+    </div>
+
+    <div class="col-md-6 content">
+      <p id='simpleText'>
+        List users here
+      </p>
+    </div>
+
+    <div class="col-md-2">
+    </div>
+  </div>
 </body>
-	
