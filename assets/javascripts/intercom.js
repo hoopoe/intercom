@@ -16,6 +16,7 @@ $(function(){
 			},
 			success: function(){
 				console.log("it's ok");
+				$("#simpleText").html("Groups:");
 				//1 sublime plugin (beautify js)
 				//2 git aliases				
 				//3 fix it
@@ -24,7 +25,7 @@ $(function(){
 				//_.each(this.groupList, function(g){ console.log(g); });
 				_.each(groupList.toJSON()[0].groups, function(g) {
 					console.log(g.name);
-					$("#simpleText").append(g.name);
+					$("#simpleText").append('<li>'+g.name+'</li>');
 				})
 				//$("#simpleText").html("put groups from redmine");
 			}
