@@ -31,3 +31,26 @@ $(function(){
 			}
 	});
 });
+$(function(){
+
+	var userCollection = Backbone.Collection.extend({
+  		url: 'http://localhost:3000/users.json'
+	});
+
+	var userList = new userCollection
+
+	userList.fetch(
+		{
+			error: function(){
+				console.log("some errors");
+			},
+			success: function(){
+				console.log("it's ok");
+				$("#simpleText").html("Users:");
+				_.each(userList.toJSON()[0].users, function(k) {
+					console.log(k.firstname);
+					$("#simpleText").append('<li>'+k.firstname+'</li>');
+				})
+			}
+	});
+});
