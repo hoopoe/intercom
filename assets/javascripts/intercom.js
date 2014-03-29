@@ -3,6 +3,31 @@ $(function(){
 	console.log($("#simpleText"));
 	console.log("init");
 
+	var Router = Backbone.Router.extend({
+		routes: { 
+			"*MyPage"		: "MyPage",
+			"Employers"	: "Employers",
+			"News"			: "News",
+			"Groups"		: "Groups"
+		},
+		MyPage: function(path){
+			console.log (path);
+		},
+		Employers: function(path){
+			console.log (path);
+		},
+		News: function(path){
+			console.log (path);
+		},
+		Groups: function(path){
+			console.log (path);
+		}
+
+	});
+
+	var rout = new Router();
+	Backbone.history.start();
+
 	var groupCollection = Backbone.Collection.extend({
   		url: 'http://localhost:3000/groups.json'
 	});
