@@ -1,81 +1,81 @@
-$(function(){
+$(function() {
 
-	console.log($("#simpleText"));
-	console.log("init");
+    $('#header').hide();
 
-	var Router = Backbone.Router.extend({
-		routes: { 
-			"*MyPage"		: "MyPage",
-			"Employers"	: "Employers",
-			"News"			: "News",
-			"Groups"		: "Groups"
-		},
-		MyPage: function(path){
-			console.log (path);
-		},
-		Employers: function(path){
-			console.log (path);
-		},
-		News: function(path){
-			console.log (path);
-		},
-		Groups: function(path){
-			console.log (path);
-		}
+    console.log($("#simpleText"));
+    console.log("init");
 
-	});
+    var Router = Backbone.Router.extend({
+        routes: {
+            "*MyPage": "MyPage",
+            "Employers": "Employers",
+            "News": "News",
+            "Groups": "Groups"
+        },
+        MyPage: function(path) {
+            console.log(path);
+        },
+        Employers: function(path) {
+            console.log(path);
+        },
+        News: function(path) {
+            console.log(path);
+        },
+        Groups: function(path) {
+            console.log(path);
+        }
 
-	var rout = new Router();
-	Backbone.history.start();
+    });
 
-	var groupCollection = Backbone.Collection.extend({
-  		url: 'http://localhost:3000/groups.json'
-	});
+    var rout = new Router();
+    Backbone.history.start();
 
-	var groupList = new groupCollection
+    var groupCollection = Backbone.Collection.extend({
+        url: 'http://localhost:3000/groups.json'
+    });
 
-	groupList.fetch(
-		{
-			error: function(){
-				console.log("some errors");
-			},
-			success: function(){
-				console.log("it's ok");
-				$("#simpleText").html("Groups:");
-				//1 sublime plugin (beautify js)
-				//2 git aliases				
-				//3 fix it
-				//4 read: backbone view, model
-				//5 crlf configuration
-				//_.each(this.groupList, function(g){ console.log(g); });
-				_.each(groupList.toJSON()[0].groups, function(g) {
-					console.log(g.name);
-					$("#simpleText").append('<li>'+g.name+'</li>');
-				})
-				//$("#simpleText").html("put groups from redmine");
-			}
-	});
+    var groupList = new groupCollection
+
+    groupList.fetch({
+        error: function() {
+            console.log("some errors");
+        },
+        success: function() {
+            console.log("it's ok");
+            $("#simpleText").html("Groups:");
+            //1 sublime plugin (beautify js)
+            //2 git aliases				
+            //3 fix it
+            //4 read: backbone view, model
+            //5 crlf configuration
+            //_.each(this.groupList, function(g){ console.log(g); });
+            _.each(groupList.toJSON()[0].groups, function(g) {
+                console.log(g.name);
+                $("#simpleText").append('<li>' + g.name + '</li>');
+            })
+            //$("#simpleText").html("put groups from redmine");
+        }
+    });
 });
-$(function(){
+$(function() {
 
-	var userCollection = Backbone.Collection.extend({
-  		url: 'http://localhost:3000/users.json'
-	});
+    var userCollection = Backbone.Collection.extend({
+        url: 'http://localhost:3000/users.json'
+    });
 
-	var userList = new userCollection
+    var userList = new userCollection
 
-	userList.fetch(
-		{
-			error: function(){
-				console.log("some errors");
-			},
-			success: function(){
-				console.log("it's ok");
-				$("#simpleText").html("Users:");
-				_.each(userList.toJSON()[0].users, function(k) {
-					console.log(k.firstname);
-					$("#simpleText").append('<li>'+k.firstname+'</li>');
-				})
-			}
-	});
+    userList.fetch({
+        error: function() {
+            console.log("some errors");
+        },
+        success: function() {
+            console.log("it's ok");
+            $("#simpleText").html("Users:");
+            _.each(userList.toJSON()[0].users, function(k) {
+                console.log(k.firstname);
+                $("#simpleText").append('<li>' + k.firstname + '</li>');
+            })
+        }
+    });
 });
