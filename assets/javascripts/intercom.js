@@ -7,11 +7,11 @@ $(function() {
 
     var Router = Backbone.Router.extend({
         routes: {
-            "MyPage": "MyPage",
-            "Employers": "Employers",
-            "News": "News",
-            "Groups": "Groups"
-        },
+            "MyPage"    : "MyPage",
+            "Employers" : "Employers",
+            "News"      : "News",
+            "Groups"    : "Groups"
+        },    
         MyPage: function(path){
             $("#Cat").html('<img src="http://cs614717.vk.me/v614717486/5cf0/2dHRpySOW8s.jpg" >');
         },
