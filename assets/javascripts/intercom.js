@@ -12,23 +12,21 @@ $(function() {
             "News": "News",
             "Groups": "Groups"
         },
-
+        MyPage: function(path){
+            $("#Cat").html('<img src="http://cs614717.vk.me/v614717486/5cf0/2dHRpySOW8s.jpg" >');
+        },
+        Employers: function(path){
+            $("#Cat").html('<img src="http://cs614717.vk.me/v614717486/5d0c/enig6oYGH-s.jpg" >');
+        },        
+        News: function(path){
+            $("#Cat").html('<img src="http://cs614717.vk.me/v614717486/5d05/GQaqR2lfPjk.jpg" >');
+        },
+        Groups: function(path){
+            $("#Cat").html('<img src="http://cs614717.vk.me/v614717486/5cf7/N0tlAwHRwI8.jpg" >');
+        },
     });
 
     var rout = new Router();
-
-    rout.on('route:MyPage', function(id) {
-        $("#Cat").html('<img src="http://cs614717.vk.me/v614717486/5cf0/2dHRpySOW8s.jpg" >');
-    });
-    rout.on('route:Employers', function(id){
-        $("#Cat").html('<img src="http://cs614717.vk.me/v614717486/5d0c/enig6oYGH-s.jpg" >');
-    });
-    rout.on('route:News', function(id){
-        $("#Cat").html('<img src="http://cs614717.vk.me/v614717486/5d05/GQaqR2lfPjk.jpg" >');
-    });
-    rout.on('route:Groups', function(id){
-        $("#Cat").html('<img src="http://cs614717.vk.me/v614717486/5cf7/N0tlAwHRwI8.jpg" >');
-    });
 
     Backbone.history.start();
 
