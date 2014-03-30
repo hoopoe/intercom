@@ -7,41 +7,27 @@ $(function() {
 
     var Router = Backbone.Router.extend({
         routes: {
-            "*MyPage": "MyPage",
+            "MyPage": "MyPage",
             "Employers": "Employers",
             "News": "News",
             "Groups": "Groups"
         },
-        MyPage: function(path) {
-            console.log(path);
-        },
-        Employers: function(path) {
-            console.log(path);
-        },
-        News: function(path) {
-            console.log(path);
-        },
-        Groups: function(path) {
-            console.log(path);
-        }
 
     });
 
     var rout = new Router();
 
     rout.on('route:MyPage', function(id) {
-        console.log(id);
-        $("#Cat").html("<img src='http://cs614717.vk.me/v614717486/5d05/GQaqR2lfPjk.jpg'>");
+        $("#Cat").html('<img src="http://cs614717.vk.me/v614717486/5cf0/2dHRpySOW8s.jpg" >');
     });
     rout.on('route:Employers', function(id){
-        console.log(id);
-        $("#Cat").html("<img src='http://cs614717.vk.me/v614717486/5d0c/enig6oYGH-s.jpg'>");
+        $("#Cat").html('<img src="http://cs614717.vk.me/v614717486/5d0c/enig6oYGH-s.jpg" >');
     });
     rout.on('route:News', function(id){
-        console.log(id);
+        $("#Cat").html('<img src="http://cs614717.vk.me/v614717486/5d05/GQaqR2lfPjk.jpg" >');
     });
     rout.on('route:Groups', function(id){
-        console.log(id);
+        $("#Cat").html('<img src="http://cs614717.vk.me/v614717486/5cf7/N0tlAwHRwI8.jpg" >');
     });
 
     Backbone.history.start();
