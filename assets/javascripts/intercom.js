@@ -31,9 +31,11 @@ $(function() {
 
     rout.on('route:MyPage', function(id) {
         console.log(id);
+        $("#Cat").html("<img src='http://cs614717.vk.me/v614717486/5d05/GQaqR2lfPjk.jpg'>");
     });
     rout.on('route:Employers', function(id){
         console.log(id);
+        $("#Cat").html("<img src='http://cs614717.vk.me/v614717486/5d0c/enig6oYGH-s.jpg'>");
     });
     rout.on('route:News', function(id){
         console.log(id);
