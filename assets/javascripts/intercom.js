@@ -28,6 +28,20 @@ $(function() {
     });
 
     var rout = new Router();
+
+    rout.on('route:MyPage', function(id) {
+        console.log(id);
+    });
+    rout.on('route:Employers', function(id){
+        console.log(id);
+    });
+    rout.on('route:News', function(id){
+        console.log(id);
+    });
+    rout.on('route:Groups', function(id){
+        console.log(id);
+    });
+
     Backbone.history.start();
 
     var groupCollection = Backbone.Collection.extend({
