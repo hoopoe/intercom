@@ -30,41 +30,9 @@
       </div><!--/.nav-collapse -->
     </div>
   </div>
+  <div id="mainbody">
+  </div>
   <p id="Cat">
     <img src="http://cs614717.vk.me/v614717486/5cf0/2dHRpySOW8s.jpg" >
   </p>
-
-
-
-
-
-<div id="ShowUsers">
-<p>
-  Name:
-    <b>
-      <%= @userWelcome %>
-    </b>
-</p>
-<br>
-
-<b>Skills:</b>
-<br>
-<%if @skillsCurrent.count == 0 %>
-  Haven't any skill
-<% else %>
-  <% @skillsCurrent.each do |sc| %>
-    <% SkillsTerc.where(id: sc.id_skills).each do |skill| %>
-      <q><%= skill.name %></q>
-    <% end %>
-  <% end %>
-<% end %>
-</div>
-
-
-
-
-
-
-  <div id="mainmenu">
-  </div>
 </body>
