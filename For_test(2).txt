@@ -1,3 +1,8 @@
 This is file for testing our merge skills.
 
+
 First commit by Kate
+
+merge test
+
+
