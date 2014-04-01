@@ -1,3 +1,11 @@
 This is file for testing our merge skills.
 merge 
 hello super super
+
+
+First commit by Kate
+
+merge test
+
+
+
