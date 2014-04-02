@@ -39,17 +39,10 @@ $(function() {
 
         employers: function(param) {
             if (param !== null) {
-                // Employers.fetch({
-                //     wait: true
-                // });
-                // Employers = Employers.filter(function(t) {
-                //     return t.get('name') === param;
-                // });
-                var q = param.split(' ');
                 app.employers.fetch({
                     // traditional: true,
                     data: {
-                        skills: q
+                        skills: param.split(' ')
                     },
                     error: function() {
                         console.log("some errors");
@@ -59,8 +52,6 @@ $(function() {
                         empView.render();
                     }
                 });
-
-                console.log("search is not implemented");
             } else {
                 app.employers.fetch({
                     error: function() {
