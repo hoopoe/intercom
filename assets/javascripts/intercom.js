@@ -24,25 +24,11 @@ $(function() {
         },
 
         search: function(param) {
-            console.log('search route');
-            console.log('param: ' + param);
-
             var topMenuView = new TopMenuView();
-            topMenuView.render(); //bind search event
-
-            app.employers.fetch({
-                error: function() {
-                    console.log("some errors");
-                },
-                success: function() {
-                    var empView = new EmployersView({});
-                    empView.render();
-                }
-            });
+            topMenuView.render(); //bind search event        
         },
 
         mypage: function() {
-            console.log("mypage route");
             var myPageView = new MyPageView();
             myPageView.render();
         },
@@ -53,12 +39,23 @@ $(function() {
 
         employers: function(param) {
             if (param !== null) {
-                Employers.fetch({
-                    wait: true
-                });
-                Employers = Employers.filter(function(t) {
-                    return t.get('name') === param;
-                });
+                // Employers.fetch({
+                //     wait: true
+                // });
+                // Employers = Employers.filter(function(t) {
+                //     return t.get('name') === param;
+                // });
+                // app.employers.fetch({
+                //     error: function() {
+                //         console.log("some errors");
+                //     },
+                //     success: function() {
+                //         var empView = new EmployersView({});
+                //         empView.render();
+                //     }
+                // });
+
+                console.log("search is not implemented");
             } else {
                 app.employers.fetch({
                     error: function() {
@@ -73,7 +70,6 @@ $(function() {
         },
 
         news: function() {
-            console.log("news route");
             var newsView = new NewsView();
             newsView.render();
         }
