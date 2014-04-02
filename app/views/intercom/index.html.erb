@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
   <% content_for :header_tags do %>
-    <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js','intercom.js', :plugin => 'intercom' %>
+    <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js', 'intercom_views.js', 'intercom.js', :plugin => 'intercom' %>
     <%= stylesheet_link_tag 'bootstrap.min.css', 'intercom.css', :plugin => 'intercom' %>
   <% end %>
 </head>
@@ -19,10 +19,10 @@
       </div>
       <div class="collapse navbar-collapse top-menu">
         <ul class="nav navbar-nav">
-          <li class="menu-item" value="mypage"><a href="#MyPage">My Page</a></li>
-          <li class="menu-item" value="employers"><a href="#Employers">Employers</a></li>
-          <li class="menu-item" value="news"><a href="#News">News</a></li>
-          <li class="menu-item" value="news"><a href="#Groups">Groups</a></li>
+          <li class="menu-item" value="mypage"><a href="#mypage">My Page</a></li>
+          <li class="menu-item" value="employers"><a href="#employers">Employers</a></li>
+          <li class="menu-item" value="news"><a href="#news">News</a></li>
+          <li class="menu-item" value="groups"><a href="#groups">Groups</a></li>
         </ul>
         <div class="navbar-form navbar-right">
           <input type="text" class="form-control col-lg-8 search-control" placeholder="Search">
@@ -30,9 +30,18 @@
       </div><!--/.nav-collapse -->
     </div>
   </div>
-  <div id="mainbody">
+  <div id="container-fluid" >
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6 content">      
+      <!--       <ul class='employer-list'> </ul> -->
+    </div>
+    <div class="col-md-3">
+    </div>
   </div>
-  <p id="Cat">
-    <img src="http://cs614717.vk.me/v614717486/5cf0/2dHRpySOW8s.jpg" >
-  </p>
+  <script type="text/template" id="employer-template">
+    <div class="view">
+      <label><%%- user_profile.skills %></label>
+    </div>
+  </script>  
 </body>
