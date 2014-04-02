@@ -45,15 +45,20 @@ $(function() {
                 // Employers = Employers.filter(function(t) {
                 //     return t.get('name') === param;
                 // });
-                // app.employers.fetch({
-                //     error: function() {
-                //         console.log("some errors");
-                //     },
-                //     success: function() {
-                //         var empView = new EmployersView({});
-                //         empView.render();
-                //     }
-                // });
+                var q = param.split(' ');
+                app.employers.fetch({
+                    // traditional: true,
+                    data: {
+                        skills: q
+                    },
+                    error: function() {
+                        console.log("some errors");
+                    },
+                    success: function() {
+                        var empView = new EmployersView({});
+                        empView.render();
+                    }
+                });
 
                 console.log("search is not implemented");
             } else {
