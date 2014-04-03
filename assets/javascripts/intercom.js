@@ -8,7 +8,8 @@ $(function() {
     //app.router - backbone router
 
     var EmployerCollection = Backbone.Collection.extend({
-        url: 'http://localhost:3000/api/user_profile.json'
+        //url: 'http://localhost:3000/api/user_profile.json'
+        url: 'http://nfrey/api/user_profile.json'
     });
 
     app.employers = new EmployerCollection
