@@ -1,34 +1,44 @@
 <!DOCTYPE html>
 <head>
   <% content_for :header_tags do %>
-    <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js','intercom.js', :plugin => 'intercom' %>
+
+  
+    <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js', 'intercom_views.js', 'intercom.js', :plugin => 'intercom' %>
     <%= stylesheet_link_tag 'bootstrap.min.css', 'bootstrap.css.map', 'intercom.css', :plugin => 'intercom' %>
   <% end %>
 </head>
 <body>
-
-<div class="navbar navbar-default">
-  <div class="navbar-header">
-    <a class="navbar-brand">InTercom</a>
+  <div class="navbar navbar-default " role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- <a href="/"><img alt="" border="0" class="logoStyle" src="/assets/parelco_logo-769fe55b028387ef917dd0422d580e30.png" title=""></a> -->
+      </div>
+      <div class="collapse navbar-collapse top-menu">
+        <ul class="nav navbar-nav">
+          <li class="menu-item" value="mypage"><a href="#mypage">My Page</a></li>
+          <li class="menu-item" value="employers"><a href="#employers">Employers</a></li>
+          <li class="menu-item" value="news"><a href="#news">News</a></li>
+          <li class="menu-item" value="groups"><a href="#groups">Groups</a></li>
+        </ul>
+        <div class="navbar-form navbar-right">
+          <input type="text" class="form-control col-lg-8 search-control" placeholder="Search">
+        </div>
+      </div><!--/.nav-collapse -->
+    </div>
   </div>
-  <div class="navbar-collapse collapse navbar-responsive-collapse">
-    <ul class="nav navbar-nav">
-       <li><a href="#MyPage">My Page</a></li>
-       <li><a href="#Employers">Employers</a></li>
-       <li><a href="#News">News</a></li>
-       <li><a href="#Groups">Groups</a></li>
-    </ul>
-    <form class="navbar-form navbar-left">
-      <input class="form-control col-lg-8" placeholder="Search" type="text">
-    </form>
+  <div id="container-fluid" >
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6 content">      
+      <!--       <ul class='employer-list'> </ul> -->
+    </div>
+    <div class="col-md-3">
+    </div>
   </div>
-</div>
-
-  <div id="mainbody">
-  </div>
-  <p id="Cat">
-    <img src="http://cs614717.vk.me/v614717486/5cf0/2dHRpySOW8s.jpg" >
-  </p>
-  
+  <script type="text/template" id="employer-template">
+    <div class="view">
+      <label><%%- user_profile.skills %></label>
+    </div>
+  </script>  
 </body>
 
