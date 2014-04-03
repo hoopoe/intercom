@@ -8,11 +8,15 @@
   <% end %>
 </head>
 <body>
-  <div class="navbar navbar-default " role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-        <!-- <a href="/"><img alt="" border="0" class="logoStyle" src="/assets/parelco_logo-769fe55b028387ef917dd0422d580e30.png" title=""></a> -->
-      </div>
+<div class="navbar navbar-default">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand">InTercom</a>
+  </div>
       <div class="collapse navbar-collapse top-menu">
         <ul class="nav navbar-nav">
           <li class="menu-item" value="mypage"><a href="#mypage">My Page</a></li>
@@ -29,16 +33,28 @@
   <div id="container-fluid" >
     <div class="col-md-3">
     </div>
-    <div class="col-md-6 content">      
-      <!--       <ul class='employer-list'> </ul> -->
+    <div class="col-md-6 content">
     </div>
     <div class="col-md-3">
     </div>
   </div>
   <script type="text/template" id="employer-template">
-    <div class="view">
-      <label><%%- user_profile.skills %></label>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row employer_row">
+          <div class="col-md-4">
+            <img src="http://dummyimage.com/100x100&text=Photo" alt="" />
+          </div>
+          <div class="col-md-8">
+            <label>user_id:</label>
+            <label><%%- user_profile.user_id %></label>
+            <br>
+            <label>skills:</label>
+            <label><%%- user_profile.skills %></label>
+          </div>
+        </div>
+      </div>
     </div>
-  </script>  
+  </script>
 </body>
 
