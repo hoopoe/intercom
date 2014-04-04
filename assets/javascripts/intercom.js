@@ -1,74 +1,77 @@
+var app = app || {};
+
 $(function() {
 
     $('#header').hide();
+    //global
+    //app.employers - collection of userprofiles
+    //app.router - backbone router
 
-    console.log($("#simpleText"));
-    console.log("init");
+    var EmployerCollection = Backbone.Collection.extend({
+        //url: 'http://localhost:3000/api/user_profile.json'
+        url: 'http://nfrey/api/user_profile.json'
+    });
 
-    var Router = Backbone.Router.extend({
+    app.employers = new EmployerCollection
+
+    var appRouter = Backbone.Router.extend({
         routes: {
-            "MyPage": "MyPage",
-            "Employers": "Employers",
-            "News": "News",
-            "Groups": "Groups"
+            'employers': 'employers',
+            'news': 'news',
+            'mypage': 'mypage',
+            'groups': 'groups',
+            'employers/(:param)': 'employers',
+            '*actions': 'search'
         },
-        MyPage: function(path) {
-            $("#Cat").html('<img src="http://cs614717.vk.me/v614717486/5cf0/2dHRpySOW8s.jpg" >');
-        },
-        Employers: function(path) {
-            $("#Cat").html('<img src="http://cs614717.vk.me/v614717486/5d0c/enig6oYGH-s.jpg" >');
-        },
-        News: function(path) {
-            $("#Cat").html('<img src="http://cs614717.vk.me/v614717486/5d05/GQaqR2lfPjk.jpg" >');
-        },
-        Groups: function(path) {
-            $("#Cat").html('<img src="http://cs614717.vk.me/v614717486/5cf7/N0tlAwHRwI8.jpg" >');
-        },
-    });
 
-    var rout = new Router();
-
-    Backbone.history.start();
-
-    var groupCollection = Backbone.Collection.extend({
-        url: 'http://localhost:3000/api/user_profile.json'
-    });
-
-    var groupList = new groupCollection
-
-    groupList.fetch({
-        error: function() {
-            console.log("some errors");
+        search: function(param) {
+            var topMenuView = new TopMenuView();
+            topMenuView.render(); //bind search event        
         },
-        success: function() {
-            console.log("it's ok1");
-            $("#mainbody").html("<ul > </ul>");
-            _.each(groupList.toJSON(), function(g) {
-                $("#mainbody ul").append('<li>' +
-                    'user_id:' + g.user_profile.user_id + ' ' + g.user_profile.skills + '</li>');
-            })
+
+        mypage: function() {
+            var myPageView = new MyPageView();
+            myPageView.render();
+        },
+
+        groups: function() {
+            console.log("groups view is missing. see intercom_view.js");
+        },
+
+        employers: function(param) {
+            if (param !== null) {
+                app.employers.fetch({
+                    // traditional: true,
+                    data: {
+                        skills: param.split(' ')
+                    },
+                    error: function() {
+                        console.log("some errors");
+                    },
+                    success: function() {
+                        var empView = new EmployersView({});
+                        empView.render();
+                    }
+                });
+            } else {
+                app.employers.fetch({
+                    error: function() {
+                        console.log("some errors");
+                    },
+                    success: function() {
+                        var empView = new EmployersView({});
+                        empView.render();
+                    }
+                });
+            }
+        },
+
+        news: function() {
+            var newsView = new NewsView();
+            newsView.render();
         }
     });
+
+    app.router = new appRouter();
+    Backbone.history.start();
 });
-// $(function() {
-
-//     var userCollection = Backbone.Collection.extend({
-//         url: 'http://localhost:3000/users.json'
-//     });
-
-//     var userList = new userCollection
-
-//     userList.fetch({
-//         error: function() {
-//             console.log("some errors");
-//         },
-//         success: function() {
-//             console.log("it's ok");
-//             $("#simpleText").html("Users:");
-//             _.each(userList.toJSON()[0].users, function(k) {
-//                 console.log(k.firstname);
-//                 $("#simpleText").append('<li>' + k.firstname + '</li>');
-//             })
-//         }
-//     });
-// });

@@ -1,38 +1,57 @@
 <!DOCTYPE html>
 <head>
   <% content_for :header_tags do %>
-    <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js','intercom.js', :plugin => 'intercom' %>
-    <%= stylesheet_link_tag 'bootstrap.min.css', 'intercom.css', :plugin => 'intercom' %>
+    <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js', 'intercom_views.js', 'intercom.js', :plugin => 'intercom' %>
+    <%= stylesheet_link_tag 'bootstrap.min.css', 'bootstrap.css.map', 'intercom.css', :plugin => 'intercom' %>
   <% end %>
 </head>
 <body>
-  <div class="navbar navbar-default " role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <!-- <a href="/"><img alt="" border="0" class="logoStyle" src="/assets/parelco_logo-769fe55b028387ef917dd0422d580e30.png" title=""></a> -->
-      </div>
+<div class="navbar navbar-default">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand">InTercom</a>
+  </div>
       <div class="collapse navbar-collapse top-menu">
         <ul class="nav navbar-nav">
-          <li class="menu-item" value="mypage"><a href="#MyPage">My Page</a></li>
-          <li class="menu-item" value="employers"><a href="#Employers">Employers</a></li>
-          <li class="menu-item" value="news"><a href="#News">News</a></li>
-          <li class="menu-item" value="news"><a href="#Groups">Groups</a></li>
+          <li class="menu-item" value="mypage"><a href="#mypage"><%=l(:my_page)%></a></li>
+          <li class="menu-item" value="employers"><a href="#employers"><%=l(:employers)%></a></li>
+          <li class="menu-item" value="news"><a href="#news"><%=l(:news)%></a></li>
+          <li class="menu-item" value="groups"><a href="#groups"><%=l(:groups)%></a></li>
         </ul>
         <div class="navbar-form navbar-right">
           <input type="text" class="form-control col-lg-8 search-control" placeholder="Search">
         </div>
-      </div><!--/.nav-collapse -->
+      </div><!--/.nav-collapse -->    
+  </div>
+  <div id="container-fluid" >
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6 content">
+    </div>
+    <div class="col-md-3">
     </div>
   </div>
-  <div id="mainbody">
-  </div>
-  <p id="Cat">
-    <img src="http://cs614717.vk.me/v614717486/5cf0/2dHRpySOW8s.jpg" >
-  </p>
+  <script type="text/template" id="employer-template">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row employer_row">
+          <div class="col-md-4">
+            <img src="http://dummyimage.com/100x100&text=Photo" alt="" />
+          </div>
+          <div class="col-md-8">
+            <label>user_id:</label>
+            <label><%%- user_profile.user_id %></label>
+            <br>
+            <label>skills:</label>
+            <label><%%- user_profile.skills %></label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </script>
 </body>
+
