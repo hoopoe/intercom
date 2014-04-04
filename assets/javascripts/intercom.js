@@ -33,10 +33,6 @@ $(function() {
             myPageView.render();
         },
 
-        groups: function() {
-            console.log("groups view is missing. see intercom_view.js");
-        },
-
         employers: function(param) {
             if (param !== null) {
                 app.employers.fetch({
@@ -69,6 +65,12 @@ $(function() {
             var newsView = new NewsView();
             newsView.render();
         }
+
+        groups: function() {
+            var groupsView = new GroupsView();
+            groupsView.render();
+        },
+
     });
 
     app.router = new appRouter();

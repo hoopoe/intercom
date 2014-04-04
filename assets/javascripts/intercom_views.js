@@ -61,6 +61,13 @@ $(function() {
         }
     });
 
+    GroupsView = Backbone.View.extend({
+        el: '.content',
+        render: function() {
+            this.$el.html('<img src="http://dummyimage.com/600x500&text=Groups" alt="" />');
+            return this;
+        }
+    });
 
     TopMenuView = Backbone.View.extend({
         el: '.top-menu',
