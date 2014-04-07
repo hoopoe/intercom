@@ -3,6 +3,7 @@ var app = app || {};
 $(function() {
 
     $('#header').hide();
+    $('#top-menu').hide();
     //global
     //app.employers - collection of userprofiles
     //app.router - backbone router
