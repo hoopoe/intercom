@@ -7,9 +7,10 @@ div .content {
 }
 
 div .employer_row {
-	border:1px solid;
+	/* border:1px solid;
 	border-color: lightblue;
 	border-radius:15px;
+  */
 }
 
 div .employer_row div img {
