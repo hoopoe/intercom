@@ -31,7 +31,7 @@ namespace :redmine do
   		puts("File is loaded")
   	end
 #далее не совсем понятно что 
-task :reset_data => :environment do
+task :load_persons => :environment do
 		UserProfile.destroy_all
 	  	User.destroy_all(:identity_url => "http://demo/");
 		  loading("person.csv")
