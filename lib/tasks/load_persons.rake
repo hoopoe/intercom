@@ -9,7 +9,7 @@ namespace :redmine do
       file = File.open(filename)
       str = file.readline
       #puts str.split(';')
-      
+      id = 1
     file.each do |line|
         value = line.split(";")
         value.each do |c|
@@ -17,11 +17,12 @@ namespace :redmine do
         i = i + 1
    				end
    		@person = UserProfile.new
+        @person.skills = arr[4]
+        @person.user_id = id+1
         @person.name = arr[0]
         @person.first_name = arr[1]
         @person.position = arr[2]
         @person.summary = arr[3]
-        @person.skills = arr[4]
         @person.birthday = arr[5]
         @person.project = arr[6]
         @person.save
