@@ -14,7 +14,6 @@ namespace :redmine do
         value = line.split(";")
         value.each do |c|
         arr[i] = c
-        puts arr[i]
         i = i + 1
    				end
    		@person = UserProfile.new
