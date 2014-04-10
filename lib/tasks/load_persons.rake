@@ -9,7 +9,7 @@ namespace :redmine do
       file = File.open(filename)
       str = file.readline
       #puts str.split(';')
-      id = 1
+      id = 0
     file.each do |line|
         value = line.split(";")
         value.each do |c|
