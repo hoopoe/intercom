@@ -28,6 +28,16 @@ $(function() {
         search: function(param) {
             var topMenuView = new TopMenuView();
             topMenuView.render(); //bind search event        
+
+            app.employers.fetch({
+                error: function() {
+                    console.log("some errors");
+                },
+                success: function() {
+                    var empView = new EmployersView({});
+                    empView.render();
+                }
+            });
         },
 
         mypage: function() {
@@ -38,7 +48,6 @@ $(function() {
         employers: function(param) {
             if (param !== null) {
                 app.employers.fetch({
-                    // traditional: true,
                     data: {
                         skills: param.split(' ')
                     },
