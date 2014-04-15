@@ -74,7 +74,8 @@ $(function() {
 
         events: {
             'click .menu-item': 'selectPage',
-            'keypress .search-control': 'search'
+            'click .btn-search': 'searchByClick',
+            'keypress .search-control': 'search',
         },
 
         initialize: function() {},
@@ -91,11 +92,31 @@ $(function() {
         },
 
         search: function(e) {
+            console.log("Tt12");
             if (e.which === 13) {
                 var keywords = $(e.target).val();
 
-                if (keywords === '') return;
+                //if (keywords === '') return;
+                if (keywords === '') {
+                    app.router.navigate('/employers', {
+                        trigger: true
+                    });
+                } else {
+                    app.router.navigate('/employers/' + keywords, {
+                        trigger: true
+                    });
+                }
+            }
+        },
 
+        searchByClick: function(e) {
+            console.log("Tt");
+            var keywords = $('.search-control').val();
+            if (keywords === '') {
+                app.router.navigate('/employers', {
+                    trigger: true
+                });
+            } else {
                 app.router.navigate('/employers/' + keywords, {
                     trigger: true
                 });
