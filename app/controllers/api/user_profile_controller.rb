@@ -1,7 +1,8 @@
 class Api::UserProfileController < ApplicationController
   respond_to :json
 
-  def index    
+  def index 
+
     if (params[:skills])
       skills = params[:skills]
       skillsT = skills.map{|s| "%#{s}%"}
@@ -15,7 +16,7 @@ class Api::UserProfileController < ApplicationController
 
       conditions = skillsT.clone
       conditions.insert(0, qanchor)
-      respond_with UserProfile.find(:all, :conditions => conditions)     
+      respond_with UserProfile.find(:all, :conditions => conditions)  
     else
       respond_with UserProfile.all
     end

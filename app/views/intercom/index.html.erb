@@ -46,6 +46,28 @@
         <div class="row employer_row">
           <div class="col-md-2 employer_img">
             <img src="http://img.biskvit.info/GV.png" alt="" />
+            <a href="#employers"><%=l(:employers)%></a>
+          </div>
+          <div class="col-md-10">
+            <!-- <label>user_id:</label> -->
+            <!-- <label><%%- user_profile.user_id %></label> -->
+            <label><%%- user_profile.name %></label>
+            <label><%%- user_profile.first_name %></label>
+            <br>
+            <label><%=l(:skills)%>:</label>
+            <label><%%- user_profile.skills %></label>
+          </div>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </script>
+  <script type="text/template" id="employer-detail-template">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row employer_row">
+          <div class="col-md-2 employer_img">
+            <img src="http://img.biskvit.info/GV.png" alt="" />
           </div>
           <div class="col-md-10">
             <!-- <label>user_id:</label> -->
