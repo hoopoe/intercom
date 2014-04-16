@@ -21,6 +21,7 @@ $(function() {
             'employers': 'employers',
             'news': 'news',
             'mypage': 'mypage',
+            'mypage/(:param)': 'mypage',
             'groups': 'groups',
             'employers/(:param)': 'employers',
             '*actions': 'search'
@@ -38,9 +39,15 @@ $(function() {
             });
         },
 
-        mypage: function() {
-            var myPageView = new MyPageView();
-            myPageView.render();
+        mypage: function(param) {
+            if (param !== null) {
+                console.log("mypage id: " + param);
+                var myPageView = new MyPageView();
+                myPageView.render();
+            } else {
+                var myPageView = new MyPageView();
+                myPageView.render();
+            }
         },
 
         employers: function(param) {
