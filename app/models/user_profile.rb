@@ -3,11 +3,8 @@ class UserProfile < ActiveRecord::Base
 
   belongs_to :user
   has_and_belongs_to_many :user_projects
-  # def name
-  #   self.user.name
-  # end
-
+  
   def to_s
-    "Name:#{self.name} Skills:#{self.skills}"
+    "Name: empty Skills:#{self.skills}"
   end 
 end
