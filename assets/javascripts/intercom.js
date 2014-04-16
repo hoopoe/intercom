@@ -9,11 +9,12 @@ $(function() {
     //app.router - backbone router
 
     var EmployerCollection = Backbone.Collection.extend({
-        url: 'http://localhost:3000/api/user_profile.json'
-        //url: 'http://nfrey/api/user_profile.json'
+        url: '/api/user_profile.json'
     });
 
     app.employers = new EmployerCollection
+    app.topMenuView = new TopMenuView();
+    app.topMenuView.render(); //bind search event 
 
     var appRouter = Backbone.Router.extend({
         routes: {
@@ -26,9 +27,6 @@ $(function() {
         },
 
         search: function(param) {
-            var topMenuView = new TopMenuView();
-            topMenuView.render(); //bind search event        
-
             app.employers.fetch({
                 error: function() {
                     console.log("some errors");

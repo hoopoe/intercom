@@ -12,7 +12,9 @@ $(function() {
 
         template: _.template(app.employerTemplate),
 
-        initialize: function() {},
+        initialize: function() {
+
+        },
 
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
