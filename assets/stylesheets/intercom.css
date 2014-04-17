@@ -9,7 +9,7 @@ div .content {
   background-color: #f5f5f5;
 }
 
-.navbar-brand:hover,.navbar-brand:focus {
+.navbar-brand:hover,.navbar-brand:focus, .navbar-brand {
     text-decoration: underline;
 }
 
