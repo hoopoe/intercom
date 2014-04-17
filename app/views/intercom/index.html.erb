@@ -64,23 +64,93 @@
     </div>
   </script>
   <script type="text/template" id="employer-detail-template">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="row employer_row">
-          <div class="col-md-2 employer_img">
-            <img src="http://img.biskvit.info/GV.png" alt="" />
-          </div>
-          <div class="col-md-10">
-            <!-- <label>user_id:</label> -->
-            <!-- <label><%%- user_profile.user_id %></label> -->
-            <label><%%- user_profile.name %></label>
-            <label><%%- user_profile.first_name %></label>
-            <br>
-            <label><%=l(:skills)%>:</label>
-            <label><%%- user_profile.skills %></label>
-          </div>
+   <div class="row">
+     <div class="col-md-12">
+       <div class="row employer_row">
+          <table>
+            <tbody>
+              <tr>
+                <td style="width: 200px;">
+                <div class="col-md-2 employer_img">
+                <table style="height: 394px;">
+                  <tbody>
+                    <tr>
+                      <td colspan="2" style="width: 200px;">
+                      <img style="width: 200px; height: 200px;" src="http://img.biskvit.info/GV.png" alt=""></td>
+                    </tr>
+                    <tr>
+                      <td style="width: 120px; height: 50px;">Лучший сотрудник</td>
+                      <td style="width: 80px; height: 50px;">Где сидит</td>
+                    </tr>
+                    <tr>
+                      <td style="width: 120px; height: 60px;">25 тт-ок</td>
+                      <td style="width: 80px; height: 60px;">Хвалить!!!</td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" style="width: 200px; height: 50px;">Сообщение</td>
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
+                </td>
+                <td style="width: 20px;"></td>
+                <td style="width: 100%;">
+                <div class="col-md-10">
+                <table style="width: 600px; height: 400px;">
+                  <tbody>
+                    <tr>
+                      <td style="width: 410px; height: 70px;">Анастасия Студень<%%-user_profile.name%> <%%-user_profile.first_name %></td>
+                      <td style="width: 10px; height: 70px;"></td>
+                      <td style="width: 80px; height: 70px;">CV</td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" style="width: 410px; height: 37px;">Проект: <%%-user_profile.project%></td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" style="width: 410px; height: 7px;">Должность: <%%-user_profile.project%></td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" style="width: 410px;">e-mail: <%%-user_profile.project%></td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" style="width: 410px;">Номер комнаты: <%%-user_profile.project%></td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" style="width: 410px;">День рождения: <%%-user_profile.project%></td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" style="width: 410px;">Работаю в компании: <%%-user_profile.project%></td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" style="width: 410px;">Мои интересы: <%%-user_profile.project%></td>
+                    </tr>
+<!-- <label>user_id:</label><label><%%- user_profile.user_id %></label>-->
+                  </tbody>
+                </table>
+                </div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="3">Технические навыки
+                  <hr><label><%=l(:skills)%>:</label>
+                  <label><%%-user_profile.skills %></label>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="3">Коммуникативные навыки<hr></td>
+              </tr>
+              <tr>
+                <td colspan="3">Иностранные языки<hr></td>
+              </tr>
+              <tr>
+                <td colspan="3">Образование<hr></td>
+              </tr>
+              <tr>
+                <td colspan="3">Курсы и теренинги<hr></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <hr>
       </div>
     </div>
   </script>
