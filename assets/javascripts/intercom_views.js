@@ -50,9 +50,23 @@ $(function() {
     MyPageView = Backbone.View.extend({
         el: '.content',
         render: function() {
-            this.$el.html('<img src="http://dummyimage.com/600x500&text=Profile Info" alt="" />');
+            this.$el.html('');
+            this.$el.append("<div class='employer-list'> </div>");
+        },
+        render: function() {
+            if (app.employers.length) {
+                _.each(app.employers.models, this.addOne);
+            }
             return this;
+        },
+
+        addOne: function(employer) {
+            var view = new EmployerView({
+                model: employer
+            });
+            this.$(".employer-list").append(view.render().el);
         }
+    
     });
 
     NewsView = Backbone.View.extend({
