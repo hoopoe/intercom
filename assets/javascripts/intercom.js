@@ -9,26 +9,25 @@ $(function() {
     //app.router - backbone router
 
     var EmployerCollection = Backbone.Collection.extend({
-        url: 'http://localhost:3000/api/user_profile.json'
-        //url: 'http://nfrey/api/user_profile.json'
+        url: '/api/user_profile.json'
     });
 
     app.employers = new EmployerCollection
+    app.topMenuView = new TopMenuView();
+    app.topMenuView.render(); //bind search event 
 
     var appRouter = Backbone.Router.extend({
         routes: {
             'employers': 'employers',
             'news': 'news',
             'mypage': 'mypage',
+            'mypage/(:param)': 'mypage',
             'groups': 'groups',
             'employers/(:param)': 'employers',
             '*actions': 'search'
         },
 
         search: function(param) {
-            var topMenuView = new TopMenuView();
-            topMenuView.render(); //bind search event        
-
             app.employers.fetch({
                 error: function() {
                     console.log("some errors");
@@ -40,9 +39,15 @@ $(function() {
             });
         },
 
-        mypage: function() {
-            var myPageView = new MyPageView();
-            myPageView.render();
+        mypage: function(param) {
+            if (param !== null) {
+                console.log("mypage id: " + param);
+                var myPageView = new MyPageView();
+                myPageView.render();
+            } else {
+                var myPageView = new MyPageView();
+                myPageView.render();
+            }
         },
 
         employers: function(param) {
