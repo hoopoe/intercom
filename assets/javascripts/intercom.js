@@ -42,10 +42,14 @@ $(function() {
         mypage: function(param) {
             if (param !== null) {
                 console.log("mypage id: " + param);
-                var myPageView = new MyPageView();
+                var myPageView = new MyPageView({
+                model: app.employers.first()
+            });
                 myPageView.render();
             } else {
-                var myPageView = new MyPageView();
+                var myPageView = new MyPageView({
+                model: app.employers.first()
+            });
                 myPageView.render();
             }
         },

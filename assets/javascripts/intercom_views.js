@@ -5,6 +5,7 @@ $(function() {
     var AppView = Backbone.View.extend({});
     app = new AppView();
     app.employerTemplate = $("#employer-template").html();
+    app.myPageTemplate = $("#employer-detail-template").html();
 
     EmployerView = Backbone.View.extend({
 
@@ -49,24 +50,19 @@ $(function() {
 
     MyPageView = Backbone.View.extend({
         el: '.content',
-        render: function() {
-            this.$el.html('');
-            this.$el.append("<div class='employer-list'> </div>");
-        },
-        render: function() {
-            if (app.employers.length) {
-                _.each(app.employers.models, this.addOne);
-            }
-            return this;
+
+        template: _.template(app.myPageTemplate),
+        initialize: function() {
+            //console.log("test1");
         },
 
-        addOne: function(employer) {
-            var view = new EmployerView({
-                model: employer
-            });
-            this.$(".employer-list").append(view.render().el);
-        }
-    
+        render: function() {
+            //console.log("test");
+            this.$el.html('');
+            this.$el.html(this.template(this.model.toJSON()));
+            return this;
+            //console.log(this.template);
+        },
     });
 
     NewsView = Backbone.View.extend({
