@@ -41,15 +41,15 @@ $(function() {
 
         mypage: function(param) {
             if (param !== null) {
-                console.log("mypage id: " + param);
+                console.log("my page id: " + param);
                 var myPageView = new MyPageView({
-                model: app.employers.first()
-            });
+                    model: app.employers.where({id: param})
+                });
                 myPageView.render();
             } else {
                 var myPageView = new MyPageView({
-                model: app.employers.first()
-            });
+                    model: app.employers.first()
+                });
                 myPageView.render();
             }
         },
