@@ -42,8 +42,17 @@ $(function() {
         mypage: function(param) {
             if (param !== null) {
                 console.log("my page id: " + param);
+                console.log(app.employers.first());
+                console.log(app.employers.models);
+                var tt = _.findWhere(app.employers.models, function(t) {
+                    t.get('user_profile').id == 32
+                });
+                console.log(tt);
                 var myPageView = new MyPageView({
-                    model: app.employers.where({id: param})
+                    model: tt
+                    // model: app.employers.where({
+                    //     id: param
+                    // })
                 });
                 myPageView.render();
             } else {
