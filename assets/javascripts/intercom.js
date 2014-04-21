@@ -42,17 +42,13 @@ $(function() {
         mypage: function(param) {
             if (param !== null) {
                 console.log("my page id: " + param);
-                console.log(app.employers.first());
-                console.log(app.employers.models);
-                var tt = _.findWhere(app.employers.models, function(t) {
-                    t.get('user_profile').id == 32
+
+                var tt = _.filter(app.employers.models, function(t) {
+                    return t.get('user_profile').user_id == param
                 });
-                console.log(tt);
+
                 var myPageView = new MyPageView({
-                    model: tt
-                    // model: app.employers.where({
-                    //     id: param
-                    // })
+                    model: tt[0] //todo: refactor
                 });
                 myPageView.render();
             } else {
