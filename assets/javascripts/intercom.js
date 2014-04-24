@@ -4,15 +4,20 @@ $(function() {
 
     $('#header').hide();
     $('#top-menu').hide();
-    //global
     //app.employers - collection of userprofiles
     //app.router - backbone router
+    //app.employer
 
     var EmployerCollection = Backbone.Collection.extend({
-        url: '/api/user_profile.json'
+        url: '/api/user_profile'
     });
 
-    app.employers = new EmployerCollection
+    var Employer = Backbone.Model.extend({
+        urlRoot: '/api/user_profile/'
+    });
+
+    app.employers = new EmployerCollection;
+    // app.employer = new Employer;
     app.topMenuView = new TopMenuView();
     app.topMenuView.render(); //bind search event 
 
@@ -41,16 +46,20 @@ $(function() {
 
         mypage: function(param) {
             if (param !== null) {
-                console.log("my page id: " + param);
-
-                var tt = _.filter(app.employers.models, function(t) {
-                    return t.get('user_profile').user_id == param
+                app.employer = new Employer({
+                    id: param
                 });
-
-                var myPageView = new MyPageView({
-                    model: tt[0] //todo: refactor
-                });
-                myPageView.render();
+                app.employer.fetch({
+                    error: function() {
+                        console.log("some errors");
+                    },
+                    success: function() {
+                        var myPageView = new MyPageView({
+                            model: app.employer
+                        });
+                        myPageView.render();
+                    }
+                })
             } else {
                 var myPageView = new MyPageView({
                     model: app.employers.first()
