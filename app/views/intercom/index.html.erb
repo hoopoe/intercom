@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <head>
   <% content_for :header_tags do %>
-    <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js', 'intercom_views.js', 'intercom.js', :plugin => 'intercom' %>
+    <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js', 'intercom_views.js', 
+
+'intercom.js', :plugin => 'intercom' %>
     <%= stylesheet_link_tag 'bootstrap.min.css', 'bootstrap.css.map', 'intercom.css', :plugin => 'intercom' %>
   <% end %>
 </head>
@@ -76,18 +78,18 @@
                   <tbody>
                     <tr>
                       <td colspan="2" style="width: 200px;">
-                      <img style="width: 200px; height: 200px;" src="http://img.biskvit.info/GV.png" alt=""></td>
+                      <img style="width: 200px; height: 200px;" src="http://img.biskvit.info/medium/Fxc.png" alt=""></td>
                     </tr>
                     <tr>
-                      <td style="width: 120px; height: 50px;">Лучший сотрудник</td>
-                      <td style="width: 80px; height: 50px;">Где сидит</td>
+                      <td style="width: 120px; height: 50px;"><button type="button" class="btn btn-default btn-lg btn-block">Лучший<br>сотрудник</button></td>
+                      <td style="width: 80px; height: 50px;"><button type="button" class="btn btn-default btn-lg btn-block">Где<br>сидит</button></td>
                     </tr>
                     <tr>
-                      <td style="width: 120px; height: 60px;">25 тт-ок</td>
-                      <td style="width: 80px; height: 60px;">Хвалить!!!</td>
+                      <td style="width: 120px; height: 60px;"><button type="button" class="btn btn-default btn-lg btn-block">25 тт-ок</button></td>
+                      <td style="width: 80px; height: 60px;"><button type="button" class="btn btn-default btn-lg btn-block">Хвалить!!!</button></td>
                     </tr>
                     <tr>
-                      <td colspan="2" style="width: 200px; height: 50px;">Сообщение</td>
+                      <td colspan="2" style="width: 200px; height: 50px;"><button type="button" class="btn btn-primary btn-lg btn-block">Сообщение</button></td>
                     </tr>
                   </tbody>
                 </table>
@@ -99,30 +101,30 @@
                 <table style="width: 600px; height: 400px;">
                   <tbody>
                     <tr>
-                      <td style="width: 410px; height: 70px;">Анастасия Студень<%%-user_profile.name%> <%%-user_profile.first_name %></td>
+                      <td style="width: 410px; height: 70px;"><h2><%%-user_profile.name%> <%%-user_profile.first_name %></h2></td>
                       <td style="width: 10px; height: 70px;"></td>
-                      <td style="width: 80px; height: 70px;">CV</td>
+                      <td style="width: 80px; height: 70px;"><button type="button" class="btn btn-primary">CV</button></td>
                     </tr>
                     <tr>
-                      <td colspan="3" style="width: 410px; height: 37px;">Проект: <%%-user_profile.project%></td>
+                      <td colspan="3" style="width: 410px; height: 37px;"><b>Проект:</b> <%%-user_profile.project%></td>
                     </tr>
                     <tr>
-                      <td colspan="3" style="width: 410px; height: 7px;">Должность: <%%-user_profile.project%></td>
+                      <td colspan="3" style="width: 410px; height: 7px;"><b>Должность:</b> <%%-user_profile.project%></td>
                     </tr>
                     <tr>
-                      <td colspan="3" style="width: 410px;">e-mail: <%%-user_profile.project%></td>
+                      <td colspan="3" style="width: 410px;"><b>e-mail:</b> <%%-user_profile.project%></td>
                     </tr>
                     <tr>
-                      <td colspan="3" style="width: 410px;">Номер комнаты: <%%-user_profile.project%></td>
+                      <td colspan="3" style="width: 410px;"><b>Номер комнаты:</b> <%%-user_profile.project%></td>
                     </tr>
                     <tr>
-                      <td colspan="3" style="width: 410px;">День рождения: <%%-user_profile.project%></td>
+                      <td colspan="3" style="width: 410px;"><b>День рождения:</b> <%%-user_profile.project%></td>
                     </tr>
                     <tr>
-                      <td colspan="3" style="width: 410px;">Работаю в компании: <%%-user_profile.project%></td>
+                      <td colspan="3" style="width: 410px;"><b>Работаю в компании:</b> <%%-user_profile.project%></td>
                     </tr>
                     <tr>
-                      <td colspan="3" style="width: 410px;">Мои интересы: <%%-user_profile.project%></td>
+                      <td colspan="3" style="width: 410px;"><b>Мои интересы:</b> <%%-user_profile.project%></td>
                     </tr>
 <!-- <label>user_id:</label><label><%%- user_profile.user_id %></label>-->
                   </tbody>
@@ -131,22 +133,22 @@
                 </td>
               </tr>
               <tr>
-                <td colspan="3">Технические навыки
+                <td colspan="4"><h3>Технические навыки</h3>
                   <hr><label><%=l(:skills)%>:</label>
-                  <label><%%-user_profile.skills %></label>
+                  <%%-user_profile.skills %>
                 </td>
               </tr>
               <tr>
-                <td colspan="3">Коммуникативные навыки<hr></td>
+                <td colspan="3"><h3>Коммуникативные навыки</h3><hr></td>
               </tr>
               <tr>
-                <td colspan="3">Иностранные языки<hr></td>
+                <td colspan="3"><h3>Иностранные языки</h3><hr></td>
               </tr>
               <tr>
-                <td colspan="3">Образование<hr></td>
+                <td colspan="3"><h3>Образование</h3><hr></td>
               </tr>
               <tr>
-                <td colspan="3">Курсы и теренинги<hr></td>
+                <td colspan="3"><h3>Курсы и тренинги</h3><hr></td>
               </tr>
             </tbody>
           </table>
