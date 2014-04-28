@@ -49,19 +49,18 @@ $(function() {
     });
 
     MyPageView = Backbone.View.extend({
+
         el: '.content',
 
         template: _.template(app.myPageTemplate),
+
         initialize: function() {
-            //console.log("test1");
         },
 
         render: function() {
-            //console.log("test");
             this.$el.html('');
             this.$el.html(this.template(this.model.toJSON()));
             return this;
-            //console.log(this.template);
         },
     });
 
