@@ -1,25 +1,28 @@
 class Api::UserProfileController < ApplicationController
   respond_to :json
 
-  def index
+  helper :sort
+  include SortHelper
 
+  def index
+    sort_init 'login', 'asc'
+    sort_update %w(login firstname lastname mail admin created_on last_login_on)
+
+    @offset, @limit = api_offset_and_limit
+        
     if (params[:skills])
       skills = params[:skills]
-      skillsT = skills.map{|s| "%#{s}%"}
-      Rails::logger::debug skillsT
+      q = skills.map{|s| "%#{s}%"}
 
-      q = UserProfile.arel_table
-      qanchor = 'skills LIKE ?'
-      (skills.count - 1).times do
-        qanchor += ' or skills LIKE ?'
-      end
-
-      conditions = skillsT.clone
-      conditions.insert(0, qanchor)
-      respond_with UserProfile.find(:all, :conditions => conditions)
+      @users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname, user_profile_t.skills")
+      .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")  
+      .where("LOWER(#{UserProfile.table_name}.skills) LIKE LOWER(?)", q)
+      respond_with @users.order(sort_clause)
     else
-      respond_with UserProfile.all
-    end
+      @users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname, user_profile_t.skills")
+      .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")  
+      respond_with @users.order(sort_clause)
+    end    
   end
 
   def show
