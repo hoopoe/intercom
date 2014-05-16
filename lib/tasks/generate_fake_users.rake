@@ -4,6 +4,7 @@ namespace :redmine do
   namespace :intercom do
 
     def createUser(firstName = nil, lastName = nil)
+      puts "hi"
       user = User.new
       user.login = Faker::Internet.user_name
       user.mail = Faker::Internet.email
@@ -22,16 +23,16 @@ namespace :redmine do
       user.save!
     end
 
-    task :generate_fake_users => :environment do      
+    task :generate_fake_users => :environment do
       User.destroy_all(:identity_url => "http://demo/")
       11.times do |t|
-         createUser()
+        createUser()
       end
       createUser("Anton", "Bakanov")
       createUser("Elena I.", "Kicherova")
       createUser("Ivan", "Bogdanyuk")
       createUser("Vladimir", "Kocheryzhkin ")
       createUser("Anton", "Korobeynikov")
-    end
+    end  
   end
 end

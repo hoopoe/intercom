@@ -6,6 +6,7 @@ GEM
     i18n (0.6.9)
 
 PLATFORMS
+  ruby
   x86-mingw32
 
 DEPENDENCIES
