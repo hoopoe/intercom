@@ -26,7 +26,7 @@ class Api::UserProfileController < ApplicationController
   end
 
   def show
-    @client = UserProfile.find_by_user_id(params[:id])
+    @client = UserProfile.find_or_create_by_user_id(params[:id])
     respond_with @client
   end
 end
