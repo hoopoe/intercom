@@ -17,6 +17,9 @@ $(function() {
     });
 
     app.employers = new EmployerCollection;
+    app.employersView = new EmployersView({
+        collection: app.employers
+    });
     // app.employer = new Employer;
     app.topMenuView = new TopMenuView();
     app.topMenuView.render(); //bind search event 
@@ -38,8 +41,11 @@ $(function() {
                     console.log("some errors");
                 },
                 success: function() {
-                    var empView = new EmployersView({});
-                    empView.render();
+                    // var empView = new EmployersView({});
+                    // empView.render();
+                    // empView.initScroll();
+                    app.employersView.render();
+                    app.employersView.initScroll();
                 }
             });
         },

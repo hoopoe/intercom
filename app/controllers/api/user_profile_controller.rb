@@ -8,7 +8,11 @@ class Api::UserProfileController < ApplicationController
     sort_init 'login', 'asc'
     sort_update %w(login firstname lastname mail admin created_on last_login_on)
 
-    @offset, @limit = api_offset_and_limit
+    @offset, @limit = api_offset_and_limit  
+
+    if (params[:page])
+      @offset = @limit * (params[:page].to_i - 1)      
+    end
         
     if (params[:skills])
       skills = params[:skills]

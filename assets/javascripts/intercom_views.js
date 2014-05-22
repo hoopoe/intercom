@@ -29,22 +29,46 @@ $(function() {
 
         initialize: function() {
             this.$el.html('');
-            // this.$el.append("<ul class='employer-list'> </ul>");
             this.$el.append("<div class='employer-list'> </div>");
+            this.listenTo(this.collection, 'add', this.test);
+        },
+
+        test: function(item) {
+            var view = new EmployerView({
+                model: item
+            });
+            this.$(".employer-list").append(view.render().el);
+        },
+
+        initScroll: function() {
+            this.infiniScroll = new Backbone.InfiniScroll(this.collection, {
+                success: this.appendRender,
+                includePage: true,
+                pageSizeParam: "limit"
+            });
+        },
+
+        appendRender: function(items) {
+            //todo
         },
 
         render: function() {
-            if (app.employers.length) {
-                _.each(app.employers.models, this.addOne);
-            }
+            // if (app.employers.length) {
+            //     _.each(app.employers.models, this.addOne);
+            // }
             return this;
         },
 
         addOne: function(employer) {
-            var view = new EmployerView({
-                model: employer
-            });
-            this.$(".employer-list").append(view.render().el);
+            // var view = new EmployerView({
+            //     model: employer
+            // });
+            // this.$(".employer-list").append(view.render().el);
+        },
+
+        remove: function() {
+            this.infiniScroll.destroy();
+            return Backbone.View.prototype.remove.call(this);
         }
     });
 
@@ -54,8 +78,7 @@ $(function() {
 
         template: _.template(app.myPageTemplate),
 
-        initialize: function() {
-        },
+        initialize: function() {},
 
         render: function() {
             this.$el.html('');
@@ -103,7 +126,6 @@ $(function() {
         },
 
         search: function(e) {
-            console.log("Tt12");
             if (e.which === 13) {
                 var keywords = $(e.target).val();
 
@@ -121,7 +143,6 @@ $(function() {
         },
 
         searchByClick: function(e) {
-            console.log("Tt");
             var keywords = $('.search-control').val();
             if (keywords === '') {
                 app.router.navigate('/employers', {
