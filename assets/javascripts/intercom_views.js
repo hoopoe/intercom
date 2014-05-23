@@ -2,14 +2,27 @@ var app = app || {};
 
 $(function() {
 
-    var AppView = Backbone.View.extend({});
-    app = new AppView();
+    Backbone.View.prototype.close = function() {
+        this.remove();
+        this.unbind();
+        if (this.onClose) {
+            this.onClose();
+        }
+    }
+
     app.employerTemplate = $("#employer-template").html();
     app.myPageTemplate = $("#employer-detail-template").html();
+    app.showView = function(view) {
+        if (app.currentView) {
+            app.currentView.close();
+        }
+        app.currentView = view;
+        app.currentView.render();
+        // app.currentView.initScroll();
+        $(".content").html(app.currentView.el);
+    }
 
     EmployerView = Backbone.View.extend({
-
-        // tagName: "li",
 
         template: _.template(app.employerTemplate),
 
@@ -25,15 +38,13 @@ $(function() {
 
     EmployersView = Backbone.View.extend({
 
-        el: '.content',
-
         initialize: function() {
             this.$el.html('');
             this.$el.append("<div class='employer-list'> </div>");
-            this.listenTo(this.collection, 'add', this.test);
+            this.listenTo(this.collection, 'add', this.add);
         },
 
-        test: function(item) {
+        add: function(item) {
             var view = new EmployerView({
                 model: item
             });
@@ -66,9 +77,9 @@ $(function() {
             // this.$(".employer-list").append(view.render().el);
         },
 
-        remove: function() {
+        onClose: function() {
             this.infiniScroll.destroy();
-            return Backbone.View.prototype.remove.call(this);
+            // return Backbone.View.prototype.remove.call(this);
         }
     });
 
@@ -89,6 +100,11 @@ $(function() {
 
     NewsView = Backbone.View.extend({
         el: '.content',
+
+        initialize: function() {
+            this.$el.html('');
+        },
+
         render: function() {
             this.$el.html('<img src="http://dummyimage.com/600x500&text=News" alt="" />');
             return this;

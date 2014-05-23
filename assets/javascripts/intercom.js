@@ -17,9 +17,10 @@ $(function() {
     });
 
     app.employers = new EmployerCollection;
-    app.employersView = new EmployersView({
-        collection: app.employers
-    });
+
+    // app.employersView = new EmployersView({
+    //     collection: app.employers
+    // });
     // app.employer = new Employer;
     app.topMenuView = new TopMenuView();
     app.topMenuView.render(); //bind search event 
@@ -32,20 +33,23 @@ $(function() {
             'mypage/(:param)': 'mypage',
             'groups': 'groups',
             'employers/(:param)': 'employers',
-            '*actions': 'search'
+            '*actions': 'default'
         },
 
-        search: function(param) {
+        default: function() {
+            app.employers.reset();
+            var empView = new EmployersView({
+                collection: app.employers
+            });
+            app.showView(empView);
+
             app.employers.fetch({
                 error: function() {
                     console.log("some errors");
                 },
                 success: function() {
-                    // var empView = new EmployersView({});
-                    // empView.render();
-                    // empView.initScroll();
-                    app.employersView.render();
-                    app.employersView.initScroll();
+                    //add event attached
+                    app.currentView.initScroll();
                 }
             });
         },
@@ -75,6 +79,12 @@ $(function() {
         },
 
         employers: function(param) {
+            app.employers.reset();
+            var empView = new EmployersView({
+                collection: app.employers
+            });
+            app.showView(empView);
+
             if (param !== null) {
                 app.employers.fetch({
                     data: {
@@ -84,8 +94,8 @@ $(function() {
                         console.log("some errors");
                     },
                     success: function() {
-                        var empView = new EmployersView({});
-                        empView.render();
+                        //add event attached
+                        app.currentView.initScroll();
                     }
                 });
             } else {
@@ -94,8 +104,8 @@ $(function() {
                         console.log("some errors");
                     },
                     success: function() {
-                        var empView = new EmployersView({});
-                        empView.render();
+                        //add event attached
+                        app.currentView.initScroll();
                     }
                 });
             }

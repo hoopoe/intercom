@@ -9,7 +9,7 @@ class Api::UserProfileController < ApplicationController
     sort_update %w(login firstname lastname mail admin created_on last_login_on)
 
     @offset, @limit = api_offset_and_limit  
-
+    # @limit = 4
     if (params[:page])
       @offset = @limit * (params[:page].to_i - 1)      
     end
