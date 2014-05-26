@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <head>
   <% content_for :header_tags do %>
-    <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js', 'infiniScroll.js', 'intercom_views.js', 
-
-'intercom.js', :plugin => 'intercom' %>
+    <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js', 'infiniScroll.js', 'topView.js', 'profileView.js', 'employersView.js', 'intercom.js', :plugin => 'intercom' %>
     <%= stylesheet_link_tag 'bootstrap.min.css', 'bootstrap.css.map', 'intercom.css', :plugin => 'intercom' %>
   <% end %>
 </head>
@@ -63,94 +61,106 @@
       </div>
     </div>
   </script>
-  <script type="text/template" id="employer-detail-template">
-   <div class="row">
-     <div class="col-md-12">
-       <div class="row employer_row">
-          <table>
+  <script type="text/template" id="profile-template">   
+    <table>
+      <tbody>
+        <tr>
+          <td style="width: 200px;">
+          <div class="col-md-2 employer_img">
+          <table style="height: 394px;">
             <tbody>
               <tr>
-                <td style="width: 200px;">
-                <div class="col-md-2 employer_img">
-                <table style="height: 394px;">
-                  <tbody>
-                    <tr>
-                      <td colspan="2" style="width: 200px;">
-                      <img style="width: 200px; height: 200px;" src="http://img.biskvit.info/medium/Fxc.png" alt=""></td>
-                    </tr>
-                    <tr>
-                      <td style="width: 120px; height: 50px;"><button type="button" class="btn btn-default btn-lg btn-block">Лучший<br>сотрудник</button></td>
-                      <td style="width: 80px; height: 50px;"><button type="button" class="btn btn-default btn-lg btn-block">Где<br>сидит</button></td>
-                    </tr>
-                    <tr>
-                      <td style="width: 120px; height: 60px;"><button type="button" class="btn btn-default btn-lg btn-block">25 тт-ок</button></td>
-                      <td style="width: 80px; height: 60px;"><button type="button" class="btn btn-default btn-lg btn-block">Хвалить!!!</button></td>
-                    </tr>
-                    <tr>
-                      <td colspan="2" style="width: 200px; height: 50px;"><button type="button" class="btn btn-primary btn-lg btn-block">Сообщение</button></td>
-                    </tr>
-                  </tbody>
-                </table>
-                </div>
-                </td>
-                <td style="width: 20px;"></td>
-                <td style="width: 100%;">
-                <div class="col-md-10">
-                <table style="width: 600px; height: 400px;">
-                  <tbody>
-                    <tr>
-                      <td style="width: 410px; height: 70px;"><h2><%%-user_profile.name%> <%%-user_profile.first_name %></h2></td>
-                      <td style="width: 10px; height: 70px;"></td>
-                      <td style="width: 80px; height: 70px;"><button type="button" class="btn btn-primary">CV</button></td>
-                    </tr>
-                    <tr>
-                      <td colspan="3" style="width: 410px; height: 37px;"><b>Проект:</b> <%%-user_profile.project%></td>
-                    </tr>
-                    <tr>
-                      <td colspan="3" style="width: 410px; height: 7px;"><b>Должность:</b> <%%-user_profile.project%></td>
-                    </tr>
-                    <tr>
-                      <td colspan="3" style="width: 410px;"><b>e-mail:</b> <%%-user_profile.project%></td>
-                    </tr>
-                    <tr>
-                      <td colspan="3" style="width: 410px;"><b>Номер комнаты:</b> <%%-user_profile.project%></td>
-                    </tr>
-                    <tr>
-                      <td colspan="3" style="width: 410px;"><b>День рождения:</b> <%%-user_profile.project%></td>
-                    </tr>
-                    <tr>
-                      <td colspan="3" style="width: 410px;"><b>Работаю в компании:</b> <%%-user_profile.project%></td>
-                    </tr>
-                    <tr>
-                      <td colspan="3" style="width: 410px;"><b>Мои интересы:</b> <%%-user_profile.project%></td>
-                    </tr>
-                  </tbody>
-                </table>
-                </div>
-                </td>
+                <td colspan="2" style="width: 200px;">
+                <img style="width: 200px; height: 200px;" src="http://img.biskvit.info/medium/Fxc.png" alt=""></td>
               </tr>
               <tr>
-                <td colspan="4"><h3>Технические навыки</h3>
-                  <hr><label><%=l(:skills)%>:</label>
-                  <%%-user_profile.skills %>
-                </td>
+                <td style="width: 120px; height: 50px;"><button type="button" class="btn btn-default btn-lg btn-block">Лучший<br>сотрудник</button></td>
+                <td style="width: 80px; height: 50px;"><button type="button" class="btn btn-default btn-lg btn-block">Где<br>сидит</button></td>
               </tr>
               <tr>
-                <td colspan="3"><h3>Коммуникативные навыки</h3><hr></td>
+                <td style="width: 120px; height: 60px;"><button type="button" class="btn btn-default btn-lg btn-block">25 тт-ок</button></td>
+                <td style="width: 80px; height: 60px;"><button type="button" class="btn btn-default btn-lg btn-block">Хвалить!!!</button></td>
               </tr>
               <tr>
-                <td colspan="3"><h3>Иностранные языки</h3><hr></td>
-              </tr>
-              <tr>
-                <td colspan="3"><h3>Образование</h3><hr></td>
-              </tr>
-              <tr>
-                <td colspan="3"><h3>Курсы и тренинги</h3><hr></td>
+                <td colspan="2" style="width: 200px; height: 50px;"><button type="button" class="btn btn-primary btn-lg btn-block">Сообщение</button></td>
               </tr>
             </tbody>
           </table>
-        </div>
-      </div>
+          </div>
+          </td>
+          <td style="width: 20px;"></td>
+          <td style="width: 100%;">
+          <div class="col-md-10">
+          <table style="width: 600px; height: 400px;">
+            <tbody>
+              <tr>
+                <td style="width: 410px; height: 70px;"><h2><%%-user_profile.name%> <%%-user_profile.first_name %></h2></td>
+                <td style="width: 10px; height: 70px;"></td>
+                <td style="width: 80px; height: 70px;"><button type="button" class="btn btn-primary">CV</button></td>
+              </tr>
+              <tr>
+                <td colspan="3" style="width: 410px; height: 37px;"><b>Проект:</b> <%%-user_profile.project%></td>
+              </tr>
+              <tr>
+                <td colspan="3" style="width: 410px; height: 7px;"><b>Должность:</b> <%%-user_profile.project%></td>
+              </tr>
+              <tr>
+                <td colspan="3" style="width: 410px;"><b>e-mail:</b> <%%-user_profile.project%></td>
+              </tr>
+              <tr>
+                <td colspan="3" style="width: 410px;"><b>Номер комнаты:</b> <%%-user_profile.project%></td>
+              </tr>
+              <tr>
+                <td colspan="3" style="width: 410px;"><b>День рождения:</b> <%%-user_profile.project%></td>
+              </tr>
+              <tr>
+                <td colspan="3" style="width: 410px;"><b>Работаю в компании:</b> <%%-user_profile.project%></td>
+              </tr>
+              <tr>
+                <td colspan="3" style="width: 410px;"><b>Мои интересы:</b> <%%-user_profile.project%></td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <h3>Технические навыки</h3>
+            <hr>            
+            <div class="skillsPh">
+              // <label><%=l(:skills)%>:</label>
+              // <%%-user_profile.skills %>
+              // <div class="editSkillsBtn">edit</div>
+            </div>            
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3"><h3>Коммуникативные навыки</h3><hr></td>
+        </tr>
+        <tr>
+          <td colspan="3"><h3>Иностранные языки</h3><hr></td>
+        </tr>
+        <tr>
+          <td colspan="3"><h3>Образование</h3><hr></td>
+        </tr>
+        <tr>
+          <td colspan="3"><h3>Курсы и тренинги</h3><hr></td>
+        </tr>
+      </tbody>
+    </table>    
+  </script>
+  <script type="text/template" id="skills-template">
+    <div>
+        <label><%=l(:skills)%>:</label>
+        <%%-user_profile.skills %>
+        <div class="editSkillsBtn">edit</div>
+    </div>
+  </script>
+  <script type="text/template" id="edit-skills-template">
+    <div>
+      <input type="text" value="<%%- user_profile.skills %>"/>
+      <div class="cancelEditSkillsBtn">cancel</div>
     </div>
   </script>
 </body>

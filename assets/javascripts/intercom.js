@@ -8,6 +8,23 @@ $(function() {
     //app.router - backbone router
     //app.employer
 
+    Backbone.View.prototype.close = function() {
+        this.remove();
+        this.unbind();
+        if (this.onClose) {
+            this.onClose();
+        }
+    };
+
+    app.showView = function(view) {
+        if (app.currentView) {
+            app.currentView.close();
+        }
+        app.currentView = view;
+        app.currentView.render();
+        $(".content").html(app.currentView.el);
+    };
+
     var EmployerCollection = Backbone.Collection.extend({
         url: '/api/user_profile'
     });
@@ -64,17 +81,18 @@ $(function() {
                         console.log("some errors");
                     },
                     success: function() {
-                        var myPageView = new MyPageView({
+                        var profileView = new ProfileView({
                             model: app.employer
                         });
-                        myPageView.render();
+                        // myPageView.render();
+                        $(".content").html(profileView.render().el)
                     }
                 })
             } else {
-                var myPageView = new MyPageView({
+                var profileView = new ProfileView({
                     model: app.employers.first()
                 });
-                myPageView.render();
+                profileView.render();
             }
         },
 
