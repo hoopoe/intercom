@@ -2,6 +2,31 @@ var app = app || {};
 
 $(function() {
 
+    app.EventAggregator = _.extend({}, Backbone.Events);
+
+    app.EventAggregator.on('skills:edit', function(profile) {
+        console.log("skills edit");
+        var skillsEdit = new ProfileSkillsEditView({
+            model: profile
+        });
+
+        $('.skillsPh').html(skillsEdit.render().el);
+    });
+
+    app.EventAggregator.on('skills:cancel', function(profile) {
+        console.log("skills cancel");
+
+        var skills = new ProfileSkillsView({
+            model: profile
+        });
+
+        $('.skillsPh').html(skills.render().el);
+    });
+
+    app.EventAggregator.on('skills:save', function(profile) {
+        console.log("skills save");
+    });
+
     ProfileSkillsView = Backbone.View.extend({
 
         template: _.template($("#skills-template").html()),
@@ -16,9 +41,17 @@ $(function() {
 
         template: _.template($("#edit-skills-template").html()),
 
+        events: {
+            'click .cancelEditSkillsBtn': 'cancel',
+        },
+
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
             return this;
+        },
+
+        cancel: function() {
+            app.EventAggregator.trigger('skills:cancel', this.model);
         }
     });
 
@@ -26,11 +59,8 @@ $(function() {
 
         template: _.template($("#profile-template").html()),
 
-        // editSkillsTemplate: _.template($("#edit-skills-template").html()),
-
         events: {
-            'click .editSkillsBtn': 'editSkills',
-            'click .cancelEditSkillsBtn': 'cancelEditSkills',
+            'click .editSkillsBtn': 'edit',
         },
 
         initialize: function() {},
@@ -47,20 +77,9 @@ $(function() {
             return this;
         },
 
-        editSkills: function() {
-            var skillsEdit = new ProfileSkillsEditView({
-                model: this.model
-            });
-
-            this.$el.find('.skillsPh').html(skillsEdit.render().el);
+        edit: function() {
+            app.EventAggregator.trigger('skills:edit', this.model);
         },
 
-        cancelEditSkills: function() {
-            var skills = new ProfileSkillsView({
-                model: this.model
-            });
-
-            this.$el.find('.skillsPh').html(skills.render().el);
-        },
     });
 });
