@@ -6,11 +6,15 @@ class Api::UserProfileController < ApplicationController
 
   # accept_api_auth :update
   # before_filter :authorize
-  skip_before_filter :verify_authenticity_token
+  # before_filter :authorize#, :except => [:index, :show]
+  # skip_before_filter :verify_authenticity_token
+  accept_api_auth :index, :show, :update
 
   def index
     sort_init 'login', 'asc'
     sort_update %w(login firstname lastname mail admin created_on last_login_on)
+
+    Rails.logger.info User.current
 
     @offset, @limit = api_offset_and_limit  
     # @limit = 4

@@ -54,6 +54,8 @@ $(function() {
         },
 
         default: function() {
+            var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+            console.log(AUTH_TOKEN);
             app.employers.reset();
             var empView = new EmployersView({
                 collection: app.employers
@@ -61,8 +63,8 @@ $(function() {
             app.showView(empView);
 
             app.employers.fetch({
-                error: function() {
-                    console.log("some errors");
+                error: function(m, resp) {
+                    console.log(resp.responseText);
                 },
                 success: function() {
                     //add event attached
@@ -118,8 +120,9 @@ $(function() {
                 });
             } else {
                 app.employers.fetch({
-                    error: function() {
-                        console.log("some errors");
+                    error: function(e) {
+                        // console.log("some errors");
+                        console.log(e);
                     },
                     success: function() {
                         //add event attached

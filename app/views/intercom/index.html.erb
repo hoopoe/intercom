@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<head>
+<head>  
   <% content_for :header_tags do %>
     <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js', 'infiniScroll.js', 'etch.js', 'topView.js', 'profileView.js', 'employersView.js', 'intercom.js', :plugin => 'intercom' %>
     <%= stylesheet_link_tag 'bootstrap.min.css', 'bootstrap.css.map', 'etch.css', 'intercom.css', :plugin => 'intercom' %>
@@ -40,7 +40,7 @@
     <div class="col-md-1">
     </div>
   </div>
-  <script type="text/template" id="employer-template">
+  <script type="html/template" id="employer-template">
     <div class="row">
       <div class="col-md-12">
         <div class="row employer_row">
@@ -50,7 +50,7 @@
              </a>
           </div>
           <div class="col-md-10">            
-            <label><%%- user.lastname %></label>
+            <label><%%= user.lastname %></label>
             <label><%%- user.firstname %></label>            
             <br>
             <label><%=l(:skills)%>:</label>
@@ -130,8 +130,8 @@
             <hr>            
             <div class="skillsPh">
               <label><%=l(:skills)%>:</label>
-              <div class="editable">
-                <%%-user_profile.skills %>
+              <div class="editable">         
+                <%% if (user_profile.skills) { %><%%= user_profile.skills %><%% } else {%>Skills<%% } %>
               </div>
             </div>            
           </td>
