@@ -4,6 +4,10 @@ class Api::UserProfileController < ApplicationController
   helper :sort
   include SortHelper
 
+  # accept_api_auth :update
+  # before_filter :authorize
+  skip_before_filter :verify_authenticity_token
+
   def index
     sort_init 'login', 'asc'
     sort_update %w(login firstname lastname mail admin created_on last_login_on)
@@ -38,5 +42,16 @@ class Api::UserProfileController < ApplicationController
   def show
     @client = UserProfile.find_or_create_by_user_id(params[:id])
     respond_with @client
+  end
+
+  def update
+    @profile = UserProfile.find_by_user_id(params[:id])
+    @profile.skills = params[:skills]
+    if @profile.save
+      Rails.logger.info "saved"
+    else
+      Rails.logger.info "failed to save"
+    end
+    respond_with @profile
   end
 end

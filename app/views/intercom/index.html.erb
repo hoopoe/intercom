@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <head>
   <% content_for :header_tags do %>
-    <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js', 'infiniScroll.js', 'topView.js', 'profileView.js', 'employersView.js', 'intercom.js', :plugin => 'intercom' %>
-    <%= stylesheet_link_tag 'bootstrap.min.css', 'bootstrap.css.map', 'intercom.css', :plugin => 'intercom' %>
+    <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js', 'infiniScroll.js', 'etch.js', 'topView.js', 'profileView.js', 'employersView.js', 'intercom.js', :plugin => 'intercom' %>
+    <%= stylesheet_link_tag 'bootstrap.min.css', 'bootstrap.css.map', 'etch.css', 'intercom.css', :plugin => 'intercom' %>
   <% end %>
 </head>
 <body>
@@ -129,9 +129,10 @@
             <h3>Технические навыки</h3>
             <hr>            
             <div class="skillsPh">
-              // <label><%=l(:skills)%>:</label>
-              // <%%-user_profile.skills %>
-              // <div class="editSkillsBtn">edit</div>
+              <label><%=l(:skills)%>:</label>
+              <div class="editable">
+                <%%-user_profile.skills %>
+              </div>
             </div>            
           </td>
         </tr>
@@ -149,18 +150,5 @@
         </tr>
       </tbody>
     </table>    
-  </script>
-  <script type="text/template" id="skills-template">
-    <div>
-        <label><%=l(:skills)%>:</label>
-        <%%-user_profile.skills %>
-        <div class="editSkillsBtn">edit</div>
-    </div>
-  </script>
-  <script type="text/template" id="edit-skills-template">
-    <div>
-      <input type="text" value="<%%- user_profile.skills %>"/>
-      <div class="cancelEditSkillsBtn">cancel</div>
-    </div>
   </script>
 </body>
