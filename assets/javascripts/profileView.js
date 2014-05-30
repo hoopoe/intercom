@@ -24,11 +24,10 @@ $(function() {
         editableClick: etch.editableInit,
 
         save: function() {
-            var skills = this.$('.editable').text();
+            var skills = this.$('.editable').html();
             this.model.save({
                 skills: skills
             });
-            console.log(skills);
         }
     });
 });

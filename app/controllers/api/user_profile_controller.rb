@@ -48,7 +48,7 @@ class Api::UserProfileController < ApplicationController
     respond_with @client
   end
 
-  def update
+  def update    
     @profile = UserProfile.find_by_user_id(params[:id])
     @profile.skills = params[:skills]
     if @profile.save
