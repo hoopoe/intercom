@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>  
   <% content_for :header_tags do %>
-    <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js', 'infiniScroll.js', 'etch.js', 'topView.js', 'profileView.js', 'employersView.js', 'intercom.js', :plugin => 'intercom' %>
+    <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js', 'infiniScroll.js', 'etch.js', 'utils.js', 'topView.js', 'profileView.js', 'employersView.js', 'intercom.js', :plugin => 'intercom' %>
     <%= stylesheet_link_tag 'bootstrap.min.css', 'bootstrap.css.map', 'etch.css', 'intercom.css', :plugin => 'intercom' %>
   <% end %>
 </head>
@@ -45,8 +45,8 @@
       <div class="col-md-12">
         <div class="row employer_row">
           <div class="col-md-2 employer_img">            
-             <a href='#mypage/<%%- user.id %>'>
-                <img src="http://img.biskvit.info/GV.png" alt="" />
+             <a href='#mypage/<%%- user.id %>'>                
+                  <img src="http://img.biskvit.info/GV.png" alt="" />                
              </a>
           </div>
           <div class="col-md-10">            
@@ -71,7 +71,13 @@
             <tbody>
               <tr>
                 <td colspan="2" style="width: 200px;">
-                <img style="width: 200px; height: 200px;" src="http://img.biskvit.info/medium/Fxc.png" alt=""></td>
+                <img id="picture">
+                </img>
+                
+                <div class="profile-img">
+                  <img style="width: 200px; height: 200px;" src="http://img.biskvit.info/medium/Fxc.png" alt="">
+                </div>
+                </td>
               </tr>
               <tr>
                 <td style="width: 120px; height: 50px;"><button type="button" class="btn btn-default btn-lg btn-block">Лучший<br>сотрудник</button></td>
@@ -130,7 +136,7 @@
             <hr>            
             <div class="skillsPh">
               <label><%=l(:skills)%>:</label>
-              <div class="editable" data-button-class=all>         
+              <div class="editable profile-skills" data-button-class=all>         
                 <%% if (user_profile.skills) { %><%%= user_profile.skills %><%% } else {%>Skills<%% } %>
               </div>
             </div>            

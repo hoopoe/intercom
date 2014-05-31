@@ -1,5 +1,4 @@
 var app = app || {};
-
 /* alias away the sync method */
 Backbone._sync = Backbone.sync;
 
