@@ -8,8 +8,8 @@ $(function() {
 
         events: {
             'mousedown .editable': 'editableClick',
-            'dragover .profile-img': 'dragoverHandler',
-            'drop .profile-img': 'dropHandler'
+            'dragover .profile-div': 'dragoverHandler',
+            'drop .profile-div': 'dropHandler'
         },
 
         initialize: function() {
@@ -51,7 +51,7 @@ $(function() {
             reader.readAsDataURL(this.pictureFile);
 
             function photoResult(data) {
-                $('.profile-img img').attr('src', data).show();
+                $('.profile-div img').attr('src', data).show();
                 self.photoObj = data;
                 console.log("add save button");
             }
@@ -59,10 +59,10 @@ $(function() {
 
         save: function() {
             var skills = this.$('.profile-skills').html();
-            console.log(skills);
-            // this.model.save({
-            //     skills: skills
-            // });
+            // console.log(skills);
+            this.model.save({
+                skills: skills
+            });
         }
     });
 });

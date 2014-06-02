@@ -11,4 +11,8 @@ class UserProfile < ActiveRecord::Base
   def to_s
     "Name: empty Skills:#{self.skills}"
   end 
+
+  def avatar_url
+    avatar.url
+  end
 end

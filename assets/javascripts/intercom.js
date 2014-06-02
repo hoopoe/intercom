@@ -74,8 +74,6 @@ $(function() {
         },
 
         default: function() {
-            var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
-            console.log(AUTH_TOKEN);
             app.employers.reset();
             var empView = new EmployersView({
                 collection: app.employers

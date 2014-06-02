@@ -46,11 +46,11 @@
         <div class="row employer_row">
           <div class="col-md-2 employer_img">            
              <a href='#mypage/<%%- user.id %>'>                
-                  <img src="http://img.biskvit.info/GV.png" alt="" />                
+                  <img src=<%%- user.avatar_url %> alt="" class="profile-img" />                
              </a>
           </div>
           <div class="col-md-10">            
-            <label><%%= user.lastname %></label>
+            <label><%%- user.lastname %></label>
             <label><%%- user.firstname %></label>            
             <br>
             <label><%=l(:skills)%>:</label>
@@ -74,8 +74,9 @@
                 <img id="picture">
                 </img>
                 
-                <div class="profile-img">
-                  <img style="width: 200px; height: 200px;" src="http://img.biskvit.info/medium/Fxc.png" alt="">
+                <div class="profile-div">
+
+                  <img class="profile-img" src=<%%-user.avatar_url%> alt="">                   
                 </div>
                 </td>
               </tr>
@@ -100,30 +101,30 @@
           <table style="width: 600px; height: 400px;">
             <tbody>
               <tr>
-                <td style="width: 410px; height: 70px;"><h2><%%-user_profile.name%> <%%-user_profile.first_name %></h2></td>
+                <td style="width: 410px; height: 70px;"><h2><%%-user.firstname%> <%%-user.lastname %></h2></td>
                 <td style="width: 10px; height: 70px;"></td>
                 <td style="width: 80px; height: 70px;"><button type="button" class="btn btn-primary">CV</button></td>
               </tr>
               <tr>
-                <td colspan="3" style="width: 410px; height: 37px;"><b>Проект:</b> <%%-user_profile.project%></td>
+                <td colspan="3" style="width: 410px; height: 37px;"><b>Проект:</b> <%%-user.firstname%></td>
               </tr>
               <tr>
-                <td colspan="3" style="width: 410px; height: 7px;"><b>Должность:</b> <%%-user_profile.project%></td>
+                <td colspan="3" style="width: 410px; height: 7px;"><b>Должность:</b> <%%-user.firstname%></td>
               </tr>
               <tr>
-                <td colspan="3" style="width: 410px;"><b>e-mail:</b> <%%-user_profile.project%></td>
+                <td colspan="3" style="width: 410px;"><b>e-mail:</b> <%%-user.firstname%></td>
               </tr>
               <tr>
-                <td colspan="3" style="width: 410px;"><b>Номер комнаты:</b> <%%-user_profile.project%></td>
+                <td colspan="3" style="width: 410px;"><b>Номер комнаты:</b> <%%-user.firstname%></td>
               </tr>
               <tr>
-                <td colspan="3" style="width: 410px;"><b>День рождения:</b> <%%-user_profile.project%></td>
+                <td colspan="3" style="width: 410px;"><b>День рождения:</b> <%%-user.firstname%></td>
               </tr>
               <tr>
-                <td colspan="3" style="width: 410px;"><b>Работаю в компании:</b> <%%-user_profile.project%></td>
+                <td colspan="3" style="width: 410px;"><b>Работаю в компании:</b> <%%-user.firstname%></td>
               </tr>
               <tr>
-                <td colspan="3" style="width: 410px;"><b>Мои интересы:</b> <%%-user_profile.project%></td>
+                <td colspan="3" style="width: 410px;"><b>Мои интересы:</b> <%%-user.firstname%></td>
               </tr>
             </tbody>
           </table>
@@ -137,7 +138,7 @@
             <div class="skillsPh">
               <label><%=l(:skills)%>:</label>
               <div class="editable profile-skills" data-button-class=all>         
-                <%% if (user_profile.skills) { %><%%= user_profile.skills %><%% } else {%>Skills<%% } %>
+                <%% if (user.skills) { %><%%= user.skills %><%% } else {%>Skills<%% } %>
               </div>
             </div>            
           </td>

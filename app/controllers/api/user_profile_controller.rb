@@ -17,39 +17,53 @@ class Api::UserProfileController < ApplicationController
 
     Rails.logger.info User.current
 
-    @offset, @limit = api_offset_and_limit  
+    @offset, @limit = api_offset_and_limit
     # @limit = 4
     if (params[:page])
-      @offset = @limit * (params[:page].to_i - 1)      
+      @offset = @limit * (params[:page].to_i - 1)
     end
-      
-    @users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname, user_profile_t.skills")
-      .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")  
 
     if (params[:skills])
       skills = params[:skills]
       q = skills.map{|s| "%#{s}%"}
 
-      @users = @users
+      @users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname, user_profile_t.skills, user_profile_t.avatar_file_name avatar_url")
+      .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
       .where("LOWER(#{UserProfile.table_name}.skills) LIKE LOWER(?)", q)
-      respond_with @users.order(sort_clause).
-                          limit(@limit).
-                          offset(@offset).
-                          all
+      .order(sort_clause)
+      .limit(@limit)
+      .offset(@offset)
+      .all
+
+      set_avatars(@users)
+      respond_with @users
     else
-      respond_with @users.order(sort_clause).
-                          limit(@limit).
-                          offset(@offset).
-                          all
-    end    
+      @users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname, user_profile_t.skills, user_profile_t.avatar_file_name avatar_url")
+      .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
+      .order(sort_clause)
+      .limit(@limit)
+      .offset(@offset)
+      .all
+
+      set_avatars(@users)
+      respond_with @users
+    end
   end
 
-  def show
-    @client = UserProfile.find_or_create_by_user_id(params[:id])
-    respond_with @client
+  def show    
+    @users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname, user_profile_t.skills, user_profile_t.avatar_file_name avatar_url")
+      .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
+      .where("LOWER(#{UserProfile.table_name}.user_id) = (?)", params[:id])
+      
+    if @users.exists?
+      set_avatars(@users)
+      respond_with @users.first
+    else
+      respond_with User.find_by_id(params[:id])
+    end
   end
 
-  def update    
+  def update
     @profile = UserProfile.find_by_user_id(params[:id])
     @profile.skills = params[:skills]
 
@@ -59,5 +73,19 @@ class Api::UserProfileController < ApplicationController
       Rails.logger.info "failed to save"
     end
     respond_with @profile
+  end
+
+  private
+  def set_avatars(users)
+    #set paperclip absolute url for each record
+    ids = users.map { |x| x.id }
+    profiles = UserProfile.where(:user_id => ids).all
+    for i in users
+      if profile = profiles.detect{|p| p.user_id == i.id}
+        i.avatar_url = profile.avatar_url
+      else
+        i.avatar_url = "nope" #don't have profile at all
+      end
+    end
   end
 end
