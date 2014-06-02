@@ -30,7 +30,7 @@ namespace :redmine do
       createUser("Anton", "Bakanov")
       createUser("Elena I.", "Kicherova")
       createUser("Ivan", "Bogdanyuk")
-      createUser("Vladimir", "Kocheryzhkin ")
+      createUser("Vladimir", "Kocheryzhkin")
       createUser("Anton", "Korobeynikov")
     end  
 
@@ -42,8 +42,9 @@ namespace :redmine do
         file.readline
         file.each do |t|          
           items = t.split(";")
-          firstN  = items[0]
-          lastN  = items[1]
+          firstN  = items[0].strip()
+          lastN  = items[1].strip()
+          imageName = "#{firstN} #{lastN}.png"
           user = User.find(:first, :conditions => ["firstname =? and lastname =?",firstN, lastN])
           if user.nil?      
             puts "User not found: "+ firstN                  
@@ -55,7 +56,14 @@ namespace :redmine do
             person.summary    = items[3]
             person.birthday   = items[5]
             person.project    = items[6]
-            person.save!            
+            imagePath = File.expand_path("../../../data/#{imageName}", __FILE__)
+            if File.exists?(imagePath)
+              file = File.open(imagePath)
+              person.avatar = file
+              file.close
+            end
+            person.save! 
+            puts "."           
           end
         end
       else

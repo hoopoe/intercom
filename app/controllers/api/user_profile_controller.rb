@@ -11,8 +11,9 @@ class Api::UserProfileController < ApplicationController
   accept_api_auth :index, :show, :update
 
   def index
-    sort_init 'login', 'asc'
-    sort_update %w(login firstname lastname mail admin created_on last_login_on)
+    sort_init 'lastname', 'asc'
+    # sort_update %w(lastname firstname login mail admin created_on last_login_on)
+    sort_update %w(lastname)
 
     Rails.logger.info User.current
 
@@ -21,21 +22,21 @@ class Api::UserProfileController < ApplicationController
     if (params[:page])
       @offset = @limit * (params[:page].to_i - 1)      
     end
-        
+      
+    @users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname, user_profile_t.skills")
+      .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")  
+
     if (params[:skills])
       skills = params[:skills]
       q = skills.map{|s| "%#{s}%"}
 
-      @users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname, user_profile_t.skills")
-      .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")  
+      @users = @users
       .where("LOWER(#{UserProfile.table_name}.skills) LIKE LOWER(?)", q)
       respond_with @users.order(sort_clause).
                           limit(@limit).
                           offset(@offset).
                           all
     else
-      @users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname, user_profile_t.skills")
-      .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")  
       respond_with @users.order(sort_clause).
                           limit(@limit).
                           offset(@offset).
@@ -51,6 +52,7 @@ class Api::UserProfileController < ApplicationController
   def update    
     @profile = UserProfile.find_by_user_id(params[:id])
     @profile.skills = params[:skills]
+
     if @profile.save
       Rails.logger.info "saved"
     else

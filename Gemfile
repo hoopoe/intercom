@@ -6,4 +6,5 @@ end
 
 group :development do
   gem 'faker'
+  gem "paperclip", "~> 4.1"
 end
