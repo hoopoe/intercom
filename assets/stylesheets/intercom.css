@@ -28,11 +28,18 @@ button.btn-search{
 .profile-img {
   width: 100px;
   height: 100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.no-profile-img {
-  height: 100px;
+.no-profile-img {  
   content: url("../images/noavatar.jpg"); 
+  width: 100px;
+  height: 100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto; 
 }
 
 

@@ -64,103 +64,120 @@
     </div>
   </script>
   <script type="text/template" id="profile-template">
-    <table>
-      <tbody>
-        <tr>
-          <td style="width: 200px;">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row employer_row">
           <div class="col-md-2 employer_img">
-          <table style="height: 394px;">
-            <tbody>
-              <tr>
-                <td colspan="2" style="width: 200px;">
-                <img id="picture">
-                </img>
-    
-                <div class="profile-div">                    
-                  <%% if (user.avatar_url == "noavatar") { %>
-                    <img class="no-profile-img"/>
-                  <%% } else {%>
-                    <img src=<%%- user.avatar_url %> alt="" class="profile-img" />
-                  <%% } %>
-                </div>
-                </td>
-              </tr>
-              <tr>
-                <td style="width: 120px; height: 50px;"><button type="button" class="btn btn-default btn-lg btn-block">Лучший<br>сотрудник</button></td>
-                <td style="width: 80px; height: 50px;"><button type="button" class="btn btn-default btn-lg btn-block">Где<br>сидит</button></td>
-              </tr>
-              <tr>
-                <td style="width: 120px; height: 60px;"><button type="button" class="btn btn-default btn-lg btn-block">25 тт-ок</button></td>
-                <td style="width: 80px; height: 60px;"><button type="button" class="btn btn-default btn-lg btn-block">Хвалить!!!</button></td>
-              </tr>
-              <tr>
-                <td colspan="2" style="width: 200px; height: 50px;"><button type="button" class="btn btn-primary btn-lg btn-block">Сообщение</button></td>
-              </tr>
-            </tbody>
-          </table>
+              <img id="picture"/>
+              <div class="profile-div">
+                 <%% if (user.avatar_url == "noavatar") { %>
+                   <img class="no-profile-img"/>
+                 <%% } else {%>
+                   <img src=<%%- user.avatar_url %> alt="" class="profile-img" />
+                 <%% } %>
+              </div>
           </div>
-          </td>
-          <td style="width: 20px;"></td>
-          <td style="width: 100%;">
           <div class="col-md-10">
-          <table style="width: 600px; height: 400px;">
-            <tbody>
-              <tr>
-                <td style="width: 410px; height: 70px;"><h2><%%-user.firstname%> <%%-user.lastname %></h2></td>
-                <td style="width: 10px; height: 70px;"></td>
-                <td style="width: 80px; height: 70px;"><button type="button" class="btn btn-primary">CV</button></td>
-              </tr>
-              <tr>
-                <td colspan="3" style="width: 410px; height: 37px;"><b>Проект:</b> <%%-user.firstname%></td>
-              </tr>
-              <tr>
-                <td colspan="3" style="width: 410px; height: 7px;"><b>Должность:</b> <%%-user.firstname%></td>
-              </tr>
-              <tr>
-                <td colspan="3" style="width: 410px;"><b>e-mail:</b> <%%-user.firstname%></td>
-              </tr>
-              <tr>
-                <td colspan="3" style="width: 410px;"><b>Номер комнаты:</b> <%%-user.firstname%></td>
-              </tr>
-              <tr>
-                <td colspan="3" style="width: 410px;"><b>День рождения:</b> <%%-user.firstname%></td>
-              </tr>
-              <tr>
-                <td colspan="3" style="width: 410px;"><b>Работаю в компании:</b> <%%-user.firstname%></td>
-              </tr>
-              <tr>
-                <td colspan="3" style="width: 410px;"><b>Мои интересы:</b> <%%-user.firstname%></td>
-              </tr>
-            </tbody>
-          </table>
+            <table>
+              <tbody>
+                <tr>
+                <td ><h2><%%-user.firstname%> <%%-user.lastname %></h2></td>
+                
+                <!--button type="button" class="btn btn-primary">CV</button-->
+                </tr>
+                <tr>
+                <td><b><%=l(:project_title)%>:</b> <%%-user.firstname%></td>
+                </tr>
+                <tr>
+                <td><b><%=l(:position_title)%>:</b> <%%-user.firstname%></td>
+                </tr>
+                <tr>
+                <td><b><%=l(:email_title)%>:</b> <%%-user.mail%></td>
+                </tr>
+                <tr>
+                <td><b><%=l(:room_number)%>:</b> <%%-user.firstname%></td>
+                </tr>
+                <tr>
+                <td><b><%=l(:birthday_title)%>:</b> <%%-user.firstname%></td>
+                </tr>              
+                <tr>
+                <td><b><%=l(:interest_title)%>:</b> <%%-user.firstname%></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="4">
-            <h3>Технические навыки</h3>
-            <hr>
-            <div class="skillsPh">
-              <label><%=l(:skills)%>:</label>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-2">
+            <h4><%=l(:skills_title)%></h4>            
+          </div>        
+          <div class="col-md-10">
+            <div class="skillsPh">              
               <div class="editable profile-skills" data-button-class=all>
                 <%% if (user.skills) { %><%%= user.skills %><%% } else {%>Skills<%% } %>
               </div>
             </div>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="3"><h3>Коммуникативные навыки</h3><hr></td>
-        </tr>
-        <tr>
-          <td colspan="3"><h3>Иностранные языки</h3><hr></td>
-        </tr>
-        <tr>
-          <td colspan="3"><h3>Образование</h3><hr></td>
-        </tr>
-        <tr>
-          <td colspan="3"><h3>Курсы и тренинги</h3><hr></td>
-        </tr>
-      </tbody>
-    </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-2">
+            <h4><%=l(:communication_skills_title)%></h4>
+          </div>        
+          <div class="col-md-10">
+            TBD
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-2">
+            <h4><%=l(:languages_title)%></h4>
+          </div>        
+          <div class="col-md-10">
+            TBD
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-2">
+            <h4><%=l(:education_title)%></h4>
+          </div>        
+          <div class="col-md-10">
+            TBD
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-2">
+            <h4><%=l(:coureses_title)%></h4>
+          </div>        
+          <div class="col-md-10">
+            TBD
+          </div>
+        </div>
+      </div>
+    </div>
   </script>
 </body>
+<h4>
