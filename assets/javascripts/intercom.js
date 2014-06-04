@@ -23,7 +23,7 @@ Backbone.sync = function(method, model, success, error) {
 $(function() {
 
     $('#header').hide();
-    $('#top-menu').hide();
+    // $('#top-menu').hide();
     //app.employers - collection of userprofiles
     //app.router - backbone router
     //app.employer
@@ -109,6 +109,7 @@ $(function() {
                     }
                 })
             } else {
+                console.log("todo: redirect to login page");
                 var profileView = new ProfileView({
                     model: app.employers.first()
                 });
