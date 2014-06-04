@@ -27,7 +27,13 @@ class Api::UserProfileController < ApplicationController
       skills = params[:skills]
       q = skills.map{|s| "%#{s}%"}
 
-      @users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname, user_profile_t.skills, user_profile_t.avatar_file_name avatar_url")
+      @users = User.select("users.id, users.login, users.mail, users.firstname,
+       users.lastname, user_profile_t.skills,
+       user_profile_t.avatar_file_name avatar_url,
+       user_profile_t.position,
+       user_profile_t.summary,
+       user_profile_t.birthday,
+       user_profile_t.project")
       .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
       .where("LOWER(#{UserProfile.table_name}.skills) LIKE LOWER(?)", q)
       .order(sort_clause)
@@ -38,7 +44,13 @@ class Api::UserProfileController < ApplicationController
       set_avatars(@users)
       respond_with @users
     else
-      @users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname, user_profile_t.skills, user_profile_t.avatar_file_name avatar_url")
+      @users = User.select("users.id, users.login, users.mail, users.firstname,
+       users.lastname, user_profile_t.skills,
+       user_profile_t.avatar_file_name avatar_url,
+       user_profile_t.position,
+       user_profile_t.summary,
+       user_profile_t.birthday,
+       user_profile_t.project")
       .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
       .order(sort_clause)
       .limit(@limit)
@@ -51,7 +63,13 @@ class Api::UserProfileController < ApplicationController
   end
 
   def show    
-    @users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname, user_profile_t.skills, user_profile_t.avatar_file_name avatar_url")
+      @users = User.select("users.id, users.login, users.mail, users.firstname,
+       users.lastname, user_profile_t.skills,
+       user_profile_t.avatar_file_name avatar_url,
+       user_profile_t.position,
+       user_profile_t.summary,
+       user_profile_t.birthday,
+       user_profile_t.project")
       .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
       .where("LOWER(#{User.table_name}.id) = (?)", params[:id])
       

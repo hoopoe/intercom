@@ -66,8 +66,8 @@
   <script type="text/template" id="profile-template">
     <div class="row">
       <div class="col-md-12">
-        <div class="row employer_row">
-          <div class="col-md-2 employer_img">
+        <div class="row">
+          <div class="col-md-2">
               <img id="picture"/>
               <div class="profile-div">
                  <%% if (user.avatar_url == "noavatar") { %>
@@ -86,25 +86,42 @@
                 <!--button type="button" class="btn btn-primary">CV</button-->
                 </tr>
                 <tr>
-                <td><b><%=l(:project_title)%>:</b> <%%-user.firstname%></td>
+                <td><b><%=l(:project_title)%>:</b> <%%-user.project%></td>
                 </tr>
                 <tr>
-                <td><b><%=l(:position_title)%>:</b> <%%-user.firstname%></td>
+                <td><b><%=l(:position_title)%>:</b> <%%-user.position%></td>
                 </tr>
                 <tr>
                 <td><b><%=l(:email_title)%>:</b> <%%-user.mail%></td>
                 </tr>
                 <tr>
-                <td><b><%=l(:room_number)%>:</b> <%%-user.firstname%></td>
+                <td><b><%=l(:room_number)%>:</b>TBD</td>
                 </tr>
                 <tr>
-                <td><b><%=l(:birthday_title)%>:</b> <%%-user.firstname%></td>
+                <td><b><%=l(:birthday_title)%>:</b> <%%-user.birthday%></td>
                 </tr>              
                 <tr>
-                <td><b><%=l(:interest_title)%>:</b> <%%-user.firstname%></td>
+                <td><b><%=l(:interest_title)%>:</b> TBD </td>
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-2">
+            <h4><%=l(:summary_title)%></h4>            
+          </div>        
+          <div class="col-md-10">
+            <div class="summaryPh">              
+              <div class="editable summary-skills" data-button-class="all">
+                <%% if (user.summary) { %><%%= user.summary %><%% } else {%>Summary<%% } %>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -118,7 +135,7 @@
           </div>        
           <div class="col-md-10">
             <div class="skillsPh">              
-              <div class="editable profile-skills" data-button-class=all>
+              <div class="editable profile-skills" data-button-class="all">
                 <%% if (user.skills) { %><%%= user.skills %><%% } else {%>Skills<%% } %>
               </div>
             </div>

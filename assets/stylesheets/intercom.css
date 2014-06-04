@@ -31,6 +31,7 @@ button.btn-search{
   display: block;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 10px;
 }
 
 .no-profile-img {  
@@ -40,6 +41,7 @@ button.btn-search{
   display: block;
   margin-left: auto;
   margin-right: auto; 
+  margin-top: 10px;
 }
 
 
