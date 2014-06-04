@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<head>  
+<head>
   <% content_for :header_tags do %>
     <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js', 'infiniScroll.js', 'etch.js', 'utils.js', 'topView.js', 'profileView.js', 'employersView.js', 'intercom.js', :plugin => 'intercom' %>
     <%= stylesheet_link_tag 'bootstrap.min.css', 'bootstrap.css.map', 'etch.css', 'intercom.css', :plugin => 'intercom' %>
@@ -24,11 +24,9 @@
       </ul>
       <div class="navbar-form navbar-right">
         <input type="text" class="form-control col-lg-8 search-control" placeholder="Search">
-        
-          <button type="button" class="btn btn-default btn-search">
-            <span class="glyphicon glyphicon-search"></span>
-          </button>
-        
+        <button type="button" class="btn btn-default btn-search">
+          <span class="glyphicon glyphicon-search"></span>
+        </button>
       </div>
     </div><!--/.nav-collapse -->
   </div>
@@ -44,14 +42,18 @@
     <div class="row">
       <div class="col-md-12">
         <div class="row employer_row">
-          <div class="col-md-2 employer_img">            
-             <a href='#mypage/<%%- user.id %>'>                
-                  <img src=<%%- user.avatar_url %> alt="" class="profile-img" />                
+          <div class="col-md-2 employer_img">
+             <a href='#mypage/<%%- user.id %>'>
+                <%% if (user.avatar_url == "noavatar") { %>
+                  <img class="no-profile-img"/>
+                <%% } else {%>
+                  <img src=<%%- user.avatar_url %> alt="" class="profile-img" />
+                <%% } %>
              </a>
           </div>
-          <div class="col-md-10">            
+          <div class="col-md-10">
             <label><%%- user.lastname %></label>
-            <label><%%- user.firstname %></label>            
+            <label><%%- user.firstname %></label>
             <br>
             <label><%=l(:skills)%>:</label>
             <label><%%- user.skills %></label>
@@ -61,7 +63,7 @@
       </div>
     </div>
   </script>
-  <script type="text/template" id="profile-template">   
+  <script type="text/template" id="profile-template">
     <table>
       <tbody>
         <tr>
@@ -73,10 +75,13 @@
                 <td colspan="2" style="width: 200px;">
                 <img id="picture">
                 </img>
-                
-                <div class="profile-div">
-
-                  <img class="profile-img" src=<%%-user.avatar_url%> alt="">                   
+    
+                <div class="profile-div">                    
+                  <%% if (user.avatar_url == "noavatar") { %>
+                    <img class="no-profile-img"/>
+                  <%% } else {%>
+                    <img src=<%%- user.avatar_url %> alt="" class="profile-img" />
+                  <%% } %>
                 </div>
                 </td>
               </tr>
@@ -134,13 +139,13 @@
         <tr>
           <td colspan="4">
             <h3>Технические навыки</h3>
-            <hr>            
+            <hr>
             <div class="skillsPh">
               <label><%=l(:skills)%>:</label>
-              <div class="editable profile-skills" data-button-class=all>         
+              <div class="editable profile-skills" data-button-class=all>
                 <%% if (user.skills) { %><%%= user.skills %><%% } else {%>Skills<%% } %>
               </div>
-            </div>            
+            </div>
           </td>
         </tr>
         <tr>
@@ -156,6 +161,6 @@
           <td colspan="3"><h3>Курсы и тренинги</h3><hr></td>
         </tr>
       </tbody>
-    </table>    
+    </table>
   </script>
 </body>

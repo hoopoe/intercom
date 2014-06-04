@@ -30,4 +30,9 @@ button.btn-search{
   height: 100px;
 }
 
+.no-profile-img {
+  height: 100px;
+  content: url("../images/noavatar.jpg"); 
+}
+
 

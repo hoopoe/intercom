@@ -53,7 +53,7 @@ class Api::UserProfileController < ApplicationController
   def show    
     @users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname, user_profile_t.skills, user_profile_t.avatar_file_name avatar_url")
       .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
-      .where("LOWER(#{UserProfile.table_name}.user_id) = (?)", params[:id])
+      .where("LOWER(#{User.table_name}.id) = (?)", params[:id])
       
     if @users.exists?
       set_avatars(@users)
@@ -76,7 +76,7 @@ class Api::UserProfileController < ApplicationController
   end
 
   private
-  def set_avatars(users)
+  def set_avatars(users)    
     #set paperclip absolute url for each record
     ids = users.map { |x| x.id }
     profiles = UserProfile.where(:user_id => ids).all
@@ -84,7 +84,7 @@ class Api::UserProfileController < ApplicationController
       if profile = profiles.detect{|p| p.user_id == i.id}
         i.avatar_url = profile.avatar_url
       else
-        i.avatar_url = "nope" #don't have profile at all
+        i.avatar_url = "noavatar" #don't have profile at all
       end
     end
   end
