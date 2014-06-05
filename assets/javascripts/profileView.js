@@ -42,6 +42,7 @@ $(function() {
 
             e.originalEvent.dataTransfer.dropEffect = 'copy';
             this.pictureFile = e.originalEvent.dataTransfer.files[0];
+            console.log(this.pictureFile);
 
             // Read the image file from the local file system and display it in the img tag
             var reader = new FileReader();
@@ -52,15 +53,20 @@ $(function() {
             reader.readAsDataURL(this.pictureFile);
 
             function photoResult(data) {
-                $(".profile-div img").removeClass("no-profile-img");
+                $('.profile-div img').removeClass("no-profile-img");
                 $('.profile-div img').attr('src', data).show();
-                self.photoObj = data;
-                $(".profile-img-save").removeClass("profile-img-save-hide");
+                // self.photoObj = data;
+                $('.profile-img-save').removeClass("profile-img-save-hide");
             }
         },
 
         profileImgSave: function() {
-            console.log("save image");
+            var img = $('.profile-div img').attr('src');
+            console.log("save image tbd");
+            // console.log(src);
+            this.model.save({
+                avatar: img
+            });
         },
 
         save: function() {
