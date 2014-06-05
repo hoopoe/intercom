@@ -9,7 +9,8 @@ $(function() {
         events: {
             'mousedown .editable': 'editableClick',
             'dragover .profile-div': 'dragoverHandler',
-            'drop .profile-div': 'dropHandler'
+            'drop .profile-div': 'dropHandler',
+            'click .profile-img-save': 'profileImgSave'
         },
 
         initialize: function() {
@@ -54,8 +55,12 @@ $(function() {
                 $(".profile-div img").removeClass("no-profile-img");
                 $('.profile-div img').attr('src', data).show();
                 self.photoObj = data;
-                console.log("add save button");
+                $(".profile-img-save").removeClass("profile-img-save-hide");
             }
+        },
+
+        profileImgSave: function() {
+            console.log("save image");
         },
 
         save: function() {
