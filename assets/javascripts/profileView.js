@@ -51,6 +51,7 @@ $(function() {
             reader.readAsDataURL(this.pictureFile);
 
             function photoResult(data) {
+                $(".profile-div img").removeClass("no-profile-img");
                 $('.profile-div img').attr('src', data).show();
                 self.photoObj = data;
                 console.log("add save button");

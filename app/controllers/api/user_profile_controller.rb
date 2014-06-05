@@ -71,7 +71,7 @@ class Api::UserProfileController < ApplicationController
        user_profile_t.birthday,
        user_profile_t.project")
       .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
-      .where("LOWER(#{User.table_name}.id) = (?)", params[:id])
+      .where("#{User.table_name}.id = (?)", params[:id])
       
     if @users.exists?
       set_avatars(@users)
