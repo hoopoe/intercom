@@ -55,23 +55,23 @@ $(function() {
             function photoResult(data) {
                 $('.profile-div img').removeClass("no-profile-img");
                 $('.profile-div img').attr('src', data).show();
-                // self.photoObj = data;
                 $('.profile-img-save').removeClass("profile-img-save-hide");
             }
         },
 
         profileImgSave: function() {
             var img = $('.profile-div img').attr('src');
-            console.log("save image tbd");
-            // console.log(src);
             this.model.save({
                 avatar: img
+            }, {
+                success: function(model, response) {
+                    $('.profile-img-save').addClass("profile-img-save-hide");
+                }
             });
         },
 
         save: function() {
             var skills = this.$('.profile-skills').html();
-            // console.log(skills);
             this.model.save({
                 skills: skills
             });
