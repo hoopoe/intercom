@@ -92,6 +92,7 @@ $(function() {
         },
 
         mypage: function(param) {
+            // window.location = 'http://localhost:3000/login?back_url=http%3A%2F%2Flocalhost%3A3000%2Fintercom#mypage';
             if (param !== null) {
                 app.employer = new Employer({
                     id: param
@@ -110,10 +111,24 @@ $(function() {
                 })
             } else {
                 console.log("todo: redirect to login page");
-                var profileView = new ProfileView({
-                    model: app.employers.first()
+                app.employer = new Employer({
+                    id: "-1" //need to get user id
                 });
-                profileView.render();
+                app.employer.fetch({
+                    error: function(m, r) {
+                        console.log("some errors");
+                    },
+                    success: function(m, r) {
+                        //we need only id. don't need to search for user inside api
+                        app.router.navigate("mypage/" + r.user.id, {
+                            trigger: true
+                        });
+                    }
+                })
+                // var profileView = new ProfileView({
+                //     model: app.employers.first()
+                // });
+                // profileView.render();
             }
         },
 

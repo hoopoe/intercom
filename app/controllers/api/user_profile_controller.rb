@@ -4,13 +4,15 @@ class Api::UserProfileController < ApplicationController
   helper :sort
   include SortHelper
 
+
+
   # accept_api_auth :update
   # before_filter :authorize
   # before_filter :authorize#, :except => [:index, :show]
   # skip_before_filter :verify_authenticity_token
   accept_api_auth :index, :show, :update
 
-  def index
+  def index    
     sort_init 'lastname', 'asc'
     # sort_update %w(lastname firstname login mail admin created_on last_login_on)
     sort_update %w(lastname)
@@ -63,6 +65,28 @@ class Api::UserProfileController < ApplicationController
   end
 
   def show    
+    if (params[:id].to_i < 0)
+      Rails.logger.info "todo: redirect to login page if not logged"
+      if User.current.logged?
+        # @users = User.select("users.id, users.login, users.mail, users.firstname,
+        # users.lastname, user_profile_t.skills,
+        # user_profile_t.avatar_file_name avatar_url,
+        # user_profile_t.position,
+        # user_profile_t.summary,
+        # user_profile_t.birthday,
+        # user_profile_t.project")
+        # .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
+        # .where("#{User.table_name}.id = (?)", User.current.id)
+
+        # set_avatars(@users)
+        
+        # user.id = User.current.id
+        respond_with User.current
+      else
+        # Rails.logger.info User.current.id
+        respond_with nil, status: :unprocessable_entity
+      end
+    else
       @users = User.select("users.id, users.login, users.mail, users.firstname,
        users.lastname, user_profile_t.skills,
        user_profile_t.avatar_file_name avatar_url,
@@ -73,12 +97,13 @@ class Api::UserProfileController < ApplicationController
       .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
       .where("#{User.table_name}.id = (?)", params[:id])
       
-    if @users.exists?
-      set_avatars(@users)
-      respond_with @users.first
-    else
-      respond_with User.find_by_id(params[:id])
-    end
+      if @users.exists?
+        set_avatars(@users)
+        respond_with @users.first
+      else
+        respond_with User.find_by_id(params[:id])
+      end
+    end      
   end
 
   def update
