@@ -107,26 +107,29 @@ class Api::UserProfileController < ApplicationController
   end
 
   def update
-    @profile = UserProfile.find_or_create_by_user_id(params[:id])
+    profile = UserProfile.find_or_create_by_user_id(params[:id])
 
     if(params.has_key?(:skills))
-      @profile.skills = params[:skills]  
+      profile.skills = params[:skills]  
     end
 
-    StringIO.open(Base64.strict_decode64(params[:avatar].split(',').pop)) do |data|
-      data.class.class_eval { attr_accessor :original_filename, :content_type }
-      data.original_filename = "temp#{DateTime.now.to_i}.png"
-      data.content_type = "image/png" #TODO: get content type from file
-      @profile.avatar = data
+    if(params.has_key?(:avatar))
+      user = User.find_by_id(params[:id])
+      StringIO.open(Base64.strict_decode64(params[:avatar].split(',').pop)) do |data|
+        data.class.class_eval { attr_accessor :original_filename, :content_type }
+        data.original_filename = "#{user.lastname}_#{user.firstname}.png"
+        data.content_type = "image/png" #TODO: get content type from file
+        profile.avatar = data
+      end
     end
     
-    if @profile.save
+    if profile.save
       Rails.logger.info "saved"      
     else
       Rails.logger.info "failed to save"    
     end
 
-    respond_with @profile
+    respond_with profile
   end
 
   private

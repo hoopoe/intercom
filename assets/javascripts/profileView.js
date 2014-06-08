@@ -6,6 +6,8 @@ $(function() {
 
         template: _.template($("#profile-template").html()),
 
+        editedEl: {},
+
         events: {
             'mousedown .editable': 'editableClick',
             'dragover .profile-div': 'dragoverHandler',
@@ -24,12 +26,12 @@ $(function() {
             return this;
         },
 
-        // editableClick: function() {
-        //     // console.log("tt");
-        //     etch.editableInit;
-        // },
+        editableClick: function(e) {
+            this.editedEl = e.target;
+            etch.editableInit.call(this, e);
+        },
 
-        editableClick: etch.editableInit,
+        // editableClick: etch.editableInit,
 
         dragoverHandler: function(e) {
             e.preventDefault();
@@ -71,6 +73,7 @@ $(function() {
         },
 
         save: function() {
+            console.log(this.editedEl);
             var skills = this.$('.profile-skills').html();
             this.model.save({
                 skills: skills
