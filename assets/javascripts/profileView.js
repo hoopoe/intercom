@@ -73,11 +73,13 @@ $(function() {
         },
 
         save: function() {
-            console.log(this.editedEl);
-            var skills = this.$('.profile-skills').html();
-            this.model.save({
-                skills: skills
-            });
+            // console.log(this.editedEl.className);
+            if (this.editedEl.className === 'editable skills') {
+                this.model.skills = this.$('.editable.skills').html();
+                console.log("set")
+            }
+            // var skills = this.$('.editable.skills').html();
+            this.model.save();
         }
     });
 });
