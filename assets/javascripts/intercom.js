@@ -85,14 +85,12 @@ $(function() {
                     console.log(resp.responseText);
                 },
                 success: function() {
-                    //add event attached
                     app.currentView.initScroll();
                 }
             });
         },
 
         mypage: function(param) {
-            // window.location = 'http://localhost:3000/login?back_url=http%3A%2F%2Flocalhost%3A3000%2Fintercom#mypage';
             if (param !== null) {
                 app.employer = new Employer({
                     id: param
@@ -116,7 +114,7 @@ $(function() {
                 app.employer.fetch({
                     error: function(m, r) {
                         console.log(r.responseText);
-                        window.location = window.location.origin + '/login?back_url=http%3A%2F%2Flocalhost%3A3000%2Fintercom#mypage';
+                        window.location = window.location.origin + '/login?back_url=' + window.location.origin + '/intercom';
                     },
                     success: function(m, r) {
                         //we need only id. don't need to search for user inside api                        
@@ -183,6 +181,15 @@ $(function() {
 
     });
 
-    app.router = new appRouter();
-    Backbone.history.start();
+    console.log(document.URL)
+    if ((document.referrer.indexOf("back_url") > 0) && (document.URL.indexOf("#") < 0)) {
+        app.router = new appRouter();
+        Backbone.history.start();
+        app.router.navigate("mypage", {
+            trigger: true
+        });
+    } else {
+        app.router = new appRouter();
+        Backbone.history.start();
+    }
 });
