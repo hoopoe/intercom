@@ -110,19 +110,23 @@ $(function() {
                     }
                 })
             } else {
-                console.log("todo: redirect to login page");
                 app.employer = new Employer({
-                    id: "-1" //need to get user id
+                    id: "logged" //need to detect logged user
                 });
                 app.employer.fetch({
                     error: function(m, r) {
-                        console.log("some errors");
+                        console.log(r.responseText);
+                        window.location = window.location.origin + '/login?back_url=http%3A%2F%2Flocalhost%3A3000%2Fintercom#mypage';
                     },
                     success: function(m, r) {
-                        //we need only id. don't need to search for user inside api
-                        app.router.navigate("mypage/" + r.user.id, {
-                            trigger: true
+                        //we need only id. don't need to search for user inside api                        
+                        // app.router.navigate("mypage/" + r.user.id, {
+                        //     trigger: true
+                        // });
+                        var profileView = new ProfileView({
+                            model: app.employer
                         });
+                        $(".content").html(profileView.render().el)
                     }
                 })
                 // var profileView = new ProfileView({
