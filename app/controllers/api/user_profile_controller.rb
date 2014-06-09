@@ -109,9 +109,14 @@ class Api::UserProfileController < ApplicationController
   def update
     profile = UserProfile.find_or_create_by_user_id(params[:id])
 
-    if(params.has_key?(:skills))
-      profile.skills = params[:skills]  
+    if(params.has_key?(:user))
+      profile.skills = params[:user][:skills]
+      profile.summary = params[:user][:summary]
     end
+
+    # if(params.has_key?(:skills))
+    #   profile.skills = params[:skills]  
+    # end
 
     if(params.has_key?(:avatar))
       user = User.find_by_id(params[:id])

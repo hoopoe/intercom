@@ -73,12 +73,12 @@ $(function() {
         },
 
         save: function() {
-            // console.log(this.editedEl.className);
-            if (this.editedEl.className === 'editable skills') {
-                this.model.skills = this.$('.editable.skills').html();
-                console.log("set")
-            }
-            // var skills = this.$('.editable.skills').html();
+            var map = this.model.get('user');
+            if (this.editedEl.getAttribute("data-prop") === "skills")
+                map[this.editedEl.getAttribute("data-prop")] = $(this.editedEl).html();
+            else
+                map[this.editedEl.getAttribute("data-prop")] = $(this.editedEl).text();
+            this.model.set('user', map);
             this.model.save();
         }
     });
