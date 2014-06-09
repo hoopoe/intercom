@@ -89,19 +89,32 @@
                 <!--button type="button" class="btn btn-primary">CV</button-->
                 </tr>
                 <tr>
-                <td><b><%=l(:project_title)%>:</b> <%%-user.project%></td>
+                  <td><b><%=l(:project_title)%>:</b>
+                   <div class="editable profile-data" data-button-class="default" data-prop="project">
+                        <%% if (user.project) { %><%%- user.project %><%% } else {%>Put project here<%% } %>
+                    </div>                    
+                  </td>
                 </tr>
                 <tr>
-                <td><b><%=l(:position_title)%>:</b> <%%-user.position%></td>
+                <td><b><%=l(:position_title)%>:</b>
+                  <div class="editable profile-data" data-button-class="default" data-prop="position">
+                      <%% if (user.position) { %><%%- user.position %><%% } else {%>Put position here<%% } %>
+                  </div>                 
                 </tr>
                 <tr>
-                <td><b><%=l(:email_title)%>:</b> <%%-user.mail%></td>
+                <td><b><%=l(:email_title)%>:</b><%%-user.mail%></td>
                 </tr>
                 <tr>
                 <td><b><%=l(:room_number)%>:</b>TBD</td>
                 </tr>
                 <tr>
-                <td><b><%=l(:birthday_title)%>:</b> <%%-user.birthday%></td>
+                <td>
+                  <div>
+                    <b><%=l(:birthday_title)%>:</b>
+                    <div class="editable profile-data" data-button-class="default" data-prop="birthday">
+                      <%% if (user.birthday) { %><%%- user.birthday %><%% } else {%>Put birthday here<%% } %>
+                    </div>                 
+                  </div>
                 </tr>              
                 <tr>
                 <td><b><%=l(:interest_title)%>:</b> TBD </td>
@@ -119,12 +132,10 @@
           <div class="col-md-2">
             <h4><%=l(:summary_title)%></h4>            
           </div>        
-          <div class="col-md-10">
-            <div class="summaryPh">              
-              <div class="editable summary" data-button-class="all" data-prop="summary">
-                <%% if (user.summary) { %><%%= user.summary %><%% } else {%>Summary<%% } %>
-              </div>
-            </div>
+          <div class="col-md-10">                    
+              <div class="editable" data-button-class="default" data-prop="summary">
+                <%% if (user.summary) { %><%%- user.summary %><%% } else {%>Summary<%% } %>
+              </div>            
           </div>
         </div>
       </div>
@@ -136,12 +147,10 @@
           <div class="col-md-2">
             <h4><%=l(:skills_title)%></h4>            
           </div>        
-          <div class="col-md-10">
-            <div class="skillsPh">              
-              <div class="editable skills" data-button-class="all" data-prop="skills">
+          <div class="col-md-10">                        
+              <div class="editable" data-button-class="all" data-prop="skills">
                 <%% if (user.skills) { %><%%= user.skills %><%% } else {%>Skills<%% } %>
-              </div>
-            </div>
+              </div>            
           </div>
         </div>
       </div>

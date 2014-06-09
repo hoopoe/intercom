@@ -112,11 +112,10 @@ class Api::UserProfileController < ApplicationController
     if(params.has_key?(:user))
       profile.skills = params[:user][:skills]
       profile.summary = params[:user][:summary]
-    end
-
-    # if(params.has_key?(:skills))
-    #   profile.skills = params[:skills]  
-    # end
+      profile.birthday = params[:user][:birthday]
+      profile.position = params[:user][:position]
+      profile.project = params[:user][:project]      
+    end  
 
     if(params.has_key?(:avatar))
       user = User.find_by_id(params[:id])

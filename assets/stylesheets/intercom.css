@@ -48,4 +48,8 @@ button.btn-search{
   display: none;
 }
 
+.profile-data {
+  display: inline-block;
+}
+
 
