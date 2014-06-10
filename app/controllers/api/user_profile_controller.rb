@@ -21,18 +21,13 @@ class Api::UserProfileController < ApplicationController
     end
   
     users = User.select("users.id, users.login, users.mail, users.firstname,
-     users.lastname, user_profile_t.skills,
-     user_profile_t.avatar_file_name avatar_url,
-     user_profile_t.position,
-     user_profile_t.summary,
-     user_profile_t.birthday,
-     user_profile_t.project")
+     users.lastname, user_profile_t.avatar_file_name avatar_url, user_profile_t.data")
     .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
 
-    if (params[:skills])
-      skills = params[:skills]
-      q = skills.map{|s| "%#{s}%"}
-      users = users.where("LOWER(#{UserProfile.table_name}.skills) LIKE LOWER(?)", q)
+    if (params[:criteria])
+      criteria = params[:criteria]
+      q = criteria.map{|s| "%#{s}%"}
+      users = users.where("LOWER(#{UserProfile.table_name}.data) LIKE LOWER(?)", q)
     end  
     users = users
       .order(sort_clause)
@@ -51,12 +46,8 @@ class Api::UserProfileController < ApplicationController
       end
 
       users = User.select("users.id, users.login, users.mail, users.firstname,
-       users.lastname, user_profile_t.skills,
-       user_profile_t.avatar_file_name avatar_url,
-       user_profile_t.position,
-       user_profile_t.summary,
-       user_profile_t.birthday,
-       user_profile_t.project")
+       users.lastname, user_profile_t.data,
+       user_profile_t.avatar_file_name avatar_url")
       .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
 
       if (params[:id] == "logged")
@@ -78,11 +69,17 @@ class Api::UserProfileController < ApplicationController
     profile = UserProfile.find_or_create_by_user_id(params[:id])
 
     if(params.has_key?(:user))
-      profile.skills = params[:user][:skills]
-      profile.summary = params[:user][:summary]
-      profile.birthday = params[:user][:birthday]
-      profile.position = params[:user][:position]
-      profile.project = params[:user][:project]      
+      # profile.skills = params[:user][:skills]
+      # profile.summary = params[:user][:summary]
+      # profile.birthday = params[:user][:birthday]
+      # profile.position = params[:user][:position]
+      # profile.project = params[:user][:project] 
+      data = { 'skills' => params[:user][:skills],
+        'position' => params[:user][:position],
+        'summary' => params[:user][:summary],
+        'birthday' => params[:user][:birthday],
+        'project' => params[:user][:project]}
+      profile.data = data.to_json     
     end  
 
     if(params.has_key?(:avatar))

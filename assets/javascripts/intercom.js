@@ -144,7 +144,8 @@ $(function() {
             if (param !== null) {
                 app.employers.fetch({
                     data: {
-                        skills: param.split(' ')
+                        //skills: param.split(' ')
+                        criteria: param.split(' ')
                     },
                     error: function() {
                         console.log("some errors");
@@ -181,7 +182,6 @@ $(function() {
 
     });
 
-    console.log(document.URL)
     if ((document.referrer.indexOf("back_url") > 0) && (document.URL.indexOf("#") < 0)) {
         app.router = new appRouter();
         Backbone.history.start();

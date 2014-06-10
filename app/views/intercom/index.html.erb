@@ -19,8 +19,8 @@
       <ul class="nav navbar-nav">
         <li class="menu-item" value="mypage"><a href="#mypage"><%=l(:my_page)%></a></li>
         <li class="menu-item" value="employers"><a href="#employers"><%=l(:employers)%></a></li>
-        <li class="menu-item" value="news"><a href="#news"><%=l(:news)%></a></li>
-        <li class="menu-item" value="groups"><a href="#groups"><%=l(:groups)%></a></li>
+        <!--li class="menu-item" value="news"><a href="#news"><%=l(:news)%></a></li>
+        <li class="menu-item" value="groups"><a href="#groups"><%=l(:groups)%></a></li-->
       </ul>
       <div class="navbar-form navbar-right">
         <input type="text" class="form-control col-lg-8 search-control" placeholder="Search">
@@ -55,8 +55,10 @@
             <label><%%- user.lastname %></label>
             <label><%%- user.firstname %></label>
             <br>
-            <label><%=l(:skills_title)%>:</label>
-            <label><%%- user.skills %></label>
+            <label><%=l(:skills_title)%>:</label>            
+            <%% if ($.parseJSON(user.data) !== null) { %>              
+               <label><%%= $.parseJSON(user.data).skills%></label>
+            <%% } %>            
           </div>
         </div>
         <hr>
@@ -91,14 +93,22 @@
                 <tr>
                   <td><b><%=l(:project_title)%>:</b>
                    <div class="editable profile-data" data-button-class="default" data-prop="project">
-                        <%% if (user.project) { %><%%- user.project %><%% } else {%>Put project here<%% } %>
+                        <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).project)) { %>
+                          <%%- $.parseJSON(user.data).project %>
+                        <%% } else {%>
+                          Put project here
+                        <%% } %>
                     </div>                    
                   </td>
                 </tr>
                 <tr>
                 <td><b><%=l(:position_title)%>:</b>
                   <div class="editable profile-data" data-button-class="default" data-prop="position">
-                      <%% if (user.position) { %><%%- user.position %><%% } else {%>Put position here<%% } %>
+                      <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).position)) { %>
+                        <%%- $.parseJSON(user.data).position %>
+                      <%% } else {%>
+                        Put position here
+                      <%% } %>
                   </div>                 
                 </tr>
                 <tr>
@@ -112,7 +122,11 @@
                   <div>
                     <b><%=l(:birthday_title)%>:</b>
                     <div class="editable profile-data" data-button-class="default" data-prop="birthday">
-                      <%% if (user.birthday) { %><%%- user.birthday %><%% } else {%>Put birthday here<%% } %>
+                      <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).birthday)) { %>
+                        <%%- $.parseJSON(user.data).birthday %>
+                      <%% } else {%>
+                        Put birthday here
+                      <%% } %>
                     </div>                 
                   </div>
                 </tr>              
@@ -134,7 +148,11 @@
           </div>        
           <div class="col-md-10">                    
               <div class="editable" data-button-class="default" data-prop="summary">
-                <%% if (user.summary) { %><%%- user.summary %><%% } else {%>Summary<%% } %>
+                <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).summary)) { %>
+                  <%%- $.parseJSON(user.data).summary %>
+                <%% } else {%>
+                  Summary
+                <%% } %>
               </div>            
           </div>
         </div>
@@ -149,7 +167,11 @@
           </div>        
           <div class="col-md-10">                        
               <div class="editable" data-button-class="all" data-prop="skills">
-                <%% if (user.skills) { %><%%= user.skills %><%% } else {%>Skills<%% } %>
+                <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).skills)) { %>
+                  <%%= $.parseJSON(user.data).skills %>
+                <%% } else {%>
+                  Skills
+                <%% } %>
               </div>            
           </div>
         </div>

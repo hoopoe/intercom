@@ -17,7 +17,9 @@ namespace :redmine do
         user.lastname = Faker::Name.name
       else
         user.lastname = lastName
-      end
+      end      
+      user.password = 'password'
+      user.password_confirmation = 'password'
       user.identity_url = 'demo'
       user.save!
     end
@@ -50,12 +52,17 @@ namespace :redmine do
             puts "User not found: "+ imageName                  
           else
             person = UserProfile.new
-            person.skills     = items[4]
-            person.user_id    = user.id            
-            person.position   = items[2]
-            person.summary    = items[3]
-            person.birthday   = items[5]
-            person.project    = items[6]
+            person.user_id    = user.id
+            # person.skills     = items[4]            
+            # person.position   = items[2]
+            # person.summary    = items[3]
+            # person.birthday   = items[5]
+            # person.project    = items[6]
+
+            data = { 'skills' => items[4], 'position' => items[2],
+             'summary' => items[3], 'birthday' => items[5], 'project' => items[6]}
+            person.data = data.to_json
+
             imagePath = File.expand_path("../../../data/#{imageName}", __FILE__)
             if File.exists?(imagePath)
               file = File.open(imagePath)
