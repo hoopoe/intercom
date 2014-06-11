@@ -86,7 +86,8 @@ class Api::UserProfileController < ApplicationController
       user = User.find_by_id(params[:id])
       StringIO.open(Base64.strict_decode64(params[:avatar].split(',').pop)) do |data|
         data.class.class_eval { attr_accessor :original_filename, :content_type }
-        data.original_filename = "#{user.lastname}_#{user.firstname}.png"
+        # data.original_filename = "#{user.lastname}_#{user.firstname}.png"
+        data.original_filename = "#{user.login}.png"
         data.content_type = "image/png"
         profile.avatar = data
       end
