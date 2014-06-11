@@ -42,7 +42,7 @@ namespace :redmine do
               createUser(t[0], t[1])
             else 
               fio = t[3].split(' ')
-              puts fio[0], fio[1]
+              # puts fio[0], fio[1]
               createUser(fio[0], fio[1])
             end
           end
