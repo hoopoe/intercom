@@ -1,18 +1,64 @@
 var app = app || {};
+/* alias away the sync method */
+Backbone._sync = Backbone.sync;
+
+/* define a new sync method */
+Backbone.sync = function(method, model, success, error) {
+    /* only need a token for non-get requests */
+    if (method == 'create' || method == 'update' || method == 'delete') {
+        /* grab the token from the meta tag rails embeds */
+        var auth_options = {};
+        auth_options[$("meta[name='csrf-param']").attr('content')] =
+            $("meta[name='csrf-token']").attr('content');
+        /* set it as a model attribute without triggering events */
+        model.set(auth_options, {
+            silent: true
+        });
+    }
+    /* proxy the call to the old sync method */
+    return Backbone._sync(method, model, success, error);
+}
+
 
 $(function() {
 
     $('#header').hide();
-    $('#top-menu').hide();
-    //global
+    // $('#top-menu').hide();
     //app.employers - collection of userprofiles
     //app.router - backbone router
+    //app.employer
+
+    Backbone.View.prototype.close = function() {
+        this.remove();
+        this.unbind();
+        if (this.onClose) {
+            this.onClose();
+        }
+    };
+
+    app.showView = function(view) {
+        if (app.currentView) {
+            app.currentView.close();
+        }
+        app.currentView = view;
+        app.currentView.render();
+        $(".content").html(app.currentView.el);
+    };
 
     var EmployerCollection = Backbone.Collection.extend({
-        url: '/api/user_profile.json'
+        url: '/api/user_profile'
     });
 
-    app.employers = new EmployerCollection
+    var Employer = Backbone.Model.extend({
+        urlRoot: '/api/user_profile/'
+    });
+
+    app.employers = new EmployerCollection;
+
+    // app.employersView = new EmployersView({
+    //     collection: app.employers
+    // });
+    // app.employer = new Employer;
     app.topMenuView = new TopMenuView();
     app.topMenuView.render(); //bind search event 
 
@@ -24,58 +70,100 @@ $(function() {
             'mypage/(:param)': 'mypage',
             'groups': 'groups',
             'employers/(:param)': 'employers',
-            '*actions': 'search'
+            '*actions': 'default'
         },
 
-        search: function(param) {
+        default: function() {
+            app.employers.reset();
+            var empView = new EmployersView({
+                collection: app.employers
+            });
+            app.showView(empView);
+
             app.employers.fetch({
-                error: function() {
-                    console.log("some errors");
+                error: function(m, resp) {
+                    console.log(resp.responseText);
                 },
                 success: function() {
-                    var empView = new EmployersView({});
-                    empView.render();
+                    app.currentView.initScroll();
                 }
             });
         },
 
         mypage: function(param) {
             if (param !== null) {
-                console.log("mypage id: " + param);
-                var myPageView = new MyPageView({
-                model: app.employers.first()
-            });
-                myPageView.render();
+                app.employer = new Employer({
+                    id: param
+                });
+                app.employer.fetch({
+                    error: function() {
+                        console.log("some errors");
+                    },
+                    success: function() {
+                        var profileView = new ProfileView({
+                            model: app.employer
+                        });
+                        // myPageView.render();
+                        $(".content").html(profileView.render().el)
+                    }
+                })
             } else {
-                var myPageView = new MyPageView({
-                model: app.employers.first()
-            });
-                myPageView.render();
+                app.employer = new Employer({
+                    id: "logged" //need to detect logged user
+                });
+                app.employer.fetch({
+                    error: function(m, r) {
+                        console.log(r.responseText);
+                        window.location = window.location.origin + '/login?back_url=' + window.location.origin + '/intercom';
+                    },
+                    success: function(m, r) {
+                        //we need only id. don't need to search for user inside api                        
+                        // app.router.navigate("mypage/" + r.user.id, {
+                        //     trigger: true
+                        // });
+                        var profileView = new ProfileView({
+                            model: app.employer
+                        });
+                        $(".content").html(profileView.render().el)
+                    }
+                })
+                // var profileView = new ProfileView({
+                //     model: app.employers.first()
+                // });
+                // profileView.render();
             }
         },
 
         employers: function(param) {
+            app.employers.reset();
+            var empView = new EmployersView({
+                collection: app.employers
+            });
+            app.showView(empView);
+
             if (param !== null) {
                 app.employers.fetch({
                     data: {
-                        skills: param.split(' ')
+                        //skills: param.split(' ')
+                        criteria: param.split(' ')
                     },
                     error: function() {
                         console.log("some errors");
                     },
                     success: function() {
-                        var empView = new EmployersView({});
-                        empView.render();
+                        //add event attached
+                        app.currentView.initScroll();
                     }
                 });
             } else {
                 app.employers.fetch({
-                    error: function() {
-                        console.log("some errors");
+                    error: function(e) {
+                        // console.log("some errors");
+                        console.log(e);
                     },
                     success: function() {
-                        var empView = new EmployersView({});
-                        empView.render();
+                        //add event attached
+                        app.currentView.initScroll();
                     }
                 });
             }
@@ -94,6 +182,14 @@ $(function() {
 
     });
 
-    app.router = new appRouter();
-    Backbone.history.start();
+    if ((document.referrer.indexOf("back_url") > 0) && (document.URL.indexOf("#") < 0)) {
+        app.router = new appRouter();
+        Backbone.history.start();
+        app.router.navigate("mypage", {
+            trigger: true
+        });
+    } else {
+        app.router = new appRouter();
+        Backbone.history.start();
+    }
 });

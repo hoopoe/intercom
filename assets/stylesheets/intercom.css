@@ -10,7 +10,7 @@ div .content {
 }
 
 .navbar-brand:hover,.navbar-brand:focus, .navbar-brand {
-    text-decoration: underline;
+
 }
 
 div .employer_img img {
@@ -23,6 +23,33 @@ div .employer_img img {
 
 button.btn-search{    
   margin-left: 5px;
+}
+
+.profile-img {
+  width: 100px;
+  height: 100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+}
+
+.no-profile-img {  
+  content: url("../images/noavatar.jpg"); 
+}
+
+.profile-img-save {
+  margin-top: 10px;
+  text-align: center;  
+  display: block;
+}
+
+.profile-img-save-hide {
+  display: none;
+}
+
+.profile-data {
+  display: inline-block;
 }
 
 
