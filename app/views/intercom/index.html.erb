@@ -55,9 +55,9 @@
             <label><%%- user.lastname %></label>
             <label><%%- user.firstname %></label>
             <br>
-            <label><%=l(:skills_title)%>:</label>            
+            <label><%=l(:project_title)%>:</label>            
             <%% if ($.parseJSON(user.data) !== null) { %>              
-               <label><%%= $.parseJSON(user.data).skills%></label>
+               <label><%%= $.parseJSON(user.data).project%></label>
             <%% } %>            
           </div>
         </div>

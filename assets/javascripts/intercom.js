@@ -65,29 +65,27 @@ $(function() {
     var appRouter = Backbone.Router.extend({
         routes: {
             'employers': 'employers',
-            'news': 'news',
             'mypage': 'mypage',
             'mypage/(:param)': 'mypage',
-            'groups': 'groups',
             'employers/(:param)': 'employers',
-            '*actions': 'default'
+            '*actions': 'mypage'
         },
 
         default: function() {
-            app.employers.reset();
-            var empView = new EmployersView({
-                collection: app.employers
-            });
-            app.showView(empView);
+            // app.employers.reset();
+            // var empView = new EmployersView({
+            //     collection: app.employers
+            // });
+            // app.showView(empView);
 
-            app.employers.fetch({
-                error: function(m, resp) {
-                    console.log(resp.responseText);
-                },
-                success: function() {
-                    app.currentView.initScroll();
-                }
-            });
+            // app.employers.fetch({
+            //     error: function(m, resp) {
+            //         console.log(resp.responseText);
+            //     },
+            //     success: function() {
+            //         app.currentView.initScroll();
+            //     }
+            // });
         },
 
         mypage: function(param) {
@@ -182,14 +180,6 @@ $(function() {
 
     });
 
-    if ((document.referrer.indexOf("back_url") > 0) && (document.URL.indexOf("#") < 0)) {
-        app.router = new appRouter();
-        Backbone.history.start();
-        app.router.navigate("mypage", {
-            trigger: true
-        });
-    } else {
-        app.router = new appRouter();
-        Backbone.history.start();
-    }
+    app.router = new appRouter();
+    Backbone.history.start();
 });
