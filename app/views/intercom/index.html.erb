@@ -58,7 +58,17 @@
             <label><%=l(:project_title)%>:</label>            
             <%% if ($.parseJSON(user.data) !== null) { %>              
                <label><%%= $.parseJSON(user.data).project%></label>
-            <%% } %>            
+            <%% } %>
+            <br>
+            <label><%=l(:project_extra_title)%>:</label>            
+            <%% if ($.parseJSON(user.data) !== null) { %>              
+               <label><%%= $.parseJSON(user.data).project_extra%></label>
+            <%% } %>
+            <br>
+            <label><%=l(:room_number)%>:</label>            
+            <%% if ($.parseJSON(user.data) !== null) { %>              
+               <label><%%= $.parseJSON(user.data).room_number%></label>
+            <%% } %>          
           </div>
         </div>
         <hr>

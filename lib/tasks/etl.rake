@@ -71,7 +71,8 @@ namespace :redmine do
             person = UserProfile.new
             person.user_id    = user.id      
             data = { 'skills' => t[9], 'position' => t[4],
-             'summary' => t[8], 'birthday' => 'TBD', 'project' => t[7]}
+            'summary' => t[8], 'birthday' => 'TBD', 'project' => t[7],
+            'project_extra' => t[11], 'room_number' => t[10]}
             person.data = data.to_json
 
             imagePath = File.expand_path("../../../data/#{imageName}", __FILE__)
