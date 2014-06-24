@@ -7,5 +7,6 @@ Redmine::Plugin.register :intercom do
   version '1.0.0'
   menu :top_menu, :intercom, { :controller => 'intercom', :action => 'index' },
    :caption => :intercom_caption
-  #Вывод плагина в главном меню redmine
+
+  permission :update_profile, :api_user_profile => :update
 end

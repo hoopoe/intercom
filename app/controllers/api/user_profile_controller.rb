@@ -3,13 +3,12 @@ class Api::UserProfileController < ApplicationController
 
   helper :sort
   include SortHelper
-  # accept_api_auth :update
-  # before_filter :authorize
-  # before_filter :authorize#, :except => [:index, :show]
-  # skip_before_filter :verify_authenticity_token
-  accept_api_auth :index, :show, :update
 
-  def index    
+  accept_api_auth :index, :show, :update
+  before_filter :authorize_self_and_manager, :only => :update
+
+
+  def index
     sort_init 'lastname', 'asc'
     # sort_update %w(lastname firstname login mail admin created_on last_login_on)
     sort_update %w(lastname)
@@ -66,19 +65,33 @@ class Api::UserProfileController < ApplicationController
   end
 
   def update
-    profile = UserProfile.find_or_create_by_user_id(params[:id])
+    if (params[:id] == "logged" && !User.current.logged?)        
+      respond_with "User is not logged", status: :unprocessable_entity      
+    end
+
+    if (params[:id] == "logged")
+      profile = UserProfile.find_or_create_by_user_id(User.current.id)
+    else  
+      profile = UserProfile.find_or_create_by_user_id(params[:id])
+    end
 
     if(params.has_key?(:user))
-      # profile.skills = params[:user][:skills]
-      # profile.summary = params[:user][:summary]
-      # profile.birthday = params[:user][:birthday]
-      # profile.position = params[:user][:position]
-      # profile.project = params[:user][:project] 
-      data = { 'skills' => params[:user][:skills],
-        'position' => params[:user][:position],
-        'summary' => params[:user][:summary],
-        'birthday' => params[:user][:birthday],
-        'project' => params[:user][:project]}
+      data = JSON.parse(profile.data)
+      if params[:user][:skills].present?
+        data['skills'] = params[:user][:skills]
+      end
+      if params[:user][:position].present?
+        data['position'] = params[:user][:position]
+      end
+      if params[:user][:summary].present?
+        data['summary'] = params[:user][:summary]
+      end
+      if params[:user][:birthday].present?
+        data['birthday'] = params[:user][:birthday]
+      end
+      if params[:user][:project].present?
+        data['project'] = params[:user][:project]
+      end
       profile.data = data.to_json     
     end  
 
@@ -103,6 +116,30 @@ class Api::UserProfileController < ApplicationController
   end
 
   private
+
+  def authorize_self_and_manager
+    if params.has_key?(:id)
+      if params[:id] == "logged"
+        allowed = true
+      else
+        Rails.logger.info "here"
+        if User.current.id == params[:id].to_i
+          allowed = true
+        else
+          allowed = User.current.allowed_to?(:update_profile, nil, :global => true)
+        end
+      end
+    else
+      allowed = User.current.allowed_to?(:update_profile, nil, :global => true)
+    end
+
+    if allowed
+      true
+    else
+        deny_access
+    end
+  end
+
   def set_avatars(users)    
     #set paperclip absolute url for each record
     ids = users.map { |x| x.id }
