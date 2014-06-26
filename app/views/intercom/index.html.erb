@@ -13,7 +13,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Tercom IN</a>
+      <a class="navbar-brand" href="#"><img class="logo-img"/></a>
     </div>
     <div class="collapse navbar-collapse top-menu">
       <ul class="nav navbar-nav">
@@ -23,10 +23,12 @@
         <li class="menu-item" value="groups"><a href="#groups"><%=l(:groups)%></a></li-->
       </ul>
       <div class="navbar-form navbar-right">
-        <input type="text" class="form-control col-lg-8 search-control" placeholder="Search">
+        <input type="text" class="form-control col-lg-8 search-control" placeholder="поиск">
+<!--
         <button type="button" class="btn btn-default btn-search">
           <span class="glyphicon glyphicon-search"></span>
         </button>
+-->
       </div>
     </div><!--/.nav-collapse -->
   </div>
@@ -65,178 +67,203 @@
       </div>
     </div>
   </script>
-  <script type="text/template" id="profile-template">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="row">
-        <table>
-        <tr>
-        <td>
-          <div class="col-md-2">              
-              <div class="profile-div">
-                 <%% if (user.avatar_url === "noavatar") { %>
-                   <img class="profile-img no-profile-img"/>
-                 <%% } else {%>
-                   <img src=<%%- user.avatar_url %> alt="" class="profile-img" />
-                 <%% } %>
-                 <div class="profile-img-save profile-img-save-hide">
-                    <button type="button" class="btn btn-primary">Save</button>
-                 </div>
-              </div>
+	<script type="text/template" id="profile-template">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="row">
+					<table class="profile-table">
+						<tr>
+<!-- FOTO_AVATAR -->
+							<td width=240 height=320>
+								<div class="col-md-2">              
+									<div class="profile-div">
+										<%% if (user.avatar_url === "noavatar") { %>
+											<img class="profile-img no-profile-img"/>
+										<%% } else {%>
+											<img src=<%%- user.avatar_url %> alt="" class="profile-img" />
+										<%% } %>
+										<div class="profile-img-save profile-img-save-hide">
+											<button type="button" class="btn btn-primary">Save</button>
+										</div>
+									</div>
+								</div>
+							</td>
+<!-- RIGHT SHORT SUMMARY -->
+							<td>
+							<div class="row">
+								<table width="550">
+									<tr><td>
+										<div class="profile-status">
+											<h3><%%-user.firstname%> <%%-user.lastname %></h3>
+<div>weklrhgklhgldfhk</div>
+										</div>
+									</td><td>
+										<button type="button" class="btn cv"/>
+									</td></tr>
+									<tr><td colspan="2">
+										<b><%=l(:project_title)%>:</b>
+										<div class="editable profile-data" data-button-class="default" data-prop="project">
+											<%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).project)) { %>
+												<%%- $.parseJSON(user.data).project %>
+											<%% } else {%>
+												Put project here
+											<%% } %>
+										</div>                    
+									</td></tr>
+									<tr><td colspan="2">
+										<b><%=l(:position_title)%>:</b>
+										<div class="editable profile-data" data-button-class="default" data-prop="position">
+											<%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).position)) { %>
+												<%%- $.parseJSON(user.data).position %>
+											<%% } else {%>
+												Put position here
+											<%% } %>
+										</div>                 
+									</td></tr>
+									<tr><td colspan="2"><b><%=l(:email_title)%>:</b><%%-user.mail%></td></tr>
+									<tr><td colspan="2"><b><%=l(:room_number)%>:</b>TBD</td></tr>
+									<tr><td colspan="2">
+										<div>
+											<b><%=l(:birthday_title)%>:</b>
+											<div class="editable profile-data" data-button-class="default" data-prop="birthday">
+												<%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).birthday)) { %>
+													<%%- $.parseJSON(user.data).birthday %>
+												<%% } else {%>
+													Put birthday here
+												<%% } %>
+											</div>                 
+										</div>
+									</td></tr>              
+									<tr><td colspan="2"><b><%=l(:interest_title)%>:</b>TBD</td></tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</td>
+		</tr>
+	</table>
 
-          </div>
-          </td>
-          <td>
-          <div class="col-md-10">
-            <table>
-              <tbody>
-                <tr>
-                <td ><h2><%%-user.firstname%> <%%-user.lastname %></h2></td>
-                
-                <!--button type="button" class="btn btn-primary">CV</button-->
-                </tr>
-                <tr>
-                  <td><b><%=l(:project_title)%>:</b>
-                   <div class="editable profile-data" data-button-class="default" data-prop="project">
-                        <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).project)) { %>
-                          <%%- $.parseJSON(user.data).project %>
-                        <%% } else {%>
-                          Put project here
-                        <%% } %>
-                    </div>                    
-                  </td>
-                </tr>
-                <tr>
-                <td><b><%=l(:position_title)%>:</b>
-                  <div class="editable profile-data" data-button-class="default" data-prop="position">
-                      <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).position)) { %>
-                        <%%- $.parseJSON(user.data).position %>
-                      <%% } else {%>
-                        Put position here
-                      <%% } %>
-                  </div>                 
-                </tr>
-                <tr>
-                <td><b><%=l(:email_title)%>:</b><%%-user.mail%></td>
-                </tr>
-                <tr>
-                <td><b><%=l(:room_number)%>:</b>TBD</td>
-                </tr>
-                <tr>
-                <td>
-                  <div>
-                    <b><%=l(:birthday_title)%>:</b>
-                    <div class="editable profile-data" data-button-class="default" data-prop="birthday">
-                      <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).birthday)) { %>
-                        <%%- $.parseJSON(user.data).birthday %>
-                      <%% } else {%>
-                        Put birthday here
-                      <%% } %>
-                    </div>                 
-                  </div>
-                </tr>              
-                <tr>
-                <td><b><%=l(:interest_title)%>:</b> TBD </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-    </td>
-    </tr>
-    </table>
-    <hr>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="row">
-          <div class="col-md-2">
-            <h4><%=l(:summary_title)%></h4>            
-          </div>        
-          <div class="col-md-10">                    
-              <div class="editable" data-button-class="default" data-prop="summary">
-                <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).summary)) { %>
-                  <%%- $.parseJSON(user.data).summary %>
-                <%% } else {%>
-                  Summary
-                <%% } %>
-              </div>            
-          </div>
-        </div>
-      </div>
-    </div>
-    <hr>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="row">
-          <div class="col-md-2">
-            <h4><%=l(:skills_title)%></h4>            
-          </div>        
-          <div class="col-md-10">                        
+<!-- SUMMARY О себе -->
+	<div class="row">
+		<div class="col-md-10">
+			<h4>
+				<img class="point-img"/>
+				<%=l(:summary_title)%>
+			</h4>            
+		</div>        
+		<hr>
+		<div class="col-md-10">                    
+			<div class="editable" data-button-class="default" data-prop="summary">
+				<%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).summary)) { %>
+					<%%- $.parseJSON(user.data).summary %>
+				<%% } else {%>
+					Summary
+				<%% } %>
+			</div>            
+		</div>
+	</div>
+
+<!-- SKILLS Технические навыки -->
+	<div class="row">
+		<div class="col-md-10">
+			<h4>
+				<img class="point-img"/>
+				<%=l(:skills_title)%>
+			</h4>            
+		</div>        
+		<hr>
+		<div class="col-md-10">                    
               <div class="editable" data-button-class="all" data-prop="skills">
                 <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).skills)) { %>
                   <%%= $.parseJSON(user.data).skills %>
                 <%% } else {%>
                   Skills
                 <%% } %>
-              </div>            
-          </div>
-        </div>
-      </div>
-    </div>
-    <hr>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="row">
-          <div class="col-md-2">
-            <h4><%=l(:communication_skills_title)%></h4>
-          </div>        
-          <div class="col-md-10">
-            TBD
-          </div>
-        </div>
-      </div>
-    </div>
-    <hr>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="row">
-          <div class="col-md-2">
-            <h4><%=l(:languages_title)%></h4>
-          </div>        
-          <div class="col-md-10">
-            TBD
-          </div>
-        </div>
-      </div>
-    </div>
-    <hr>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="row">
-          <div class="col-md-2">
-            <h4><%=l(:education_title)%></h4>
-          </div>        
-          <div class="col-md-10">
-            TBD
-          </div>
-        </div>
-      </div>
-    </div>
-    <hr>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="row">
-          <div class="col-md-2">
-            <h4><%=l(:coureses_title)%></h4>
-          </div>        
-          <div class="col-md-10">
-            TBD
-          </div>
-        </div>
-      </div>
-    </div>
+              </div>             
+		</div>
+	</div>
+
+<!-- communication_skills -->
+	<div class="row">
+		<div class="col-md-10">
+			<h4>
+				<img class="point-img"/>
+				<%=l(:communication_skills_title)%>
+			</h4>            
+		</div>        
+		<hr>
+		<div class="col-md-10">                    
+              <div class="editable" data-button-class="all" data-prop="skills">
+                <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).skills)) { %>
+                  <%%= $.parseJSON(user.data).skills %>
+                <%% } else {%>
+                  Skills
+                <%% } %>
+              </div>             
+		</div>
+	</div>
+
+<!-- languages -->
+	<div class="row">
+		<div class="col-md-10">
+			<h4>
+				<img class="point-img"/>
+				<%=l(:languages_title)%>
+			</h4>            
+		</div>        
+		<hr>
+		<div class="col-md-10">                    
+              <div class="editable" data-button-class="all" data-prop="skills">
+                <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).skills)) { %>
+                  <%%= $.parseJSON(user.data).skills %>
+                <%% } else {%>
+                  Skills
+                <%% } %>
+              </div>             
+		</div>
+	</div>
+
+<!-- education -->
+	<div class="row">
+		<div class="col-md-10">
+			<h4>
+				<img class="point-img"/>
+				<%=l(:education_title)%>
+			</h4>            
+		</div>        
+		<hr>
+		<div class="col-md-10">                    
+              <div class="editable" data-button-class="all" data-prop="skills">
+                <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).skills)) { %>
+                  <%%= $.parseJSON(user.data).skills %>
+                <%% } else {%>
+                  Skills
+                <%% } %>
+              </div>             
+		</div>
+	</div>
+
+<!-- coureses -->
+	<div class="row">
+		<div class="col-md-10">
+			<h4>
+				<img class="point-img"/>
+				<%=l(:coureses_title)%>
+			</h4>            
+		</div>        
+		<hr>
+		<div class="col-md-10">                    
+              <div class="editable" data-button-class="all" data-prop="skills">
+                <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).skills)) { %>
+                  <%%= $.parseJSON(user.data).skills %>
+                <%% } else {%>
+                  Skills
+                <%% } %>
+              </div>             
+		</div>
+	</div>
+
   </script>
 </body>
 <h4>
