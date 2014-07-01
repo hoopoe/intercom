@@ -245,7 +245,6 @@ td,th {
 
     .navbar {
         display: none;
-	border-radius: 0px;
     }
 
     .table td,.table th {
@@ -374,7 +373,6 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
     font-weight: 500;
     line-height: 1.1;
     color: #317eac;
-    border-bottom: 0px dotted #bbb;
 }
 
 h1 small,h2 small,h3 small,h4 small,h5 small,h6 small,.h1 small,.h2 small,.h3 small,.h4 small,.h5 small,.h6 small,h1 .small,h2 .small,h3 .small,h4 .small,h5 .small,h6 .small,.h1 .small,.h2 .small,.h3 .small,.h4 .small,.h5 .small,.h6 .small {
