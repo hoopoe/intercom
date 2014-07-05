@@ -49,7 +49,7 @@ $(function() {
             // Read the image file from the local file system and display it in the img tag
             var reader = new FileReader();
             reader.onloadend = function() {
-                app.Resample(this.result, 128, 128, photoResult);
+                app.Resample(this.result, 240, 320, photoResult);
             };
 
             reader.readAsDataURL(this.pictureFile);
