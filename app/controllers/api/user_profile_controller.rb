@@ -13,16 +13,18 @@ class Api::UserProfileController < ApplicationController
     # sort_update %w(lastname firstname login mail admin created_on last_login_on)
     sort_update %w(lastname)
     
-    offset, limit = api_offset_and_limit
+    @offset, @limit = api_offset_and_limit
     # @limit = 4
     if (params[:page])
-      offset = limit * (params[:page].to_i - 1)
+      @offset = @limit * (params[:page].to_i - 1)
     end
   
     users = User.select("users.id, users.login, users.mail, users.firstname,
      users.lastname, user_profile_t.avatar_file_name avatar_url, user_profile_t.data")
     .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
-
+    
+    # Rails.logger.info params[:criteria]
+    
     if (params[:criteria])
       criteria = params[:criteria]
       q = criteria.map{|s| "%#{s}%"}
@@ -30,8 +32,8 @@ class Api::UserProfileController < ApplicationController
     end  
     users = users
       .order(sort_clause)
-      .limit(limit)
-      .offset(offset)
+      .limit(@limit)
+      .offset(@offset)
       .all    
 
     set_avatars(users)

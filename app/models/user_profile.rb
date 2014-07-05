@@ -1,6 +1,8 @@
 class UserProfile < ActiveRecord::Base
   self.table_name = "user_profile_t"
   belongs_to :user  
+
+  attr_accessible :data, :user_id
   
   attr_accessible :avatar
   has_attached_file :avatar, :default_url => "noavatar"
