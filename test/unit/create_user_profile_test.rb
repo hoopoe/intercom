@@ -20,13 +20,26 @@ class DropSkillsCreateUserProfileTest < ActiveSupport::TestCase
     u3P = UserProfile.generate!(:user_id => u3.id,
                                 :data => "{'skills':'c++'}") 
 
-    q = "%java%"
+    criteria = []
+    q = criteria.map{|s| "%#{s}%"}
+
+    if q.length > 0 
+        for index, i in q do
+            if index = 0
+                where_clause = "LOWER(#{UserProfile.table_name}.data) LIKE LOWER('#{q[index]}')"
+            else
+                where_clause = where_clause + 
+                " or LOWER(#{UserProfile.table_name}.data) LIKE LOWER('#{q[index]}')"
+            end
+        end
+    end
+    
     users = User
         .select("users.firstname")
         .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
-        .where("LOWER(#{UserProfile.table_name}.data) LIKE LOWER(?)", q)
+        .where(where_clause)
         .all
 
-    assert_equal 2, users.count
+    assert_equal 4, users.count
   end
 end

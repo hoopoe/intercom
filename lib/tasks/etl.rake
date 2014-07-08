@@ -27,19 +27,26 @@ namespace :redmine do
 
     task :load_users => :environment do
       User.destroy_all(:identity_url => "http://demo/")
-      filePath = File.expand_path('../../../data/person.xls', __FILE__)
+      filePath = File.expand_path('../../../data/person2.xls', __FILE__)
       if File.exists?(filePath)                
         file = Spreadsheet.open(filePath)
         sheet = file.worksheet(0)
-        sheet.rows.each_with_index do |t,i|            
+        sheet.rows.each_with_index do |t,i|
+          if (i > 300) 
+            break #limit number of employers 
+          end
           if (i != 0) # skip header
             if (t[0]) # has first name
               createUser(t[0], t[1])
             else 
-              fio = t[3].split(' ')
-              firstname = fio[1]
-              lastname = fio[0]
-              createUser(firstname, lastname)
+              unless t[3].nil?
+                fio = t[3].split(' ')
+                firstname = fio[1]
+                lastname = fio[0]
+                createUser(firstname, lastname)
+              else
+                puts "Can't process: ", i
+              end
             end
           end
         end
@@ -48,19 +55,26 @@ namespace :redmine do
 
     task :load_profiles => :environment do
       UserProfile.destroy_all(conditions = nil)            
-      filePath = File.expand_path('../../../data/person.xls', __FILE__)
+      filePath = File.expand_path('../../../data/person2.xls', __FILE__)
       if File.exists?(filePath)         
         file = Spreadsheet.open(filePath)
         sheet = file.worksheet(0)
         sheet.rows.each_with_index do |t,i|  
+          if (i > 300) 
+            break #limit number of employers 
+          end
           if (i != 0) # skip header
             if (t[0]) # has first last
               firstN = t[0]
               lastN = t[1]
-            else 
-              fio = t[3].split(' ')
-              firstN = fio[1]
-              lastN = fio[0]
+            else
+              unless t[3].nil? 
+                fio = t[3].split(' ')
+                firstN = fio[1]
+                lastN = fio[0]
+              else
+                puts "Can't process: ", i
+              end
             end
           end          
           imageName = "#{lastN} #{firstN}.png"

@@ -23,13 +23,22 @@ class Api::UserProfileController < ApplicationController
      users.lastname, user_profile_t.avatar_file_name avatar_url, user_profile_t.data")
     .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
     
-    # Rails.logger.info params[:criteria]
-    
     if (params[:criteria])
       criteria = params[:criteria]
       q = criteria.map{|s| "%#{s}%"}
-      users = users.where("LOWER(#{UserProfile.table_name}.data) LIKE LOWER(?)", q)
+      if q.length > 0 
+        for index, i in q do
+            if index = 0
+                where_clause = "LOWER(#{UserProfile.table_name}.data) LIKE LOWER('#{q[index]}')"
+            else
+                where_clause = where_clause + 
+                " or LOWER(#{UserProfile.table_name}.data) LIKE LOWER('#{q[index]}')"
+            end
+        end
+      end
+      users = users.where(where_clause)
     end  
+
     users = users
       .order(sort_clause)
       .limit(@limit)
