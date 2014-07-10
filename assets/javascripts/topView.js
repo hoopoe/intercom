@@ -50,5 +50,9 @@ TopMenuView = Backbone.View.extend({
                 trigger: true
             });
         }
+    },
+
+    setSearch: function(criteria) {
+        $('.search-control').val(criteria);
     }
 });

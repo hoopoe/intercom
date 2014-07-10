@@ -55,10 +55,6 @@ $(function() {
 
     app.employers = new EmployerCollection;
 
-    // app.employersView = new EmployersView({
-    //     collection: app.employers
-    // });
-    // app.employer = new Employer;
     app.topMenuView = new TopMenuView();
     app.topMenuView.render(); //bind search event 
 
@@ -71,38 +67,20 @@ $(function() {
             '*actions': 'mypage'
         },
 
-        default: function() {
-            // app.employers.reset();
-            // var empView = new EmployersView({
-            //     collection: app.employers
-            // });
-            // app.showView(empView);
-
-            // app.employers.fetch({
-            //     error: function(m, resp) {
-            //         console.log(resp.responseText);
-            //     },
-            //     success: function() {
-            //         app.currentView.initScroll();
-            //     }
-            // });
-        },
-
         mypage: function(param) {
             if (param !== null) {
                 app.employer = new Employer({
                     id: param
                 });
                 app.employer.fetch({
-                    error: function() {
-                        console.log("some errors");
+                    error: function(m, r) {
+                        console.log(r.responseText);
                     },
                     success: function() {
                         var profileView = new ProfileView({
                             model: app.employer
                         });
-                        // myPageView.render();
-                        $(".content").html(profileView.render().el)
+                        app.showView(profileView);
                     }
                 })
             } else {
@@ -114,7 +92,7 @@ $(function() {
                         console.log(r.responseText);
                         window.location = window.location.origin + '/login?back_url=' + window.location.origin + '/intercom';
                     },
-                    success: function(m, r) {
+                    success: function() {
                         //we need only id. don't need to search for user inside api                        
                         // app.router.navigate("mypage/" + r.user.id, {
                         //     trigger: true
@@ -122,62 +100,35 @@ $(function() {
                         var profileView = new ProfileView({
                             model: app.employer
                         });
-                        $(".content").html(profileView.render().el)
+                        app.showView(profileView);
                     }
                 })
-                // var profileView = new ProfileView({
-                //     model: app.employers.first()
-                // });
-                // profileView.render();
             }
         },
 
         employers: function(param) {
             app.employers.reset();
+            app.topMenuView.setSearch(param);
             var empView = new EmployersView({
                 collection: app.employers
             });
             app.showView(empView);
 
+            var dataReq = {};
             if (param !== null) {
-                app.employers.fetch({
-                    data: {
-                        //skills: param.split(' ')
-                        criteria: param.split(' ')
-                    },
-                    error: function() {
-                        console.log("some errors");
-                    },
-                    success: function() {
-                        //add event attached
-                        app.currentView.initScroll();
-                    }
-                });
-            } else {
-                app.employers.fetch({
-                    error: function(e) {
-                        // console.log("some errors");
-                        console.log(e);
-                    },
-                    success: function() {
-                        //add event attached
-                        app.currentView.initScroll();
-                    }
-                });
+                dataReq.criteria = param.split(' ');
             }
-        },
 
-        news: function() {
-            var newsView = new NewsView();
-            newsView.render();
-        },
-
-
-        groups: function() {
-            var groupsView = new GroupsView();
-            groupsView.render();
+            app.employers.fetch({
+                data: dataReq,
+                error: function(m, r) {
+                    console.log(r.responseText);
+                },
+                success: function() {
+                    app.currentView.initScroll(dataReq);
+                }
+            });
         }
-
     });
 
     app.router = new appRouter();

@@ -31,11 +31,12 @@ $(function() {
             this.$(".employer-list").append(view.render().el);
         },
 
-        initScroll: function() {
+        initScroll: function(extraParams) {
             this.infiniScroll = new Backbone.InfiniScroll(this.collection, {
                 success: this.appendRender,
                 includePage: true,
-                pageSizeParam: "limit"
+                pageSizeParam: "limit",
+                extraParams: extraParams
             });
         },
 
