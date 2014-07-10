@@ -27,7 +27,7 @@ namespace :redmine do
 
     task :load_users => :environment do
       User.destroy_all(:identity_url => "http://demo/")
-      filePath = File.expand_path('../../../data/person2.xls', __FILE__)
+      filePath = File.expand_path('../../../data/person.xls', __FILE__)
       if File.exists?(filePath)                
         file = Spreadsheet.open(filePath)
         sheet = file.worksheet(0)
@@ -55,7 +55,7 @@ namespace :redmine do
 
     task :load_profiles => :environment do
       UserProfile.destroy_all(conditions = nil)            
-      filePath = File.expand_path('../../../data/person2.xls', __FILE__)
+      filePath = File.expand_path('../../../data/person.xls', __FILE__)
       if File.exists?(filePath)         
         file = Spreadsheet.open(filePath)
         sheet = file.worksheet(0)

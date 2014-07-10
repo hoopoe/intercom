@@ -1,7 +1,7 @@
 ru:
   intercom_caption: "Терком"
   my_page: "Моя страница"
-  employers: "Работники"
+  employers: "Сотрудники"
   news: "Новости"
   groups: "Группы"
   skills_title: "Технические навыки"
@@ -17,3 +17,4 @@ ru:
   interest_title: "Мои интересы"
   summary_title: "О себе"
   project_extra_title: "Доп. проект"
+  events: "События"

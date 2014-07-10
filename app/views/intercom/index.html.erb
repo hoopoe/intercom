@@ -19,7 +19,7 @@
       <ul class="nav navbar-nav">
         <li class="menu-item" value="mypage"><a href="#mypage"><%=l(:my_page)%></a></li>
         <li class="menu-item" value="employers"><a href="#employers"><%=l(:employers)%></a></li>
-        <li class="menu-item" value="events"><a href="#events"><%=l(:events)%></a></li>
+        <!-- <li class="menu-item" value="events"><a href="#events"><%=l(:events)%></a></li> -->
         <!--li class="menu-item" value="news"><a href="#news"><%=l(:news)%></a></li>
         <li class="menu-item" value="groups"><a href="#groups"><%=l(:groups)%></a></li-->
       </ul>
@@ -204,11 +204,11 @@
 		</div>        
 		<hr>
 		<div class="col-md-10">                    
-              <div class="editable" data-button-class="all" data-prop="skills">
-                <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).skills)) { %>
-                  <%%= $.parseJSON(user.data).skills %>
+              <div class="editable" data-button-class="all" data-prop="communication">
+                <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).communication)) { %>
+                  <%%= $.parseJSON(user.data).communication %>
                 <%% } else {%>
-                  Skills
+                  TBD
                 <%% } %>
               </div>             
 		</div>
@@ -224,11 +224,11 @@
 		</div>        
 		<hr>
 		<div class="col-md-10">                    
-              <div class="editable" data-button-class="all" data-prop="skills">
-                <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).skills)) { %>
-                  <%%= $.parseJSON(user.data).skills %>
+              <div class="editable" data-button-class="all" data-prop="languages">
+                <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).languages)) { %>
+                  <%%= $.parseJSON(user.data).languages %>
                 <%% } else {%>
-                  Skills
+                  TBD
                 <%% } %>
               </div>             
 		</div>
@@ -244,11 +244,11 @@
 		</div>        
 		<hr>
 		<div class="col-md-10">                    
-              <div class="editable" data-button-class="all" data-prop="skills">
-                <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).skills)) { %>
-                  <%%= $.parseJSON(user.data).skills %>
+              <div class="editable" data-button-class="all" data-prop="education">
+                <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).education)) { %>
+                  <%%= $.parseJSON(user.data).education %>
                 <%% } else {%>
-                  Skills
+                 TBD
                 <%% } %>
               </div>             
 		</div>
@@ -264,11 +264,11 @@
 		</div>        
 		<hr>
 		<div class="col-md-10">                    
-              <div class="editable" data-button-class="all" data-prop="skills">
-                <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).skills)) { %>
-                  <%%= $.parseJSON(user.data).skills %>
+              <div class="editable" data-button-class="all" data-prop="coureses">
+                <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).coureses)) { %>
+                  <%%= $.parseJSON(user.data).coureses %>
                 <%% } else {%>
-                  Skills
+                  TBD
                 <%% } %>
               </div>             
 		</div>
