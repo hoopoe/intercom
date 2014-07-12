@@ -1,4 +1,4 @@
-class Api::UserProfileController < ApplicationController
+class Intercom::Api::V1::UserProfileController < ApplicationController
   respond_to :json
 
   helper :sort

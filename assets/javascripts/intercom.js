@@ -46,11 +46,11 @@ $(function() {
     };
 
     var EmployerCollection = Backbone.Collection.extend({
-        url: '/api/user_profile'
+        url: '/intercom/api/v1/user_profile'
     });
 
     var Employer = Backbone.Model.extend({
-        urlRoot: '/api/user_profile/'
+        urlRoot: '/intercom/api/v1/user_profile/'
     });
 
     app.employers = new EmployerCollection;

@@ -1,5 +1,7 @@
 class IntercomController < ApplicationController  
-  # before_filter :authorize  
+	
+  respond_to :html
+
   def index   
   end
 end
