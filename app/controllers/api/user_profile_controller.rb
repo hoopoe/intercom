@@ -28,7 +28,7 @@ class Api::UserProfileController < ApplicationController
       q = criteria.map{|s| "%#{s}%"}
       if q.length > 0 
         for index, i in q do
-            if index = 0
+            if index == 0
                 where_clause = "LOWER(#{UserProfile.table_name}.data) LIKE LOWER('#{q[index]}')"
             else
                 where_clause = where_clause + 
@@ -85,9 +85,14 @@ class Api::UserProfileController < ApplicationController
     else  
       profile = UserProfile.find_or_create_by_user_id(params[:id])
     end
-
+    
     if(params.has_key?(:user))
-      data = JSON.parse(profile.data)
+      if profile.data.present?
+        data = JSON.parse(profile.data)
+      else
+        data = Hash.new
+      end
+
       if params[:user][:skills].present?
         data['skills'] = params[:user][:skills]
       end

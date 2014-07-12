@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'faker'
 require 'spreadsheet'
 
@@ -32,23 +33,23 @@ namespace :redmine do
         file = Spreadsheet.open(filePath)
         sheet = file.worksheet(0)
         sheet.rows.each_with_index do |t,i|
-          if (i > 300) 
-            break #limit number of employers 
+
+          if (i == 0)
+            next; # skip header
           end
-          if (i != 0) # skip header
-            if (t[0]) # has first name
-              createUser(t[0], t[1])
-            else 
-              unless t[3].nil?
-                fio = t[3].split(' ')
-                firstname = fio[1]
-                lastname = fio[0]
-                createUser(firstname, lastname)
-              else
-                puts "Can't process: ", i
-              end
-            end
+
+          if (i > 300) #limit number of employers 
+            break 
           end
+
+          if (t[0]) # has first name
+            firstname = t[0]
+            lastname = t[1]
+            createUser(firstname, lastname)
+          else 
+              puts "Can't process: ", i
+          end
+
         end
       end
     end  
@@ -60,33 +61,46 @@ namespace :redmine do
         file = Spreadsheet.open(filePath)
         sheet = file.worksheet(0)
         sheet.rows.each_with_index do |t,i|  
-          if (i > 300) 
-            break #limit number of employers 
+
+          if (i == 0)
+            next; # skip header
           end
-          if (i != 0) # skip header
-            if (t[0]) # has first last
-              firstN = t[0]
-              lastN = t[1]
-            else
-              unless t[3].nil? 
-                fio = t[3].split(' ')
-                firstN = fio[1]
-                lastN = fio[0]
-              else
-                puts "Can't process: ", i
-              end
+
+          if (i > 300) #limit number of employers 
+            break 
+          end
+
+          if (t[0]) # has first name
+            firstname = t[0]
+            lastname = t[1]
+            unless t[3].nil? #FIO ru
+              fio = t[3].split(' ')
+              lastnameRu = fio[0]
+              firstnameRu = fio[1]
             end
-          end          
-          imageName = "#{lastN} #{firstN}.png"
-          user = User.find(:first, :conditions => ["firstname =? and lastname =?",firstN, lastN])
+          end
+                   
+          imageName = "#{lastname} #{firstname}.png"
+          user = User.find(:first, :conditions => ["firstname =? and lastname =?", firstname, lastname])
           if user.nil?      
-            puts "User not found: "+ imageName
+            puts "User not found: #{i}"
           else
             person = UserProfile.new
             person.user_id    = user.id      
-            data = { 'skills' => t[9], 'position' => t[4],
-            'summary' => t[8], 'birthday' => 'TBD', 'project' => t[7],
-            'project_extra' => t[11], 'room_number' => t[10]}
+            data = { 
+              'firstname' => firstname,
+              'lastname' => lastname,
+              'firstnameRu' => firstnameRu,
+              'lastnameRu' => lastnameRu,
+              'position' => t[4],
+              'dep' => t[5],
+              'office' => t[6],
+              'project' => t[7],
+              'summary' => t[8],
+              'skills' => t[9],
+              'project_extra' => t[11],
+              'room_number' => t[10]
+            }
             person.data = data.to_json
 
             imagePath = File.expand_path("../../../data/#{imageName}", __FILE__)
