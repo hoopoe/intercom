@@ -68,42 +68,27 @@ $(function() {
         },
 
         mypage: function(param) {
+            var req = {};
             if (param !== null) {
-                app.employer = new Employer({
-                    id: param
-                });
-                app.employer.fetch({
-                    error: function(m, r) {
-                        console.log(r.responseText);
-                    },
-                    success: function() {
-                        var profileView = new ProfileView({
-                            model: app.employer
-                        });
-                        app.showView(profileView);
-                    }
-                })
+                req.id = param;
             } else {
-                app.employer = new Employer({
-                    id: "logged" //need to detect logged user
-                });
-                app.employer.fetch({
-                    error: function(m, r) {
-                        console.log(r.responseText);
+                req.id = "logged";
+            };
+            app.employer = new Employer(req);
+            app.employer.fetch({
+                error: function(m, r) {
+                    if (r.status === 422) //not logged
                         window.location = window.location.origin + '/login?back_url=' + window.location.origin + '/intercom';
-                    },
-                    success: function() {
-                        //we need only id. don't need to search for user inside api                        
-                        // app.router.navigate("mypage/" + r.user.id, {
-                        //     trigger: true
-                        // });
-                        var profileView = new ProfileView({
-                            model: app.employer
-                        });
-                        app.showView(profileView);
-                    }
-                })
-            }
+                },
+                success: function(m, r) {
+                    // console.log(req);
+                    // console.log(r.user.editable);
+                    var profileView = new ProfileView({
+                        model: app.employer
+                    });
+                    app.showView(profileView);
+                }
+            })
         },
 
         employers: function(param) {

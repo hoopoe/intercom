@@ -8,6 +8,8 @@ $(function() {
 
         editedEl: {},
 
+        isEditable: false,
+
         events: {
             'mousedown .editable': 'editableClick',
             'dragover .profile-div': 'dragoverHandler',
@@ -18,6 +20,8 @@ $(function() {
         initialize: function() {
             _.bindAll(this, 'save');
             this.model.bind('save', this.save);
+            if (this.model.get('user').editable)
+                this.isEditable = true;
         },
 
         render: function() {
@@ -27,8 +31,11 @@ $(function() {
         },
 
         editableClick: function(e) {
-            this.editedEl = e.target;
-            etch.editableInit.call(this, e);
+            // console.log(this.isEditable);
+            if (this.isEditable) {
+                this.editedEl = e.target;
+                etch.editableInit.call(this, e);
+            }
         },
 
         // editableClick: etch.editableInit,

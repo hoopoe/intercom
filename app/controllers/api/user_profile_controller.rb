@@ -7,85 +7,88 @@ class Api::UserProfileController < ApplicationController
   accept_api_auth :index, :show, :update
   before_filter :authorize_self_and_manager, :only => :update
 
-
   def index
     sort_init 'lastname', 'asc'
     # sort_update %w(lastname firstname login mail admin created_on last_login_on)
     sort_update %w(lastname)
-    
+
     @offset, @limit = api_offset_and_limit
     # @limit = 4
     if (params[:page])
       @offset = @limit * (params[:page].to_i - 1)
     end
-  
+
     users = User.select("users.id, users.login, users.mail, users.firstname,
      users.lastname, user_profile_t.avatar_file_name avatar_url, user_profile_t.data")
     .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
-    
+
     if (params[:criteria])
       criteria = params[:criteria]
       q = criteria.map{|s| "%#{s}%"}
-      if q.length > 0 
-        for index, i in q do
-            if index == 0
-                where_clause = "LOWER(#{UserProfile.table_name}.data) LIKE LOWER('#{q[index]}')"
-            else
-                where_clause = where_clause + 
-                " or LOWER(#{UserProfile.table_name}.data) LIKE LOWER('#{q[index]}')"
-            end
+      if q.length > 0
+        where_clause = ""
+        q.each_with_index do |i, index|
+          if index == 0
+            where_clause = "LOWER(#{UserProfile.table_name}.data) LIKE LOWER('#{q[index]}')"
+          else
+            where_clause = where_clause +
+              " or LOWER(#{UserProfile.table_name}.data) LIKE LOWER('#{q[index]}')"
+          end
         end
+        users = users.where(where_clause)
       end
-      users = users.where(where_clause)
-    end  
+    end
 
     users = users
-      .order(sort_clause)
-      .limit(@limit)
-      .offset(@offset)
-      .all    
+    .order(sort_clause)
+    .limit(@limit)
+    .offset(@offset)
+    .all
 
     set_avatars(users)
-    respond_with users    
+    respond_with users
   end
 
-  def show    
-    if (params.has_key?(:id))          
-      if (params[:id] == "logged" && !User.current.logged?)        
-        respond_with "User is not logged", status: :unprocessable_entity      
-      end
-
-      users = User.select("users.id, users.login, users.mail, users.firstname,
+  def show
+    if (params.has_key?(:id))
+      if (params[:id] == "logged" && !User.current.logged?)
+        respond_with "User is not logged", status: :unprocessable_entity
+      else
+        users = User.select("users.id, users.login, users.mail, users.firstname,
        users.lastname, user_profile_t.data,
        user_profile_t.avatar_file_name avatar_url")
-      .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
+        .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
 
-      if (params[:id] == "logged")
-        users = users.where("#{User.table_name}.id = (?)", User.current.id)
-      else
-        users = users.where("#{User.table_name}.id = (?)", params[:id])
+        if (params[:id] == "logged")
+          users = users.where("#{User.table_name}.id = (?)", User.current.id)
+        else
+          users = users.where("#{User.table_name}.id = (?)", params[:id])
+        end
+
+        if users.exists?
+          set_avatars(users)
+          u = users.first
+          u['editable'] = authorize_self_and_manager()
+          respond_with u
+        else
+          # respond_with User.find_by_id(id)
+          render_403
+        end
       end
-      
-      if users.exists?
-        set_avatars(users)
-        respond_with users.first
-      else
-        respond_with User.find_by_id(id)
-      end  
-    end   
+    end
   end
 
   def update
-    if (params[:id] == "logged" && !User.current.logged?)        
-      respond_with "User is not logged", status: :unprocessable_entity      
+    if (params[:id] == "logged" && !User.current.logged?)
+      respond_with "User is not logged", status: :unprocessable_entity
     end
 
     if (params[:id] == "logged")
       profile = UserProfile.find_or_create_by_user_id(User.current.id)
-    else  
+    else
       profile = UserProfile.find_or_create_by_user_id(params[:id])
     end
-    
+
     if(params.has_key?(:user))
       if profile.data.present?
         data = JSON.parse(profile.data)
@@ -108,8 +111,8 @@ class Api::UserProfileController < ApplicationController
       if params[:user][:project].present?
         data['project'] = params[:user][:project]
       end
-      profile.data = data.to_json     
-    end  
+      profile.data = data.to_json
+    end
 
     if(params.has_key?(:avatar))
       user = User.find_by_id(params[:id])
@@ -120,24 +123,22 @@ class Api::UserProfileController < ApplicationController
         profile.avatar = data
       end
     end
-    
+
     if profile.save
-      Rails.logger.info "saved"      
+      Rails.logger.info "saved"
     else
-      Rails.logger.info "failed to save"    
+      Rails.logger.info "failed to save"
     end
 
     respond_with profile
   end
 
   private
-
   def authorize_self_and_manager
     if params.has_key?(:id)
       if params[:id] == "logged"
         allowed = true
       else
-        Rails.logger.info "here"
         if User.current.id == params[:id].to_i
           allowed = true
         else
@@ -151,11 +152,12 @@ class Api::UserProfileController < ApplicationController
     if allowed
       true
     else
-        deny_access
+      # deny_access
+      false
     end
   end
 
-  def set_avatars(users)    
+  def set_avatars(users)
     #set paperclip absolute url for each record
     ids = users.map { |x| x.id }
     profiles = UserProfile.where(:user_id => ids).all
