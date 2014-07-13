@@ -58,6 +58,9 @@
             <label><%%- user.lastname %></label>
             <label><%%- user.firstname %></label>
             <br>
+            <label>e-mail:</label>
+            <label><%%- user.mail %></label>
+            <br>
             <label><%=l(:project_title)%>:</label>            
             <%% if ($.parseJSON(user.data) !== null) { %>              
                <label><%%= $.parseJSON(user.data).project%></label>
