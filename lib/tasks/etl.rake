@@ -98,8 +98,9 @@ namespace :redmine do
               'project' => t[7],
               'summary' => t[8],
               'skills' => t[9],
+              'room_number' => t[10],
               'project_extra' => t[11],
-              'room_number' => t[10]
+              'birthday' => t[12]
             }
             person.data = data.to_json
 
