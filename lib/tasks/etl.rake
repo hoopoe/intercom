@@ -108,9 +108,11 @@ namespace :redmine do
               file = File.open(imagePath)
               person.avatar = file
               file.close
+            else
+              puts "image not found #{imageName}" 
             end
             person.save! 
-            print "."           
+            # print "."           
           end
         end
       else
