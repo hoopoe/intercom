@@ -38,13 +38,13 @@ namespace :redmine do
             next; # skip header
           end
 
-          if (i > 300) #limit number of employers 
+          if (i > 150) #limit number of employers 
             break 
           end
 
           if (t[0]) # has first name
-            firstname = t[0]
-            lastname = t[1]
+            firstname = t[0].gsub(/\s+/, "")
+            lastname = t[1].gsub(/\s+/, "")
             createUser(firstname, lastname)
           else 
               puts "Can't process: ", i
@@ -66,13 +66,13 @@ namespace :redmine do
             next; # skip header
           end
 
-          if (i > 300) #limit number of employers 
+          if (i > 150) #limit number of employers 
             break 
           end
 
           if (t[0]) # has first name
-            firstname = t[0]
-            lastname = t[1]
+            firstname = t[0].gsub(/\s+/, "")
+            lastname = t[1].gsub(/\s+/, "")
             unless t[3].nil? #FIO ru
               fio = t[3].split(' ')
               lastnameRu = fio[0]
