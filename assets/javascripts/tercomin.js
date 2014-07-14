@@ -46,11 +46,11 @@ $(function() {
     };
 
     var EmployerCollection = Backbone.Collection.extend({
-        url: '/intercom/api/v1/user_profile'
+        url: '/tercomin/api/v1/user_profile'
     });
 
     var Employer = Backbone.Model.extend({
-        urlRoot: '/intercom/api/v1/user_profile/'
+        urlRoot: '/tercomin/api/v1/user_profile/'
     });
 
     app.employers = new EmployerCollection;
@@ -78,7 +78,7 @@ $(function() {
             app.employer.fetch({
                 error: function(m, r) {
                     if (r.status === 422) //not logged
-                        window.location = window.location.origin + '/login?back_url=' + window.location.origin + '/intercom';
+                        window.location = window.location.origin + '/login?back_url=' + window.location.origin + '/tercomin';
                 },
                 success: function(m, r) {
                     // console.log(req);

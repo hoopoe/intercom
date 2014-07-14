@@ -1,6 +1,6 @@
-get 'intercom', :to => 'intercom#index'
+get 'tercomin', :to => 'tercomin#index'
 
-namespace :intercom do
+namespace :tercomin do
   namespace :api do
     namespace :v1 do
       resources :user_profile, only: [:index, :show, :update]

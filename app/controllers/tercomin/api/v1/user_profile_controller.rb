@@ -1,4 +1,4 @@
-class Intercom::Api::V1::UserProfileController < ApplicationController
+class Tercomin::Api::V1::UserProfileController < ApplicationController
   respond_to :json
 
   helper :sort

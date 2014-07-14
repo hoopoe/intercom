@@ -3,7 +3,7 @@ require 'faker'
 require 'spreadsheet'
 
 namespace :redmine do
-  namespace :intercom do
+  namespace :tercomin do
 
     def createUser(firstName = nil, lastName = nil)      
       user = User.new

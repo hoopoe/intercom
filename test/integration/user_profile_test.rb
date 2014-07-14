@@ -13,7 +13,7 @@ class Redmine::ApiTest::UserProfileTest < Redmine::ApiTest::Base
 	
 	context "with offset and limit" do
       should "use the params" do        
-        get '/intercom/api/v1/user_profile.json?offset=2&limit=3'
+        get '/tercomin/api/v1/user_profile.json?offset=2&limit=3'
         assert_equal 2, assigns(:offset)   
         assert_equal 3, assigns(:limit)
       end
