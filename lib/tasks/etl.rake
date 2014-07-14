@@ -102,18 +102,20 @@ namespace :redmine do
               'project_extra' => t[11],
               'birthday' => t[12]
             }
-            person.data = data.to_json
-
+            person.data = data.to_json          
             imagePath = File.expand_path("../../../data/#{imageName}", __FILE__)
             if File.exists?(imagePath)
-              file = File.open(imagePath)
-              person.avatar = file
-              file.close
+              if Gem.win_platform?
+                #paperclip not working on windows
+              else
+                file = File.open(imagePath)
+                person.avatar = file
+                file.close
+              end
             else
               puts "image not found #{imageName}" 
             end
-            person.save! 
-            # print "."           
+            person.save!                  
           end
         end
       else
