@@ -120,8 +120,7 @@ namespace :redmine do
         end
       else
         puts "File not exist"
-      end
-      puts ""        
+      end      
     end
 
     task :check_profiles => :environment do
