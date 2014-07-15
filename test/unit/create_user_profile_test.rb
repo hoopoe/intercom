@@ -1,15 +1,19 @@
 require File.expand_path('../../test_helper', __FILE__)
 
-class DropSkillsCreateUserProfileTest < ActiveSupport::TestCase
+class CreateAndSearchUserProfileTest < ActiveSupport::TestCase
 
-  should "create" do
+  should "create" do    
+    User.delete_all
     user = User.generate!(:firstname => 'First Test User')
-    userProfile = UserProfile.generate!(:user_id => user.id,
-                                        :skills => 'c#, c++, java')
+    userProfile = UserProfile.generate!(:user_id => user.id, 
+        :data => "{'skills':'c#, c++, java'}")
     assert_equal 1, User.count(:all, :conditions => {:firstname => 'First Test User'})
   end
 
   should "search" do
+    User.delete_all
+    UserProfile.delete_all
+
     u1 = User.generate!(:firstname => 'u1')
     u1P = UserProfile.generate!(:user_id => u1.id,
                                 :data => "{'skills':'c#, c++, java'}")    
@@ -40,6 +44,6 @@ class DropSkillsCreateUserProfileTest < ActiveSupport::TestCase
         .where(where_clause)
         .all
 
-    assert_equal 4, users.count
+    assert_equal 3, users.count
   end
 end

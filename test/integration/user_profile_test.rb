@@ -3,7 +3,7 @@ require File.expand_path('../../test_helper', __FILE__)
 
 class Redmine::ApiTest::UserProfileTest < Redmine::ApiTest::Base
 	def setup
-		@controller = Api::UserProfileController.new
+		@controller = Tercomin::Api::V1::UserProfileController.new
 	end
 
 	def test_api_offset_and_limit_without_params
