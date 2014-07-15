@@ -64,6 +64,8 @@ $(function() {
             'mypage': 'mypage',
             'mypage/(:param)': 'mypage',
             'employers/(:param)': 'employers',
+            'events': 'events',
+            'events/(:param)': 'events',
             '*actions': 'mypage'
         },
 
@@ -81,8 +83,6 @@ $(function() {
                         window.location = window.location.origin + '/login?back_url=' + window.location.origin + '/tercomin';
                 },
                 success: function(m, r) {
-                    // console.log(req);
-                    // console.log(r.user.editable);
                     var profileView = new ProfileView({
                         model: app.employer
                     });
@@ -113,6 +113,14 @@ $(function() {
                     app.currentView.initScroll(dataReq);
                 }
             });
+        },
+
+        events: function(param) {
+            console.log("events");
+            var eventsView = new EventsView({
+                // collection: app.employers
+            });
+            app.showView(eventsView);
         }
     });
 

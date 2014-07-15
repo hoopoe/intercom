@@ -40,48 +40,12 @@ $(function() {
             });
         },
 
-        appendRender: function(items) {
-            //todo
-        },
-
         render: function() {
-            // if (app.employers.length) {
-            //     _.each(app.employers.models, this.addOne);
-            // }
             return this;
-        },
-
-        addOne: function(employer) {
-            // var view = new EmployerView({
-            //     model: employer
-            // });
-            // this.$(".employer-list").append(view.render().el);
         },
 
         onClose: function() {
             this.infiniScroll.destroy();
-            // return Backbone.View.prototype.remove.call(this);
-        }
-    });
-
-    NewsView = Backbone.View.extend({
-        el: '.content',
-
-        initialize: function() {
-            this.$el.html('');
-        },
-
-        render: function() {
-            this.$el.html('<img src="http://dummyimage.com/600x500&text=News" alt="" />');
-            return this;
-        }
-    });
-
-    GroupsView = Backbone.View.extend({
-        el: '.content',
-        render: function() {
-            this.$el.html('<img src="http://dummyimage.com/600x500&text=Groups" alt="" />');
-            return this;
         }
     });
 });
