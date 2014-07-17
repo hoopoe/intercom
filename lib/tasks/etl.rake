@@ -87,9 +87,7 @@ namespace :redmine do
           else
             person = UserProfile.new
             person.user_id    = user.id      
-            data = { 
-              'firstname' => firstname,
-              'lastname' => lastname,
+            data = {
               'firstnameRu' => firstnameRu,
               'lastnameRu' => lastnameRu,
               'position' => t[4],

@@ -20,7 +20,8 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
 
     users = User.select("users.id, users.login, users.mail, users.firstname,
      users.lastname, user_profile_t.avatar_file_name avatar_url, user_profile_t.data")
-    .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
+    .joins("LEFT JOIN #{UserProfile.table_name} 
+      ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
 
     if (params[:criteria])
       criteria = params[:criteria]
@@ -29,11 +30,11 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
         where_clause = ""
         q.each_with_index do |i, index|
           if index == 0
-            where_clause = "LOWER(#{UserProfile.table_name}.data) LIKE LOWER('#{q[index]}')"
-          else
-            where_clause = where_clause +
-              " or LOWER(#{UserProfile.table_name}.data) LIKE LOWER('#{q[index]}')"
+            where_clause  = "LOWER(#{User.table_name}.firstname) LIKE LOWER('#{q[index]}') 
+            or LOWER(#{User.table_name}.lastname) LIKE LOWER('#{q[index]}')"
           end
+          where_clause = where_clause + 
+          " or LOWER(#{UserProfile.table_name}.data) LIKE LOWER('#{q[index]}')"
         end
         users = users.where(where_clause)
       end
