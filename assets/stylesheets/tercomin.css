@@ -52,6 +52,13 @@ button.btn-search{
 }
 
 .profile-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+}
+
+.employer-img {
   width: 90px;
   height: 120px;
   display: block;

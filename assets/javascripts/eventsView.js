@@ -7,7 +7,7 @@ $(function() {
     EventsView = Backbone.View.extend({
 
         initialize: function() {
-            this.$el.html('Put events here');
+            this.$el.html('TBD');
         },
 
         render: function() {

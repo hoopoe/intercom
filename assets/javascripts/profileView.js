@@ -51,12 +51,12 @@ $(function() {
 
             e.originalEvent.dataTransfer.dropEffect = 'copy';
             this.pictureFile = e.originalEvent.dataTransfer.files[0];
-            console.log(this.pictureFile);
+            // console.log(this.pictureFile);
 
             // Read the image file from the local file system and display it in the img tag
             var reader = new FileReader();
             reader.onloadend = function() {
-                app.Resample(this.result, 240, 320, photoResult);
+                app.Resample(this.result, 290, 330, photoResult);
             };
 
             reader.readAsDataURL(this.pictureFile);
