@@ -135,5 +135,15 @@ h3{
   color: white;  
 }
 
+.line-separator {
+  height:1px;
+  background:#1995dc;
+  border-bottom:1px solid #1995dc;
+}
+
+.profile-text {
+  padding-top: 10px;
+}
+
 
 
