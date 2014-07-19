@@ -41,6 +41,7 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
     end
 
     users = users
+    .where("#{User.table_name}.status != 3")
     .order(sort_clause)
     .limit(@limit)
     .offset(@offset)
