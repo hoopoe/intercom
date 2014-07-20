@@ -117,7 +117,7 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
     end
 
     if(params.has_key?(:avatar))
-      user = User.find_by_id(params[:id])
+      user = User.find_by_id(profile.user_id)
       StringIO.open(Base64.strict_decode64(params[:avatar].split(',').pop)) do |data|
         data.class.class_eval { attr_accessor :original_filename, :content_type }
         data.original_filename = "#{user.login}.png"
