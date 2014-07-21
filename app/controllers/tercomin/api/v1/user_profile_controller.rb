@@ -70,6 +70,7 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
         if users.exists?
           set_avatars(users)
           u = users.first
+          # u.write_attribute('editable', authorize_self_and_manager())
           u['editable'] = authorize_self_and_manager()
           respond_with u
         else

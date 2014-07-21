@@ -1,0 +1,10 @@
+--- 
+user_profiles_1: 
+  id: 1001
+  user_id: 1
+  data: '{"birthday": "20.01."}'
+
+user_profiles_2: 
+  id: 1002
+  user_id: 2
+  data: '{"birthday": "20.01."}'
