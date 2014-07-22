@@ -54,10 +54,14 @@ class Redmine::ApiTest::UserProfileTest < Redmine::ApiTest::Base
 
   end
 
-  # test "PUT /tercomin/api/v1/user_profile.json should require authentication" do
-  #   get '/groups.json'
-  #   assert_response 401
-  # end
-
+  test "PUT /tercomin/api/v1/user_profile/1.json should require authentication" do
+    put '/tercomin/api/v1/user_profile/1.json', {
+        :id => 1,
+        :user => {
+          :data => '{"summary": "test summary"}'}
+        }
+        
+    assert_response 401
+  end
 
 end

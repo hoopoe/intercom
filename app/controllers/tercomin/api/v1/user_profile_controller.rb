@@ -82,6 +82,11 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
   end
 
   def update
+    unless authorize_self_and_manager()
+      render :text => 'Access denied.', :status => 401
+      return
+    end
+
     if (params[:id] == "logged" && !User.current.logged?)
       respond_with "User is not logged", status: :unprocessable_entity
     end
@@ -155,7 +160,6 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
     if allowed
       true
     else
-      # deny_access
       false
     end
   end
