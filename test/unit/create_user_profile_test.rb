@@ -29,7 +29,7 @@ class CreateAndSearchUserProfileTest < ActiveSupport::TestCase
 
     if q.length > 0 
         for index, i in q do
-            if index = 0
+            if index == 0
                 where_clause = "LOWER(#{UserProfile.table_name}.data) LIKE LOWER('#{q[index]}')"
             else
                 where_clause = where_clause + 
