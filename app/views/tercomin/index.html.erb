@@ -1,7 +1,6 @@
 <% content_for :header_tags do %>
-  <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js', 'infiniScroll.js', 'etch.js', 'utils.js', 'topView.js', 'eventsView.js', 'profileView.js', 'employersView.js', 'tercomin.js', :plugin => 'tercomin' %>
+  <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js', 'infiniScroll.js', 'etch.js', 'utils.js', 'topView.js', 'settingsView.js', 'eventsView.js', 'profileView.js', 'employersView.js', 'tercomin.js', :plugin => 'tercomin' %>
   <%= stylesheet_link_tag 'bootstrap.min.css', 'bootstrap.css.map', 'etch.css', 'tercomin.css', :plugin => 'tercomin' %>
-
 <% end %>
 <div class="navbar navbar-default">
   <div class="navbar-header">
@@ -19,8 +18,7 @@
       <li class="menu-item" value="mypage"><a href="#mypage"><%=l(:my_page)%></a></li>
       <li class="menu-item" value="employers"><a href="#employers"><%=l(:employers)%></a></li>
       <li class="menu-item" value="events"><a href="#events"><%=l(:events)%></a></li>
-      <!--li class="menu-item" value="news"><a href="#news"><%=l(:news)%></a></li>
-        <li class="menu-item" value="groups"><a href="#groups"><%=l(:groups)%></a></li-->
+      <li class="menu-item" value="settings"><a href="#settings"><%=l(:settings)%></a></li>
     </ul>
     <div class="navbar-form navbar-right">
       <input type="text" class="form-control col-lg-8 search-control" placeholder="поиск">
@@ -30,6 +28,10 @@
     </div>
   </div><!--/.nav-collapse -->
 </div>
+<!--%= render :partial => 'classic' %-->
+<!-- <div>
+  <%= @tercomInTheme %>
+</div> -->
 <div id="container-fluid" >
   <div class="col-md-1">
   </div>
@@ -38,6 +40,11 @@
   <div class="col-md-1">
   </div>
 </div>
+<script type="html/template" id="settings-template">
+    <div>
+      Settings item
+    </div>
+</script>
 <script type="html/template" id="events-template">
   	<div>
   		Event item

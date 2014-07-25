@@ -45,6 +45,13 @@ $(function() {
         $(".content").html(app.currentView.el);
     };
 
+    app.logMeIn = function() {
+        if (!window.location.origin) {
+            window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+        }
+        window.location = window.location.origin + '/login?back_url=' + window.location.origin + '/tercomin';
+    };
+
     var EmployerCollection = Backbone.Collection.extend({
         url: '/tercomin/api/v1/user_profile'
     });
@@ -66,6 +73,8 @@ $(function() {
             'employers/(:param)': 'employers',
             'events': 'events',
             'events/(:param)': 'events',
+            'settings': 'settings',
+            'settings/(:param)': 'settings',
             '*actions': 'mypage'
         },
 
@@ -80,10 +89,7 @@ $(function() {
             app.employer.fetch({
                 error: function(m, r) {
                     if (r.status === 422) { //not logged
-                        if (!window.location.origin) {
-                            window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
-                        }
-                        window.location = window.location.origin + '/login?back_url=' + window.location.origin + '/tercomin';
+                        app.logMeIn();
                     }
                 },
                 success: function(m, r) {
@@ -120,11 +126,34 @@ $(function() {
         },
 
         events: function(param) {
-            console.log("events");
             var eventsView = new EventsView({
-                // collection: app.employers
+
             });
             app.showView(eventsView);
+        },
+
+        settings: function(param) {
+            //todo: dup
+            var req = {};
+            if (param !== null) {
+                req.id = param;
+            } else {
+                req.id = "logged";
+            };
+            app.employer = new Employer(req);
+            app.employer.fetch({
+                error: function(m, r) {
+                    if (r.status === 422) { //not logged
+                        app.logMeIn();
+                    }
+                },
+                success: function(m, r) {
+                    var settingsView = new SettingsView({
+                        model: app.employer
+                    });
+                    app.showView(settingsView);
+                }
+            })
         }
     });
 
