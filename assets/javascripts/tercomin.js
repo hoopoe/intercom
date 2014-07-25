@@ -79,8 +79,12 @@ $(function() {
             app.employer = new Employer(req);
             app.employer.fetch({
                 error: function(m, r) {
-                    if (r.status === 422) //not logged
+                    if (r.status === 422) { //not logged
+                        if (!window.location.origin) {
+                            window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+                        }
                         window.location = window.location.origin + '/login?back_url=' + window.location.origin + '/tercomin';
+                    }
                 },
                 success: function(m, r) {
                     var profileView = new ProfileView({

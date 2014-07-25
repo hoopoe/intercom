@@ -8,6 +8,17 @@ body {
   line-height: inherit;
 }
 
+
+#main a {
+  font-weight: bold;
+  color: #fff;
+}
+
+#main a:hover, a:focus {
+  color: #fff;
+  text-decoration: underline;
+}
+
 hr {
   border: none;
   color: #1995dc; 
@@ -22,6 +33,12 @@ div .content {
 
 h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
   border-bottom: 0px dotted #bbb;	
+}
+
+#top-menu a.tercomin {
+  padding-left: 20px;
+  background-image: url("../images/pantera.png");
+  background-repeat: no-repeat;
 }
 
 .navbar {
@@ -74,7 +91,7 @@ button.btn-search{
   width: 81px;
   height: 101px;
   display: block;
-  background-image: url("images/cv.png"); 
+  background-image: url("../images/cv.png"); 
   margin-left: 0px;
   margin-right: auto;
   margin-top: 10px;
@@ -90,12 +107,18 @@ button.btn-search{
 	height: 100%;
 }
 
-.no-profile-img {  
-  content: url("../images/noavatar.jpg"); 
+.no-profile-img {    
+  display: block;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background: url("../images/noavatar.jpg") no-repeat;
+  width: 88px; /* Width of new image */
+  height: 88px; /* Height of new image */
+  padding-left: 88px; /* Equal to width of new image */
 }
 
 .profile-status {  
-    background-image: url("images/status_backgr.png"); 
+  background-image: url("../images/status_backgr.png"); 
 	width: 472px;
 	height: 101px;
 }
@@ -104,14 +127,6 @@ h3{
 	color: rgba(244,244,244,1);
 	margin-top: 10px;
 	padding: 12px 10px 1px 10px;
-}
-
-.logo-img {  
-  content: url("images/logo.png"); 
-}
-
-.point-img {  
-  content: url("images/bul.png"); 
 }
 
 .profile-img-save {

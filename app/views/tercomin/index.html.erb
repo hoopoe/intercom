@@ -1,6 +1,7 @@
 <% content_for :header_tags do %>
   <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js', 'infiniScroll.js', 'etch.js', 'utils.js', 'topView.js', 'eventsView.js', 'profileView.js', 'employersView.js', 'tercomin.js', :plugin => 'tercomin' %>
   <%= stylesheet_link_tag 'bootstrap.min.css', 'bootstrap.css.map', 'etch.css', 'tercomin.css', :plugin => 'tercomin' %>
+
 <% end %>
 <div class="navbar navbar-default">
   <div class="navbar-header">
@@ -9,7 +10,9 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="#"><img class="logo-img"/></a>
+    <a class="navbar-brand" href="#">
+      <%= image_tag 'logo.png', :plugin => 'tercomin' %>
+    </a>
   </div>
   <div class="collapse navbar-collapse top-menu">
     <ul class="nav navbar-nav">
@@ -47,6 +50,7 @@
         <div class="col-md-2 employer_img">
            <a href='#mypage/<%%- user.id %>'>
               <%% if (user.avatar_url == "noavatar") { %>
+                
                 <img class="no-profile-img"/>
               <%% } else {%>
                 <img src=<%%- user.avatar_url %> alt="" class="employer-img" />
@@ -145,8 +149,8 @@
   	</div>
   	<div class="row">
   	  		<div class="col-md-3">
-  	  			<h4>
-  	  				<img class="point-img"/>
+  	  			<h4>  	  				
+              <%= image_tag 'bul.png', :plugin => 'tercomin' %>
   	  				<%=l(:summary_title)%>
   	  			</h4>
   	  		</div>
@@ -165,7 +169,7 @@
   	<div class="row">
   		<div class="col-md-3">
   			<h4>
-  				<img class="point-img"/>
+  				<%= image_tag 'bul.png', :plugin => 'tercomin' %>
   				<%=l(:skills_title)%>
   			</h4>
   		</div>
@@ -184,7 +188,7 @@
   	<div class="row">
   		<div class="col-md-3">
   			<h4>
-  				<img class="point-img"/>
+  				<%= image_tag 'bul.png', :plugin => 'tercomin' %>
   				<%=l(:communication_skills_title)%>
   			</h4>
   		</div>
@@ -203,7 +207,7 @@
   	<div class="row">
   		<div class="col-md-3">
   			<h4>
-  				<img class="point-img"/>
+  				<%= image_tag 'bul.png', :plugin => 'tercomin' %>
   				<%=l(:languages_title)%>
   			</h4>
   		</div>
@@ -222,7 +226,7 @@
   	<div class="row">
   		<div class="col-md-3">
   			<h4>
-  				<img class="point-img"/>
+  				<%= image_tag 'bul.png', :plugin => 'tercomin' %>
   				<%=l(:education_title)%>
   			</h4>
   		</div>
@@ -241,7 +245,7 @@
   	<div class="row">
   		<div class="col-md-3">
   			<h4>
-  				<img class="point-img"/>
+  				<%= image_tag 'bul.png', :plugin => 'tercomin' %>
   				<%=l(:coureses_title)%>
   			</h4>
   		</div>
