@@ -100,7 +100,12 @@ namespace :redmine do
               'project_extra' => t[11],
               'birthday' => t[12]
             }
-            person.data = data.to_json          
+            person.data = data.to_json     
+            settingsData = {
+              'theme' => t[13]
+            }                 
+            person.settings = settingsData.to_json
+
             imagePath = File.expand_path("../../../data/#{imageName}", __FILE__)
             if File.exists?(imagePath)
               if Gem.win_platform?

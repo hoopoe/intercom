@@ -56,8 +56,8 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
       if (params[:id] == "logged" && !User.current.logged?)
         respond_with "User is not logged", status: :unprocessable_entity
       else
-        users = User.select("users.id, users.login, users.mail, users.firstname,
-       users.lastname, user_profile_t.data,
+        users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname,
+         user_profile_t.data, user_profile_t.settings,
        user_profile_t.avatar_file_name avatar_url")
         .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
 
