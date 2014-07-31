@@ -1,6 +1,10 @@
 <% content_for :header_tags do %>
   <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js', 'bootstrap.min.js', 'infiniScroll.js', 'etch.js', 'utils.js', 'topView.js', 'settingsView.js', 'eventsView.js', 'profileView.js', 'employersView.js', 'tercomin.js', :plugin => 'tercomin' %>
-  <%= stylesheet_link_tag 'bootstrap.min.css', 'bootstrap.css.map', 'etch.css', 'tercomin.css', :plugin => 'tercomin' %>
+  <% if @themeName == 'bootswatch' %>
+    <%= stylesheet_link_tag 'bootstrap.min.css', 'bootstrap.css.map', 'etch.css', 'tercomin.css', :plugin => 'tercomin' %>
+  <% else %>
+    <%= stylesheet_link_tag 'etch.css', 'tercomin-classic.css', :plugin => 'tercomin' %>
+  <% end %>
 <% end %>
 <div class="navbar navbar-default">
   <div class="navbar-header">
@@ -14,24 +18,21 @@
     </a>
   </div>
   <div class="collapse navbar-collapse top-menu">
+    <div class="navbar-form navbar-right">
+      <input type="text" class="form-control col-lg-8 search-control" placeholder="поиск">
+    </div>
+    <div class="demo_lbl">
+      <span>Demo. All changes will be reverted.</span>
+    </div>
     <ul class="nav navbar-nav">
       <li class="menu-item" value="mypage"><a href="#mypage"><%=l(:my_page)%></a></li>
       <li class="menu-item" value="employers"><a href="#employers"><%=l(:employers)%></a></li>
       <li class="menu-item" value="events"><a href="#events"><%=l(:events)%></a></li>
       <li class="menu-item" value="settings"><a href="#settings"><%=l(:settings)%></a></li>
     </ul>
-    <div class="navbar-form navbar-right">
-      <input type="text" class="form-control col-lg-8 search-control" placeholder="поиск">
-    </div>
-    <div class="demo_lbl">
-      Demo. All changes will be reverted.
-    </div>
   </div><!--/.nav-collapse -->
 </div>
 <!--%= render :partial => 'classic' %-->
-<!--div>
-  <%= @themeName %>
-</div-->
 <div id="container-fluid" >
   <div class="col-md-1">
   </div>
@@ -45,7 +46,7 @@
     <div class="btn-group">
       <button type="button" class="btn btn-primary">
         <%% if ((user.settings) && ($.parseJSON(user.settings) !== null) && ($.parseJSON(user.settings).theme !== null)) { %>
-               <%%- $.parseJSON(user.settings).theme %>                        
+               <%%- $.parseJSON(user.settings).theme %>
         <%% } else {%>
              default
         <%% } %>
@@ -120,24 +121,30 @@
           </div>
         </div>
         <div class="col-md-8">
-          <table width="550">
-            <tr><td>
-              <div class="profile-status">
-                <h3><%%-user.lastname %> <%%-user.firstname%></h3>
-              </div>
-            </td><td>
-              <button type="button" class="btn cv"/>
-            </td></tr>
-            <tr><td colspan="2">
-              <b><%=l(:project_title)%>:</b>
-              <div class="editable profile-data" data-button-class="default" data-prop="project">
-                <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).project)) { %>
-                  <%%- $.parseJSON(user.data).project %>
-                <%% } else {%>
-                  Put project here
-                <%% } %>
-              </div>
-            </td></tr>
+          <table>
+            <tr>
+              <td>
+                <div class="profile-status">
+                  <h3><%%-user.lastname %> <%%-user.firstname%></h3>
+                </div>
+              </td>              
+              <td>
+                <button type="button" class="btn cv"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <b><%=l(:project_title)%>:</b>
+              
+                <div class="editable profile-data" data-button-class="default" data-prop="project">
+                  <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).project)) { %>
+                    <%%- $.parseJSON(user.data).project %>
+                  <%% } else {%>
+                    Put project here
+                  <%% } %>
+                </div>
+              </td>
+            </tr>
             <tr><td colspan="2">
               <b><%=l(:position_title)%>:</b>
               <div class="editable profile-data" data-button-class="default" data-prop="position">
@@ -213,7 +220,7 @@
       </h4>
     </div>
     <div class="col-md-9 profile-text">
-              <div class="editable" data-button-class="all" data-prop="communication">
+              <div class="no-editable" data-button-class="all" data-prop="communication">
                 <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).communication)) { %>
                   <%%= $.parseJSON(user.data).communication %>
                 <%% } else {%>
@@ -232,7 +239,7 @@
       </h4>
     </div>
     <div class="col-md-9 profile-text">
-              <div class="editable" data-button-class="all" data-prop="languages">
+              <div class="no-editable" data-button-class="all" data-prop="languages">
                 <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).languages)) { %>
                   <%%= $.parseJSON(user.data).languages %>
                 <%% } else {%>
@@ -251,7 +258,7 @@
       </h4>
     </div>
     <div class="col-md-9 profile-text">
-              <div class="editable" data-button-class="all" data-prop="education">
+              <div class="no-editable" data-button-class="all" data-prop="education">
                 <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).education)) { %>
                   <%%= $.parseJSON(user.data).education %>
                 <%% } else {%>
@@ -270,7 +277,7 @@
       </h4>
     </div>
     <div class="col-md-9 profile-text">
-              <div class="editable" data-button-class="all" data-prop="coureses">
+              <div class="no-editable" data-button-class="all" data-prop="coureses">
                 <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).coureses)) { %>
                   <%%= $.parseJSON(user.data).coureses %>
                 <%% } else {%>
