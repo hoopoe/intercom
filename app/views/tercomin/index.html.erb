@@ -43,11 +43,17 @@
 <script type="html/template" id="settings-template">
   <div>
     <div class="btn-group">
-      <button type="button" class="btn btn-primary">Default</button>
+      <button type="button" class="btn btn-primary">
+        <%% if ((user.settings) && ($.parseJSON(user.settings) !== null) && ($.parseJSON(user.settings).theme !== null)) { %>
+               <%%- $.parseJSON(user.settings).theme %>                        
+        <%% } else {%>
+             default
+        <%% } %>
+      </button>
       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
       <ul class="dropdown-menu">
-        <li><a href="#" value="Default">Default</a></li>
-        <li><a href="#" value="Bootswatch">Bootswatch</a></li>        
+        <li><a href="#" value="default">default</a></li>
+        <li><a href="#" value="bootswatch">bootswatch</a></li>
       </ul>
     </div>
   </div>

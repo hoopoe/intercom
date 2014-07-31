@@ -120,6 +120,18 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
         data['project'] = params[:user][:project]
       end
       profile.data = data.to_json
+
+      if profile.settings.present?
+        settings = JSON.parse(profile.settings)
+      else
+        settings = Hash.new
+      end
+
+      if params[:user][:settings].present?
+        settings['theme'] = JSON.parse(params[:user][:settings])['theme']
+      end
+      profile.settings = settings.to_json
+
     end
 
     if(params.has_key?(:avatar))
