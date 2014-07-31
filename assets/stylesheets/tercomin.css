@@ -151,9 +151,8 @@ h3{
   border-bottom:1px solid #1995dc;
 }
 
-.profile-text {
-  padding-top: 10px;
-}
+.profile-text {padding-top: 10px;}
+.theme-picker {width: 120px;}
 
 
 

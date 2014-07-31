@@ -42,21 +42,19 @@
   </div>
 </div>
 <script type="html/template" id="settings-template">
-  <div>
-    <div class="btn-group">
-      <button type="button" class="btn btn-primary">
-        <%% if ((user.settings) && ($.parseJSON(user.settings) !== null) && ($.parseJSON(user.settings).theme !== null)) { %>
-               <%%- $.parseJSON(user.settings).theme %>
+  <div class="theme-picker">
+    <select class="form-control theme-select">
+      
+       <%% if ((user.settings) && ($.parseJSON(user.settings) !== null) 
+        && ($.parseJSON(user.settings).theme !== null) && ($.parseJSON(user.settings).theme == "bootswatch")) { %>
+              <option value="default" >default</option>
+              <option value="bootswatch" selected="selected"> bootswatch</option>
         <%% } else {%>
-             default
+              <option value="default" selected="selected">default</option>
+              <option value="bootswatch"> bootswatch</option>
         <%% } %>
-      </button>
-      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
-      <ul class="dropdown-menu">
-        <li><a href="#" value="default">default</a></li>
-        <li><a href="#" value="bootswatch">bootswatch</a></li>
-      </ul>
-    </div>
+          
+    </select>    
   </div>
 </script>
 <script type="html/template" id="events-template">

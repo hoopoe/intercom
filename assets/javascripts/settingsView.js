@@ -7,7 +7,7 @@ $(function() {
         template: _.template($("#settings-template").html()),
 
         events: {
-            'click .dropdown-menu > li > a': 'selectTheme'
+            'change .theme-select': 'select'
         },
 
         initialize: function() {
@@ -20,9 +20,9 @@ $(function() {
             return this;
         },
 
-        selectTheme: function(e) {
+        select: function(e) {
             e.preventDefault();
-            var themeValue = e.currentTarget.getAttribute('value');
+            var themeValue = e.currentTarget.value;
             var settings = {};
             settings.theme = themeValue;
 
