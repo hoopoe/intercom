@@ -42,3 +42,12 @@
 
 .profile-div {display: none;}
 
+.no-profile-img {    
+  display: block;
+  background: url("../images/noavatar.jpg") no-repeat;
+  width: 88px;
+  height: 88px;
+  /*padding-left: 88px;*/
+}
+div .employer_img{float:left; margin: 2px 10px 2px 2px;}
+

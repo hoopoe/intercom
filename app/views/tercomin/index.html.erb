@@ -69,16 +69,17 @@
         <div class="col-md-2 employer_img">
            <a href='#mypage/<%%- user.id %>'>
               <%% if (user.avatar_url == "noavatar") { %>
-  
                 <img class="no-profile-img"/>
               <%% } else {%>
-                <img src=<%%- user.avatar_url %> alt="" class="employer-img" />
+                <img src=<%%- user.avatar_url %> alt="no img" class="employer-img" />
               <%% } %>
            </a>
         </div>
         <div class="col-md-10">
-          <label><%%- user.lastname %></label>
-          <label><%%- user.firstname %></label>
+          <a href='#mypage/<%%- user.id %>'>
+            <%%- user.lastname %>
+            <%%- user.firstname %>
+          </a>
           <br>
           <label>e-mail:</label>
           <label><%%- user.mail %></label>
