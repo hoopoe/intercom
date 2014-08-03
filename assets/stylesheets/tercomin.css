@@ -152,7 +152,10 @@ h3{
 }
 
 .profile-text {padding-top: 10px;}
-.theme-picker {width: 120px;}
+
+.theme-select{width: 120px;}
+div.theme-picker >div:first-child{float:left; line-height: 30px; padding-right: 10px}
+
 
 
 

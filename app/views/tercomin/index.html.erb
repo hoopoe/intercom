@@ -43,8 +43,11 @@
 </div>
 <script type="html/template" id="settings-template">
   <div class="theme-picker">
+    <div>
+        <%=l(:label_theme)%>:
+    </div>
+    <div>
     <select class="form-control theme-select">
-      
        <%% if ((user.settings) && ($.parseJSON(user.settings) !== null) 
         && ($.parseJSON(user.settings).theme !== null) && ($.parseJSON(user.settings).theme == "bootswatch")) { %>
               <option value="default" >default</option>
@@ -55,6 +58,7 @@
         <%% } %>
           
     </select>    
+    </div>
   </div>
 </script>
 <script type="html/template" id="events-template">
