@@ -11,42 +11,17 @@
 padding-top: 2px;
 padding-bottom: 2px;
 }
+.navbar-default .navbar-nav>.active>a{background-color: #ffffdd;}
 
 .form-control {padding: 0px; height: 24px;}
 .content {background-color: #f6f6f6; border: 1px solid #e4e4e4;}
 #content { padding: 0px;}
 
-
-/*.navbar {
-	background-color: #EEEEEE;
-	height: 2.2em;	
-	font-size: 90%;	
-	padding: 3px 20px 3px 3px;
+#top-menu a.tercomin {
+  padding-left: 20px;
+  background-image: url("../images/pantera.png");
+  background-repeat: no-repeat;
 }
-
-.navbar-nav {
-	padding-top: 5px;
-	margin-top: -1px;
-}
-
-.navbar-header {
-	 display: none;
-}*/
-
-
-/*#content {
-	padding: 0px;
-}
-
-.nav li {
-  float:left;
-  list-style-type:none;
-  margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
-  white-space:nowrap;
-}
-
-.nav li a {color: #467aa7; margin-right: 8px; padding-top: 5px; font-weight: bold;}*/
 
 #main { font:70% Verdana,Tahoma,Arial,sans-serif; background: #e8eaec; }
 #main div.top-menu a { font-weight: bold; color: #999;}
@@ -77,6 +52,7 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #ccc;
 div.row{padding: 5px;}
 div.profile-text {padding-top: 10px;}
 div.profile-lbl {padding-top: 10px;}
+div.editable {background-color: #fff;}
 
 /*employers*/
 div.employer-img img {

@@ -3,6 +3,7 @@ var app = app || {};
 $(function() {
 
     SettingsView = Backbone.View.extend({
+        name: "settings",
 
         template: _.template($("#settings-template").html()),
 

@@ -3,6 +3,7 @@ var app = app || {};
 $(function() {
 
     ProfileView = Backbone.View.extend({
+        name: "mypage",
 
         template: _.template($("#profile-template").html()),
 
@@ -23,6 +24,7 @@ $(function() {
             if (this.model.get('user').editable)
                 this.isEditable = true;
         },
+
 
         render: function() {
             this.$el.html('');

@@ -6,6 +6,7 @@ $(function() {
 
     EmployerView = Backbone.View.extend({
 
+
         template: _.template(app.employerTemplate),
 
         initialize: function() {},
@@ -17,6 +18,7 @@ $(function() {
     });
 
     EmployersView = Backbone.View.extend({
+        name: "employers",
 
         initialize: function() {
             this.$el.html('');

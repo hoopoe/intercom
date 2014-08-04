@@ -38,11 +38,13 @@ $(function() {
 
     app.showView = function(view) {
         if (app.currentView) {
+            app.topMenuView.deactivate(view.name);
             app.currentView.close();
         }
         app.currentView = view;
         app.currentView.render();
         $(".content").html(app.currentView.el);
+        app.topMenuView.activate(view.name);
     };
 
     app.logMeIn = function() {

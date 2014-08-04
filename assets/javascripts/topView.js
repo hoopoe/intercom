@@ -15,6 +15,14 @@ TopMenuView = Backbone.View.extend({
         return this;
     },
 
+    activate: function(name) {
+        $("li[value='" + name + "']").addClass("active");
+    },
+
+    deactivate: function() {
+        $("li.menu-item").removeClass("active");
+    },
+
     selectPage: function(ev) {
         var urlPath = $(ev.currentTarget).attr('value').toLowerCase();
         app.router.navigate(urlPath, {
