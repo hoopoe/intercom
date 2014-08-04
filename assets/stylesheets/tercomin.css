@@ -26,9 +26,7 @@ div .content {
   padding: 0px 0px 0px 0px;
 }
 
-h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
-  border-bottom: 0px dotted #bbb;	
-}
+h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {  border-bottom: 0px dotted #bbb;}
 
 #top-menu a.tercomin {
   padding-left: 20px;
@@ -73,14 +71,7 @@ button.btn-search{
   margin-top: 10px;
 }
 
-.employer-img {
-  width: 90px;
-  height: 120px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 10px;
-}
+
 
 .cv {
   width: 81px;
@@ -102,15 +93,7 @@ button.btn-search{
 	height: 100%;
 }
 
-.no-profile-img {    
-  display: block;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  background: url("../images/noavatar.jpg") no-repeat;
-  width: 88px; /* Width of new image */
-  height: 88px; /* Height of new image */
-  padding-left: 88px; /* Equal to width of new image */
-}
+
 
 .profile-status {  
   background-image: url("../images/status_backgr.png"); 
@@ -145,16 +128,42 @@ h3{
   color: white;  
 }
 
-.line-separator {
-  height:1px;
-  background:#1995dc;
-  border-bottom:1px solid #1995dc;
-}
+/*global*/
+div.line-separator {height:1px;  background:#1995dc;  border-bottom:1px solid #1995dc;}
 
-.profile-text {padding-top: 10px;}
+
 
 .theme-select{width: 120px;}
 div.theme-picker >div:first-child{float:left; line-height: 30px; padding-right: 10px}
+
+
+/*profile*/
+div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995dc; float: left; margin: 2px}
+div.profile-lbl {padding-top: 10px;}
+div.profile-text {padding-top: 10px;}
+
+
+/*employers*/
+div.employer-img img {
+  width: 90px;
+  height: 120px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+}
+
+.no-profile-img {    
+  display: block;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background: url("../images/noavatar.jpg") no-repeat;
+  width: 88px; /* Width of new image */
+  height: 88px; /* Height of new image */
+  padding-left: 88px; /* Equal to width of new image */
+}
+
+div.employer-text{padding-top: 10px;}
 
 
 

@@ -3,7 +3,7 @@
   <% if @themeName == 'bootswatch' %>
     <%= stylesheet_link_tag 'bootstrap.min.css', 'bootstrap.css.map', 'etch.css', 'tercomin.css', :plugin => 'tercomin' %>
   <% else %>
-    <%= stylesheet_link_tag 'etch.css', 'tercomin-classic.css', :plugin => 'tercomin' %>
+    <%= stylesheet_link_tag 'bootstrap.min.css', 'bootstrap.css.map', 'etch.css', 'tercomin-classic.css', :plugin => 'tercomin' %>
   <% end %>
 <% end %>
 <div class="navbar navbar-default">
@@ -21,9 +21,9 @@
     <div class="navbar-form navbar-right">
       <input type="text" class="form-control col-lg-8 search-control" placeholder="поиск">
     </div>
-    <div class="demo_lbl">
+    <!-- <div class="demo_lbl">
       <span>Demo. All changes will be reverted.</span>
-    </div>
+    </div> -->
     <ul class="nav navbar-nav">
       <li class="menu-item" value="mypage"><a href="#mypage"><%=l(:my_page)%></a></li>
       <li class="menu-item" value="employers"><a href="#employers"><%=l(:employers)%></a></li>
@@ -32,7 +32,7 @@
     </ul>
   </div><!--/.nav-collapse -->
 </div>
-<!--%= render :partial => 'classic' %-->
+
 <div id="container-fluid" >
   <div class="col-md-1">
   </div>
@@ -42,252 +42,37 @@
   </div>
 </div>
 <script type="html/template" id="settings-template">
-  <div class="theme-picker">
-    <div>
-        <%=l(:label_theme)%>:
+<div class="col-md-12">
+  <div class="row theme-picker">
+    <div class="col-md-1">
+      <%=l(:label_theme)%>:
     </div>
-    <div>
-    <select class="form-control theme-select">
-       <%% if ((user.settings) && ($.parseJSON(user.settings) !== null) 
-        && ($.parseJSON(user.settings).theme !== null) && ($.parseJSON(user.settings).theme == "bootswatch")) { %>
-              <option value="default" >default</option>
-              <option value="bootswatch" selected="selected"> bootswatch</option>
-        <%% } else {%>
-              <option value="default" selected="selected">default</option>
-              <option value="bootswatch"> bootswatch</option>
-        <%% } %>
-          
-    </select>    
+    <div class="col-md-2">
+      <select class="form-control theme-select">
+         <%% if ((user.settings) && ($.parseJSON(user.settings) !== null) 
+          && ($.parseJSON(user.settings).theme !== null) && ($.parseJSON(user.settings).theme == "bootswatch")) { %>
+                <option value="default" >default</option>
+                <option value="bootswatch" selected="selected"> bootswatch</option>
+          <%% } else {%>
+                <option value="default" selected="selected">default</option>
+                <option value="bootswatch"> bootswatch</option>
+          <%% } %>          
+      </select> 
     </div>
   </div>
+</div>
 </script>
 <script type="html/template" id="events-template">
   <div>
     Event item
   </div>
 </script>
-<script type="html/template" id="employer-template">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="row employer_row">
-        <div class="col-md-2 employer_img">
-           <a href='#mypage/<%%- user.id %>'>
-              <%% if (user.avatar_url == "noavatar") { %>
-                <img class="no-profile-img"/>
-              <%% } else {%>
-                <img src=<%%- user.avatar_url %> alt="no img" class="employer-img" />
-              <%% } %>
-           </a>
-        </div>
-        <div class="col-md-10">
-          <a href='#mypage/<%%- user.id %>'>
-            <%%- user.lastname %>
-            <%%- user.firstname %>
-          </a>
-          <br>
-          <label>e-mail:</label>
-          <label><%%- user.mail %></label>
-          <br>
-          <label><%=l(:project_title)%>:</label>
-          <%% if ($.parseJSON(user.data) !== null) { %>
-             <label><%%= $.parseJSON(user.data).project%></label>
-          <%% } %>
-          <br>
-          <label><%=l(:project_extra_title)%>:</label>
-          <%% if ($.parseJSON(user.data) !== null) { %>
-             <label><%%= $.parseJSON(user.data).project_extra%></label>
-          <%% } %>
-          <br>
-          <label><%=l(:room_number)%>:</label>
-          <%% if ($.parseJSON(user.data) !== null) { %>
-             <label><%%= $.parseJSON(user.data).room_number%></label>
-          <%% } %>
-        </div>
-      </div>
-      <hr>
-    </div>
-  </div>
-</script>
-<script type="text/template" id="profile-template">
-  <div class="row">
-    <div class="col-md-12">
-        <div class="col-md-4">
-          <div class="profile-div">
-            <%% if (user.avatar_url === "noavatar") { %>
-              <img class="profile-img no-profile-img"/>
-            <%% } else {%>
-              <img src=<%%- user.avatar_url %> alt="" class="profile-img" />
-            <%% } %>
-            <div class="profile-img-save profile-img-save-hide">
-              <button type="button" class="btn btn-primary">Save</button>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-8">
-          <table>
-            <tr>
-              <td>
-                <div class="profile-status">
-                  <h3><%%-user.lastname %> <%%-user.firstname%></h3>
-                </div>
-              </td>              
-              <td>
-                <button type="button" class="btn cv"/>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <b><%=l(:project_title)%>:</b>
-              
-                <div class="editable profile-data" data-button-class="default" data-prop="project">
-                  <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).project)) { %>
-                    <%%- $.parseJSON(user.data).project %>
-                  <%% } else {%>
-                    Put project here
-                  <%% } %>
-                </div>
-              </td>
-            </tr>
-            <tr><td colspan="2">
-              <b><%=l(:position_title)%>:</b>
-              <div class="editable profile-data" data-button-class="default" data-prop="position">
-                <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).position)) { %>
-                  <%%- $.parseJSON(user.data).position %>
-                <%% } else {%>
-                  Put position here
-                <%% } %>
-              </div>
-            </td></tr>
-            <tr><td colspan="2"><b><%=l(:email_title)%>:</b><%%-user.mail%></td></tr>
-            <tr><td colspan="2"><b><%=l(:room_number)%>:</b>TBD</td></tr>
-            <tr><td colspan="2">
-              <div>
-                <b><%=l(:birthday_title)%>:</b>
-                <div class="editable profile-data" data-button-class="default" data-prop="birthday">
-                  <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).birthday)) { %>
-                    <%%- $.parseJSON(user.data).birthday %>
-                  <%% } else {%>
-                    Put birthday here
-                  <%% } %>
-                </div>
-              </div>
-            </td></tr>
-            <tr><td colspan="2"><b><%=l(:interest_title)%>:</b>TBD</td></tr>
-          </table>
-        </div>
-    </div>
-  </div>
-  <div class="row">
-        <div class="col-md-3">
-          <h4>
-            <%= image_tag 'bul.png', :plugin => 'tercomin' %>
-            <%=l(:summary_title)%>
-          </h4>
-        </div>
-        <div class="col-md-9 profile-text">
-          <div class="editable" data-button-class="default" data-prop="summary">
-            <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).summary)) { %>
-              <%%- $.parseJSON(user.data).summary %>
-            <%% } else {%>
-              Summary
-            <%% } %>
-          </div>
-        </div>
-  </div>
-  <div class="line-separator"/>
-  
-  <div class="row">
-    <div class="col-md-3">
-      <h4>
-        <%= image_tag 'bul.png', :plugin => 'tercomin' %>
-        <%=l(:skills_title)%>
-      </h4>
-    </div>
-    <div class="col-md-9 profile-text">
-              <div class="editable" data-button-class="all" data-prop="skills">
-                <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).skills)) { %>
-                  <%%= $.parseJSON(user.data).skills %>
-                <%% } else {%>
-                  Skills
-                <%% } %>
-              </div>
-    </div>
-  </div>
-  <div class="line-separator"/>
-  
-  <div class="row">
-    <div class="col-md-3">
-      <h4>
-        <%= image_tag 'bul.png', :plugin => 'tercomin' %>
-        <%=l(:communication_skills_title)%>
-      </h4>
-    </div>
-    <div class="col-md-9 profile-text">
-              <div class="no-editable" data-button-class="all" data-prop="communication">
-                <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).communication)) { %>
-                  <%%= $.parseJSON(user.data).communication %>
-                <%% } else {%>
-                  TBD
-                <%% } %>
-              </div>
-    </div>
-  </div>
-  <div class="line-separator"/>
-  
-  <div class="row">
-    <div class="col-md-3">
-      <h4>
-        <%= image_tag 'bul.png', :plugin => 'tercomin' %>
-        <%=l(:languages_title)%>
-      </h4>
-    </div>
-    <div class="col-md-9 profile-text">
-              <div class="no-editable" data-button-class="all" data-prop="languages">
-                <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).languages)) { %>
-                  <%%= $.parseJSON(user.data).languages %>
-                <%% } else {%>
-                  TBD
-                <%% } %>
-              </div>
-    </div>
-  </div>
-  <div class="line-separator"/>
-  
-  <div class="row">
-    <div class="col-md-3">
-      <h4>
-        <%= image_tag 'bul.png', :plugin => 'tercomin' %>
-        <%=l(:education_title)%>
-      </h4>
-    </div>
-    <div class="col-md-9 profile-text">
-              <div class="no-editable" data-button-class="all" data-prop="education">
-                <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).education)) { %>
-                  <%%= $.parseJSON(user.data).education %>
-                <%% } else {%>
-                 TBD
-                <%% } %>
-              </div>
-    </div>
-  </div>
-  <div class="line-separator"/>
-  
-  <div class="row">
-    <div class="col-md-3">
-      <h4>
-        <%= image_tag 'bul.png', :plugin => 'tercomin' %>
-        <%=l(:coureses_title)%>
-      </h4>
-    </div>
-    <div class="col-md-9 profile-text">
-              <div class="no-editable" data-button-class="all" data-prop="coureses">
-                <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).coureses)) { %>
-                  <%%= $.parseJSON(user.data).coureses %>
-                <%% } else {%>
-                  TBD
-                <%% } %>
-              </div>
-    </div>
-  </div>
-  <div class="line-separator"/>
-</script>
+
+<% if @themeName == 'bootswatch' %>
+  <%= render :partial => 'profile' %>
+  <%= render :partial => 'employers' %>
+<%else%>
+  <%= render :partial => 'profile-classic' %>
+  <%= render :partial => 'employers-classic' %>
+<%end%>
+
