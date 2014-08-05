@@ -7,10 +7,7 @@
 
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {background-color: #eee;border-color: #fff;}
 .navbar-header { display: none;}
-.navbar-nav>li>a {
-padding-top: 2px;
-padding-bottom: 2px;
-}
+.navbar-nav>li>a {padding-top: 2px;padding-bottom: 2px;}
 /*.navbar-default .navbar-nav>.active>a{background-color: #ffffdd;}*/
 
 /*.navbar-default .navbar-nav>.active>a{background-color: #fff;}*/
