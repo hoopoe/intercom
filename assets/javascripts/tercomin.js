@@ -19,9 +19,15 @@ Backbone.sync = function(method, model, success, error) {
     return Backbone._sync(method, model, success, error);
 }
 
+jQuery.fn.extend({
+    live: function(types, data, fn) {
+        //workaround to suppress redmine's jquery ruins
+        return this;
+    },
+})
+
 
 $(function() {
-
     $('#header').hide();
     // $('#top-menu').hide();
     //app.employers - collection of userprofiles
