@@ -1,53 +1,24 @@
-.navbar-default {
- background-color: #f6f6f6; 
- border-color: #e4e4e4; 
-}
 .navbar{background-image:  linear-gradient(#f6f6f6, #f6f6f6 60%, #f6f6f6); min-height: 10px;}
+.navbar-default { background-color: #f6f6f6;  border-color: #e4e4e4; }
 .navbar-form {margin-top: 0px; margin-bottom: 0px;}
 
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {background-color: #eee;border-color: #fff;}
 .navbar-header { display: none;}
-.navbar-nav>li>a {padding-top: 2px;padding-bottom: 2px;}
-/*.navbar-default .navbar-nav>.active>a{background-color: #ffffdd;}*/
-
-/*.navbar-default .navbar-nav>.active>a{background-color: #fff;}*/
-
+.navbar-nav>li>a {padding-top: 2px;padding-bottom: 2px;  }
 
 .form-control {padding: 0px; height: 24px;}
 .content {background-color: #f6f6f6; border: 1px solid #e4e4e4;}
 #content { padding: 0px;}
 
-#top-menu a.tercomin {
-  padding-left: 20px;
-  background-image: url("../images/pantera.png");
-  background-repeat: no-repeat;
-}
-
+#top-menu a.tercomin {  padding-left: 20px;  background-image: url("../images/pantera.png");  background-repeat: no-repeat;}
 #main { font:70% Verdana,Tahoma,Arial,sans-serif; background: #e8eaec; }
-#main div.top-menu a { font-weight: bold; color: #999; text-decoration: none;}
+#main div.top-menu a { font-weight: bold; color: #999; text-decoration: none; outline: none;}
 #main div.top-menu li.active a{ background-color: #fff; color: #444;}
+#main div.top-menu li{text-decoration: none;}
 
-.navbar-default .navbar-nav>.active>a {background-color: #fff; color: #444;}
+.navbar-default .navbar-nav>.active>a {background-color: #fff; color: #444; }
 .navbar-default .navbar-nav>.active>a:hover {background-color: #fff;}
 .navbar-default .navbar-nav>li>a:hover{background-color: #ffffdd;}
-
-/*.navbar-right {float:right;}*/
-.demo_lbl {  float:right;  padding-top: 5px; font-size: 10px; color: #467aa7; }
-
-/*#container-fluid {margin: 15px; background-color: #f6f6f6; border: 1px solid #e4e4e4;}*/
-
-.profile-data {display: inline-block;}
-
-.profile-div {display: none;}
-
-/*.no-profile-img {    
-  display: block;
-  background: url("../images/noavatar.jpg") no-repeat;
-  width: 88px;
-  height: 88px;
-}*/
-
-
 
 /*profile*/
 div.line-separator {height:1px;  background:#fff;  border-bottom:1px solid #fff;}
@@ -57,6 +28,8 @@ div.row{padding: 5px;}
 div.profile-text {padding-top: 10px;}
 div.profile-lbl {padding-top: 10px;}
 div.editable {background-color: #fff;}
+.profile-data {display: inline-block;}
+.profile-div {display: none;}
 
 /*employers*/
 div.employer-img img {
@@ -84,4 +57,4 @@ div.no-profile-img {display: block;background: url("../images/noavatar.jpg") no-
 div.theme-picker >div:first-child{float:left; line-height: 20px; padding-right: 10px;}
 
 
-/*global*/
+
