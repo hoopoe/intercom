@@ -49,7 +49,20 @@
               </div>
             </td></tr>
             <tr><td colspan="2"><b><%=l(:email_title)%>:</b><%%-user.mail%></td></tr>
-            <tr><td colspan="2"><b><%=l(:room_number)%>:</b>TBD</td></tr>
+            <tr>
+              <td colspan="2">                
+                 <div>
+                  <b><%=l(:room_number)%>:</b>
+                  <div class="editable profile-data" data-button-class="default" data-prop="room_number">
+                    <%% if (($.parseJSON(user.data) !== null) && ($.parseJSON(user.data).room_number)) { %>
+                      <%%- $.parseJSON(user.data).room_number %>
+                    <%% } else {%>
+                      Put birthday here
+                    <%% } %>
+                  </div>
+                </div>
+              </td>              
+            </tr>
             <tr><td colspan="2">
               <div>
                 <b><%=l(:birthday_title)%>:</b>
