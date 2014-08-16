@@ -29,7 +29,7 @@
           <td colspan="2">
              <div>
                 <b><%=l(:room_number)%>:</b>
-                <input class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data profile-data-short" data-button-class="default" data-prop="room_number" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).room_number)) { %><%%- $.parseJSON(profile.data).room_number %><%% } else {%><%=l(:put_room_number_here) %><%% } %>'>
+                <input class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data profile-data-short" data-button-class="default" maxlength="4" data-prop="room_number" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).room_number)) { %><%%- $.parseJSON(profile.data).room_number %><%% } else {%><%=l(:put_room_number_here) %><%% } %>'>
                 </input>
               </div>
           </td>
