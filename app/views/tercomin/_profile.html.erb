@@ -28,51 +28,30 @@
             <tr>
               <td>
                 <b><%=l(:project_title)%>:</b>
-              
-                <div class="editable profile-data" data-button-class="default" data-prop="project">
-                  <%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).project)) { %>
-                    <%%- $.parseJSON(profile.data).project %>
-                  <%% } else {%>
-                    <%=l(:put_projects_here) %>
-                  <%% } %>
-                </div>
+                <input class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data" data-button-class="default" data-prop="project" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).project)) { %><%%- $.parseJSON(profile.data).project %><%% } else {%><%=l(:put_projects_here) %><%% } %>'>
+            </input>
               </td>
             </tr>
             <tr><td colspan="2">
               <b><%=l(:position_title)%>:</b>
-              <div class="editable profile-data" data-button-class="default" data-prop="position">
-                <%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).position)) { %>
-                  <%%- $.parseJSON(profile.data).position %>
-                <%% } else {%>
-                  <%=l(:put_position_here) %>
-                <%% } %>
-              </div>
+              <input class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data" data-button-class="default" data-prop="position" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).position)) { %><%%- $.parseJSON(profile.data).position %><%% } else {%><%=l(:put_position_here) %><%% } %>'>
+              </input>
             </td></tr>
             <tr><td colspan="2"><b><%=l(:email_title)%>:</b> <%%-profile.mail%></td></tr>
             <tr>
               <td colspan="2">                
                  <div>
                   <b><%=l(:room_number)%>:</b>
-                  <div class="editable profile-data" data-button-class="default" data-prop="room_number">
-                    <%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).room_number)) { %>
-                      <%%- $.parseJSON(profile.data).room_number %>
-                    <%% } else {%>
-                      <%=l(:put_room_number_here) %>
-                    <%% } %>
-                  </div>
+                  <input class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data profile-data-short" data-button-class="default" data-prop="room_number" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).room_number)) { %><%%- $.parseJSON(profile.data).room_number %><%% } else {%><%=l(:put_room_number_here) %><%% } %>'>
+                </input>
                 </div>
               </td>              
             </tr>
             <tr><td colspan="2">
               <div>
                 <b><%=l(:birthday_title)%>:</b>
-                <div class="editable profile-data" data-button-class="default" data-prop="birthday">
-                  <%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).birthday)) { %>
-                    <%%- $.parseJSON(profile.data).birthday %>
-                  <%% } else {%>
-                    <%=l(:put_birthday_here) %>
-                  <%% } %>
-                </div>
+                <input class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data profile-data-short" data-button-class="default" data-prop="birthday" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).birthday)) { %><%%- $.parseJSON(profile.data).birthday %><%% } else {%><%=l(:put_birthday_here) %><%% } %>'>
+                </input>
               </div>
             </td></tr>
           </table>
@@ -85,9 +64,9 @@
             <%=l(:summary_title)%>
         </div>
         <div class="col-md-9 profile-text">
-          <div class="editable" data-button-class="default" data-prop="summary">
+          <div class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%>" data-button-class="all" data-prop="summary">
             <%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).summary)) { %>
-              <%%- $.parseJSON(profile.data).summary %>
+              <%%= $.parseJSON(profile.data).summary %>
             <%% } else {%>
               Summary
             <%% } %>
@@ -102,7 +81,7 @@
         <%=l(:skills_title)%>
     </div>
     <div class="col-md-9 profile-text">
-              <div class="editable" data-button-class="all" data-prop="skills">
+              <div class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%>" data-button-class="all" data-prop="skills">
                 <%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).skills)) { %>
                   <%%= $.parseJSON(profile.data).skills %>
                 <%% } else {%>

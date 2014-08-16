@@ -11,7 +11,7 @@
 #content { padding: 0px;}
 
 #top-menu a.tercomin {  padding-left: 20px;  background-image: url("../images/pantera.png");  background-repeat: no-repeat;}
-#main { font:90% Verdana,Tahoma,Arial,sans-serif; background: #e8eaec; }
+#main { font: 12px Verdana,Tahoma,Arial,sans-serif; background: #e8eaec; }
 #main div.top-menu{  font:80% Verdana,Tahoma,Arial,sans-serif; background: #e8eaec; }
 #main div.top-menu a { font-weight: bold; color: #999; text-decoration: none; outline: none;}
 #main div.top-menu li.active a{ background-color: #fff; color: #444;}
@@ -28,10 +28,9 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #ccc;
 div.row{padding: 5px;}
 div.profile-text {padding-top: 10px;}
 div.profile-lbl {padding-top: 10px;}
-div.editable {background-color: #fff;}
+.editable {background-color: #fff;}
 .no-editable {background-color: #f6f6f6;}
 .profile-data {display: inline-block;}
-/*.profile-data-short {min-width: 50px}*/
 .profile-div {display: none;}
 .profile-table {table-layout: fixed;}
 

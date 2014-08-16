@@ -15,7 +15,8 @@ body {
 .navbar-default .navbar-nav>li>a:hover{background-color: #54b4eb;}
 
 #top-menu a.tercomin {  padding-left: 20px;  background-image: url("../images/pantera.png");  background-repeat: no-repeat;}
-#main { font:90% Verdana,Tahoma,Arial,sans-serif; background: #e8eaec; }
+#main { font: 12px Verdana,Tahoma,Arial,sans-serif; background: #e8eaec; }
+#main div.top-menu{  font:80% Verdana,Tahoma,Arial,sans-serif;}
 #main div.top-menu a { font-weight: bold; color: #fff; text-decoration: none;}
 #main div.top-menu a:hover { color: #fff; text-decoration: none; }
 #main div.top-menu li.active a{ background-color: #54b4eb; color: #000;}
@@ -32,9 +33,11 @@ div.profile-lbl {padding-top: 10px;}
 div.profile-text {padding-top: 10px;}
 .profile-img-save {  margin-top: 10px;  text-align: center;    display: block;}
 .profile-img-save-hide {  display: none;}
-.profile-data {  display: inline-block;}
+.profile-data {  display: inline-block; border:0px;}
 .profile-status {background-image: url("../images/status_backgr.png"); width: 472px; height: 101px; text-align: center; padding-top: 10px}
 .profile-status span{color:#fff; font-size: 24px;}
+.editable {background-color: #fff;}
+.no-editable {background-color: #f6f6f6;}
 .profile-img {  display: block;  margin-left: auto;  margin-right: auto;  margin-top: 10px;}
 .btn {border-radius:10px; border: 0px solid transparent;}
 .cv {
