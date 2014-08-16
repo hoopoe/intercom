@@ -49,8 +49,8 @@
     </div>
     <div class="col-md-2">
       <select class="form-control theme-select">
-         <%% if ((user.settings) && ($.parseJSON(user.settings) !== null) 
-          && ($.parseJSON(user.settings).theme !== null) && ($.parseJSON(user.settings).theme == "bootswatch")) { %>
+         <%% if ((profile.settings) && ($.parseJSON(profile.settings) !== null) 
+          && ($.parseJSON(profile.settings).theme !== null) && ($.parseJSON(profile.settings).theme == "bootswatch")) { %>
                 <option value="default" >default</option>
                 <option value="bootswatch" selected="selected"> bootswatch</option>
           <%% } else {%>

@@ -42,6 +42,12 @@ $(function() {
         }
     };
 
+    Backbone.View.prototype.renderFinished = function() {
+        if (this.onRenderFinished) {
+            this.onRenderFinished();
+        }
+    };
+
     app.showView = function(view) {
         if (app.currentView) {
             app.topMenuView.deactivate(view.name);
@@ -50,6 +56,7 @@ $(function() {
         app.currentView = view;
         app.currentView.render();
         $(".content").html(app.currentView.el);
+        app.currentView.renderFinished();
         app.topMenuView.activate(view.name);
     };
 

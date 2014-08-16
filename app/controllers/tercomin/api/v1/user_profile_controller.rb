@@ -71,8 +71,10 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
           set_avatars(users)
           u = users.first
           # u.write_attribute('editable', authorize_self_and_manager())
-          u['editable'] = authorize_self_and_manager()
-          respond_with u
+          # u['editable'] = authorize_self_and_manager()
+          # foo = Hash[u.map { |f| [f.name.to_sym, f.value] }]
+          @response = {:profile => u.attributes, :editable => authorize_self_and_manager()}
+          respond_with @response
         else
           # respond_with User.find_by_id(id)
           render_403
@@ -97,27 +99,30 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
       profile = UserProfile.find_or_create_by_user_id(params[:id])
     end
 
-    if(params.has_key?(:user))
+    if(params.has_key?(:profile))
       if profile.data.present?
         data = JSON.parse(profile.data)
       else
         data = Hash.new
       end
 
-      if params[:user][:skills].present?
-        data['skills'] = params[:user][:skills]
+      if params[:profile][:skills].present?
+        data['skills'] = params[:profile][:skills]
       end
-      if params[:user][:position].present?
-        data['position'] = params[:user][:position]
+      if params[:profile][:position].present?
+        data['position'] = params[:profile][:position]
       end
-      if params[:user][:summary].present?
-        data['summary'] = params[:user][:summary]
+      if params[:profile][:summary].present?
+        data['summary'] = params[:profile][:summary]
       end
-      if params[:user][:birthday].present?
-        data['birthday'] = params[:user][:birthday]
+      if params[:profile][:birthday].present?
+        data['birthday'] = params[:profile][:birthday]
       end
-      if params[:user][:project].present?
-        data['project'] = params[:user][:project]
+      if params[:profile][:room_number].present?
+        data['room_number'] = params[:profile][:room_number]
+      end
+      if params[:profile][:project].present?
+        data['project'] = params[:profile][:project]
       end
       profile.data = data.to_json
 
@@ -127,8 +132,8 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
         settings = Hash.new
       end
 
-      if params[:user][:settings].present?
-        settings['theme'] = JSON.parse(params[:user][:settings])['theme']
+      if params[:profile][:settings].present?
+        settings['theme'] = JSON.parse(params[:profile][:settings])['theme']
       end
       profile.settings = settings.to_json
 

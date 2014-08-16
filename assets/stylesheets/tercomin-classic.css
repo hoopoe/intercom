@@ -11,7 +11,8 @@
 #content { padding: 0px;}
 
 #top-menu a.tercomin {  padding-left: 20px;  background-image: url("../images/pantera.png");  background-repeat: no-repeat;}
-#main { font:70% Verdana,Tahoma,Arial,sans-serif; background: #e8eaec; }
+#main { font:90% Verdana,Tahoma,Arial,sans-serif; background: #e8eaec; }
+#main div.top-menu{  font:80% Verdana,Tahoma,Arial,sans-serif; background: #e8eaec; }
 #main div.top-menu a { font-weight: bold; color: #999; text-decoration: none; outline: none;}
 #main div.top-menu li.active a{ background-color: #fff; color: #444;}
 #main div.top-menu li{text-decoration: none;}
@@ -28,8 +29,13 @@ div.row{padding: 5px;}
 div.profile-text {padding-top: 10px;}
 div.profile-lbl {padding-top: 10px;}
 div.editable {background-color: #fff;}
-.profile-data {display: inline-block;}
+.no-editable {}
+.profile-data {display: inline-block; min-width: 200px;}
+.profile-data-short {min-width: 50px}
 .profile-div {display: none;}
+.profile-table {table-layout: fixed;}
+
+
 
 /*employers*/
 div.employer-img img {

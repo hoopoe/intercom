@@ -21,7 +21,7 @@ $(function() {
         initialize: function() {
             _.bindAll(this, 'save');
             this.model.bind('save', this.save);
-            if (this.model.get('user').editable)
+            if (this.model.get('editable'))
                 this.isEditable = true;
         },
 
@@ -30,6 +30,14 @@ $(function() {
             this.$el.html('');
             this.$el.html(this.template(this.model.toJSON()));
             return this;
+        },
+
+        renderFinished: function() {
+            if (!this.isEditable){
+                _.each($('.profile-data'), function(i) {
+                    $(i).attr('disabled', true);
+                });
+            }
         },
 
         editableClick: function(e) {
@@ -82,12 +90,15 @@ $(function() {
         },
 
         save: function() {
-            var map = this.model.get('user');
-            if (this.editedEl.getAttribute("data-prop") === "skills")
-                map[this.editedEl.getAttribute("data-prop")] = $(this.editedEl).html();
+            // window.t = $(this.editedEl);
+            // console.log(window.t);
+            var map = {};//this.model.get('profile');
+            if ($(this.editedEl).is("input"))
+                map[this.editedEl.getAttribute("data-prop")] = $(this.editedEl).val();
             else
-                map[this.editedEl.getAttribute("data-prop")] = $(this.editedEl).text();
-            this.model.set('user', map);
+                map[this.editedEl.getAttribute("data-prop")] = $(this.editedEl).html();
+                
+            this.model.set('profile', map);
             this.model.save();
         }
     });

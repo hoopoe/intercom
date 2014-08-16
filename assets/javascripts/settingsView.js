@@ -27,7 +27,7 @@ $(function() {
             var settings = {};
             settings.theme = themeValue;
 
-            var user = this.model.get('user');
+            var user = this.model.get('profile');
             user.settings = JSON.stringify(settings);
             this.model.save({}, {
                 success: function(model, response) {

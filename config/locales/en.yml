@@ -20,3 +20,7 @@ en:
   project_extra_title: "Other projects"
   events: "Events"
   settings: "Settings"
+  put_projects_here: "Put projects here"
+  put_position_here: "Put position here"
+  put_room_number_here: "Put room number here"
+  put_birthday_here:  "Put birthday here (dd.mm)"
