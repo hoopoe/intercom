@@ -29,9 +29,9 @@ div.row{padding: 5px;}
 div.profile-text {padding-top: 10px;}
 div.profile-lbl {padding-top: 10px;}
 div.editable {background-color: #fff;}
-.no-editable {}
-.profile-data {display: inline-block; min-width: 200px;}
-.profile-data-short {min-width: 50px}
+.no-editable {background-color: #f6f6f6;}
+.profile-data {display: inline-block;}
+/*.profile-data-short {min-width: 50px}*/
 .profile-div {display: none;}
 .profile-table {table-layout: fixed;}
 
