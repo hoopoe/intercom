@@ -103,25 +103,7 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
       else
         data = Hash.new
       end
-
-      if params[:profile][:skills].present?
-        data['skills'] = params[:profile][:skills]
-      end
-      if params[:profile][:position].present?
-        data['position'] = params[:profile][:position]
-      end
-      if params[:profile][:summary].present?
-        data['summary'] = params[:profile][:summary]
-      end
-      if params[:profile][:birthday].present?
-        data['birthday'] = params[:profile][:birthday]
-      end
-      if params[:profile][:room_number].present?
-        data['room_number'] = params[:profile][:room_number]
-      end
-      if params[:profile][:project].present?
-        data['project'] = params[:profile][:project]
-      end
+      data.merge!(params[:profile]);
       profile.data = data.to_json
 
       if profile.settings.present?

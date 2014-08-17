@@ -24,3 +24,5 @@ ru:
   put_position_here: "Ваша должность"
   put_room_number_here: "Номер Вашей комнаты"
   put_birthday_here:  "Ваш день рождения (дд.мм)"
+  put_summary_here: "Введите информацию о себе"
+  put_skills_here: "Перечислите свои навыки"

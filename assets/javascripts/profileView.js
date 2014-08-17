@@ -33,11 +33,12 @@ $(function() {
         },
 
         renderFinished: function() {
-            if (!this.isEditable){
-                _.each($('.profile-data'), function(i) {
-                    $(i).attr('disabled', true);
-                });
-            }
+            _.each($('.profile-data'), function(i) {
+                $(i).attr('size', $(i).val().length + 5);
+                if (!this.isEditable){
+                    $(i).attr('disabled', true); 
+                }
+            },this);
         },
 
         editableClick: function(e) {

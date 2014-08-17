@@ -28,13 +28,13 @@
             <tr>
               <td>
                 <b><%=l(:project_title)%>:</b>
-                <input type=text class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data" data-button-class="default" data-prop="project" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).project)) { %><%%- $.parseJSON(profile.data).project %><%% } else {%><%=l(:put_projects_here) %><%% } %>'>
-            </input>
+                <input placeholder="<%=l(:put_projects_here) %>" class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data" data-button-class="default" data-prop="project" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).project)) { %><%%- $.parseJSON(profile.data).project %><%% } %>'>
+                </input>
               </td>
             </tr>
             <tr><td colspan="2">
               <b><%=l(:position_title)%>:</b>
-              <input class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data" data-button-class="default" data-prop="position" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).position)) { %><%%- $.parseJSON(profile.data).position %><%% } else {%><%=l(:put_position_here) %><%% } %>'>
+              <input placeholder="<%=l(:put_position_here) %>" class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data" data-button-class="default" data-prop="position" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).position)) { %><%%- $.parseJSON(profile.data).position %><%% } %>'>
               </input>
             </td></tr>
             <tr><td colspan="2"><b><%=l(:email_title)%>:</b> <%%-profile.mail%></td></tr>
@@ -42,7 +42,7 @@
               <td colspan="2">                
                  <div>
                   <b><%=l(:room_number)%>:</b>
-                  <input class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data profile-data-short" data-button-class="default" data-prop="room_number" maxlength="4" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).room_number)) { %><%%- $.parseJSON(profile.data).room_number %><%% } else {%><%=l(:put_room_number_here) %><%% } %>'>
+                  <input placeholder="<%=l(:put_room_number_here) %>" class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data profile-data-short" data-button-class="default" data-prop="room_number" maxlength="4" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).room_number)) { %><%%- $.parseJSON(profile.data).room_number %><%% } %>'>
                 </input>
                 </div>
               </td>              
@@ -50,7 +50,7 @@
             <tr><td colspan="2">
               <div>
                 <b><%=l(:birthday_title)%>:</b>
-                <input class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data profile-data-short" data-button-class="default" data-prop="birthday" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).birthday)) { %><%%- $.parseJSON(profile.data).birthday %><%% } else {%><%=l(:put_birthday_here) %><%% } %>'>
+                <input placeholder="<%=l(:put_birthday_here) %>" class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data profile-data-short" data-button-class="default" data-prop="birthday" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).birthday)) { %><%%- $.parseJSON(profile.data).birthday %><%% } %>'>
                 </input>
               </div>
             </td></tr>
@@ -64,11 +64,11 @@
             <%=l(:summary_title)%>
         </div>
         <div class="col-md-9 profile-text">
-          <div class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%>" data-button-class="all" data-prop="summary">
+          <div class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%>" data-button-class="all" data-prop="summary" placeholder="test">
             <%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).summary)) { %>
               <%%= $.parseJSON(profile.data).summary %>
             <%% } else {%>
-              Summary
+              <%=l(:put_summary_here) %>
             <%% } %>
           </div>
         </div>
@@ -85,7 +85,7 @@
                 <%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).skills)) { %>
                   <%%= $.parseJSON(profile.data).skills %>
                 <%% } else {%>
-                  Skills
+                  <%=l(:put_skills_here) %>
                 <%% } %>
               </div>
     </div>

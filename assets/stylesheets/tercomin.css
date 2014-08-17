@@ -33,7 +33,8 @@ div.profile-lbl {padding-top: 10px;}
 div.profile-text {padding-top: 10px;}
 .profile-img-save {  margin-top: 10px;  text-align: center;    display: block;}
 .profile-img-save-hide {  display: none;}
-.profile-data {  display: inline-block; border:0px;}
+.profile-data {  display: inline-block; border:0px; min-width: 180px;}
+[contentEditable=true]:empty:not(:focus):before{content:attr(data-ph)}
 .profile-status {background-image: url("../images/status_backgr.png"); width: 472px; height: 101px; text-align: center; padding-top: 10px}
 .profile-status span{color:#fff; font-size: 24px;}
 .editable {background-color: #fff;}

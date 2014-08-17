@@ -30,7 +30,9 @@ div.profile-text {padding-top: 10px;}
 div.profile-lbl {padding-top: 10px;}
 .editable {background-color: #fff;}
 .no-editable {background-color: #f6f6f6;}
-.profile-data {display: inline-block;}
+.profile-data {display: inline-block; border:0px; min-width: 180px;}
+.profile-data-html{width:100%;}
+[contentEditable=true]:empty:not(:focus):before{content:attr(data-ph)}
 .profile-div {display: none;}
 .profile-table {table-layout: fixed;}
 
