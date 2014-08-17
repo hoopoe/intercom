@@ -41,19 +41,15 @@ $(function() {
             },this);
         },
 
-        editableClick: function(e) {
-            // console.log(this.isEditable);
+        editableClick: function(e) {            
             if (this.isEditable) {
                 this.editedEl = e.target;
                 etch.editableInit.call(this, e);
             }
-        },
-
-        // editableClick: etch.editableInit,
+        },    
 
         dragoverHandler: function(e) {
-            e.preventDefault();
-            // console.log("drag over");
+            e.preventDefault();            
         },
 
         dropHandler: function(e) {
@@ -90,10 +86,8 @@ $(function() {
             });
         },
 
-        save: function() {
-            // window.t = $(this.editedEl);
-            // console.log(window.t);
-            var map = {};//this.model.get('profile');
+        save: function() {            
+            var map = {};
             if ($(this.editedEl).is("input"))
                 map[this.editedEl.getAttribute("data-prop")] = $(this.editedEl).val();
             else
