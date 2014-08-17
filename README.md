@@ -1,4 +1,4 @@
-# HR Dashboard for redmine [![Build Status](https://travis-ci.org/hoopoe/tercomin.svg?branch=master)](https://travis-ci.org/hoopoe/tercomin)
+# Employee profiles for internal services (HR) [![Build Status](https://travis-ci.org/hoopoe/tercomin.svg?branch=master)](https://travis-ci.org/hoopoe/tercomin)
 
 Install Instructions: 
 Please, install plugin into "~/redmine/plugins/tercomin"
