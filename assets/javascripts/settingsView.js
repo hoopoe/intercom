@@ -27,17 +27,21 @@ $(function() {
             var settings = {};
             settings.theme = themeValue;
 
-            var user = this.model.get('profile');
-            user.settings = JSON.stringify(settings);
-            this.model.save({}, {
-                success: function(model, response) {
-                    window.location.reload(true);
-                    console.log("success");
-                },
-                error: function(model, response) {
-                    console.log("error");
-                }
-            });
+            // var user = this.model.get('profile');
+            // user.settings = JSON.stringify(settings);
+            var map = {};
+            map["settings"] = JSON.stringify(settings);
+            this.model.set('profile', map);
+            this.model.save();
+            // this.model.save({}, {
+            //     success: function(model, response) {
+            //         // window.location.reload(true);
+            //         console.log("success");
+            //     },
+            //     error: function(model, response) {
+            //         console.log("error");
+            //     }
+            // });
         }
     });
 });

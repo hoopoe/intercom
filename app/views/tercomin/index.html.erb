@@ -20,10 +20,7 @@
   <div class="collapse navbar-collapse top-menu">
     <div class="navbar-form navbar-right">
       <input type="text" class="form-control col-lg-8 search-control" placeholder="поиск">
-    </div>
-    <!-- <div class="demo_lbl">
-      <span>Demo. All changes will be reverted.</span>
-    </div> -->
+    </div>    
     <ul class="nav navbar-nav">
       <li class="menu-item" value="mypage"><a href="#mypage"><%=l(:my_page)%></a></li>
       <li class="menu-item" value="employers"><a href="#employers"><%=l(:employers)%></a></li>
@@ -68,11 +65,98 @@
   </div>
 </script>
 
-<% if @themeName == 'bootswatch' %>
-  <%= render :partial => 'profile' %>
+<script type="text/template" id="profile-template">
+  <div class="row">
+    <div class="col-md-12">
+      <% if @themeName == 'bootswatch' %>
+        <div class="col-md-4">
+          <div class="profile-div">
+            <%% if (profile.avatar_url === "noavatar") { %>
+              <img class="profile-img no-profile-img"/>
+            <%% } else {%>
+              <img src=<%%- profile.avatar_url %> alt="" class="profile-img" />
+            <%% } %>
+            <div class="profile-img-save profile-img-save-hide">
+              <button type="button" class="btn btn-primary">Save</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">      
+      <%end%>
+      <table class="profile-table">
+        <tr>
+          <td>
+            <div class="profile-status">
+              <h3><%%-profile.lastname %> <%%-profile.firstname%></h3>
+            </div>
+          </td>
+          <td>
+            <button type="button" class="btn cv"/>
+          </td>
+        </tr>
+        <tr>
+          <td >
+            <b><%=l(:project_title)%>:</b>
+            <input placeholder="<%=l(:put_projects_here) %>" class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data" data-button-class="default" data-prop="project" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).project)) { %><%%- $.parseJSON(profile.data).project %><%% } %>'>
+            </input>
+          </td>
+        </tr>
+        <tr><td colspan="2">
+          <b><%=l(:position_title)%>:</b>
+          <input placeholder="<%=l(:put_position_here) %>" class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data" data-button-class="default" data-prop="position" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).position)) { %><%%- $.parseJSON(profile.data).position %><%% } %>'>
+          </input>
+        </td></tr>
+        <tr><td colspan="2"><b><%=l(:email_title)%>:</b> <%%- profile.mail%></td></tr>
+        <tr>
+          <td colspan="2">
+             <div>
+                <b><%=l(:room_number)%>:</b>
+                <input placeholder="<%=l(:put_room_number_here) %>" class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data profile-data-short" data-button-class="default" maxlength="4" data-prop="room_number" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).room_number)) { %><%%- $.parseJSON(profile.data).room_number %><%% } %>'>
+                </input>
+              </div>
+          </td>
+        </tr>
+        <tr><td colspan="2">
+          <div>
+            <b><%=l(:birthday_title)%>:</b>
+            <input placeholder="<%=l(:put_birthday_here) %>" class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data profile-data-short" data-button-class="default" data-prop="birthday" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).birthday)) { %><%%- $.parseJSON(profile.data).birthday %><%% } %>'>
+            </input>
+          </div>
+        </td></tr>
+      </table>      
+      <% if @themeName == 'bootswatch' %>
+        </div>  <!--close col-md-8-->
+      <%end%>       
+    </div>
+  </div>
+  <div class="row">
+        <div class="col-md-3 profile-lbl">
+            <div class="circle"/>
+            <%=l(:summary_title)%>
+        </div>
+        <div class="col-md-9 profile-text">
+          <div contentEditable=true data-ph="<%=l(:put_summary_here) %>" class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data-html" data-button-class="all" data-prop="summary"><%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).summary)) { %><%%= $.parseJSON(profile.data).summary %><%% } %></div>
+        </div>
+  </div>
+  <div class="line-separator"/>
+  
+  <div class="row">
+    <div class="col-md-3 profile-lbl">
+        <div class="circle"/>
+        <%=l(:skills_title)%>
+    </div>
+    <div class="col-md-9 profile-text">
+            <div contentEditable=true data-ph="<%=l(:put_skills_here) %>" class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data-html" data-button-class="all" data-prop="skills"><%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).skills)) { %><%%= $.parseJSON(profile.data).skills %><%% } %></div>
+    </div>
+  </div>
+  
+  <div class="line-separator"/>
+</script>
+
+<% if @themeName == 'bootswatch' %>  
   <%= render :partial => 'employers' %>
-<%else%>
-  <%= render :partial => 'profile-classic' %>
+<%else%>  
   <%= render :partial => 'employers-classic' %>
 <%end%>
+
 
