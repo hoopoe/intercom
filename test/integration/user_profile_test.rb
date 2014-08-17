@@ -1,6 +1,4 @@
 require File.expand_path('../../test_helper', __FILE__)
-# require paperclip
-
 
 
 class Redmine::ApiTest::UserProfileTest < Redmine::ApiTest::Base
@@ -12,8 +10,7 @@ class Redmine::ApiTest::UserProfileTest < Redmine::ApiTest::Base
   end
 
   def test_api_offset_and_limit_without_params
-    assert_equal [0, 25], @controller.api_offset_and_limit({})
-    # Rails::logger.info @controller.api_offset_and_limit({})
+    assert_equal [0, 25], @controller.api_offset_and_limit({})    
   end
 
   context "with offset and limit" do
@@ -23,20 +20,11 @@ class Redmine::ApiTest::UserProfileTest < Redmine::ApiTest::Base
       assert_equal 3, assigns(:limit)
     end
   end
-
-  # context "with offset and limit" do
-  #   should "return only 3 record" do
-  #     get '/api/user_profile.json?offset=1&limit=3'
-  #     json = ActiveSupport::JSON.decode(response.body)
-  #     assert_equal 3, json.length
-  #   end
-  # end
-
+  
   test "GET /tercomin/api/v1/user_profile.json should return profiles" do
     get '/tercomin/api/v1/user_profile.json'
     assert_response :success
     assert_equal 'application/json', response.content_type
-
     profiles = MultiJson.load(response.body)
     assert_kind_of Array, profiles
   end
@@ -45,13 +33,8 @@ class Redmine::ApiTest::UserProfileTest < Redmine::ApiTest::Base
   test "GET /tercomin/api/v1/user_profile/1.json should return admin profile" do
     get '/tercomin/api/v1/user_profile/1.json'
     assert_response :success
-
-    profiles = MultiJson.load(response.body)
-    # Rails.logger.info profiles
-    # Rails.logger.info profiles["user"]
-
-    assert_equal 'admin', profiles["user"]["login"]
-
+    profiles = MultiJson.load(response.body)    
+    assert_equal 'admin', profiles["profile"]["login"]
   end
 
   test "PUT /tercomin/api/v1/user_profile/1.json should require authentication" do
