@@ -34,7 +34,7 @@ $(function() {
 
         renderFinished: function() {
             _.each($('.profile-data'), function(i) {
-                $(i).attr('size', $(i).val().length + 5);
+                // $(i).attr('size', $(i).val().length + 5);
                 if (!this.isEditable){
                     $(i).attr('disabled', true); 
                 }
@@ -87,12 +87,8 @@ $(function() {
         },
 
         save: function() {            
-            var map = {};
-            if ($(this.editedEl).is("input"))
-                map[this.editedEl.getAttribute("data-prop")] = $(this.editedEl).val();
-            else
-                map[this.editedEl.getAttribute("data-prop")] = $(this.editedEl).html();
-                
+            var map = {};            
+            map[this.editedEl.getAttribute("data-prop")] = $(this.editedEl).val();            
             this.model.set('profile', map);
             this.model.save();
         }

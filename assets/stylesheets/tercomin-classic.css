@@ -28,14 +28,14 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #ccc;
 div.row{padding: 5px;}
 div.profile-text {padding-top: 10px;}
 div.profile-lbl {padding-top: 10px;}
+div.profile-lbl *{float:right;}
 .editable {background-color: #fff;}
 .no-editable {background-color: #f6f6f6;}
-.profile-data {display: inline-block; border:0px; min-width: 180px;}
+.profile-data {display: inline-block; min-width: 180px;}
 .profile-data-html{width:100%;}
-[contentEditable=true]:empty:not(:focus):before{content:attr(data-ph)}
 .profile-div {display: none;}
 .profile-table {table-layout: fixed;}
-
+div.profile-status{text-align: right;}
 
 
 /*employers*/
