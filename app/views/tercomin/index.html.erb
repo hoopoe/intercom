@@ -1,5 +1,5 @@
 <% content_for :header_tags do %>
-  <%= javascript_include_tag 'jquery-1.11.0.min.js', 'underscore-min.js', 'backbone-min.js', 'bootstrap.min.js', 'infiniScroll.js', 'etch.js', 'utils.js', 'topView.js', 'settingsView.js', 'eventsView.js', 'profileView.js', 'employersView.js', 'tercomin.js', :plugin => 'tercomin' %>
+  <%= javascript_include_tag 'underscore-min.js', 'backbone-min.js', 'bootstrap.min.js', 'infiniScroll.js', 'etch.js', 'utils.js', 'topView.js', 'settingsView.js', 'eventsView.js', 'profileView.js', 'employersView.js', 'tercomin.js', :plugin => 'tercomin' %>
   <% if @themeName == 'bootswatch' %>
     <%= stylesheet_link_tag 'bootstrap.min.css', 'bootstrap.css.map', 'etch.css', 'tercomin.css', :plugin => 'tercomin' %>
   <% else %>
@@ -83,8 +83,8 @@
         </div>
         <div class="col-md-8">      
       <%else%>
-        <div class="col-md-1"/>
-        <div class="col-md-11">
+        <div class="col-md-0"/>
+        <div class="col-md-12">
       <%end%>
       <table class="profile-table">
         <tr>
@@ -135,6 +135,7 @@
         <tr>
           <td>          
             <b><%=l(:birthday_title)%>:</b>
+            <!--input type="text" id="datepicker" name="date"/-->
           </td>
           <td>
             <input placeholder="<%=l(:put_birthday_here) %>" class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data profile-data-short" data-button-class="default" data-prop="birthday" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).birthday)) { %><%%- $.parseJSON(profile.data).birthday %><%% } %>'>

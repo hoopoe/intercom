@@ -38,7 +38,8 @@ $(function() {
                 if (!this.isEditable){
                     $(i).attr('disabled', true); 
                 }
-            },this);
+            },this);        
+            // $( "#datepicker" ).datepicker();            
         },
 
         editableClick: function(e) {            

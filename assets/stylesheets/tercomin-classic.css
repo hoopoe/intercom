@@ -64,4 +64,8 @@ div.no-profile-img {display: block;background: url("../images/noavatar.jpg") no-
 div.theme-picker >div:first-child{float:left; line-height: 20px; padding-right: 10px;}
 
 
+/*top menu*/
+input.search-control{height: 20px;margin-top:2px;}
+
+
 
