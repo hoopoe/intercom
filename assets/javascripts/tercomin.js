@@ -60,6 +60,18 @@ $(function() {
         app.topMenuView.activate(view.name);
     };
 
+    app.getDateOfBirth = function(date) {      
+        var list = date.split('.').filter(Boolean);
+        if (list.length > 1) { //todo: refactor            
+            var dd = _.first(list);
+            var mm = _.last(list);
+            var year = (new Date).getFullYear();        
+            return dd + '/' + mm;
+        }else{
+            return date;
+        }
+    }
+
     app.logMeIn = function() {
         if (!window.location.origin) {
             window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');

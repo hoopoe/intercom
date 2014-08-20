@@ -36,7 +36,7 @@ div.profile-lbl *{float:right;}
 .profile-div {display: none;}
 .profile-table {table-layout: fixed;}
 div.profile-status{text-align: right;}
-
+.ui-datepicker-year{display:none;}
 
 /*employers*/
 div.employer-img img {

@@ -33,13 +33,25 @@ $(function() {
         },
 
         renderFinished: function() {
-            _.each($('.profile-data'), function(i) {
-                // $(i).attr('size', $(i).val().length + 5);
+            _.each($('.profile-data'), function(i) {                
                 if (!this.isEditable){
                     $(i).attr('disabled', true); 
                 }
             },this);        
-            // $( "#datepicker" ).datepicker();            
+
+            var view = this; //todo: remove
+
+            $( "#datepicker" ).datepicker({
+             changeYear: false, 
+             dateFormat: 'dd/mm', 
+             onSelect: function(dateText) {
+                console.log("tt");
+                 if (view.isEditable) {
+                    view.editedEl = this; //this -> input                    
+                    view.save(); //read calendar data-prop                    
+                }
+              }
+            });                
         },
 
         editableClick: function(e) {            

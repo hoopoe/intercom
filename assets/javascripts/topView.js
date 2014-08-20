@@ -23,18 +23,17 @@ TopMenuView = Backbone.View.extend({
         $("li.menu-item").removeClass("active");
     },
 
-    selectPage: function(ev) {
-        var urlPath = $(ev.currentTarget).attr('value').toLowerCase();
+    selectPage: function(ev) {        
+        var urlPath = ev.currentTarget.getAttribute('value');
         app.router.navigate(urlPath, {
             trigger: true
-        });
+        });        
     },
 
     search: function(e) {
         if (e.which === 13) {
             var keywords = $(e.target).val();
-
-            //if (keywords === '') return;
+            
             if (keywords === '') {
                 app.router.navigate('/employers', {
                     trigger: true
