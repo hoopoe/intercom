@@ -44,8 +44,7 @@ $(function() {
             $( "#datepicker" ).datepicker({
              changeYear: false, 
              dateFormat: 'dd/mm', 
-             onSelect: function(dateText) {
-                console.log("tt");
+             onSelect: function(dateText) {                
                  if (view.isEditable) {
                     view.editedEl = this; //this -> input                    
                     view.save(); //read calendar data-prop                    
@@ -101,9 +100,20 @@ $(function() {
 
         save: function() {            
             var map = {};            
-            map[this.editedEl.getAttribute("data-prop")] = $(this.editedEl).val();            
+            var prop = this.editedEl.getAttribute("data-prop");
+            var notify =  $(this.editedEl).parent().children('span');            
+            map[prop] = $(this.editedEl).val();            
             this.model.set('profile', map);
-            this.model.save();
+            this.model.save({},{
+                    success: function(model, response) {                                                                        
+                        notify.animate({ opacity: 1 });
+                        notify.fadeTo( 1000, 0 );                    
+                        $('div.etch-editor-panel').remove();                                      
+                    },
+                    error: function(model, response) {                        
+                        $('div.etch-editor-panel').remove();
+                    },
+                });
         }
     });
 });

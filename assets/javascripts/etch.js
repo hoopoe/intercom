@@ -338,7 +338,7 @@
                 // check to see if the click was in an etch tool
                 var target = e.target || e.srcElement;
                 if ($(target).not('.etch-editor-panel, .etch-editor-panel *, .etch-image-tools, .etch-image-tools *').size()) {
-                    // remove editor
+                    // remove editor                    
                     $editor.remove();
 
 

@@ -36,14 +36,15 @@ div.profile-lbl {padding-top: 10px;}
 div.profile-text {padding-top: 10px;}
 .profile-img-save {  margin-top: 10px;  text-align: center;    display: block;}
 .profile-img-save-hide {  display: none;}
-.profile-data {  display: inline-block; border:0px; min-width: 180px;}
+.profile-data {  display: inline-block; border:0px;}
 .profile-status {background-image: url("../images/status_backgr.png"); width: 472px; height: 101px; text-align: center; padding-top: 10px}
-.profile-data-html{width:100%; border:0px;}
+.profile-data-html{width:95%;}
 .profile-status h3 {color: #fff; text-decoration: none;}
 .editable {background-color: #fff;}
 .no-editable {background-color: #f6f6f6;}
 .profile-img {  display: block;  margin-left: auto;  margin-right: auto;  margin-top: 10px;}
 .btn {border-radius:10px; border: 0px solid transparent;}
+.profile-notify{opacity: 0;}
 .ui-datepicker-year{display:none;}
 
 .cv {

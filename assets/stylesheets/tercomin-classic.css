@@ -1,3 +1,12 @@
+body {
+font-family: Verdana, sans-serif;
+font-size: 12px;
+/*color: #484848;*/
+margin: 0;
+padding: 0;
+min-width: 900px;
+}
+
 .navbar{background-image:  linear-gradient(#f6f6f6, #f6f6f6 60%, #f6f6f6); min-height: 10px;}
 .navbar-default { background-color: #f6f6f6;  border-color: #e4e4e4; }
 .navbar-form {margin-top: 0px; margin-bottom: 0px;}
@@ -32,11 +41,13 @@ div.profile-lbl *{float:right;}
 .editable {background-color: #fff;}
 .no-editable {background-color: #f6f6f6;}
 .profile-data {display: inline-block; min-width: 180px;}
-.profile-data-html{width:100%;}
+.profile-data-html{width:95%;}
 .profile-div {display: none;}
 .profile-table {table-layout: fixed;}
 div.profile-status{text-align: right;}
-.ui-datepicker-year{display:none;}
+.profile-notify{opacity: 0;}
+.ui-datepicker-year {display:none;}
+
 
 /*employers*/
 div.employer-img img {
