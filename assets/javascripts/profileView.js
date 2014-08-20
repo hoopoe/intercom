@@ -101,16 +101,25 @@ $(function() {
         save: function() {            
             var map = {};            
             var prop = this.editedEl.getAttribute("data-prop");
-            var notify =  $(this.editedEl).parent().children('span');            
+            var notifyOk = $(this.editedEl).siblings().first();
+            var notifyFail = $(this.editedEl).siblings().last();
+            
             map[prop] = $(this.editedEl).val();            
             this.model.set('profile', map);
+            if (!this.model.isValid()) {                
+                $('div.etch-editor-panel').remove();
+                notifyFail.animate({ opacity: 1 }); 
+                notifyFail.attr('title', this.model.validationError);                
+            }        
+
             this.model.save({},{
                     success: function(model, response) {                                                                        
-                        notify.animate({ opacity: 1 });
-                        notify.fadeTo( 1000, 0 );                    
+                        notifyFail.animate({ opacity: 0 });
+                        notifyOk.animate({ opacity: 1 });
+                        notifyOk.fadeTo( 1000, 0 );                    
                         $('div.etch-editor-panel').remove();                                      
                     },
-                    error: function(model, response) {                        
+                    error: function(model, response) {                           
                         $('div.etch-editor-panel').remove();
                     },
                 });

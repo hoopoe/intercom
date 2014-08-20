@@ -84,7 +84,19 @@ $(function() {
     });
 
     var Employer = Backbone.Model.extend({
-        urlRoot: '/tercomin/api/v1/user_profile/'
+        urlRoot: '/tercomin/api/v1/user_profile/',        
+        validate: function(attrs, options) {
+            
+            if(attrs.profile.room_number){                 
+                if (attrs.profile.room_number.length > 6) {                    
+                  return "Room number should be less than 6 symbols";
+                }  
+                var re = /^[0-9\-]+$/;                
+                if(!re.test(attrs.profile.room_number)) {
+                  return "Room number is invalid /^[0-9\-]+$/";
+                }
+            }                    
+        }
     });
 
     app.employers = new EmployerCollection;
