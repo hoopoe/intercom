@@ -38,7 +38,8 @@ div.profile-text {padding-top: 10px;}
 .profile-img-save-hide {  display: none;}
 .profile-data {  display: inline-block; border:0px;}
 .profile-status {background-image: url("../images/status_backgr.png"); width: 472px; height: 101px; text-align: center; padding-top: 10px}
-.profile-data-html{width:95%; border: 0px;}
+.profile-data-html{width:95%; border: 0px; word-break: break-all;}
+ [contentEditable=true]:empty:not(:focus):before{content:attr(data-ph)}
 .profile-status h3 {color: #fff; text-decoration: none;}
 .editable {background-color: #fff;}
 .no-editable {background-color: #f6f6f6;}

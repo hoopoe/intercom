@@ -53,9 +53,10 @@ $(function() {
             });                
         },
 
-        editableClick: function(e) {            
-            if (this.isEditable) {
-                this.editedEl = e.target;
+        editableClick: function(e) {
+            // console.log(e.currentTarget);
+            if (this.isEditable) {                
+                this.editedEl = e.currentTarget;
                 etch.editableInit.call(this, e);
             }
         },    
@@ -99,12 +100,18 @@ $(function() {
         },
 
         save: function() {            
-            var map = {};            
+            // console.log($(this.editedEl));
+            var map = {};                                
             var prop = this.editedEl.getAttribute("data-prop");
+
             var notifyOk = $(this.editedEl).siblings().first();
             var notifyFail = $(this.editedEl).siblings().last();
             
-            map[prop] = $(this.editedEl).val();            
+            if ($(this.editedEl).is("input"))
+                map[prop] = $(this.editedEl).val();            
+            else
+                map[prop] = $(this.editedEl).html();
+
             this.model.set('profile', map);
             if (!this.model.isValid()) {                
                 $('div.etch-editor-panel').remove();
@@ -113,16 +120,16 @@ $(function() {
             }        
 
             this.model.save({},{
-                    success: function(model, response) {                                                                        
-                        notifyFail.animate({ opacity: 0 });
-                        notifyOk.animate({ opacity: 1 });
-                        notifyOk.fadeTo( 1000, 0 );                    
-                        $('div.etch-editor-panel').remove();                                      
-                    },
-                    error: function(model, response) {                           
-                        $('div.etch-editor-panel').remove();
-                    },
-                });
+                success: function(model, response) {                                                                        
+                    notifyFail.animate({ opacity: 0 });
+                    notifyOk.animate({ opacity: 1 });
+                    notifyOk.fadeTo( 1000, 0 );                    
+                    $('div.etch-editor-panel').remove();                                      
+                },
+                error: function(model, response) {                           
+                    $('div.etch-editor-panel').remove();
+                },
+            });
         }
     });
 });

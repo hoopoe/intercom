@@ -159,7 +159,7 @@
         <div class="circle"/>
     </div>
     <div class="col-md-10 profile-text">
-      <textarea placeholder='<%=l(:put_summary_here) %>' rows="7" class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data-html" data-button-class="all" data-prop="summary"><%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).summary)) { %><%%= $.parseJSON(profile.data).summary %><%% } %></textarea>
+      <div contentEditable=true data-ph='<%=l(:put_summary_here) %>' class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data-html" data-button-class="all" data-prop="summary"><%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).summary)) { %><%%= $.parseJSON(profile.data).summary %><%% } %></div>
       <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
     </div>
   </div>
@@ -171,7 +171,7 @@
         <div class="circle"/>
     </div>
     <div class="col-md-10 profile-text">
-      <textarea placeholder='<%=l(:put_skills_here) %>' rows="7" class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data-html" data-button-class="all" data-prop="skills"><%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).skills)) { %><%%= $.parseJSON(profile.data).skills %><%% } %></textarea>
+      <div contentEditable=true data-ph='<%=l(:put_skills_here) %>' class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data-html" data-button-class="all" data-prop="skills"><%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).skills)) { %><%%= $.parseJSON(profile.data).skills %><%% } %></div>
       <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
     </div>
   </div>
