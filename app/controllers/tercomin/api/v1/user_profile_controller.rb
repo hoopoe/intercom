@@ -139,13 +139,13 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
   end
 
   private
-  def is_inspecial_group
-    @userHasPermision = false
-    editGroups = Group.where(:lastname => ['hr', 'lt-prj-tercomin-pm', 'lt-prj-tercom-website-pm'])
-    editGroups.each do |i|
-      @userHasPermision |= User.logged.in_group(i).any?
+  def is_inspecial_group    
+    if !User.current.logged?
+      return false
     end
-    return @userHasPermision
+    currentGroups = User.current.groups.map{ |o| o.lastname }
+    ig = currentGroups & ['hr', 'lt-prj-tercomin-pm', 'lt-prj-tercom-website-pm']  
+    return ig.any?
   end
 
   def authorize_self_and_manager
