@@ -46,14 +46,16 @@ div.profile-text {padding-top: 10px;}
 .profile-notify{opacity: 0;}
 .ui-datepicker-year{display:none;}
 
-.cv {
+/*.cv {
   width: 81px;
   height: 101px;
   display: block;
   background-image: url("../images/cv.png"); 
   margin-left: 0px;
   margin-right: auto;  
-}
+}*/
+
+.cv{display:none;}
 
 /*employers*/
 div.employer-img img {

@@ -108,6 +108,16 @@
           </td>
         </tr>
         <tr>
+          <td >
+            <b><%=l(:project_extra_title)%>:</b>
+          </td>
+          <td>
+            <input placeholder="<%=l(:put_projects_extra_here) %>" class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data" data-button-class="default" data-prop="project_extra" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).project_extra)) { %><%%- $.parseJSON(profile.data).project_extra %><%% } %>'>
+            </input>
+            <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
+          </td>
+        </tr>
+        <tr>
           <td>
             <b><%=l(:position_title)%>:</b>
           </td>
@@ -141,7 +151,7 @@
             <b><%=l(:birthday_title)%>:</b>           
           </td>
           <td>
-             <input type="text" id="datepicker" data-prop="birthday" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).birthday)) { %><%%- app.getDateOfBirth($.parseJSON(profile.data).birthday) %><%% } %>'/>      
+             <input type="text" id="datepicker" class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data" data-prop="birthday" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).birthday)) { %><%%- app.getDateOfBirth($.parseJSON(profile.data).birthday) %><%% } %>'/>      
              <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
           </td>
         </tr>

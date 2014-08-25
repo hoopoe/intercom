@@ -21,6 +21,7 @@ ru:
   events: "События"
   settings: "Мои настройки"
   put_projects_here: "Ваши проекты"
+  put_projects_extra_here: "Ваши доп. проекты"  
   put_position_here: "Ваша должность"
   put_room_number_here: "Номер Вашей комнаты"
   put_birthday_here:  "Ваш день рождения (дд.мм)"

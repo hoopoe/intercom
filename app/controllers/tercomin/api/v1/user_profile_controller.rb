@@ -139,6 +139,15 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
   end
 
   private
+  def is_inspecial_group
+    @userHasPermision = false
+    editGroups = Group.where(:lastname => ['hr', 'lt-prj-tercomin-pm', 'lt-prj-tercom-website-pm'])
+    editGroups.each do |i|
+      @userHasPermision |= User.logged.in_group(i).any?
+    end
+    return @userHasPermision
+  end
+
   def authorize_self_and_manager
     if params.has_key?(:id)
       if params[:id] == "logged"
@@ -147,11 +156,11 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
         if User.current.id == params[:id].to_i
           allowed = true
         else
-          allowed = User.current.allowed_to?(:update_profile, nil, :global => true)
+          allowed = User.current.allowed_to?(:update_profile, nil, :global => true) | is_inspecial_group()
         end
       end
     else
-      allowed = User.current.allowed_to?(:update_profile, nil, :global => true)
+      allowed = User.current.allowed_to?(:update_profile, nil, :global => true) | is_inspecial_group()
     end
 
     if allowed
