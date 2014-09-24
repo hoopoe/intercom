@@ -14,4 +14,10 @@ class TercominController < ApplicationController
   		end
   	end
   end
+
+  def show
+    data = "generate word file"
+    send_data( data, :filename => "cv.txt" )    
+  end
 end
+

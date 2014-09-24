@@ -1,4 +1,5 @@
 get 'tercomin', :to => 'tercomin#index'
+get 'tercomin/:id', :to => 'tercomin#show'
 
 namespace :tercomin do
   namespace :api do
