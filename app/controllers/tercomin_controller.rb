@@ -15,9 +15,17 @@ class TercominController < ApplicationController
   	end
   end
 
-  def show
-    data = "generate word file"
-    send_data( data, :filename => "cv.txt" )    
+  def show    
+    filename = template_tag("cv.docx", :plugin => 'tercomin')
+    # send_data( data, :filename => "cv.txt" )    
+    send_file filename, :disposition => 'attachment'
+  end
+
+private
+  def template_tag(source, options={})
+    if plugin = options.delete(:plugin)      
+      source = "#{Rails.root}/public/plugin_assets/#{plugin}/images/#{source}"    
+    end
+    return source
   end
 end
-
