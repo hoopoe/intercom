@@ -58,7 +58,7 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
       else
         users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname,
          user_profile_t.data, user_profile_t.settings,
-       user_profile_t.avatar_file_name avatar_url")
+         user_profile_t.avatar_file_name avatar_url")
         .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
 
         if (params[:id] == "logged")
@@ -69,12 +69,10 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
 
         if users.exists?
           set_avatars(users)
-          u = users.first
-          # u['editable'] = authorize_self_and_manager()
+          u = users.first          
           @response = {:profile => u.attributes, :editable => authorize_self_and_manager()}
           respond_with @response
-        else
-          # respond_with User.find_by_id(id)
+        else          
           render_403
         end
       end
