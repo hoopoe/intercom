@@ -1,4 +1,5 @@
-require 'zip'
+require 'zip' #ms word generation
+require 'nokogiri' #ms word generation
 
 class TercominController < ApplicationController  
 	before_filter :find_user_profile, :only => :show
@@ -21,7 +22,7 @@ class TercominController < ApplicationController
     result_file_name = "#{@user.lastname}_#{@user.firstname}.docx"
     @user_profile = UserProfile.find_or_create_by_user_id(params[:id])      
     filename = template_tag("cv.docx", :plugin => 'tercomin')
-    zf = Zip::File.new(filename)
+    zf = Zip::File.new(filename)    
 
     if @user_profile.respond_to? :data
       pd = JSON.parse(@user_profile.data)
@@ -36,21 +37,28 @@ class TercominController < ApplicationController
               doc = doc.gsub("[Firstname]", @user.firstname)   
               doc = doc.gsub("[Lastname]", @user.lastname)
               doc = doc.gsub("[Position]", pd['position']) if pd['position'].present?
-              doc = doc.gsub("[Summary]", pd['summary']) if pd['summary'].present?
-              doc = doc.gsub("[Expertise]", pd['skills']) if pd['skills'].present?
-              doc = doc.gsub("[Work_From_Year]", "2013")
-              doc = doc.gsub("[Work_To_Year]", "2014")
-              doc = doc.gsub("[Work_Name]", "latin-tercom")
-              doc = doc.gsub("[Work_Project]", "LiftEye")
-              doc = doc.gsub("[Work_Position]", "Developer")
-              doc = doc.gsub("[Work_Resp]", "c++ dev")
-              doc = doc.gsub("[Work_Summary]", "Working hard")
-              doc = doc.gsub("[EDU_From_Year]", "2002")
-              doc = doc.gsub("[EDU_To_Year]", "2008")
-              doc = doc.gsub("[EDU_Summary]", "Spbu")
-              doc = doc.gsub("[Certificates]", "MS")
-              doc = doc.gsub("[Languages]", "intermediate")
-              doc = doc.gsub("[Languages_Extra]", "Suomi primary")
+              if pd['summary'].present?
+                tmp = Nokogiri::HTML(pd['summary'].gsub(/>\s+</, "><"))                
+                doc = doc.gsub("[Summary]", tmp.xpath("//text()").to_s)
+              end
+              if pd['skills'].present?
+                tmp = Nokogiri::HTML(pd['skills'].gsub(/>\s+</, "><"))                
+                doc = doc.gsub("[Skills]", tmp.xpath("//text()").to_s)
+              end              
+
+              # doc = doc.gsub("[Work_From_Year]", "2013")
+              # doc = doc.gsub("[Work_To_Year]", "2014")
+              # doc = doc.gsub("[Work_Name]", "latin-tercom")
+              # doc = doc.gsub("[Work_Project]", "LiftEye")
+              # doc = doc.gsub("[Work_Position]", "Developer")
+              # doc = doc.gsub("[Work_Resp]", "c++ dev")
+              # doc = doc.gsub("[Work_Summary]", "Working hard")
+              # doc = doc.gsub("[EDU_From_Year]", "2002")
+              # doc = doc.gsub("[EDU_To_Year]", "2008")
+              # doc = doc.gsub("[EDU_Summary]", "Spbu")
+              # doc = doc.gsub("[Certificates]", "MS")
+              # doc = doc.gsub("[Languages]", "intermediate")
+              # doc = doc.gsub("[Languages_Extra]", "Suomi primary")
               out.write doc        
             else
               out.write e.get_input_stream.read
