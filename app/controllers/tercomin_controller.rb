@@ -39,11 +39,11 @@ class TercominController < ApplicationController
               doc = doc.gsub("[Position]", pd['position']) if pd['position'].present?
               if pd['summary'].present?
                 tmp = Nokogiri::HTML(pd['summary'].gsub(/>\s+</, "><"))                
-                doc = doc.gsub("[Summary]", tmp.xpath("//text()").to_s)
+                doc = doc.force_encoding("UTF-8").gsub("[Summary]", tmp.xpath("//text()").to_s)
               end
               if pd['skills'].present?
                 tmp = Nokogiri::HTML(pd['skills'].gsub(/>\s+</, "><"))                
-                doc = doc.gsub("[Skills]", tmp.xpath("//text()").to_s)
+                doc = doc.force_encoding("UTF-8").gsub("[Skills]", tmp.xpath("//text()").to_s)
               end              
 
               # doc = doc.gsub("[Work_From_Year]", "2013")
