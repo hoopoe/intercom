@@ -62,34 +62,40 @@ $(function() {
             }
         },   
 
-        addPosition: function(e) {            
-            var Position = Backbone.Model.extend({
-                schema: {
-                    name: 'Text'
-                }
-            });
-
+        addPosition: function(e) {           
             var PositionForm = Backbone.Form.extend({
-                template: _.template($('#position-template').html()),
+                template: _.template($('#position-template').html()),                 
+                schema: {                    
+                    companyName: { type: 'Text', validators: ['required'] },
+                    from: 'Date',
+                    to: 'Date',                                        
+                    project: { type: 'Text', validators: ['required'] },
+                    position: { type: 'Text', validators: ['required'] },
+                    resp: { type: 'Text', validators: ['required'] },
+                    techSummary: { type: 'Text', validators: ['required'] }
+                },            
+                data: {                  
+                  companyName: 'Lanit-Tercom',                  
+                  from: '2013-01-24',
+                  to: '2014-02-22',
+                  project: '',
+                  position: '',
+                  resp: '',
+                  techSummary: ''
+                },
                 events: {                    
-                    'click .add-position-cancel': 'cancel'
+                    'click .add-position-cancel': 'cancel',
+                    'click .add-position-submit': 'submit'
                 },   
-                cancel: function(e) {
+                cancel: function(e) {                    
+                    
+                },
+                submit: function(e) {                    
                     console.log(this.getValue());
-                }             
-            });
-            var position = new Position();
-            position.set("name", "bla bla ");
-            var form = new PositionForm({
-                model: position
-            }).render();
-
-            $('.positions-ph').append(form.el);
-
-            // $(form.el.'add-position-cancel').on('click', function(){
-            //     console.log('cancel'); 
-            //     console.log(form.getValue()); 
-            // });
+                }              
+            });            
+            var form = new PositionForm().render();
+            $('.positions-ph').append(form.el);        
         },
 
         dragoverHandler: function(e) {
