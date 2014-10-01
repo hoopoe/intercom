@@ -15,7 +15,8 @@ $(function() {
             'mousedown .editable': 'editableClick',
             'dragover .profile-div': 'dragoverHandler',
             'drop .profile-div': 'dropHandler',
-            'click .profile-img-save': 'profileImgSave'
+            'click .profile-img-save': 'profileImgSave',
+            'click .add-position': 'addPosition'
         },
 
         initialize: function() {
@@ -59,7 +60,37 @@ $(function() {
                 this.editedEl = e.currentTarget;
                 etch.editableInit.call(this, e);
             }
-        },    
+        },   
+
+        addPosition: function(e) {            
+            var Position = Backbone.Model.extend({
+                schema: {
+                    name: 'Text'
+                }
+            });
+
+            var PositionForm = Backbone.Form.extend({
+                template: _.template($('#position-template').html()),
+                events: {                    
+                    'click .add-position-cancel': 'cancel'
+                },   
+                cancel: function(e) {
+                    console.log(this.getValue());
+                }             
+            });
+            var position = new Position();
+            position.set("name", "bla bla ");
+            var form = new PositionForm({
+                model: position
+            }).render();
+
+            $('.positions-ph').append(form.el);
+
+            // $(form.el.'add-position-cancel').on('click', function(){
+            //     console.log('cancel'); 
+            //     console.log(form.getValue()); 
+            // });
+        },
 
         dragoverHandler: function(e) {
             e.preventDefault();            

@@ -1,5 +1,5 @@
 <% content_for :header_tags do %>
-  <%= javascript_include_tag 'underscore-min.js', 'backbone-min.js', 'bootstrap.min.js', 'infiniScroll.js', 'etch.js', 'utils.js', 'topView.js', 'settingsView.js', 'eventsView.js', 'profileView.js', 'employersView.js', 'tercomin.js', :plugin => 'tercomin' %>
+  <%= javascript_include_tag 'underscore-min.js', 'backbone-min.js', 'backbone-forms.min.js', 'bootstrap.min.js', 'infiniScroll.js', 'etch.js', 'utils.js', 'topView.js', 'settingsView.js', 'eventsView.js', 'profileView.js', 'employersView.js', 'tercomin.js', :plugin => 'tercomin' %>
   <% if @themeName == 'bootswatch' %>
     <%= stylesheet_link_tag 'bootstrap.min.css', 'bootstrap.css.map', 'etch.css', 'tercomin.css', :plugin => 'tercomin' %>
   <% else %>
@@ -64,7 +64,6 @@
     Event item
   </div>
 </script>
-
 <script type="text/template" id="profile-template">
   <div class="row">
     <div class="col-md-12">
@@ -184,11 +183,24 @@
       <div contentEditable=true data-ph='<%=l(:put_skills_here) %>' class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data-html" data-button-class="all" data-prop="skills"><%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).skills)) { %><%%= $.parseJSON(profile.data).skills %><%% } %></div>
       <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
     </div>
-  </div>
-  
+  </div>  
   <div class="line-separator"/>
-</script>
 
+  <div class="row positions-ph">
+    <a class="add-position">
+      <i class="glyphicon glyphicon-plus"/>
+      Add Position
+    </a>
+  </div>
+
+</script>
+<script type="text/html" id="position-template" >
+  <form>            
+    <div data-fields="name"></div>    
+    <a class="add-position-cancel">Cancel</a>  
+    <a class="add-position-submit">Submit</a>
+  </form>
+</script>
 <% if @themeName == 'bootswatch' %>  
   <%= render :partial => 'employers' %>
 <%else%>  

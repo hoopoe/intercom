@@ -83,7 +83,7 @@ $(function() {
         url: '/tercomin/api/v1/user_profile'
     });
 
-    var Employer = Backbone.Model.extend({
+    app.Employer = Backbone.Model.extend({
         urlRoot: '/tercomin/api/v1/user_profile/',        
         validate: function(attrs, options) {
             
@@ -124,7 +124,7 @@ $(function() {
             } else {
                 req.id = "logged";
             };
-            app.employer = new Employer(req);
+            app.employer = new app.Employer(req);
             app.employer.fetch({
                 error: function(m, r) {
                     if (r.status === 422) { //not logged
@@ -179,7 +179,7 @@ $(function() {
             } else {
                 req.id = "logged";
             };
-            app.employer = new Employer(req);
+            app.employer = new app.Employer(req);
             app.employer.fetch({
                 error: function(m, r) {
                     if (r.status === 422) { //not logged
