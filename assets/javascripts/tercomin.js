@@ -61,6 +61,8 @@ $(function() {
       }
     };
 
+
+
     Backbone.View.prototype.close = function() {
         this.remove();
         this.unbind();
@@ -105,6 +107,14 @@ $(function() {
         }
         window.location = window.location.origin + '/login?back_url=' + window.location.origin + '/tercomin';
     };
+
+    app.getHash = function() {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for( var i=0; i < 8; i++ )
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        return text;
+    }
 
     var EmployerCollection = Backbone.Collection.extend({
         url: '/tercomin/api/v1/user_profile'

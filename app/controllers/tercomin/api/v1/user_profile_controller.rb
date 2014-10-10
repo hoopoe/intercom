@@ -57,7 +57,7 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
         respond_with "User is not logged", status: :unprocessable_entity
       else
         users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname,
-         user_profile_t.data, user_profile_t.settings,
+         user_profile_t.data, user_profile_t.settings, user_profile_t.positions,
          user_profile_t.avatar_file_name avatar_url")
         .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
 
@@ -96,25 +96,36 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
     end
 
     if(params.has_key?(:profile))
-      if profile.data.present?
-        data = JSON.parse(profile.data)
-      else
-        data = Hash.new
+      #profile data
+      if params[:profile][:data].present?
+        if profile.data.present?
+          data = JSON.parse(profile.data)
+        else
+          data = Hash.new
+        end
+        data.merge!(JSON.parse(params[:profile][:data]));
+        profile.data = data.to_json
       end
-      data.merge!(params[:profile]);
-      profile.data = data.to_json
-
-      if profile.settings.present?
-        settings = JSON.parse(profile.settings)
-      else
-        settings = Hash.new
-      end
-
+      #profile settings
       if params[:profile][:settings].present?
-        settings['theme'] = JSON.parse(params[:profile][:settings])['theme']
+        if profile.settings.present?
+          settings = JSON.parse(profile.settings)
+        else
+          settings = Hash.new
+        end      
+        settings.merge!(JSON.parse(params[:profile][:settings]));
+        profile.settings = settings.to_json
       end
-      profile.settings = settings.to_json
-
+      #profile positions
+      if params[:profile][:positions].present?
+        if profile.positions.present?
+          positions = JSON.parse(profile.positions)
+        else
+          positions = Hash.new
+        end      
+        positions.merge!(JSON.parse(params[:profile][:positions]));
+        profile.positions = positions.to_json
+      end
     end
 
     if(params.has_key?(:avatar))

@@ -34,7 +34,18 @@ $(function() {
             return this;
         },
         onPositionSubmit: function(data) {
-            console.log(data);
+            var hash = app.getHash();            
+            var map = {};
+            map[hash] = data;            
+            this.model.set('profile', {'positions': JSON.stringify(map)} );
+            this.model.save({}, {
+                success: function(model, response) {                                    
+                    console.log("todo: ok");
+                },
+                error: function(model, response) {               
+                    console.log("todo: failed");
+                }
+            });
         },
         renderFinished: function() {
             _.each($('.profile-data'), function(i) {                
@@ -44,7 +55,6 @@ $(function() {
             },this);        
 
             var view = this; //todo: remove
-
             $( "#datepicker" ).datepicker({
              changeYear: false, 
              dateFormat: 'dd/mm', 
@@ -57,8 +67,7 @@ $(function() {
             });                
         },
 
-        editableClick: function(e) {
-            // console.log(e.currentTarget);
+        editableClick: function(e) {            
             if (this.isEditable) {                
                 this.editedEl = e.currentTarget;
                 etch.editableInit.call(this, e);
@@ -71,18 +80,14 @@ $(function() {
                 events: {                    
                     'click .add-position-cancel': 'cancel',
                     'click .add-position-submit': 'submit'
-                },   
-                initialize: function() {
-                    // console.log("init");
-                    // console.log(this.$el);
-                },
+                },                
                 render: function(){                    
                     this.$el.html( this.template );                    
                     rivets.bind(this.el, { position: this.model } )
                     return this;
                 },
                 cancel: function(e) {                    
-                    console.log("cancel");
+                    console.log("todo: cancel");
                 },
                 submit: function(e) {
                     Backbone.positionEvent.trigger('positionSubmit', this.model.toJSON());                                    
@@ -111,8 +116,7 @@ $(function() {
             e.originalEvent.preventDefault();
 
             e.originalEvent.dataTransfer.dropEffect = 'copy';
-            this.pictureFile = e.originalEvent.dataTransfer.files[0];
-            // console.log(this.pictureFile);
+            this.pictureFile = e.originalEvent.dataTransfer.files[0];            
 
             // Read the image file from the local file system and display it in the img tag
             var reader = new FileReader();
@@ -141,7 +145,6 @@ $(function() {
         },
 
         save: function() {            
-            // console.log($(this.editedEl));
             var map = {};                                
             var prop = this.editedEl.getAttribute("data-prop");
 
@@ -152,8 +155,8 @@ $(function() {
                 map[prop] = $(this.editedEl).val();            
             else
                 map[prop] = $(this.editedEl).html();
-
-            this.model.set('profile', map);
+            
+            this.model.set('profile', {'data': JSON.stringify(map) });
             if (!this.model.isValid()) {                
                 $('div.etch-editor-panel').remove();
                 notifyFail.animate({ opacity: 1 }); 
