@@ -2,6 +2,8 @@ var app = app || {};
 
 $(function() {
 
+    Backbone.positionEvent = _.extend({}, Backbone.Events);
+
     ProfileView = Backbone.View.extend({
         name: "mypage",
 
@@ -20,19 +22,20 @@ $(function() {
         },
 
         initialize: function() {
+            Backbone.positionEvent.on('positionSubmit', this.onPositionSubmit, this);
             _.bindAll(this, 'save');
             this.model.bind('save', this.save);
             if (this.model.get('editable'))
                 this.isEditable = true;
-        },
-
-
+        },        
         render: function() {
             this.$el.html('');
             this.$el.html(this.template(this.model.toJSON()));
             return this;
         },
-
+        onPositionSubmit: function(data) {
+            console.log(data);
+        },
         renderFinished: function() {
             _.each($('.profile-data'), function(i) {                
                 if (!this.isEditable){
@@ -63,38 +66,39 @@ $(function() {
         },   
 
         addPosition: function(e) {           
-            var PositionForm = Backbone.Form.extend({
-                template: _.template($('#position-template').html()),                 
-                schema: {                    
-                    companyName: { type: 'Text', validators: ['required'] },
-                    from: 'Date',
-                    to: 'Date',                                        
-                    project: { type: 'Text', validators: ['required'] },
-                    position: { type: 'Text', validators: ['required'] },
-                    resp: { type: 'Text', validators: ['required'] },
-                    techSummary: { type: 'Text', validators: ['required'] }
-                },            
-                data: {                  
-                  companyName: 'Lanit-Tercom',                  
-                  from: '2013-01-24',
-                  to: '2014-02-22',
-                  project: '',
-                  position: '',
-                  resp: '',
-                  techSummary: ''
-                },
+            var PositionView = Backbone.View.extend({
+                template: _.template($('#position-template').html()),                            
                 events: {                    
                     'click .add-position-cancel': 'cancel',
                     'click .add-position-submit': 'submit'
                 },   
-                cancel: function(e) {                    
-                    
+                initialize: function() {
+                    // console.log("init");
+                    // console.log(this.$el);
                 },
-                submit: function(e) {                    
-                    console.log(this.getValue());
+                render: function(){                    
+                    this.$el.html( this.template );                    
+                    rivets.bind(this.el, { position: this.model } )
+                    return this;
+                },
+                cancel: function(e) {                    
+                    console.log("cancel");
+                },
+                submit: function(e) {
+                    Backbone.positionEvent.trigger('positionSubmit', this.model.toJSON());                                    
                 }              
             });            
-            var form = new PositionForm().render();
+            
+            var position = new Backbone.Model({
+                companyName: 'Joe',
+                from: new Date(), 
+                to: new Date(),
+                project: "project",
+                position: "position",
+                resp: "resp",
+                techSummary: "techSummary"
+            });
+            var form = new PositionView({model: position}).render();            
             $('.positions-ph').append(form.el);        
         },
 

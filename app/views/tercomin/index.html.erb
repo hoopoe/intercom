@@ -1,5 +1,5 @@
 <% content_for :header_tags do %>
-  <%= javascript_include_tag 'underscore-min.js', 'backbone-min.js', 'backbone-forms.min.js', 'bootstrap.min.js', 'infiniScroll.js', 'etch.js', 'utils.js', 'topView.js', 'settingsView.js', 'eventsView.js', 'profileView.js', 'employersView.js', 'tercomin.js', :plugin => 'tercomin' %>
+  <%= javascript_include_tag 'underscore-min.js', 'backbone-min.js', 'rivets.min.js', 'bootstrap.min.js', 'infiniScroll.js', 'etch.js', 'utils.js', 'topView.js', 'settingsView.js', 'eventsView.js', 'profileView.js', 'employersView.js', 'tercomin.js', :plugin => 'tercomin' %>
   <% if @themeName == 'bootswatch' %>
     <%= stylesheet_link_tag 'bootstrap.min.css', 'bootstrap.css.map', 'etch.css', 'tercomin.css', :plugin => 'tercomin' %>
   <% else %>
@@ -196,9 +196,17 @@
 </script>
 <script type="text/html" id="position-template" >
   <form>            
-    <div data-fields="companyName,from,to"></div>    
-    <a class="add-position-submit">Submit</a>
-    <a class="add-position-cancel">Cancel</a>      
+    <div>      
+      <input type="text" rv-value="position:companyName"/>
+      <input type="text" rv-value="position:from"/>
+      <input type="text" rv-value="position:to"/>
+      <input type="text" rv-value="position:project"/>
+      <input type="text" rv-value="position:position"/>
+      <input type="text" rv-value="position:resp"/>
+      <input type="text" rv-value="position:techSummary"/>
+      <a class="add-position-submit">Submit</a>
+      <a class="add-position-cancel">Cancel</a>
+    </div>    
   </form>
 </script>
 <% if @themeName == 'bootswatch' %>  
