@@ -61,8 +61,6 @@ $(function() {
       }
     };
 
-
-
     Backbone.View.prototype.close = function() {
         this.remove();
         this.unbind();
@@ -98,7 +96,7 @@ $(function() {
             return dd + '/' + mm;
         }else{
             return date;
-        }
+    }
     }
 
     app.logMeIn = function() {
@@ -120,6 +118,12 @@ $(function() {
         url: '/tercomin/api/v1/user_profile'
     });
 
+    var PositionCollection = Backbone.Collection.extend({        
+    });    
+
+    app.Position = Backbone.Model.extend({
+    });
+
     app.Employer = Backbone.Model.extend({
         urlRoot: '/tercomin/api/v1/user_profile/',        
         validate: function(attrs, options) {
@@ -135,6 +139,35 @@ $(function() {
             }                    
         }
     });
+
+    app.Employer.prototype.parse = function(response) {              
+        var attr = response && _.clone(response) || {};        
+        if (response && response.profile.positions) {
+            var positions = $.parseJSON(response.profile.positions);
+            var items = [];             
+            for (var key in positions) {
+               items.push(positions[key]);                
+            }
+            attr["positions_gen"] = items;             
+            // delete response.profile.positions;
+        }
+        if (response && response.profile.data) {
+            var data = $.parseJSON(response.profile.data);
+            for (var key in data) {    
+                if (data.hasOwnProperty(key)) {                
+                    attr[ key + "_gen" ] = data[key];
+                }                                      
+            }
+        }
+        if (response && response.profile) {
+            attr[ "id_gen" ] = "tercomin/" + response.profile.id;
+            attr[ "firstname_gen" ] = response.profile.firstname;
+            attr[ "lastname_gen" ] = response.profile.lastname;
+            attr[ "mail_gen" ] = response.profile.mail;
+        }
+        console.log(attr);
+        return attr;        
+    };
 
     app.employers = new EmployerCollection;
 

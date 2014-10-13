@@ -70,11 +70,7 @@
       <% if @themeName == 'bootswatch' %>
         <div class="col-md-4">
           <div class="profile-div">
-            <%% if (profile.avatar_url === "noavatar") { %>
-              <img class="profile-img no-profile-img"/>
-            <%% } else {%>
-              <img src=<%%- profile.avatar_url %> alt="" class="profile-img" />
-            <%% } %>
+            <img rv-if="user_p:profile.avatar_url!='noavatar'" rv-src="user_p:profile.avatar_url" class="profile-img"/>            
             <div class="profile-img-save profile-img-save-hide">
               <button type="button" class="btn btn-primary">Save</button>
             </div>
@@ -88,21 +84,20 @@
       <table class="profile-table">
         <tr>
           <td colspan="2">
-            <div class="profile-status">
-              <h3><%%-profile.lastname %> <%%-profile.firstname%></h3>
+            <div class="profile-status">              
+              <h3>{ user_p:lastname_gen } {user_p:firstname_gen }</h3>
             </div>
           </td>
-          <td>              
-            <a href='tercomin/<%%- profile.id %>' class="btn cv"/>                        
+          <td>                  
+            <a rv-href="user_p:id_gen" class="btn cv"/>            
           </td>
         </tr>
         <tr>
           <td >
             <b><%=l(:project_title)%>:</b>
           </td>
-          <td>
-            <input placeholder="<%=l(:put_projects_here) %>" class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data" data-button-class="default" data-prop="project" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).project)) { %><%%- $.parseJSON(profile.data).project %><%% } %>'>
-            </input>
+          <td>                           
+            <input type="text" data-prop="project" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" placeholder="<%=l(:put_projects_here) %>" rv-value="user_p:project_gen"/>
             <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
           </td>
         </tr>
@@ -111,8 +106,7 @@
             <b><%=l(:project_extra_title)%>:</b>
           </td>
           <td>
-            <input placeholder="<%=l(:put_projects_extra_here) %>" class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data" data-button-class="default" data-prop="project_extra" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).project_extra)) { %><%%- $.parseJSON(profile.data).project_extra %><%% } %>'>
-            </input>
+             <input placeholder="<%=l(:put_projects_extra_here) %>" data-prop="project_extra" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" rv-value="user_p:project_extra_gen"/>            
             <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
           </td>
         </tr>
@@ -121,8 +115,7 @@
             <b><%=l(:position_title)%>:</b>
           </td>
           <td>
-            <input placeholder="<%=l(:put_position_here) %>" class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data" data-button-class="default" data-prop="position" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).position)) { %><%%- $.parseJSON(profile.data).position %><%% } %>'>
-            </input>
+            <input placeholder="<%=l(:put_position_here) %>" data-prop="position" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" rv-value='user_p:position_gen'/>            
             <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
           </td>
         </tr>
@@ -130,8 +123,8 @@
           <td>
             <b><%=l(:email_title)%>:</b>
           </td>
-          <td>
-            <%%- profile.mail%>
+          <td>            
+            { user_p:mail_gen }            
           </td>
         </tr>
         <tr>
@@ -139,8 +132,7 @@
             <b><%=l(:room_number)%>:</b>
           </td>
           <td>
-            <input placeholder="<%=l(:put_room_number_here) %>" class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data profile-data-short" data-button-class="default" maxlength="6" data-prop="room_number" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).room_number)) { %><%%- $.parseJSON(profile.data).room_number %><%% } %>'>
-            </input>
+            <input placeholder="<%=l(:put_room_number_here) %>" maxlength="6" data-prop="room_number" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" rv-value='user_p:room_number_gen'/>            
             <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
             <span class="glyphicon glyphicon-floppy-remove profile-notify"/>
           </td>          
@@ -150,7 +142,7 @@
             <b><%=l(:birthday_title)%>:</b>           
           </td>
           <td>
-             <input type="text" id="datepicker" class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data" data-prop="birthday" value='<%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).birthday)) { %><%%- app.getDateOfBirth($.parseJSON(profile.data).birthday) %><%% } %>'/>      
+             <input type="text" id="datepicker" data-prop="birthday" class="profile-data" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" rv-value='user_p:birthday_gen'/>      
              <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
           </td>
         </tr>
@@ -168,7 +160,8 @@
         <div class="circle"/>
     </div>
     <div class="col-md-10 profile-text">
-      <div contentEditable=true data-ph='<%=l(:put_summary_here) %>' class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data-html" data-button-class="all" data-prop="summary"><%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).summary)) { %><%%= $.parseJSON(profile.data).summary %><%% } %></div>
+      <div contentEditable=true data-ph='<%=l(:put_summary_here) %>' data-prop="summary" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" data-button-class="all" data-prop="summary" rv-html="user_p:summary_gen">          
+      </div>
       <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
     </div>
   </div>
@@ -180,20 +173,40 @@
         <div class="circle"/>
     </div>
     <div class="col-md-10 profile-text">
-      <div contentEditable=true data-ph='<%=l(:put_skills_here) %>' class="<%% if (editable) {%>editable<%% } else {%>no-editable<%%}%> profile-data-html" data-button-class="all" data-prop="skills"><%% if (($.parseJSON(profile.data) !== null) && ($.parseJSON(profile.data).skills)) { %><%%= $.parseJSON(profile.data).skills %><%% } %></div>
+       <div contentEditable=true data-ph='<%=l(:put_skills_here) %>' data-prop="skills" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" data-button-class="all" data-prop="skills" rv-html="user_p:skills_gen"></div>
       <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
     </div>
-  </div>  
+  </div>
+  <div class="line-separator"/>  
+  
+  <div class="row">
+    <div class="col-md-2 position-lbl">        
+        <span><%=l(:positions_title)%></span>
+        <div class="circle"/>
+    </div>
+    <div class="col-md-9 position-text">          
+      <ul>
+        <li rv-each-todo="user_p:positions_gen">          
+          <span>{ todo.companyName }</span>
+        </li>
+      <ul>
+      <div class="row positions-ph">        
+      </div>
+    </div>
+    <div class="col-md-1 position-status">  
+      <a class="add-position">
+        <i class="glyphicon glyphicon-plus">
+            Add Position
+        </i>  
+      </a>
+    </div>
+  </div>    
   <div class="line-separator"/>
 
-  <div class="row positions-ph">
-    <a class="add-position">
-      <i class="glyphicon glyphicon-plus"/>
-      Add Position
-    </a>
-  </div>
-
+  
+     
 </script>
+
 <script type="text/html" id="position-template" >
   <form>            
     <div>      

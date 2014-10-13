@@ -29,14 +29,23 @@ $(function() {
                 this.isEditable = true;
         },        
         render: function() {
-            this.$el.html('');
-            this.$el.html(this.template(this.model.toJSON()));
+            this.$el.html('')
+            this.$el.html( this.template );
+            // console.log(this.model.toJSON());
+
+            // console.log(this.model);
+            // rivets.bind(this.el, { t_profile: this.model.get('profile') } );
+            rivets.bind(this.el, { user_p: this.model } );
+
+            // this.$el.html(this.template(this.model.toJSON()));
+            
             return this;
         },
         onPositionSubmit: function(data) {
-            var hash = app.getHash();            
+            var hash = app.getHash();  
+            data.set('guid', hash);
             var map = {};
-            map[hash] = data;            
+            map[hash] = data.toJSON();            
             this.model.set('profile', {'positions': JSON.stringify(map)} );
             this.model.save({}, {
                 success: function(model, response) {                                    
@@ -67,7 +76,7 @@ $(function() {
             });                
         },
 
-        editableClick: function(e) {            
+        editableClick: function(e) {     
             if (this.isEditable) {                
                 this.editedEl = e.currentTarget;
                 etch.editableInit.call(this, e);
@@ -89,8 +98,9 @@ $(function() {
                 cancel: function(e) {                    
                     console.log("todo: cancel");
                 },
-                submit: function(e) {
-                    Backbone.positionEvent.trigger('positionSubmit', this.model.toJSON());                                    
+                submit: function(e) {                                    
+                    //Backbone.positionEvent.trigger('positionSubmit', this.model.toJSON());
+                    Backbone.positionEvent.trigger('positionSubmit', this.model);
                 }              
             });            
             
@@ -145,7 +155,7 @@ $(function() {
         },
 
         save: function() {            
-            var map = {};                                
+            var map = {};                       
             var prop = this.editedEl.getAttribute("data-prop");
 
             var notifyOk = $(this.editedEl).siblings().first();
