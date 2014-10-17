@@ -19,7 +19,8 @@ $(function() {
             'drop .profile-div': 'dropHandler',
             'click .profile-img-save': 'profileImgSave',
             'click .add-position': 'addPosition',
-            'click .remove-position': 'removePosition'
+            'click .remove-position': 'removePosition',
+            'click .edit-position': 'editPosition'
         },
 
         initialize: function() {
@@ -69,11 +70,16 @@ $(function() {
                 etch.editableInit.call(this, e);
             }
         },   
-        onPositionSubmit: function(data) {
-            var hash = app.getHash();  
-            data.set('guid', hash);            
+        onPositionSubmit: function(model) {            
             var map = $.parseJSON(this.model.get("profile").positions); 
-            map[hash] = data.toJSON();            
+            if (model.get('guid')) { //update
+                map[model.get('guid')] = model.toJSON();
+            } else {
+                var hash = app.getHash();  
+                model.set('guid', hash);                
+                map[hash] = model.toJSON();            
+            }
+
             this.model.set('profile', {'positions': JSON.stringify(map)} );
             this.model.save({}, {
                 success: function(model, response) {
@@ -88,28 +94,7 @@ $(function() {
             $('.position-ph').remove();
         },
         
-        addPosition: function(e) {           
-            var PositionView = Backbone.View.extend({
-                className: 'position-ph',
-                template: _.template($('#position-template').html()),                            
-                events: {                    
-                    'click .add-position-cancel': 'cancel',
-                    'click .add-position-submit': 'submit'
-                },                
-                render: function(){                    
-                    this.$el.html('');
-                    this.$el.html( this.template );                    
-                    rivets.bind(this.el, { position: this.model } )
-                    return this;
-                },
-                cancel: function(e) {                    
-                    Backbone.positionEvent.trigger('cancelPositionForm', this.model);
-                },
-                submit: function(e) {                                                        
-                    Backbone.positionEvent.trigger('positionSubmit', this.model);
-                }              
-            });            
-            
+        addPosition: function(e) {                            
             var position = new Backbone.Model({
                 companyName: 'Joe',
                 from: new Date(), 
@@ -119,25 +104,52 @@ $(function() {
                 resp: "resp",
                 techSummary: "techSummary"
             });
-            var form = new PositionView({model: position}).render();            
+            var form = new app.PositionView({model: position}).render();            
             $('.positions-ph').append(form.el);        
         },
+        editPosition: function(e) {
+            e.preventDefault();            
+            var positions;
+            var position;
+            try {
+                positions = $.parseJSON(this.model.get("profile").positions);                
+            } catch(err) {
+               console.log("positions json is invalid");
+            }
 
+            if (positions !== undefined) {
+                var id = $(e.currentTarget).data("id");
+                var position = positions[id];
+                if (position)
+                {
+                    $('.position-ph').remove();
+                    var form = new app.PositionView({model: new Backbone.Model(position)}).render();            
+                    $('.positions-ph').append(form.el);                      
+                }                
+            }
+        },
         removePosition: function(e) {
             e.preventDefault();
             var id = $(e.currentTarget).data("id");
-            var positions = $.parseJSON(this.model.get("profile").positions);            
-            delete positions[id];            
-            this.model.set('profile', {'positions': JSON.stringify(positions)} );
-            this.model.save({}, {
-                success: function(model, response) {
-                    location.reload();
-                    // console.log("ok");
-                },
-                error: function(model, response) {               
-                    console.log("save: failed");                    
-                }
-            });            
+            var positions;
+            try {
+                positions = $.parseJSON(this.model.get("profile").positions);
+            } catch(err) {
+                console.log("positions json is invalid");
+            }
+
+            if (positions !== undefined) {
+                delete positions[id];            
+                this.model.set('profile', {'positions': JSON.stringify(positions)} );
+                this.model.save({}, {
+                    success: function(model, response) {
+                        location.reload();                    
+                    },
+                    error: function(model, response) {               
+                        console.log("save: failed");                    
+                    }
+                });        
+            }    
         },
 
         dragoverHandler: function(e) {

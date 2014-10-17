@@ -123,6 +123,27 @@ $(function() {
     app.Position = Backbone.Model.extend({
     });
 
+    app.PositionView = Backbone.View.extend({
+        className: 'position-ph',
+        template: _.template($('#position-template').html()),                            
+        events: {                    
+            'click .add-position-cancel': 'cancel',
+            'click .add-position-submit': 'submit'
+        },                
+        render: function(){                    
+            this.$el.html('');
+            this.$el.html( this.template );                    
+            rivets.bind(this.el, { position: this.model } )
+            return this;
+        },
+        cancel: function(e) {                    
+            Backbone.positionEvent.trigger('cancelPositionForm', this.model);
+        },
+        submit: function(e) {                                                        
+            Backbone.positionEvent.trigger('positionSubmit', this.model);
+        }              
+    });
+
     app.Employer = Backbone.Model.extend({
         urlRoot: '/tercomin/api/v1/user_profile/',        
         validate: function(attrs, options) {
