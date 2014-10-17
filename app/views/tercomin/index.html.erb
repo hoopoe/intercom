@@ -186,14 +186,19 @@
     </div>
     <div class="col-md-9 position-text">          
       <ul>
-        <li rv-each-todo="user_p:positions_gen">          
-          <span>{ todo.companyName }</span>
-          <span>{ todo.from }</span>
-          <span>{ todo.to }</span>
-          <span>{ todo.position }</span>
-          <span>{ todo.project }</span>
-          <span>{ todo.resp }</span>
-          <span>{ todo.techSummary }</span>
+        <li rv-each-pos="user_p:positions_gen">          
+          <span>{ pos.companyName }</span>
+          <span>{ pos.from }</span>
+          <span>{ pos.to }</span>
+          <span>{ pos.position }</span>
+          <span>{ pos.project }</span>
+          <span>{ pos.resp }</span>
+          <span>{ pos.techSummary }</span>
+          <a class="remove-position" rv-data-id="pos.guid">
+            <i class="glyphicon glyphicon-remove">
+                Remove
+            </i>  
+          </a>
         </li>
       <ul>
       <div class="row positions-ph">        
@@ -207,10 +212,7 @@
       </a>
     </div>
   </div>    
-  <div class="line-separator"/>
-
-  
-     
+  <div class="line-separator"/>    
 </script>
 
 <script type="text/html" id="position-template" >

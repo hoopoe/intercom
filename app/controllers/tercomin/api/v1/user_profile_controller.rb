@@ -118,13 +118,14 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
       end
       #profile positions
       if params[:profile][:positions].present?
-        if profile.positions.present?
-          positions = JSON.parse(profile.positions)
-        else
-          positions = Hash.new
-        end      
-        positions.merge!(JSON.parse(params[:profile][:positions]));
-        profile.positions = positions.to_json
+        # if profile.positions.present?
+        #   positions = JSON.parse(profile.positions)
+        # else
+        #   positions = Hash.new
+        # end      
+        # positions.merge!(JSON.parse(params[:profile][:positions]));
+        # profile.positions = positions.to_json
+        profile.positions = params[:profile][:positions]
       end
     end
 

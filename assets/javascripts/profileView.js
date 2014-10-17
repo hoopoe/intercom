@@ -18,7 +18,8 @@ $(function() {
             'dragover .profile-div': 'dragoverHandler',
             'drop .profile-div': 'dropHandler',
             'click .profile-img-save': 'profileImgSave',
-            'click .add-position': 'addPosition'
+            'click .add-position': 'addPosition',
+            'click .remove-position': 'removePosition'
         },
 
         initialize: function() {
@@ -70,8 +71,8 @@ $(function() {
         },   
         onPositionSubmit: function(data) {
             var hash = app.getHash();  
-            data.set('guid', hash);
-            var map = {};
+            data.set('guid', hash);            
+            var map = $.parseJSON(this.model.get("profile").positions); 
             map[hash] = data.toJSON();            
             this.model.set('profile', {'positions': JSON.stringify(map)} );
             this.model.save({}, {
@@ -120,6 +121,23 @@ $(function() {
             });
             var form = new PositionView({model: position}).render();            
             $('.positions-ph').append(form.el);        
+        },
+
+        removePosition: function(e) {
+            e.preventDefault();
+            var id = $(e.currentTarget).data("id");
+            var positions = $.parseJSON(this.model.get("profile").positions);            
+            delete positions[id];            
+            this.model.set('profile', {'positions': JSON.stringify(positions)} );
+            this.model.save({}, {
+                success: function(model, response) {
+                    location.reload();
+                    // console.log("ok");
+                },
+                error: function(model, response) {               
+                    console.log("save: failed");                    
+                }
+            });            
         },
 
         dragoverHandler: function(e) {
