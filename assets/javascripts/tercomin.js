@@ -33,8 +33,7 @@ $(function() {
     //app.employers - collection of userprofiles
     //app.router - backbone router
     //app.employer
-
-    // Rivets.js Backbone adapter
+    
     rivets.adapters[':'] = {
       // set the listeners to update the corresponding DOM element
       subscribe: function(obj, keypath, callback) {
@@ -167,6 +166,19 @@ $(function() {
         }
         console.log(attr);
         return attr;        
+    };
+
+    function endsWith(str, suffix) {
+        return str.indexOf(suffix, str.length - suffix.length) !== -1;
+    };
+
+    Backbone.Model.prototype.toJSON = function() {
+      var json = _.clone(this.attributes);
+      for(var attr in json) {
+        if (endsWith(attr, "_gen"))                
+            delete json[attr];        
+      }      
+      return json;
     };
 
     app.employers = new EmployerCollection;

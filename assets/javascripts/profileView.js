@@ -23,6 +23,8 @@ $(function() {
 
         initialize: function() {
             Backbone.positionEvent.on('positionSubmit', this.onPositionSubmit, this);
+            Backbone.positionEvent.on('cancelPositionForm', this.onCancelPositionForm, this);
+            // Backbone.positionEvent.on('renderRequest', this.render, this);
             _.bindAll(this, 'save');
             this.model.bind('save', this.save);
             if (this.model.get('editable'))
@@ -40,21 +42,6 @@ $(function() {
             // this.$el.html(this.template(this.model.toJSON()));
             
             return this;
-        },
-        onPositionSubmit: function(data) {
-            var hash = app.getHash();  
-            data.set('guid', hash);
-            var map = {};
-            map[hash] = data.toJSON();            
-            this.model.set('profile', {'positions': JSON.stringify(map)} );
-            this.model.save({}, {
-                success: function(model, response) {                                    
-                    console.log("todo: ok");
-                },
-                error: function(model, response) {               
-                    console.log("todo: failed");
-                }
-            });
         },
         renderFinished: function() {
             _.each($('.profile-data'), function(i) {                
@@ -75,31 +62,49 @@ $(function() {
               }
             });                
         },
-
         editableClick: function(e) {     
             if (this.isEditable) {                
                 this.editedEl = e.currentTarget;
                 etch.editableInit.call(this, e);
             }
         },   
-
+        onPositionSubmit: function(data) {
+            var hash = app.getHash();  
+            data.set('guid', hash);
+            var map = {};
+            map[hash] = data.toJSON();            
+            this.model.set('profile', {'positions': JSON.stringify(map)} );
+            this.model.save({}, {
+                success: function(model, response) {
+                    location.reload();                    
+                },
+                error: function(model, response) {               
+                    console.log("save: failed");                    
+                }
+            });
+        },
+        onCancelPositionForm: function(data) {
+            $('.position-ph').remove();
+        },
+        
         addPosition: function(e) {           
             var PositionView = Backbone.View.extend({
+                className: 'position-ph',
                 template: _.template($('#position-template').html()),                            
                 events: {                    
                     'click .add-position-cancel': 'cancel',
                     'click .add-position-submit': 'submit'
                 },                
                 render: function(){                    
+                    this.$el.html('');
                     this.$el.html( this.template );                    
                     rivets.bind(this.el, { position: this.model } )
                     return this;
                 },
                 cancel: function(e) {                    
-                    console.log("todo: cancel");
+                    Backbone.positionEvent.trigger('cancelPositionForm', this.model);
                 },
-                submit: function(e) {                                    
-                    //Backbone.positionEvent.trigger('positionSubmit', this.model.toJSON());
+                submit: function(e) {                                                        
                     Backbone.positionEvent.trigger('positionSubmit', this.model);
                 }              
             });            
