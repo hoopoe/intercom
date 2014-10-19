@@ -108,13 +108,13 @@ $(function() {
 
         addPosition: function(e) {
             var position = new Backbone.Model({
-                companyName: 'Joe',
+                companyName: '',
                 from: moment().format("MM/DD/YYYY"),
                 to: moment().format("MM/DD/YYYY"),
-                project: "project",
-                position: "position",
-                resp: "resp",
-                techSummary: "techSummary"
+                project: "",
+                position: "",
+                resp: "",
+                techSummary: ""
             });
             if (this.currentAddOrUpdatePositionView !== undefined) {
                 this.currentAddOrUpdatePositionView.cancel();
@@ -122,7 +122,8 @@ $(function() {
             this.currentAddOrUpdatePositionView = new app.AddOrUpdatePositionView({
                 model: position
             }).render();
-            $('.positions-ph').append(this.currentAddOrUpdatePositionView.el);
+            // $('.positions-ph').append(this.currentAddOrUpdatePositionView.el);
+            $('.positions-ph').prepend(this.currentAddOrUpdatePositionView.el);
         },
         editPosition: function(e) {
             e.preventDefault();

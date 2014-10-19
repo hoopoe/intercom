@@ -49,11 +49,7 @@ div.profile-text {padding-top: 10px;}
 /*.position-ph{background: #f4f4f4;}*/
 .positions-view{list-style-type: none;}
 .position-container{margin: 10px;}
-/*.position-info{float:left; }*/
-
-.glyphicon:hover{
-  cursor: pointer;
-}
+.glyphicon:hover{cursor: pointer;}
 
 .cv {
   width: 81px;

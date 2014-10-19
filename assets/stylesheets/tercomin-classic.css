@@ -49,6 +49,9 @@ div.profile-status{text-align: right;}
 .profile-status h3 {text-decoration: none; border-bottom-width:0px;}
 .profile-notify{opacity: 0;}
 .ui-datepicker-year {display:none;}
+.positions-view{list-style-type: none;}
+.position-container{margin: 10px;}
+.glyphicon:hover{cursor: pointer;}
 
 
 /*employers*/

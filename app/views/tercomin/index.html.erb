@@ -203,7 +203,7 @@
   <div class='row position-container'>     
     <div class='position-info'>
       <label for="companyName">Title</label>
-      <span id="companyName">{ position:companyName }</span>    
+      <span id="companyName">{ position:companyName }</span>
       <br>
       <label for="from">From</label>
       <span id="from">{ position:from | date}</span>
@@ -211,11 +211,13 @@
       <label for="to">To</label>
       <span id="to">{ position:to | date}</span>  
       <br>
+
       <label for="position">Position</label>
       <span id="position">{ position:position }</span>
-      <br>
+      
       <label for="project">Project</label>
       <span id="project">{ position:project }</span>
+
       <br>
       <label for="resp">Responsibility</label>
       <span id="resp">{ position:resp }</span>
@@ -243,7 +245,7 @@
   <form >       
     <div class="form-group col-md-6">
       <label for="companyName">Company</label>
-      <input type="text" class="form-control" id="companyName" placeholder="Enter company name" rv-value="position:companyName">
+      <input type="text" class="form-control" id="companyName" placeholder="Enter company name" rv-value="position:companyName" placeholder="Company">
     </div>  
     <div class="form-group col-md-3">
       <label for="from_edit">From</label>      
@@ -255,19 +257,19 @@
     </div>
     <div class="form-group col-md-4">
       <label for="project">Project</label>  
-      <input type="text" class="form-control" rv-value="position:project" id="project"/>
+      <input type="text" class="form-control" rv-value="position:project" id="project" placeholder="Project"/>
     </div>   
     <div class="form-group col-md-8">
       <label for="position">Position</label>   
-      <input type="text" class="form-control" rv-value="position:position" id="position"/>
+      <input type="text" class="form-control" rv-value="position:position" id="position" placeholder="Position"/>
     </div>
     <div class="form-group col-md-12">
       <label for="resp">Responsibility</label>
-      <textarea class="form-control" rows="3" rv-value="position:resp" id="resp"></textarea>      
+      <textarea class="form-control" rows="3" rv-value="position:resp" id="resp" placeholder="Responsibility"></textarea>
     </div>
     <div class="form-group col-md-12">
-      <label for="techSummary">Summary</label>      
-      <input type="text" class="form-control" rv-value="position:techSummary" id="techSummary"/>
+      <label for="techSummary">Summary</label>            
+      <textarea class="form-control" rows="3" rv-value="position:techSummary" id="techSummary" placeholder="Summary"></textarea>
     </div>
     <div class="form-group col-md-12">
       <a class="add-position-submit btn btn-primary">Save</a>
