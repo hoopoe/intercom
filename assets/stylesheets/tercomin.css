@@ -29,9 +29,9 @@ div.line-separator {background:#1995dc;  border-bottom:1px solid #1995dc;}
 
 /*profile*/
 div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995dc; float: left; margin: 2px}
-div.profile-lbl {padding-top: 10px;}
+/*div.profile-lbl {padding-top: 10px;}*/
 /*div.profile-lbl *{float:right;}*/
-div.profile-text {padding-top: 10px;}
+/*div.profile-text {padding-top: 10px;}*/
 .profile-img-save {  margin-top: 10px;  text-align: center;    display: block;}
 .profile-img-save-hide {  display: none;}
 .profile-data {  display: inline-block; border:0px;}

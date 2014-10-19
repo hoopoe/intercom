@@ -155,27 +155,28 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-2 profile-lbl">        
+    <div class="col-md-11 col-md-offset-1">        
         <span><%=l(:summary_title)%></span>
         <div class="circle"/>
     </div>
-    <div class="col-md-10 profile-text">
+    <div class="col-md-9 col-md-offset-2">
       <div contentEditable=true data-ph='<%=l(:put_summary_here) %>' data-prop="summary" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" data-button-class="all" data-prop="summary" rv-html="user_p:summary">          
       </div>
       <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
-    </div>
+    </div>    
+    
   </div>
   <div class="line-separator"/>
   
   <div class="row">
-    <div class="col-md-2 profile-lbl">        
+    <div class="col-md-11 col-md-offset-1">        
         <span><%=l(:skills_title)%></span>
         <div class="circle"/>
     </div>
-    <div class="col-md-10 profile-text">
-       <div contentEditable=true data-ph='<%=l(:put_skills_here) %>' data-prop="skills" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" data-button-class="all" data-prop="skills" rv-html="user_p:skills"></div>
-      <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
-    </div>
+    <div class="col-md-9 col-md-offset-2">
+       <div contentEditable=true data-ph='<%=l(:put_skills_here) %>' data-prop="skills" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" data-button-class="all" data-prop="skills" rv-html="user_p:skills"></div>      
+       <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
+    </div>    
   </div>
   <div class="line-separator"/>  
   
@@ -190,13 +191,32 @@
     </div>
   </div>
   <div class="row">    
-    <div class="col-md-offset-2 col-md-9 position-text">      
+    <div class="col-md-offset-2 col-md-9">      
       <div class="positions-ph">        
       </div>
     </div>
     
   </div>    
-  <div class="line-separator"/>    
+  <div class="line-separator"/>
+
+  <div class="row">
+    <div class="col-md-offset-1 col-md-2">
+      <span><%=l(:background_title)%></span>
+      <div class="circle"/>      
+    </div>
+    <div>
+      <a class="add-background col-md-offset-6 col-md-3">
+      <span class="glyphicon glyphicon-plus">Add</span></a>
+    </div>
+  </div>
+  <div class="row">    
+    <div class="col-md-offset-2 col-md-9">      
+      <div class="backgrounds-ph">        
+      </div>
+    </div>
+    
+  </div>    
+  <div class="line-separator"/>
 </script>
 
 <script type="text/html" id="position-li-template" >
