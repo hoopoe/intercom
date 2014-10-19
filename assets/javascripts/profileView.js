@@ -126,7 +126,7 @@ $(function() {
         },
         editPosition: function(e) {
             e.preventDefault();
-            var selectedPositionEl = $(e.currentTarget).parent();            
+            var selectedPositionEl = $(e.currentTarget).parent().parent();            
             var id = $(e.currentTarget).data("id");
             var positions = this.model.get("positions");
             var position = positions.get(id);
@@ -136,10 +136,7 @@ $(function() {
                 }                
                 this.currentAddOrUpdatePositionView = new app.AddOrUpdatePositionView({
                     model: position
-                }).render();
-
-                // selectedPositionEl.empty();
-                // selectedPositionEl.hide();
+                }).render();            
                 selectedPositionEl.append(this.currentAddOrUpdatePositionView.el);                
             }
         },

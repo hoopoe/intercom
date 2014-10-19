@@ -25,7 +25,21 @@ class TercominController < ApplicationController
     zf = Zip::File.new(filename)    
 
     if @user_profile.respond_to? :data
-      pd = JSON.parse(@user_profile.data)
+      begin
+        pd = JSON.parse(@user_profile.data)
+      rescue  
+        puts 'parse profile error'  
+      end  
+      begin
+        positions = JSON.parse(@user_profile.positions)
+      rescue  
+        puts 'parse positions error'  
+      end  
+      begin
+        background = JSON.parse(@user_profile.background)
+      rescue  
+        puts 'parse background error'  
+      end  
       buffer = Zip::OutputStream.write_buffer do |out|
         zf.entries.each do |e|    
           if e.ftype == :directory
@@ -33,29 +47,61 @@ class TercominController < ApplicationController
           else          
             out.put_next_entry(e.name)
             if (e.name == DOCUMENT_FILE_PATH)             
-              doc = e.get_input_stream.read
+              tmp = e.get_input_stream.read
+              doc = Nokogiri::XML(tmp)
+              node = doc.at('//w:t[contains(., "Professional experience")]')
+              tableNode = node.parent.parent.next_element
+              tableRowsNodes = tableNode.xpath('.//w:tr')
+              
+              if positions && !positions.empty?                
+                tableRowsNodes.remove
+                positions.each do |i|                  
+                  for j in tableRowsNodes do
+                    row = j.clone
+                    replaceNodeContent(row, "[Work_From_Year]", i['from'])
+                    replaceNodeContent(row, "[Work_To_Year]", i['to'])
+                    replaceNodeContent(row, "[Work_Name]", i['companyName'])
+                    replaceNodeContent(row, "[Work_Project]", i['project'])
+                    replaceNodeContent(row, "[Work_Position]", i['position'])
+                    replaceNodeContent(row, "[Work_Resp]", i['resp'])
+                    replaceNodeContent(row, "[Work_Summary]", i['techSummary'])
+                    tableNode.add_child(row)
+                  end
+                end
+              end
+
+              nodeEdu = doc.at('//w:t[contains(., "Educational background")]')
+              tableEduNode = nodeEdu.parent.parent.next_element
+              tableEduRowsNodes = tableEduNode.xpath('.//w:tr')
+              
+              if background && !background.empty?
+                tableEduRowsNodes.remove
+                background.each do |i|                  
+                  for j in tableRowsNodes do
+                    row = j.clone
+                    replaceNodeContent(row, "[EDU_From_Year]", i['from'])
+                    replaceNodeContent(row, "[EDU_To_Year]", i['to'])                    
+                    replaceNodeContent(row, "[EDU_Summary]", i['summary'])
+                    tableNode.add_child(row)
+                  end
+                end
+              end
+
+              doc = doc.inner_html
               doc = doc.gsub("[Firstname]", @user.firstname)   
               doc = doc.gsub("[Lastname]", @user.lastname)
               doc = doc.gsub("[Position]", pd['position']) if pd['position'].present?
-              if pd['summary'].present?
-                tmp = Nokogiri::HTML(pd['summary'].gsub(/>\s+</, "><"))                
-                doc = doc.force_encoding("UTF-8").gsub("[Summary]", tmp.xpath("//text()").to_s)
+              if pd
+                if pd['summary'].present?
+                  tmp = Nokogiri::HTML(pd['summary'].gsub(/>\s+</, "><"))                
+                  doc = doc.force_encoding("UTF-8").gsub("[Summary]", tmp.xpath("//text()").to_s)
+                end
+                if pd['skills'].present?
+                  tmp = Nokogiri::HTML(pd['skills'].gsub(/>\s+</, "><"))                
+                  doc = doc.force_encoding("UTF-8").gsub("[Skills]", tmp.xpath("//text()").to_s)
+                end
               end
-              if pd['skills'].present?
-                tmp = Nokogiri::HTML(pd['skills'].gsub(/>\s+</, "><"))                
-                doc = doc.force_encoding("UTF-8").gsub("[Skills]", tmp.xpath("//text()").to_s)
-              end              
-
-              # doc = doc.gsub("[Work_From_Year]", "2013")
-              # doc = doc.gsub("[Work_To_Year]", "2014")
-              # doc = doc.gsub("[Work_Name]", "latin-tercom")
-              # doc = doc.gsub("[Work_Project]", "LiftEye")
-              # doc = doc.gsub("[Work_Position]", "Developer")
-              # doc = doc.gsub("[Work_Resp]", "c++ dev")
-              # doc = doc.gsub("[Work_Summary]", "Working hard")
-              # doc = doc.gsub("[EDU_From_Year]", "2002")
-              # doc = doc.gsub("[EDU_To_Year]", "2008")
-              # doc = doc.gsub("[EDU_Summary]", "Spbu")
+            
               # doc = doc.gsub("[Certificates]", "MS")
               # doc = doc.gsub("[Languages]", "intermediate")
               # doc = doc.gsub("[Languages_Extra]", "Suomi primary")
@@ -86,5 +132,11 @@ class TercominController < ApplicationController
       source = "#{Rails.root}/public/plugin_assets/#{plugin}/reporting/#{source}"    
     end
     return source
+  end
+
+  def replaceNodeContent(node, content, newcontent)
+    criteria = './/w:t[contains(., "%s")]' % content
+    item =node.at(criteria)
+    item.content = item.content.gsub("#{content}", "#{newcontent}") if item
   end
 end

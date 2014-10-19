@@ -180,59 +180,64 @@
   <div class="line-separator"/>  
   
   <div class="row">
-    <div class="col-md-2 position-lbl">        
-        <span><%=l(:positions_title)%></span>
-        <div class="circle"/>
+    <div class="col-md-offset-1 col-md-2">
+      <span><%=l(:positions_title)%></span>
+      <div class="circle"/>      
     </div>
-    <div class="col-md-9 position-text">      
+    <div>
+      <a class="add-position col-md-offset-6 col-md-3">
+      <span class="glyphicon glyphicon-plus">Add</span></a>
+    </div>
+  </div>
+  <div class="row">    
+    <div class="col-md-offset-2 col-md-9 position-text">      
       <div class="positions-ph">        
       </div>
     </div>
-    <div class="col-md-1 position-status">  
-      <a class="add-position">
-        <i class="glyphicon glyphicon-plus">
-            Add Position
-        </i>  
-      </a>
-    </div>
+    
   </div>    
   <div class="line-separator"/>    
 </script>
 
 <script type="text/html" id="position-li-template" >
-  <div class='position-container'> 
-    <label for="companyName">Title</label>
-    <span id="companyName">{ position:companyName }</span>
-    <a class="remove-position" rv-data-id="position:id">
-      <i class="glyphicon glyphicon-remove">
-          Remove
-      </i>  
-    </a>
-    <a class="edit-position" rv-data-id="position:id">
-      <i class="glyphicon glyphicon-edit">
-          Edit
-      </i>  
-    </a>   
-    <br>
-    <label for="from">From</label>
-    <span id="from">{ position:from | date}</span>
-    <span><b>&#8211</b></span>
-    <label for="to">To</label>
-    <span id="to">{ position:to | date}</span>  
-    <br>
-    <label for="position">Position</label>
-    <span id="position">{ position:position }</span>
-    <br>
-    <label for="project">Project</label>
-    <span id="project">{ position:project }</span>
-    <br>
-    <label for="resp">Responsibility</label>
-    <span id="resp">{ position:resp }</span>
-    <br>
-    <label for="techSummary">Summary</label>
-    <span id="techSummary">{ position:techSummary }</span>
-    <div class="line-separator"/> 
+  <div class='row position-container'>     
+    <div class='position-info'>
+      <label for="companyName">Title</label>
+      <span id="companyName">{ position:companyName }</span>    
+      <br>
+      <label for="from">From</label>
+      <span id="from">{ position:from | date}</span>
+      <span><b>&#8211</b></span>
+      <label for="to">To</label>
+      <span id="to">{ position:to | date}</span>  
+      <br>
+      <label for="position">Position</label>
+      <span id="position">{ position:position }</span>
+      <br>
+      <label for="project">Project</label>
+      <span id="project">{ position:project }</span>
+      <br>
+      <label for="resp">Responsibility</label>
+      <span id="resp">{ position:resp }</span>
+      <br>
+      <label for="techSummary">Summary</label>
+      <span id="techSummary">{ position:techSummary }</span>
+    </div>
+    <div class=''>
+      <a class="remove-position" rv-data-id="position:id">
+        <i class="glyphicon glyphicon-remove">
+            Remove
+        </i>  
+      </a>
+      <a class="edit-position" rv-data-id="position:id">
+        <i class="glyphicon glyphicon-edit">
+            Edit
+        </i>  
+      </a>   
+    </div>
+    
   </div> 
+  <div class="line-separator"/> 
 </script>
 <script type="text/html" id="position-template" >
   <form >       
