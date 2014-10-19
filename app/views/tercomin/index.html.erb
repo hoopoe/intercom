@@ -1,9 +1,9 @@
 <% content_for :header_tags do %>
-  <%= javascript_include_tag 'underscore-min.js', 'backbone-min.js', 'rivets.min.js', 'bootstrap.min.js', 'infiniScroll.js', 'etch.js', 'utils.js', 'topView.js', 'settingsView.js', 'eventsView.js', 'profileView.js', 'employersView.js', 'tercomin.js', :plugin => 'tercomin' %>
+  <%= javascript_include_tag 'underscore-min.js', 'backbone-min.js', 'moment-with-locales.min.js', 'rivets.min.js', 'bootstrap.min.js', 'bootstrap-datetimepicker.min.js', 'infiniScroll.js', 'etch.js', 'utils.js', 'topView.js', 'settingsView.js', 'eventsView.js', 'profileView.js', 'employersView.js', 'tercomin.js', :plugin => 'tercomin' %>
   <% if @themeName == 'bootswatch' %>
-    <%= stylesheet_link_tag 'bootstrap.min.css', 'bootstrap.css.map', 'etch.css', 'tercomin.css', :plugin => 'tercomin' %>
+    <%= stylesheet_link_tag 'bootstrap.min.css', 'etch.css', 'tercomin.css', :plugin => 'tercomin' %>
   <% else %>
-    <%= stylesheet_link_tag 'bootstrap.min.css', 'bootstrap.css.map', 'etch.css', 'tercomin-classic.css', :plugin => 'tercomin' %>
+    <%= stylesheet_link_tag 'bootstrap.min.css', 'bootstrap.css.map', 'bootstrap-datetimepicker.min.css', 'etch.css', 'tercomin-classic.css', :plugin => 'tercomin' %>
   <% end %>
 <% end %>
 <div class="navbar navbar-default">
@@ -70,7 +70,7 @@
       <% if @themeName == 'bootswatch' %>
         <div class="col-md-4">
           <div class="profile-div">
-            <img rv-if="user_p:profile.avatar_url!='noavatar'" rv-src="user_p:profile.avatar_url" class="profile-img"/>            
+            <img rv-if="user_p:avatar_url!='noavatar'" rv-src="user_p:avatar_url" class="profile-img"/>            
             <div class="profile-img-save profile-img-save-hide">
               <button type="button" class="btn btn-primary">Save</button>
             </div>
@@ -85,11 +85,11 @@
         <tr>
           <td colspan="2">
             <div class="profile-status">              
-              <h3>{ user_p:lastname_gen } {user_p:firstname_gen }</h3>
+              <h3>{ user_p:lastname } {user_p:firstname }</h3>
             </div>
           </td>
           <td>                  
-            <a rv-href="user_p:id_gen" class="btn cv"/>            
+            <a rv-href="user_p:id" class="btn cv"/>            
           </td>
         </tr>
         <tr>
@@ -97,7 +97,7 @@
             <b><%=l(:project_title)%>:</b>
           </td>
           <td>                           
-            <input type="text" data-prop="project" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" placeholder="<%=l(:put_projects_here) %>" rv-value="user_p:project_gen"/>
+            <input type="text" data-prop="project" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" placeholder="<%=l(:put_projects_here) %>" rv-value="user_p:project"/>
             <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
           </td>
         </tr>
@@ -106,7 +106,7 @@
             <b><%=l(:project_extra_title)%>:</b>
           </td>
           <td>
-             <input placeholder="<%=l(:put_projects_extra_here) %>" data-prop="project_extra" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" rv-value="user_p:project_extra_gen"/>            
+             <input placeholder="<%=l(:put_projects_extra_here) %>" data-prop="project_extra" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" rv-value="user_p:project_extra"/>            
             <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
           </td>
         </tr>
@@ -115,7 +115,7 @@
             <b><%=l(:position_title)%>:</b>
           </td>
           <td>
-            <input placeholder="<%=l(:put_position_here) %>" data-prop="position" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" rv-value='user_p:position_gen'/>            
+            <input placeholder="<%=l(:put_position_here) %>" data-prop="position" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" rv-value='user_p:position'/>            
             <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
           </td>
         </tr>
@@ -124,7 +124,7 @@
             <b><%=l(:email_title)%>:</b>
           </td>
           <td>            
-            { user_p:mail_gen }            
+            { user_p:mail }            
           </td>
         </tr>
         <tr>
@@ -132,7 +132,7 @@
             <b><%=l(:room_number)%>:</b>
           </td>
           <td>
-            <input placeholder="<%=l(:put_room_number_here) %>" maxlength="6" data-prop="room_number" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" rv-value='user_p:room_number_gen'/>            
+            <input placeholder="<%=l(:put_room_number_here) %>" maxlength="6" data-prop="room_number" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" rv-value='user_p:room_number'/>            
             <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
             <span class="glyphicon glyphicon-floppy-remove profile-notify"/>
           </td>          
@@ -142,7 +142,7 @@
             <b><%=l(:birthday_title)%>:</b>           
           </td>
           <td>
-             <input type="text" id="datepicker" data-prop="birthday" class="profile-data" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" rv-value='user_p:birthday_gen'/>      
+             <input type="text" id="datepicker" data-prop="birthday" class="profile-data" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" rv-value='user_p:birthday'/>      
              <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
           </td>
         </tr>
@@ -160,7 +160,7 @@
         <div class="circle"/>
     </div>
     <div class="col-md-10 profile-text">
-      <div contentEditable=true data-ph='<%=l(:put_summary_here) %>' data-prop="summary" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" data-button-class="all" data-prop="summary" rv-html="user_p:summary_gen">          
+      <div contentEditable=true data-ph='<%=l(:put_summary_here) %>' data-prop="summary" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" data-button-class="all" data-prop="summary" rv-html="user_p:summary">          
       </div>
       <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
     </div>
@@ -173,7 +173,7 @@
         <div class="circle"/>
     </div>
     <div class="col-md-10 profile-text">
-       <div contentEditable=true data-ph='<%=l(:put_skills_here) %>' data-prop="skills" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" data-button-class="all" data-prop="skills" rv-html="user_p:skills_gen"></div>
+       <div contentEditable=true data-ph='<%=l(:put_skills_here) %>' data-prop="skills" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" data-button-class="all" data-prop="skills" rv-html="user_p:skills"></div>
       <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
     </div>
   </div>
@@ -184,29 +184,8 @@
         <span><%=l(:positions_title)%></span>
         <div class="circle"/>
     </div>
-    <div class="col-md-9 position-text">          
-      <ul>
-        <li rv-each-pos="user_p:positions_gen">          
-          <span>{ pos.companyName }</span>
-          <span>{ pos.from }</span>
-          <span>{ pos.to }</span>
-          <span>{ pos.position }</span>
-          <span>{ pos.project }</span>
-          <span>{ pos.resp }</span>
-          <span>{ pos.techSummary }</span>
-          <a class="remove-position" rv-data-id="pos.guid">
-            <i class="glyphicon glyphicon-remove">
-                Remove
-            </i>  
-          </a>
-          <a class="edit-position" rv-data-id="pos.guid">
-            <i class="glyphicon glyphicon-edit">
-                Edit
-            </i>  
-          </a>
-        </li>
-      <ul>
-      <div class="row positions-ph">        
+    <div class="col-md-9 position-text">      
+      <div class="positions-ph">        
       </div>
     </div>
     <div class="col-md-1 position-status">  
@@ -220,38 +199,75 @@
   <div class="line-separator"/>    
 </script>
 
+<script type="text/html" id="position-li-template" >
+  <div class='position-container'> 
+    <label for="companyName">Title</label>
+    <span id="companyName">{ position:companyName }</span>
+    <a class="remove-position" rv-data-id="position:id">
+      <i class="glyphicon glyphicon-remove">
+          Remove
+      </i>  
+    </a>
+    <a class="edit-position" rv-data-id="position:id">
+      <i class="glyphicon glyphicon-edit">
+          Edit
+      </i>  
+    </a>   
+    <br>
+    <label for="from">From</label>
+    <span id="from">{ position:from | date}</span>
+    <span><b>&#8211</b></span>
+    <label for="to">To</label>
+    <span id="to">{ position:to | date}</span>  
+    <br>
+    <label for="position">Position</label>
+    <span id="position">{ position:position }</span>
+    <br>
+    <label for="project">Project</label>
+    <span id="project">{ position:project }</span>
+    <br>
+    <label for="resp">Responsibility</label>
+    <span id="resp">{ position:resp }</span>
+    <br>
+    <label for="techSummary">Summary</label>
+    <span id="techSummary">{ position:techSummary }</span>
+    <div class="line-separator"/> 
+  </div> 
+</script>
 <script type="text/html" id="position-template" >
-  <form>    
-    <div class="form-group">
-      <label for="companyName">Company Name</label>
+  <form >       
+    <div class="form-group col-md-6">
+      <label for="companyName">Company</label>
       <input type="text" class="form-control" id="companyName" placeholder="Enter company name" rv-value="position:companyName">
-    </div>                 
-    <div class="form-group">
-      <label for="from">From</label>      
-      <input type="text" class="form-control" rv-value="position:from" id="from"/>
+    </div>  
+    <div class="form-group col-md-3">
+      <label for="from_edit">From</label>      
+      <input type="text" class="form-control pos-date" rv-value="position:from | date" id="from_edit"/>    
+    </div>      
+    <div class="form-group col-md-3">
+      <label for="to_edit">To</label>  
+      <input type="text" class="form-control pos-date" rv-value="position:to" id="to_edit"/>  
     </div>
-    <div class="form-group">
-      <label for="to">To</label>  
-      <input type="text" class="form-control" rv-value="position:to" id="to"/>
-    </div>
-    <div class="form-group">
+    <div class="form-group col-md-4">
       <label for="project">Project</label>  
       <input type="text" class="form-control" rv-value="position:project" id="project"/>
     </div>   
-    <div class="form-group">
+    <div class="form-group col-md-8">
       <label for="position">Position</label>   
       <input type="text" class="form-control" rv-value="position:position" id="position"/>
     </div>
-    <div class="form-group">
+    <div class="form-group col-md-12">
       <label for="resp">Responsibility</label>
-      <input type="text" class="form-control" rv-value="position:resp" id="resp"/>
+      <textarea class="form-control" rows="3" rv-value="position:resp" id="resp"></textarea>      
     </div>
-    <div class="form-group">
+    <div class="form-group col-md-12">
       <label for="techSummary">Summary</label>      
       <input type="text" class="form-control" rv-value="position:techSummary" id="techSummary"/>
     </div>
+    <div class="form-group col-md-12">
       <a class="add-position-submit btn btn-primary">Save</a>
       <a class="add-position-cancel btn btn-primary">Cancel</a>    
+    <div>    
   </form>
 </script>
 <% if @themeName == 'bootswatch' %>  

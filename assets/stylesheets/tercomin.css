@@ -44,8 +44,12 @@ div.profile-text {padding-top: 10px;}
 .profile-img {  display: block;  margin-left: auto;  margin-right: auto;  margin-top: 10px;}
 .btn {border-radius:10px; border: 0px solid transparent;}
 .profile-notify{opacity: 0;}
-.ui-datepicker-year{display:none;}
+/*.ui-datepicker-year{display:none;}*/
+/*.ui-datepicker-without-year{display:none;}*/
 /*.position-ph{background: #f4f4f4;}*/
+.positions-view{list-style-type: none;}
+.position-container{margin: 10px;}
+/*.position-add{-webkit-padding-start: 40px;}*/
 
 .cv {
   width: 81px;

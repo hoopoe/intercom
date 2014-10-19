@@ -17,6 +17,9 @@
     "tests"
   ],
   "dependencies": {
-    "rivets": "~0.6.10"
+    "rivets": "~0.6.10",
+    "momentjs": "~2.8.3",
+    "bootstrap-datetimepicker": "~0.0.11",
+    "bootstrap": "~3.2.0"
   }
 }

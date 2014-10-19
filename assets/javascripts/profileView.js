@@ -11,7 +11,7 @@ $(function() {
 
         editedEl: {},
 
-        isEditable: false,
+        isEditable: false,            
 
         events: {
             'mousedown .editable': 'editableClick',
@@ -24,136 +24,145 @@ $(function() {
         },
 
         initialize: function() {
+            app.currentProfile = this.model; //todo: remove           
             Backbone.positionEvent.on('positionSubmit', this.onPositionSubmit, this);
             Backbone.positionEvent.on('cancelPositionForm', this.onCancelPositionForm, this);
-            // Backbone.positionEvent.on('renderRequest', this.render, this);
+            Backbone.positionEvent.on('renderPositions', this.renderPositions, this);
             _.bindAll(this, 'save');
             this.model.bind('save', this.save);
             if (this.model.get('editable'))
                 this.isEditable = true;
-        },        
+        },
         render: function() {
-            this.$el.html('')
-            this.$el.html( this.template );
-            // console.log(this.model.toJSON());
-
-            // console.log(this.model);
-            // rivets.bind(this.el, { t_profile: this.model.get('profile') } );
-            rivets.bind(this.el, { user_p: this.model } );
-
-            // this.$el.html(this.template(this.model.toJSON()));
-            
+            this.$el.html('');
+            this.$el.html(this.template);
+            rivets.bind(this.el, {
+                user_p: this.model.get('data')
+            });
+            this.renderPositions();
             return this;
         },
+        renderPositions: function() {
+            if(this.currentPositionsView!==undefined)
+                this.currentPositionsView.remove();
+
+            if(this.currentAddOrUpdatePositionView!==undefined)
+                this.currentAddOrUpdatePositionView.remove();
+
+            this.currentPositionsView = new app.PositionsView({
+                collection: this.model.get('positions')
+            });
+            this.$el.find('.positions-ph').append(this.currentPositionsView.$el);
+            this.currentPositionsView.render();
+        },
         renderFinished: function() {
-            _.each($('.profile-data'), function(i) {                
-                if (!this.isEditable){
-                    $(i).attr('disabled', true); 
+            _.each($('.profile-data'), function(i) {
+                if (!this.isEditable) {
+                    $(i).attr('disabled', true);
                 }
-            },this);        
+            }, this);
 
             var view = this; //todo: remove
-            $( "#datepicker" ).datepicker({
-             changeYear: false, 
-             dateFormat: 'dd/mm', 
-             onSelect: function(dateText) {                
-                 if (view.isEditable) {
-                    view.editedEl = this; //this -> input                    
-                    view.save(); //read calendar data-prop                    
-                }
-              }
-            });                
+            // $( "#datepicker" ).datepicker({
+            //  changeYear: false, 
+            //  dateFormat: 'dd/mm', 
+            //  onSelect: function(dateText) {                
+            //      if (view.isEditable) {
+            //         view.editedEl = this; //this -> input                    
+            //         view.save(); //read calendar data-prop                    
+            //     }
+            //   }
+            // });                
         },
-        editableClick: function(e) {     
-            if (this.isEditable) {                
+        editableClick: function(e) {
+            if (this.isEditable) {
                 this.editedEl = e.currentTarget;
                 etch.editableInit.call(this, e);
             }
-        },   
-        onPositionSubmit: function(model) {            
-            var map = $.parseJSON(this.model.get("profile").positions); 
-            if (model.get('guid')) { //update
-                map[model.get('guid')] = model.toJSON();
+        },
+        onPositionSubmit: function(positionModel) {
+            var positions = this.model.get("positions");
+            if (positionModel.id && positions.get(positionModel.id) !== undefined) { //update                
+                positions.set(positionModel,{remove: false});
             } else {
-                var hash = app.getHash();  
-                model.set('guid', hash);                
-                map[hash] = model.toJSON();            
+                var hash = app.getHash();
+                positionModel.set('id', hash);
+                positions.add(positionModel);
             }
-
-            this.model.set('profile', {'positions': JSON.stringify(map)} );
+            this.model.set('profile', {
+                'positions': JSON.stringify(positions)
+            });
             this.model.save({}, {
                 success: function(model, response) {
-                    location.reload();                    
+                    Backbone.positionEvent.trigger('renderPositions');
                 },
-                error: function(model, response) {               
-                    console.log("save: failed");                    
+                error: function(model, response) {
+                    console.log("save: failed");
                 }
             });
         },
-        onCancelPositionForm: function(data) {
-            $('.position-ph').remove();
+
+        onCancelPositionForm: function(data) {            
+            Backbone.positionEvent.trigger('renderPositions');
         },
-        
-        addPosition: function(e) {                            
+
+        addPosition: function(e) {
             var position = new Backbone.Model({
                 companyName: 'Joe',
-                from: new Date(), 
-                to: new Date(),
+                from: moment().format("MM/DD/YYYY"),
+                to: moment().format("MM/DD/YYYY"),
                 project: "project",
                 position: "position",
                 resp: "resp",
                 techSummary: "techSummary"
             });
-            var form = new app.PositionView({model: position}).render();            
-            $('.positions-ph').append(form.el);        
+            if (this.currentAddOrUpdatePositionView !== undefined) {
+                this.currentAddOrUpdatePositionView.cancel();
+            }
+            this.currentAddOrUpdatePositionView = new app.AddOrUpdatePositionView({
+                model: position
+            }).render();
+            $('.positions-ph').append(this.currentAddOrUpdatePositionView.el);
         },
         editPosition: function(e) {
-            e.preventDefault();            
-            var positions;
-            var position;
-            try {
-                positions = $.parseJSON(this.model.get("profile").positions);                
-            } catch(err) {
-               console.log("positions json is invalid");
-            }
-
-            if (positions !== undefined) {
-                var id = $(e.currentTarget).data("id");
-                var position = positions[id];
-                if (position)
-                {
-                    $('.position-ph').remove();
-                    var form = new app.PositionView({model: new Backbone.Model(position)}).render();            
-                    $('.positions-ph').append(form.el);                      
+            e.preventDefault();
+            var selectedPositionEl = $(e.currentTarget).parent();            
+            var id = $(e.currentTarget).data("id");
+            var positions = this.model.get("positions");
+            var position = positions.get(id);
+            if (position !== undefined) {
+                if (this.currentAddOrUpdatePositionView !== undefined) {
+                    this.currentAddOrUpdatePositionView.cancel();
                 }                
+                this.currentAddOrUpdatePositionView = new app.AddOrUpdatePositionView({
+                    model: position
+                }).render();
+
+                // selectedPositionEl.empty();
+                // selectedPositionEl.hide();
+                selectedPositionEl.append(this.currentAddOrUpdatePositionView.el);                
             }
         },
         removePosition: function(e) {
-            e.preventDefault();
+            e.preventDefault();    
             var id = $(e.currentTarget).data("id");
-            var positions;
-            try {
-                positions = $.parseJSON(this.model.get("profile").positions);
-            } catch(err) {
-                console.log("positions json is invalid");
-            }
-
-            if (positions !== undefined) {
-                delete positions[id];            
-                this.model.set('profile', {'positions': JSON.stringify(positions)} );
-                this.model.save({}, {
-                    success: function(model, response) {
-                        location.reload();                    
-                    },
-                    error: function(model, response) {               
-                        console.log("save: failed");                    
-                    }
-                });        
-            }    
+            var positions = this.model.get("positions");
+            positions.remove(id);
+            this.model.set('profile', {
+                'positions': JSON.stringify(positions)
+            });
+            this.model.save({}, {
+                success: function(model, response) {                    
+                    Backbone.positionEvent.trigger('renderPositions');
+                },
+                error: function(model, response) {
+                    console.log("save: failed");
+                }
+            });
         },
 
         dragoverHandler: function(e) {
-            e.preventDefault();            
+            e.preventDefault();
         },
 
         dropHandler: function(e) {
@@ -161,7 +170,7 @@ $(function() {
             e.originalEvent.preventDefault();
 
             e.originalEvent.dataTransfer.dropEffect = 'copy';
-            this.pictureFile = e.originalEvent.dataTransfer.files[0];            
+            this.pictureFile = e.originalEvent.dataTransfer.files[0];
 
             // Read the image file from the local file system and display it in the img tag
             var reader = new FileReader();
@@ -189,33 +198,41 @@ $(function() {
             });
         },
 
-        save: function() {            
-            var map = {};                       
+        save: function() {
+            var data = $.parseJSON(this.model.get("profile").data);
             var prop = this.editedEl.getAttribute("data-prop");
 
             var notifyOk = $(this.editedEl).siblings().first();
             var notifyFail = $(this.editedEl).siblings().last();
-            
-            if ($(this.editedEl).is("input"))
-                map[prop] = $(this.editedEl).val();            
-            else
-                map[prop] = $(this.editedEl).html();
-            
-            this.model.set('profile', {'data': JSON.stringify(map) });
-            if (!this.model.isValid()) {                
-                $('div.etch-editor-panel').remove();
-                notifyFail.animate({ opacity: 1 }); 
-                notifyFail.attr('title', this.model.validationError);                
-            }        
 
-            this.model.save({},{
-                success: function(model, response) {                                                                        
-                    notifyFail.animate({ opacity: 0 });
-                    notifyOk.animate({ opacity: 1 });
-                    notifyOk.fadeTo( 1000, 0 );                    
-                    $('div.etch-editor-panel').remove();                                      
+            if ($(this.editedEl).is("input"))
+                data[prop] = $(this.editedEl).val();
+            else
+                data[prop] = $(this.editedEl).html();
+
+            this.model.set('profile', {
+                'data': JSON.stringify(data)
+            });
+            if (!this.model.isValid()) {
+                $('div.etch-editor-panel').remove();
+                notifyFail.animate({
+                    opacity: 1
+                });
+                notifyFail.attr('title', this.model.validationError);
+            }
+
+            this.model.save({}, {
+                success: function(model, response) {
+                    notifyFail.animate({
+                        opacity: 0
+                    });
+                    notifyOk.animate({
+                        opacity: 1
+                    });
+                    notifyOk.fadeTo(1000, 0);
+                    $('div.etch-editor-panel').remove();
                 },
-                error: function(model, response) {                           
+                error: function(model, response) {
                     $('div.etch-editor-panel').remove();
                 },
             });
