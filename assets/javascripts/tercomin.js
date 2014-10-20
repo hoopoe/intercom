@@ -206,11 +206,8 @@ $(function() {
         if (response && response.profile.positions) {
             var positions = $.parseJSON(response.profile.positions);
             var tmp = new app.PositionCollection();
-            tmp.reset(positions);
-            console.log(tmp);
+            tmp.reset(positions);         
             attr['positions'] = tmp;
-        }else{
-            // attr['positions'] = new app.PositionCollection();
         }
 
         if (response && response.profile.data) {
@@ -223,8 +220,7 @@ $(function() {
             dataModel.set('mail', response.profile.mail);
             dataModel.set('avatar_url', response.profile.avatar_url);
             attr['data'] = dataModel;
-        }
-        console.log(attr);
+        }        
         return attr;
     };
 
