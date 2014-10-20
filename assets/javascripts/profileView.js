@@ -49,6 +49,9 @@ $(function() {
             if(this.currentAddOrUpdatePositionView!==undefined)
                 this.currentAddOrUpdatePositionView.remove();
 
+            if (this.model.get('positions') === undefined)
+                this.model.set('positions', new app.PositionCollection());
+
             this.currentPositionsView = new app.PositionsView({
                 collection: this.model.get('positions')
             });

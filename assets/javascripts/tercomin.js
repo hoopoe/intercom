@@ -174,13 +174,13 @@ $(function() {
         tagName: 'ul',
         className: 'positions-view',
         initialize: function() {},
-        render: function() {
+        render: function() {            
             this.collection.each(function(position) {
                 var positionView = new app.PositionView({
                     model: position
                 });
                 this.$el.append(positionView.render().el);
-            }, this);
+            }, this);            
             return this;
         }
     });
@@ -207,8 +207,12 @@ $(function() {
             var positions = $.parseJSON(response.profile.positions);
             var tmp = new app.PositionCollection();
             tmp.reset(positions);
+            console.log(tmp);
             attr['positions'] = tmp;
+        }else{
+            // attr['positions'] = new app.PositionCollection();
         }
+
         if (response && response.profile.data) {
             var data = $.parseJSON(response.profile.data);
             var dataModel = new Backbone.Model(data);
