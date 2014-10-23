@@ -1,6 +1,45 @@
 var app = app || {};
 
 (function() {
+    app.showView = function(view) {        
+        if (app.currentView) {
+            app.topMenuView.deactivate(view.name);
+            app.currentView.close();
+        }
+        app.currentView = view;
+        app.currentView.render();
+        $(".content").html(app.currentView.el);
+        app.currentView.renderFinished();
+        app.topMenuView.activate(view.name);
+    };
+
+    app.getDateOfBirth = function(date) {
+        var list = date.split('.').filter(Boolean);
+        if (list.length > 1) { //todo: refactor            
+            var dd = _.first(list);
+            var mm = _.last(list);
+            var year = (new Date).getFullYear();
+            return dd + '/' + mm;
+        } else {
+            return date;
+        }
+    };
+
+    app.logMeIn = function() {
+        if (!window.location.origin) {
+            window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+        }
+        window.location = window.location.origin + '/login?back_url=' + window.location.origin + '/tercomin';
+    };
+
+    app.getHash = function() {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for (var i = 0; i < 8; i++)
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        return text;
+    };
+
     app.Resample = (function(canvas) {
         // based on http://webreflection.blogspot.de/2010/12/100-client-side-image-resizing.html (C) WebReflection Mit Style License
         function Resample(img, width, height, onresample) {
