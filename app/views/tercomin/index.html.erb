@@ -1,9 +1,9 @@
 <% content_for :header_tags do %>
-  <%= javascript_include_tag 'underscore-min.js', 'backbone-min.js', 'moment-with-locales.min.js', 'rivets.min.js', 'bootstrap.min.js', 'bootstrap-datetimepicker.min.js', 'infiniScroll.js', 'etch.js', 'utils.js', 'topView.js', 'positionsView.js', 'settingsView.js', 'eventsView.js', 'profileView.js', 'employersView.js', 'tercomin.js', :plugin => 'tercomin' %>
+  <%= javascript_include_tag 'underscore-min.js', 'backbone-min.js', 'moment.min.js', 'rivets.min.js', 'bootstrap.min.js', 'infiniScroll.js', 'etch.js', 'utils.js', 'topView.js', 'positionsView.js', 'settingsView.js', 'eventsView.js', 'profileView.js', 'employersView.js', 'tercomin.js', :plugin => 'tercomin' %>
   <% if @themeName == 'bootswatch' %>
     <%= stylesheet_link_tag 'bootstrap.min.css', 'etch.css', 'tercomin.css', :plugin => 'tercomin' %>
   <% else %>
-    <%= stylesheet_link_tag 'bootstrap.min.css', 'bootstrap.css.map', 'bootstrap-datetimepicker.min.css', 'etch.css', 'tercomin-classic.css', :plugin => 'tercomin' %>
+    <%= stylesheet_link_tag 'bootstrap.min.css', 'etch.css', 'tercomin-classic.css', :plugin => 'tercomin' %>
   <% end %>
 <% end %>
 <div class="navbar navbar-default">
