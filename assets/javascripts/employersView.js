@@ -21,16 +21,19 @@ $(function() {
     });
 
     app.Employer.prototype.parse = function(response) {
+        console.log("tt");
         var attr = response && _.clone(response) || {};
         if (response && response.profile.positions) {
             var positions = $.parseJSON(response.profile.positions);
             var tmp = new app.PositionCollection();
-            tmp.reset(positions);         
+            tmp.reset(positions);
             attr['positions'] = tmp;
         }
 
-        if (response && response.profile.data) {
-            var data = $.parseJSON(response.profile.data);
+        if (response) {
+            var data;
+            if (response.profile.data)
+                data = $.parseJSON(response.profile.data);
             var dataModel = new Backbone.Model(data);
             dataModel.set('editable', response.editable);
             dataModel.set('id', "tercomin/" + response.profile.id);
@@ -39,7 +42,7 @@ $(function() {
             dataModel.set('mail', response.profile.mail);
             dataModel.set('avatar_url', response.profile.avatar_url);
             attr['data'] = dataModel;
-        }        
+        }
         return attr;
     };
 

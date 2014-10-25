@@ -11,7 +11,7 @@ $(function() {
 
         editedEl: {},
 
-        isEditable: false,            
+        isEditable: false,
 
         events: {
             'mousedown .editable': 'editableClick',
@@ -43,10 +43,10 @@ $(function() {
             return this;
         },
         renderPositions: function() {
-            if(this.currentPositionsView!==undefined)
+            if (this.currentPositionsView !== undefined)
                 this.currentPositionsView.remove();
 
-            if(this.currentAddOrUpdatePositionView!==undefined)
+            if (this.currentAddOrUpdatePositionView !== undefined)
                 this.currentAddOrUpdatePositionView.remove();
 
             if (this.model.get('positions') === undefined)
@@ -86,7 +86,9 @@ $(function() {
         onPositionSubmit: function(positionModel) {
             var positions = this.model.get("positions");
             if (positionModel.id && positions.get(positionModel.id) !== undefined) { //update                
-                positions.set(positionModel,{remove: false});
+                positions.set(positionModel, {
+                    remove: false
+                });
             } else {
                 var hash = app.getHash();
                 positionModel.set('id', hash);
@@ -105,7 +107,7 @@ $(function() {
             });
         },
 
-        onCancelPositionForm: function(data) {            
+        onCancelPositionForm: function(data) {
             Backbone.positionEvent.trigger('renderPositions');
         },
 
@@ -130,22 +132,22 @@ $(function() {
         },
         editPosition: function(e) {
             e.preventDefault();
-            var selectedPositionEl = $(e.currentTarget).parent().parent();            
+            var selectedPositionEl = $(e.currentTarget).parent().parent();
             var id = $(e.currentTarget).data("id");
             var positions = this.model.get("positions");
             var position = positions.get(id);
             if (position !== undefined) {
                 if (this.currentAddOrUpdatePositionView !== undefined) {
                     this.currentAddOrUpdatePositionView.cancel();
-                }                
+                }
                 this.currentAddOrUpdatePositionView = new app.AddOrUpdatePositionView({
                     model: position
-                }).render();            
-                selectedPositionEl.append(this.currentAddOrUpdatePositionView.el);                
+                }).render();
+                selectedPositionEl.append(this.currentAddOrUpdatePositionView.el);
             }
         },
         removePosition: function(e) {
-            e.preventDefault();    
+            e.preventDefault();
             var id = $(e.currentTarget).data("id");
             var positions = this.model.get("positions");
             positions.remove(id);
@@ -153,7 +155,7 @@ $(function() {
                 'positions': JSON.stringify(positions)
             });
             this.model.save({}, {
-                success: function(model, response) {                    
+                success: function(model, response) {
                     Backbone.positionEvent.trigger('renderPositions');
                 },
                 error: function(model, response) {
