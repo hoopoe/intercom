@@ -11,16 +11,17 @@ $(function() {
                 try {                
                     JSON.parse(attrs.profile.data);
                 } catch (e) {
-                    console.log("Profile data is not valid");
-                    console.log(attrs.profile.data);
-                    console.log(attrs);
+                    console.log("Profile data is not valid");                    
                     return "Profile data is not valid";
                 }
             }
-            try {                            
-                JSON.parse(attrs.profile.positions);
-            } catch (e) {
-                return "Profile positions is not valid";
+            if (attrs.profile.positions !== undefined) {
+                try {                            
+                    JSON.parse(attrs.profile.positions);
+                } catch (e) {
+                    console.log("Profile positions is not valid");
+                    return "Profile positions is not valid";
+                }
             }
 
             if (attrs.profile.room_number) {

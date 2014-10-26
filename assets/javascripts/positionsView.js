@@ -51,14 +51,23 @@ $(function() {
     app.PositionsView = Backbone.View.extend({
         tagName: 'ul',
         className: 'positions-view',
-        initialize: function() {},
-        render: function() {            
+        editable: 'SDF',
+        initialize: function() {
+            
+        },
+        setEditable:function(e) {
+            this.editable = e;            
+        },
+        render: function() {
+
             this.collection.each(function(position) {
+                position.set('editable', this.editable);                
                 var positionView = new app.PositionView({
-                    model: position
+                    model: position                    
                 });
                 this.$el.append(positionView.render().el);
-            }, this);            
+            }, this);
+            
             return this;
         }
     });

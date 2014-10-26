@@ -58,8 +58,10 @@ $(function() {
                 this.model.set('positions', new app.PositionCollection());
 
             this.currentPositionsView = new app.PositionsView({
-                collection: this.model.get('positions')
+                collection: this.model.get('positions')                
             });
+            this.currentPositionsView.setEditable(this.model.get('editable'));
+            
             this.$el.find('.positions-ph').append(this.currentPositionsView.$el);
             this.currentPositionsView.render();
         },

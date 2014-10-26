@@ -23,12 +23,14 @@ $(function() {
 
         select: function(e) {
             e.preventDefault();
+
             var themeValue = e.currentTarget.value;
             var settings = {};
             settings.theme = themeValue;
             
             var map = {};
             map["settings"] = JSON.stringify(settings);
+            console.log(this.model);
             this.model.set('profile', map);
             // this.model.save();
             this.model.save({}, {
