@@ -48,6 +48,7 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
     text-align: center;
     padding-top: 10px;}
 .profile-data-html{width:95%; border: 0px; word-break: break-all;  float:left;}
+.profile-data-span{word-break: break-all;}
  [contentEditable=true]:empty:not(:focus):before{content:attr(data-ph)}
 .profile-status h3 {color: #fff; text-decoration: none; border-bottom-width:0px;}
 .editable {background-color: #fff;}

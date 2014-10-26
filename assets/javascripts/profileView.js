@@ -151,7 +151,8 @@ $(function() {
         saveEmpItem: function(e) {            
             var prop = e.currentTarget.getAttribute('value');
             var dataModel = this.model.get('data').set('edit_prop', prop);
-            if (prop === 'summary' || prop === 'skills' || prop == 'coureses') {                
+            if (prop === 'summary' || prop === 'skills' || prop == 'coureses'
+                 || prop === 'extra_languages') {                
                 var tmp = $('.profile-' + prop);
                 dataModel.set(prop, tmp.html())
                 console.log(dataModel);
