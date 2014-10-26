@@ -27,6 +27,17 @@ var app = app || {};
         }
     };
 
+    rivets.formatters.prependRoot = function(value){
+      return "/tercomin/" + value;
+    }
+
+    rivets.formatters.eq = function (value, args) {        
+        if (typeof value === 'boolean') {
+            return value === Boolean(args);
+        }
+        return value === args;
+    };
+
     app.showView = function(view) {
         if (app.currentView) {
             app.topMenuView.deactivate(view.name);

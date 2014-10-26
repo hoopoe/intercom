@@ -40,8 +40,7 @@ $(function() {
             });
             return this;
         },
-        cancel: function(e) {
-            // Backbone.positionEvent.trigger('cancelPositionForm', this.model);
+        cancel: function(e) {            
             this.remove();
         },
         submit: function(e) {            

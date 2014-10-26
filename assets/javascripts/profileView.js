@@ -20,14 +20,19 @@ $(function() {
             'click .profile-img-save': 'profileImgSave',
             'click .add-position': 'addPosition',
             'click .remove-position': 'removePosition',
-            'click .edit-position': 'editPosition'
+            'click .edit-position': 'editPosition',
+            'click .edit-emp-item': 'editEmpItem',
+            'click .emp-item-cancel': 'cancelEmpItem',
+            'click .emp-item-save': 'saveEmpItem'
         },
 
         initialize: function() {
             app.currentProfile = this.model; //todo: remove           
+            // console.log(this.model);
             Backbone.positionEvent.on('positionSubmit', this.onPositionSubmit, this);
             Backbone.positionEvent.on('cancelPositionForm', this.onCancelPositionForm, this);
             Backbone.positionEvent.on('renderPositions', this.renderPositions, this);
+            Backbone.positionEvent.on('editItemCompleted', this.onEditItemCompleted, this);
             _.bindAll(this, 'save');
             this.model.bind('save', this.save);
             if (this.model.get('editable'))
@@ -35,7 +40,7 @@ $(function() {
         },
         render: function() {
             this.$el.html('');
-            this.$el.html(this.template);
+            this.$el.html(this.template);            
             rivets.bind(this.el, {
                 user_p: this.model.get('data')
             });
@@ -130,6 +135,44 @@ $(function() {
             // $('.positions-ph').append(this.currentAddOrUpdatePositionView.el);
             $('.positions-ph').prepend(this.currentAddOrUpdatePositionView.el);
         },
+
+        editEmpItem: function(e) {
+            var prop = e.currentTarget.getAttribute('value');
+            this.model.get('data').set('edit_prop', prop);
+            if (prop === 'birthday')
+            {
+                var that = this; //todo: remove
+                $( "#birthdayPicker" ).datepicker({
+                 changeYear: false, 
+                 dateFormat: 'dd/mm', 
+                 onSelect: function(dateText) {                
+                    var data = that.model.get('data');
+                    data.set('birthday',dateText);
+                    that.save();
+                    // console.log(data);
+                    // console.log(that.model.get('data'));
+                    //  if (view.isEditable) {
+                    //     view.editedEl = this; //this -> input                    
+                    //     view.save(); //read calendar data-prop                    
+                    // }
+                  }
+                }); 
+            }
+        },
+        cancelEmpItem: function(e) {
+            this.model.get('data').set('edit_prop', "None");
+        },
+        saveEmpItem: function(e) {
+            this.save();
+        },
+        onEditItemCompleted: function() {
+            var prop = this.model.get('data').get('edit_prop');
+            var ntf = $('.' + prop + '-notify-ok');            
+            ntf.animate({ opacity: 1 });
+            ntf.fadeTo(1000, 0);            
+            this.model.get('data').set('edit_prop', "None");
+        },
+
         editPosition: function(e) {
             e.preventDefault();
             var selectedPositionEl = $(e.currentTarget).parent().parent();
@@ -202,41 +245,45 @@ $(function() {
         },
 
         save: function() {
-            var data = $.parseJSON(this.model.get("profile").data);
-            var prop = this.editedEl.getAttribute("data-prop");
+            // console.log(this.model.get('data'));
 
-            var notifyOk = $(this.editedEl).siblings().first();
-            var notifyFail = $(this.editedEl).siblings().last();
+            // var data = $.parseJSON(this.model.get("profile").data);
+            // var prop = this.editedEl.getAttribute("data-prop");
 
-            if ($(this.editedEl).is("input"))
-                data[prop] = $(this.editedEl).val();
-            else
-                data[prop] = $(this.editedEl).html();
+            // var notifyOk = $(this.editedEl).siblings().first();
+            // var notifyFail = $(this.editedEl).siblings().last();
 
-            this.model.set('profile', {
-                'data': JSON.stringify(data)
-            });
+            // if ($(this.editedEl).is("input"))
+            //     data[prop] = $(this.editedEl).val();
+            // else
+            //     data[prop] = $(this.editedEl).html();
+
+            // this.model.set('profile', {
+            //     'data': JSON.stringify(data)
+            // });
             if (!this.model.isValid()) {
-                $('div.etch-editor-panel').remove();
-                notifyFail.animate({
-                    opacity: 1
-                });
-                notifyFail.attr('title', this.model.validationError);
+                console.log("model is not valid");
+                // $('div.etch-editor-panel').remove();
+                // notifyFail.animate({
+                //     opacity: 1
+                // });
+                // notifyFail.attr('title', this.model.validationError);
             }
 
             this.model.save({}, {
-                success: function(model, response) {
-                    notifyFail.animate({
-                        opacity: 0
-                    });
-                    notifyOk.animate({
-                        opacity: 1
-                    });
-                    notifyOk.fadeTo(1000, 0);
-                    $('div.etch-editor-panel').remove();
+                success: function(model, response) {                    
+                    // notifyFail.animate({
+                    //     opacity: 0
+                    // });
+                    // notifyOk.animate({
+                    //     opacity: 1
+                    // });
+                    // notifyOk.fadeTo(1000, 0);
+                    // $('div.etch-editor-panel').remove();
+                    Backbone.positionEvent.trigger('editItemCompleted', this.model);
                 },
                 error: function(model, response) {
-                    $('div.etch-editor-panel').remove();
+                    // $('div.etch-editor-panel').remove();
                 },
             });
         }

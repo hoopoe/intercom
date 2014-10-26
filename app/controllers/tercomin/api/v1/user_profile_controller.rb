@@ -102,7 +102,7 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
           data = JSON.parse(profile.data)
         else
           data = Hash.new
-        end
+        end        
         data.merge!(JSON.parse(params[:profile][:data]));
         profile.data = data.to_json
       end
