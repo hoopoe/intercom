@@ -9,7 +9,7 @@ $(function() {
 
         template: _.template($("#profile-template").html()),
 
-        editedEl: {},
+        // editedEl: {},
 
         isEditable: false,
 
@@ -68,27 +68,16 @@ $(function() {
                 if (!this.isEditable) {
                     $(i).attr('disabled', true);
                 }
-            }, this);
-
-            var view = this; //todo: remove
-            // $( "#datepicker" ).datepicker({
-            //  changeYear: false, 
-            //  dateFormat: 'dd/mm', 
-            //  onSelect: function(dateText) {                
-            //      if (view.isEditable) {
-            //         view.editedEl = this; //this -> input                    
-            //         view.save(); //read calendar data-prop                    
-            //     }
-            //   }
-            // });                
+            }, this);            
         },
         editableClick: function(e) {
-            if (this.isEditable) {
-                this.editedEl = e.currentTarget;
+            // if (this.isEditable) {
+            //     this.editedEl = e.currentTarget;
                 etch.editableInit.call(this, e);
-            }
+            // }
         },
         onPositionSubmit: function(positionModel) {
+
             var positions = this.model.get("positions");
             if (positionModel.id && positions.get(positionModel.id) !== undefined) { //update                
                 positions.set(positionModel, {
@@ -99,11 +88,13 @@ $(function() {
                 positionModel.set('id', hash);
                 positions.add(positionModel);
             }
+            
             this.model.set('profile', {
                 'positions': JSON.stringify(positions)
             });
-            this.model.save({}, {
-                success: function(model, response) {
+                        
+            this.model.save({},{
+                success: function(model, response) {                    
                     Backbone.positionEvent.trigger('renderPositions');
                 },
                 error: function(model, response) {
@@ -138,7 +129,7 @@ $(function() {
 
         editEmpItem: function(e) {
             var prop = e.currentTarget.getAttribute('value');
-            this.model.get('data').set('edit_prop', prop);
+            var dataModel = this.model.get('data').set('edit_prop', prop);
             if (prop === 'birthday')
             {
                 var that = this; //todo: remove
@@ -148,21 +139,23 @@ $(function() {
                  onSelect: function(dateText) {                
                     var data = that.model.get('data');
                     data.set('birthday',dateText);
-                    that.save();
-                    // console.log(data);
-                    // console.log(that.model.get('data'));
-                    //  if (view.isEditable) {
-                    //     view.editedEl = this; //this -> input                    
-                    //     view.save(); //read calendar data-prop                    
-                    // }
+                    that.save();                    
                   }
                 }); 
             }
+                      
         },
         cancelEmpItem: function(e) {
             this.model.get('data').set('edit_prop', "None");
         },
-        saveEmpItem: function(e) {
+        saveEmpItem: function(e) {            
+            var prop = e.currentTarget.getAttribute('value');
+            var dataModel = this.model.get('data').set('edit_prop', prop);
+            if (prop === 'summary' || prop === 'skills') {                
+                var psummary = $('.profile-' + prop);
+                dataModel.set(prop, psummary.html())
+                console.log(dataModel);
+            } 
             this.save();
         },
         onEditItemCompleted: function() {

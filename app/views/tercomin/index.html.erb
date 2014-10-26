@@ -87,10 +87,7 @@
 
       <br>
       <label for="resp">Responsibility</label>
-      <span id="resp">{ position:resp }</span>
-      <br>
-      <label for="techSummary">Summary</label>
-      <span id="techSummary">{ position:techSummary }</span>
+      <span id="resp">{ position:resp }</span>      
     </div>
     <div class=''>
       <a class="remove-position" rv-data-id="position:id">
@@ -103,10 +100,10 @@
             Edit
         </i>  
       </a>   
-    </div>
-    
+    </div>    
+    <div class="line-separator-gray"/> 
   </div> 
-  <div class="line-separator"/> 
+  
 </script>
 <script type="text/html" id="position-template" >
   <form >       
@@ -133,17 +130,14 @@
     <div class="form-group col-md-12">
       <label for="resp">Responsibility</label>
       <textarea class="form-control" rows="3" rv-value="position:resp" id="resp" placeholder="Responsibility"></textarea>
-    </div>
-    <div class="form-group col-md-12">
-      <label for="techSummary">Summary</label>            
-      <textarea class="form-control" rows="3" rv-value="position:techSummary" id="techSummary" placeholder="Summary"></textarea>
-    </div>
+    </div>    
     <div class="form-group col-md-12">
       <a class="add-position-submit btn btn-primary">Save</a>
       <a class="add-position-cancel btn btn-primary">Cancel</a>    
     <div>    
   </form>
 </script>
+
 <% if @themeName == 'bootswatch' %>  
   <%= render :partial => 'employers' %>
 <%else%>  

@@ -17,9 +17,10 @@
         // in the markup as "data-button-class"   
         buttonClasses: {
             'default': ['save'],
-            'all': ['bold', 'italic', 'underline', 'unordered-list', 'ordered-list', 'link', 'clear-formatting', 'save'],
+            'all': ['bold', 'italic', 'underline', 'unordered-list', 'ordered-list', 'link', 'clear-formatting', 'save'],            
             'title': ['bold', 'italic', 'underline', 'save'],
             'avatar': ['save', 'image'],
+            'format': ['bold', 'italic', 'underline', 'unordered-list', 'ordered-list', 'link', 'clear-formatting'],
         }
     };
 

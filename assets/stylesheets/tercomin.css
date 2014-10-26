@@ -26,9 +26,11 @@ body {
 .row {margin-left: 5px;margin-right: 5px;}
 button.btn-search{margin-left: 5px;}
 div.line-separator {background:#1995dc;  border-bottom:1px solid #1995dc;}
+div.line-separator-gray{background:#8D8D8D;  border-bottom:1px solid #8D8D8D;}
 
 /*profile*/
-div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995dc; float: left; margin: 2px}
+div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995dc; float: left; margin: 2px; }
+/*.emp-item-title {padding-right: 60px;}*/
 /*div.profile-lbl {padding-top: 10px;}*/
 /*div.profile-lbl *{float:right;}*/
 /*div.profile-text {padding-top: 10px;}*/
@@ -48,8 +50,11 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 /*.ui-datepicker-without-year{display:none;}*/
 /*.position-ph{background: #f4f4f4;}*/
 .positions-view{list-style-type: none;}
+/*ul.positions-view li:nth-child(odd) {background-color: #E4E4E4;}*/
+
 .position-container{margin: 10px;}
 .glyphicon:hover{cursor: pointer;}
+/*positions-view*/
 
 .cv {
   width: 81px;

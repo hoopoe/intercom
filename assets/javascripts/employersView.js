@@ -7,10 +7,15 @@ $(function() {
     app.Employer = Backbone.Model.extend({
         urlRoot: '/tercomin/api/v1/user_profile/',
         validate: function(attrs, options) {
-            try {                
-                JSON.parse(attrs.profile.data);
-            } catch (e) {
-                return "Profile data is not valid";
+            if (attrs.profile.data !== undefined) {
+                try {                
+                    JSON.parse(attrs.profile.data);
+                } catch (e) {
+                    console.log("Profile data is not valid");
+                    console.log(attrs.profile.data);
+                    console.log(attrs);
+                    return "Profile data is not valid";
+                }
             }
             try {                            
                 JSON.parse(attrs.profile.positions);

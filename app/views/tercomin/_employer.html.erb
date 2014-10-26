@@ -188,17 +188,38 @@
   </div>
   <div class="row">
     <div class="col-md-11 col-md-offset-1">
-        <span><%=l(:summary_title)%></span>
-        <div class="circle"/>
+        <span class="emp-item-title"><%=l(:summary_title)%></span>
+        <div class="circle"/>     
+       
     </div>
     <div class="col-md-9 col-md-offset-2">
-      <div contentEditable=true class="profile-data-html" data-ph='<%=l(:put_summary_here) %>' data-prop="summary" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" data-button-class="all" data-prop="summary" rv-html="user_p:summary">
+      <div rv-show="user_p:edit_prop | eq summary">        
+        <div contentEditable=true class="profile-data-html editable profile-summary" data-ph='<%=l(:put_summary_here) %>' data-button-class="format" rv-html="user_p:summary"/>
+        <a class="emp-item-cancel" value="summary">
+          <i class="glyphicon glyphicon-remove">
+              Cancel
+          </i>  
+        </a>
+        <a class="emp-item-save" value="summary">
+          <i class="glyphicon glyphicon-save">
+              Save
+          </i>  
+        </a>
       </div>
-      <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
-    </div>
-  
+      <div rv-hide="user_p:edit_prop | eq summary">
+        <span rv-html="user_p:summary" />                  
+        <span class="glyphicon glyphicon-floppy-saved profile-notify summary-notify-ok"/>
+        <span class="glyphicon glyphicon-floppy-remove profile-notify summary-notify-fail"/>
+        <a rv-show="user_p:editable | eq true" class="edit-emp-item" value="summary">
+          <i class="glyphicon glyphicon-pencil">
+              Edit
+          </i>  
+        </a>  
+      </div>      
+      <div class="line-separator"/>
+    </div>  
   </div>
-  <div class="line-separator"/>
+  
   
   <div class="row">
     <div class="col-md-11 col-md-offset-1">
@@ -206,11 +227,33 @@
         <div class="circle"/>
     </div>
     <div class="col-md-9 col-md-offset-2">
-       <div contentEditable=true class="profile-data-html" data-ph='<%=l(:put_skills_here) %>' data-prop="skills" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" data-button-class="all" data-prop="skills" rv-html="user_p:skills"></div>
-       <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
+      <div rv-show="user_p:edit_prop | eq skills">        
+        <div contentEditable=true class="profile-data-html editable profile-skills" data-ph='<%=l(:put_skills_here) %>' data-button-class="format" rv-html="user_p:skills"/>
+        <a class="emp-item-cancel" value="skills">
+          <i class="glyphicon glyphicon-remove">
+              Cancel
+          </i>  
+        </a>
+        <a class="emp-item-save" value="skills">
+          <i class="glyphicon glyphicon-save">
+              Save
+          </i>  
+        </a>
+      </div>
+      <div rv-hide="user_p:edit_prop | eq skills">
+        <span rv-html="user_p:skills" />                  
+        <span class="glyphicon glyphicon-floppy-saved profile-notify skills-notify-ok"/>
+        <span class="glyphicon glyphicon-floppy-remove profile-notify skills-notify-fail"/>
+        <a rv-show="user_p:editable | eq true" class="edit-emp-item" value="skills">
+          <i class="glyphicon glyphicon-pencil">
+              Edit
+          </i>  
+        </a>  
+      </div>     
+      <div class="line-separator"/>
     </div>
   </div>
-  <div class="line-separator"/>
+  
   
   <div class="row">
     <div class="col-md-offset-1 col-md-2">
@@ -223,14 +266,13 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-offset-2 col-md-9">
+    <div class="col-md-offset-2 col-md-7">
       <div class="positions-ph">
       </div>
-    </div>
-  
+      <div class="line-separator"/>
+    </div>  
   </div>
-  <div class="line-separator"/>
-  
+    
   <div class="row">
     <div class="col-md-offset-1 col-md-2">
       <span><%=l(:background_title)%></span>
@@ -245,10 +287,9 @@
     <div class="col-md-offset-2 col-md-9">
       <div class="backgrounds-ph">
       </div>
-    </div>
-  
-  </div>
-  <div class="line-separator"/>
+      <div class="line-separator"/>
+    </div>  
+  </div>  
   
   <div class="row">
     <div class="col-md-offset-1 col-md-2">
@@ -261,9 +302,9 @@
        <div contentEditable=true class="profile-data-html" data-ph='<%=l(:put_coureses_here) %>' data-prop="coureses" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" data-button-class="default" data-prop="coureses" rv-html="user_p:coureses">
       </div>
       <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
+      <div class="line-separator"/>
     </div>
-  </div>
-  <div class="line-separator"/>
+  </div>  
   
   <div class="row">
     <div class="col-md-offset-1 col-md-2">
@@ -276,7 +317,7 @@
        <div contentEditable=true class="profile-data-html" data-ph='<%=l(:put_languages_here) %>' data-prop="languages" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" data-button-class="default" data-prop="languages" rv-html="user_p:languages">
       </div>
       <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
+      <div class="line-separator"/>
     </div>
-  </div>
-  <div class="line-separator"/>
+  </div>  
 </script>

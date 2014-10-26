@@ -28,9 +28,9 @@ $(function() {
             'mouseover .pos-date': 'createDatePicker',            
         },
         createDatePicker: function(e) {            
-            $(e.currentTarget).datetimepicker({
-                pickTime:false
-            });        
+            // $(e.currentTarget).datetimepicker({
+            //     pickTime:false
+            // });        
         },
         render: function() {
             this.$el.html('');
@@ -43,7 +43,7 @@ $(function() {
         cancel: function(e) {            
             this.remove();
         },
-        submit: function(e) {            
+        submit: function(e) {                 
             Backbone.positionEvent.trigger('positionSubmit', this.model);
         }
     });
