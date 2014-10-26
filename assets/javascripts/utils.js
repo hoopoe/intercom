@@ -38,6 +38,18 @@ var app = app || {};
         return value === args;
     };
 
+    rivets.binders['src-strict'] = function(el, value) {
+        if (value === 'noavatar')
+            value = "";
+      var img = new Image()
+
+      img.onload = function() {        
+        $(el).attr('src', value)
+      }
+      // console.log(value);
+      img.src = value
+    }
+
     app.showView = function(view) {
         if (app.currentView) {
             app.topMenuView.deactivate(view.name);

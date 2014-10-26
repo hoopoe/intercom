@@ -37,33 +37,61 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 .profile-img-save {  margin-top: 10px;  text-align: center;    display: block;}
 .profile-img-save-hide {  display: none;}
 .profile-data {  display: inline-block; border:0px;}
-.profile-status {background-image: url("../images/status_backgr.png"); width: 472px; height: 101px; text-align: center; padding-top: 10px;}
+/*.profile-status {background-image: url("../images/status_backgr.png"); width: 472px; height: 101px; text-align: center; padding-top: 10px;}*/
+.profile-status { 
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    border: 1px solid;
+    background-color: #428BCA;
+    height: 100px;
+    text-align: center;
+    padding-top: 10px;}
 .profile-data-html{width:95%; border: 0px; word-break: break-all;  float:left;}
  [contentEditable=true]:empty:not(:focus):before{content:attr(data-ph)}
 .profile-status h3 {color: #fff; text-decoration: none; border-bottom-width:0px;}
 .editable {background-color: #fff;}
 .no-editable {background-color: #f6f6f6;}
 .profile-img {  display: block;  margin-left: auto;  margin-right: auto;  margin-top: 10px;}
-.btn {border-radius:10px; border: 0px solid transparent;}
+/*.btn {border-radius:10px; border: 0px solid transparent;}*/
 .profile-notify{opacity: 0;}
 /*.ui-datepicker-year{display:none;}*/
 /*.ui-datepicker-without-year{display:none;}*/
 /*.position-ph{background: #f4f4f4;}*/
 .positions-view{list-style-type: none;}
+.profile-header{padding-bottom: 10px;}
 /*ul.positions-view li:nth-child(odd) {background-color: #E4E4E4;}*/
 
 .position-container{margin: 10px;}
 .glyphicon:hover{cursor: pointer;}
 /*positions-view*/
 
-.cv {
+/*.cv {
   width: 81px;
   height: 101px;
   display: block;
   background-image: url("../images/cv.png"); 
   margin-left: 0px;
   margin-right: auto;  
+}*/
+.profile-cv {
+    text-align: center;  
 }
+
+a.cv { 
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    border: 1px solid;
+    background-color: #428BCA;
+    height: 100px;    
+    display: block;
+    color:#fff;   
+    line-height: 90px;
+    font-size: 18px;
+    text-decoration: none;
+}
+
 /*.add-position {float:right;}*/
 
 /*.cv{display:none;}*/
