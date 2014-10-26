@@ -11,7 +11,7 @@ $(function() {
 
         // editedEl: {},
 
-        isEditable: false,
+        isEditable: false, //todo: remove
 
         events: {
             'mousedown .editable': 'editableClick',
@@ -27,8 +27,7 @@ $(function() {
         },
 
         initialize: function() {
-            app.currentProfile = this.model; //todo: remove           
-            // console.log(this.model);
+            app.currentProfile = this.model; //todo: remove            
             Backbone.positionEvent.on('positionSubmit', this.onPositionSubmit, this);
             Backbone.positionEvent.on('cancelPositionForm', this.onCancelPositionForm, this);
             Backbone.positionEvent.on('renderPositions', this.renderPositions, this);
@@ -61,7 +60,7 @@ $(function() {
                 collection: this.model.get('positions')                
             });
             this.currentPositionsView.setEditable(this.model.get('editable'));
-            
+
             this.$el.find('.positions-ph').append(this.currentPositionsView.$el);
             this.currentPositionsView.render();
         },
@@ -124,8 +123,7 @@ $(function() {
             }
             this.currentAddOrUpdatePositionView = new app.AddOrUpdatePositionView({
                 model: position
-            }).render();
-            // $('.positions-ph').append(this.currentAddOrUpdatePositionView.el);
+            }).render();            
             $('.positions-ph').prepend(this.currentAddOrUpdatePositionView.el);
         },
 
@@ -153,9 +151,9 @@ $(function() {
         saveEmpItem: function(e) {            
             var prop = e.currentTarget.getAttribute('value');
             var dataModel = this.model.get('data').set('edit_prop', prop);
-            if (prop === 'summary' || prop === 'skills') {                
-                var psummary = $('.profile-' + prop);
-                dataModel.set(prop, psummary.html())
+            if (prop === 'summary' || prop === 'skills' || prop == 'coureses') {                
+                var tmp = $('.profile-' + prop);
+                dataModel.set(prop, tmp.html())
                 console.log(dataModel);
             } 
             this.save();

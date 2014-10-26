@@ -297,9 +297,30 @@
   </div>
   <div class="row">
     <div class="col-md-offset-2 col-md-9">
-       <div contentEditable=true class="profile-data-html" data-ph='<%=l(:put_coureses_here) %>' data-prop="coureses" rv-class-editable="user_p:editable" rv-class-no-editable="!user_p:editable" data-button-class="default" data-prop="coureses" rv-html="user_p:coureses">
+      <div rv-show="user_p:edit_prop | eq coureses">
+        <div contentEditable=true class="editable profile-data-htm profile-coureses" data-ph='<%=l(:put_coureses_here) %>' data-prop="coureses" data-button-class="format" data-prop="coureses" rv-html="user_p:coureses">
+        </div>
+        <a class="emp-item-cancel"  value="coureses">
+          <i class="glyphicon glyphicon-remove">
+              Cancel
+          </i>  
+        </a>
+        <a class="emp-item-save" value="coureses">
+          <i class="glyphicon glyphicon-save">
+              Save
+          </i>  
+        </a>
       </div>
-      <span class="glyphicon glyphicon-floppy-saved profile-notify"/>
+      <div rv-hide="user_p:edit_prop | eq coureses">
+        <span rv-html="user_p:coureses" />                  
+        <span class="glyphicon glyphicon-floppy-saved profile-notify coureses-notify-ok"/>
+        <span class="glyphicon glyphicon-floppy-remove profile-notify coureses-notify-fail"/>
+        <a rv-show="user_p:editable | eq true" class="edit-emp-item" value="coureses">
+          <i class="glyphicon glyphicon-pencil">
+              Edit
+          </i>  
+        </a>  
+      </div>      
       <div class="line-separator"/>
     </div>
   </div>  

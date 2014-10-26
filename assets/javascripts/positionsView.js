@@ -51,10 +51,7 @@ $(function() {
     app.PositionsView = Backbone.View.extend({
         tagName: 'ul',
         className: 'positions-view',
-        editable: 'SDF',
-        initialize: function() {
-            
-        },
+        editable: false,        
         setEditable:function(e) {
             this.editable = e;            
         },
