@@ -66,14 +66,13 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 .profile-table-header{padding-bottom: 10px;}
 /*ul.positions-view li:nth-child(odd) {background-color: #E4E4E4;}*/
 .edit-emp-item{}
-
-
 .emp-item-error{color:red;}
 .position-container{margin: 10px;}
 .glyphicon:hover{cursor: pointer;}
 #main .profile-cv a{color: #fff;}
 #main .profile-cv a:hover{color: #fff; text-decoration: none}
 #main .profile-cv :hover{background-color: #54b4eb;}
+.profile-data-title{min-width: 150px;}
 /*positions-view*/
 
 /*.cv {

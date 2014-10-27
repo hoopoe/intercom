@@ -28,170 +28,139 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            <div class="col-md-2">
-              <span><%=l(:project_title)%>:</span>              
-            </div>
-            <div class="col-md-5">
-              <div rv-show="user_p:edit_prop | eq project">
-                <input rv-value="user_p:project" placeholder="<%=l(:put_projects_here) %>"/>
-                <a class="emp-item-cancel" value="project">
-                  <i class="glyphicon glyphicon-remove">
-                      Cancel
-                  </i>  
-                </a>
-                <a class="emp-item-save" value="project">
-                  <i class="glyphicon glyphicon-save">
-                      Save
-                  </i>  
-                </a>                
-              </div>
-              <div rv-hide="user_p:edit_prop | eq project">
-                <span rv-text="user_p:project" />
-                <span rv-hide="user_p:edit_prop | eq project" class="edit-emp-item">
+            <div class="col-md-2 profile-data-title">
+              <span><%=l(:project_title)%>:</span>
+              <span rv-hide="user_p:edit_prop | eq project" class="edit-emp-item">
                   <a rv-show="user_p:editable | eq true" value="project">
                     <i class="glyphicon glyphicon-pencil"/>                
                   </a>
-                </span>                  
+              </span>            
+            </div>
+            <div class="col-md-6">
+              <div rv-show="user_p:edit_prop | eq project">
+                <input rv-value="user_p:project" placeholder="<%=l(:put_projects_here) %>"/>
+                <a class="emp-item-cancel" value="project"><i class="glyphicon">Cancel</i></a>
+                <a class="emp-item-save" value="project"><i class="glyphicon">Save</i></a>
+              </div>
+              <div rv-hide="user_p:edit_prop | eq project">
+                <span rv-text="user_p:project" />                 
                 <span class="glyphicon glyphicon-floppy-saved profile-notify project-notify-ok"/>
               </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-3">
               <span rv-show="user_p:edit_prop | eq project" rv-text="user_p.validationError" class="emp-item-error"/>
             </div>            
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <div class="col-md-2">
-              <span><%=l(:project_extra_title)%>:</span>              
-            </div>
-            <div class="col-md-5">
-              <div rv-show="user_p:edit_prop | eq project_extra">
-                <input rv-value="user_p:project_extra" placeholder="<%=l(:put_project_extra_here) %>"/>
-                <a class="emp-item-cancel" value="project_extra">
-                  <i class="glyphicon glyphicon-remove">
-                      Cancel
-                  </i>  
+            <div class="col-md-2 profile-data-title">
+              <span><%=l(:project_extra_title)%>:</span>
+              <span rv-hide="user_p:edit_prop | eq project_extra" class="edit-emp-item">
+                <a rv-show="user_p:editable | eq true" value="project_extra">
+                  <i class="glyphicon glyphicon-pencil"/>                
                 </a>
-                <a class="emp-item-save" value="project_extra">
-                  <i class="glyphicon glyphicon-save">
-                      Save
-                  </i>  
-                </a>                
+              </span>             
+            </div>
+            <div class="col-md-6">
+              <div rv-show="user_p:edit_prop | eq project_extra">
+                <input rv-value="user_p:project_extra" placeholder="<%=l(:put_projects_extra_here) %>"/>
+                <a class="emp-item-cancel" value="project_extra"><i class="glyphicon">Cancel</i></a>
+                <a class="emp-item-save" value="project_extra"><i class="glyphicon">Save</i></a>
               </div>
               <div rv-hide="user_p:edit_prop | eq project_extra">
                 <span rv-text="user_p:project_extra" />
-                <span rv-hide="user_p:edit_prop | eq project_extra" class="edit-emp-item">
-                  <a rv-show="user_p:editable | eq true" value="project_extra">
-                    <i class="glyphicon glyphicon-pencil"/>                
-                  </a>
-                </span>                  
                 <span class="glyphicon glyphicon-floppy-saved profile-notify project_extra-notify-ok"/>
               </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-3">
               <span rv-show="user_p:edit_prop | eq project_extra" rv-text="user_p.validationError" class="emp-item-error"/>
             </div>            
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <div class="col-md-2">
-              <span><%=l(:position_title)%>:</span>              
+            <div class="col-md-2 profile-data-title">
+              <span><%=l(:position_title)%>:</span>
+              <span rv-hide="user_p:edit_prop | eq position" class="edit-emp-item">
+                <a rv-show="user_p:editable | eq true" value="position">
+                  <i class="glyphicon glyphicon-pencil"/>                
+                </a>
+              </span>              
             </div>
-            <div class="col-md-5">
+            <div class="col-md-6">
               <div rv-show="user_p:edit_prop | eq position">
                 <input rv-value="user_p:position" placeholder="<%=l(:put_project_extra_here) %>"/>
-                <a class="emp-item-cancel" value="position">
-                  <i class="glyphicon glyphicon-remove">
-                      Cancel
-                  </i>  
-                </a>
-                <a class="emp-item-save" value="position">
-                  <i class="glyphicon glyphicon-save">
-                      Save
-                  </i>  
-                </a>                
+                <a class="emp-item-cancel" value="position"><i class="glyphicon">Cancel</i></a>
+                <a class="emp-item-save" value="position"><i class="glyphicon">Save</i></a>
               </div>
               <div rv-hide="user_p:edit_prop | eq position">
                 <span rv-text="user_p:position" />
-                <span rv-hide="user_p:edit_prop | eq position" class="edit-emp-item">
-                  <a rv-show="user_p:editable | eq true" value="position">
-                    <i class="glyphicon glyphicon-pencil"/>                
-                  </a>
-                </span>                  
                 <span class="glyphicon glyphicon-floppy-saved profile-notify position-notify-ok"/>
               </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-3">
               <span rv-show="user_p:edit_prop | eq position" rv-text="user_p.validationError" class="emp-item-error"/>
             </div>            
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <div class="col-md-2">
+            <div class="col-md-2 profile-data-title">
               <span><%=l(:email_title)%>:</span>              
             </div>
-            <div class="col-md-5">
+            <div class="col-md-6">
               <span rv-text="user_p:mail"/>
             </div>                    
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <div class="col-md-2">
-              <span><%=l(:room_number)%>:</span>              
+            <div class="col-md-2 profile-data-title">
+              <span><%=l(:room_number)%>:</span>
+              <span rv-hide="user_p:edit_prop | eq room_number" class="edit-emp-item">
+                <a rv-show="user_p:editable | eq true" value="room_number">
+                  <i class="glyphicon glyphicon-pencil"/>                
+                </a>
+              </span>            
             </div>
-            <div class="col-md-5">
+            <div class="col-md-6">
               <div rv-show="user_p:edit_prop | eq room_number">
                 <input rv-value="user_p:room_number" placeholder="<%=l(:put_room_number_here) %>"/>
-                <a class="emp-item-cancel" value="room_number">
-                  <i class="glyphicon glyphicon-remove">
-                      Cancel
-                  </i>  
-                </a>
-                <a class="emp-item-save" value="room_number">
-                  <i class="glyphicon glyphicon-save">
-                      Save
-                  </i>  
-                </a>                
+                <a class="emp-item-cancel" value="room_number"><i class="glyphicon">Cancel</i></a>
+                <a class="emp-item-save" value="room_number"><i class="glyphicon">Save</i></a>
               </div>
               <div rv-hide="user_p:edit_prop | eq room_number">
-                <span rv-text="user_p:room_number" />
-                <span rv-hide="user_p:edit_prop | eq room_number" class="edit-emp-item">
-                  <a rv-show="user_p:editable | eq true" value="room_number">
-                    <i class="glyphicon glyphicon-pencil"/>                
-                  </a>
-                </span>                  
+                <span rv-text="user_p:room_number" />                  
                 <span class="glyphicon glyphicon-floppy-saved profile-notify room_number-notify-ok"/>
               </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-3">
               <span rv-show="user_p:edit_prop | eq room_number" rv-text="user_p.validationError" class="emp-item-error"/>
             </div>            
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <div class="col-md-2">
-              <span><%=l(:birthday_title)%>:</span>              
+            <div class="col-md-2 profile-data-title">
+              <span><%=l(:birthday_title)%>:</span>
+              <span rv-hide="user_p:edit_prop | eq birthday" class="edit-emp-item">
+                <a rv-show="user_p:editable | eq true" value="birthday">
+                  <i class="glyphicon glyphicon-pencil"/>                
+                </a>
+              </span>         
             </div>
-            <div class="col-md-5">
+            <div class="col-md-6">
               <div rv-show="user_p:edit_prop | eq birthday">
-                <input rv-value="user_p:birthday" id="birthdayPicker"/>                        
+                <input rv-value="user_p:birthday" id="birthdayPicker"/>
+                <a class="emp-item-cancel" value="birthday"><i class="glyphicon">Cancel</i></a>
               </div>
               <div rv-hide="user_p:edit_prop | eq birthday">
                 <span rv-text="user_p:birthday" />
-                <span rv-hide="user_p:edit_prop | eq birthday" class="edit-emp-item">
-                  <a rv-show="user_p:editable | eq true" value="birthday">
-                    <i class="glyphicon glyphicon-pencil"/>                
-                  </a>
-                </span>                  
                 <span class="glyphicon glyphicon-floppy-saved profile-notify birthday-notify-ok"/>
               </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-3">
               <span rv-show="user_p:edit_prop | eq birthday" rv-text="user_p.validationError" class="emp-item-error"/>
             </div>            
           </div>
@@ -224,8 +193,8 @@
     </div>  
     <div class="col-md-offset-2 col-md-9">
       <div rv-show="user_p:edit_prop | eq summary">
-        <a class="emp-item-cancel" value="summary"><i class="glyphicon glyphicon-remove">Cancel</i></a>
-        <a class="emp-item-save" value="summary"><i class="glyphicon glyphicon-save">Save</i></a>        
+        <a class="emp-item-cancel" value="summary"><i class="glyphicon">Cancel</i></a>
+        <a class="emp-item-save" value="summary"><i class="glyphicon">Save</i></a>        
         <span rv-show="user_p:edit_prop | eq summary" rv-text="user_p.validationError" class="emp-item-error"/>
       </div>
       <div class="line-separator"/>
@@ -253,8 +222,8 @@
     </div>
     <div class="col-md-offset-2 col-md-9">
       <div rv-show="user_p:edit_prop | eq skills">
-        <a class="emp-item-cancel" value="skills"><i class="glyphicon glyphicon-remove">Cancel</i></a>
-        <a class="emp-item-save" value="skills"><i class="glyphicon glyphicon-save">Save</i></a>      
+        <a class="emp-item-cancel" value="skills"><i class="glyphicon">Cancel</i></a>
+        <a class="emp-item-save" value="skills"><i class="glyphicon">Save</i></a>      
         <span rv-show="user_p:edit_prop | eq skills" rv-text="user_p.validationError" class="emp-item-error"/>
       </div>
       <div class="line-separator"/>
@@ -310,8 +279,8 @@
     </div>
     <div class="col-md-offset-2 col-md-9">
       <div rv-show="user_p:edit_prop | eq coureses">
-        <a class="emp-item-cancel" value="coureses"><i class="glyphicon glyphicon-remove">Cancel</i></a>
-        <a class="emp-item-save" value="coureses"><i class="glyphicon glyphicon-save">Save</i></a>
+        <a class="emp-item-cancel" value="coureses"><i class="glyphicon">Cancel</i></a>
+        <a class="emp-item-save" value="coureses"><i class="glyphicon">Save</i></a>
         <span rv-show="user_p:edit_prop | eq coureses" rv-text="user_p.validationError" class="emp-item-error"/>
       </div>          
       <div class="line-separator"/>
@@ -354,8 +323,8 @@
 
     <div class="col-md-offset-2 col-md-9">
       <div rv-show="user_p:edit_prop | eq extra_languages">
-        <a class="emp-item-cancel" value="extra_languages"><i class="glyphicon glyphicon-remove">Cancel</i></a>
-        <a class="emp-item-save" value="extra_languages"><i class="glyphicon glyphicon-save">Save</i></a>
+        <a class="emp-item-cancel" value="extra_languages"><i class="glyphicon">Cancel</i></a>
+        <a class="emp-item-save" value="extra_languages"><i class="glyphicon">Save</i></a>
         <span rv-show="user_p:edit_prop | eq extra_languages" rv-text="user_p.validationError" class="emp-item-error"/>
       </div> 
     </div>
