@@ -62,7 +62,7 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 /*.ui-datepicker-without-year{display:none;}*/
 /*.position-ph{background: #f4f4f4;}*/
 .positions-view{list-style-type: none;}
-.profile-header{padding-bottom: 10px;}
+/*.profile-header{padding-bottom: 10px;}*/
 .profile-table-header{padding-bottom: 10px;}
 /*ul.positions-view li:nth-child(odd) {background-color: #E4E4E4;}*/
 .edit-emp-item{}
@@ -73,6 +73,9 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 #main .profile-cv a:hover{color: #fff; text-decoration: none}
 #main .profile-cv :hover{background-color: #54b4eb;}
 .profile-data-title{min-width: 150px;}
+.profile-item{padding-top: 3px; padding-bottom: 3px;}
+.profile-lg-item{padding-top: 10px; padding-bottom: 10px;}
+.profile-row{padding-bottom: 10px;}
 /*positions-view*/
 
 /*.cv {

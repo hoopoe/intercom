@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-12 profile-item">
             <div class="col-md-2 profile-data-title">
               <span><%=l(:project_title)%>:</span>
               <span rv-hide="user_p:edit_prop | eq project" class="edit-emp-item">
@@ -53,7 +53,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-12 profile-item">
             <div class="col-md-2 profile-data-title">
               <span><%=l(:project_extra_title)%>:</span>
               <span rv-hide="user_p:edit_prop | eq project_extra" class="edit-emp-item">
@@ -79,7 +79,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-12 profile-item">
             <div class="col-md-2 profile-data-title">
               <span><%=l(:position_title)%>:</span>
               <span rv-hide="user_p:edit_prop | eq position" class="edit-emp-item">
@@ -105,7 +105,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-12 profile-item">
             <div class="col-md-2 profile-data-title">
               <span><%=l(:email_title)%>:</span>              
             </div>
@@ -115,7 +115,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-12 profile-item">
             <div class="col-md-2 profile-data-title">
               <span><%=l(:room_number)%>:</span>
               <span rv-hide="user_p:edit_prop | eq room_number" class="edit-emp-item">
@@ -141,7 +141,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-12 profile-item">
             <div class="col-md-2 profile-data-title">
               <span><%=l(:birthday_title)%>:</span>
               <span rv-hide="user_p:edit_prop | eq birthday" class="edit-emp-item">
@@ -172,7 +172,7 @@
       <%end%>
     </div>
   </div>
-  <div class="row">
+  <div class="row profile-row">
     <div class="col-md-11 col-md-offset-1 edit-emp-item">
       <span class="emp-item-title"><%=l(:summary_title)%></span>
       <div class="circle"/>
@@ -180,7 +180,7 @@
         <a rv-show="user_p:editable | eq true"  value="summary"><i class="glyphicon glyphicon-pencil"/></a>
       </span>  
     </div>
-    <div class="col-md-9 col-md-offset-2">
+    <div class="col-md-9 col-md-offset-2 profile-lg-item">
       <div rv-show="user_p:edit_prop | eq summary">        
         <div contentEditable=true class="profile-data-html editable profile-summary" data-ph='<%=l(:put_summary_here) %>' data-button-class="format" rv-html="user_p:summary">
         </div>
@@ -201,7 +201,7 @@
     </div>
   </div>
     
-  <div class="row">
+  <div class="row profile-row">
     <div class="col-md-11 col-md-offset-1 edit-emp-item">
         <span><%=l(:skills_title)%></span>
         <div class="circle"/>
@@ -209,7 +209,7 @@
           <a rv-show="user_p:editable | eq true"  value="skills"><i class="glyphicon glyphicon-pencil"/></a>
         </span> 
     </div>
-    <div class="col-md-9 col-md-offset-2">
+    <div class="col-md-9 col-md-offset-2 profile-lg-item">
       <div rv-show="user_p:edit_prop | eq skills">        
         <div contentEditable=true class="profile-data-html editable profile-skills" data-ph='<%=l(:put_skills_here) %>' data-button-class="format" rv-html="user_p:skills">
         </div>
@@ -230,35 +230,38 @@
     </div>
   </div>
     
-  <div class="row">
+  <div class="row profile-row">
     <div class="col-md-offset-1 col-md-2">
       <span><%=l(:positions_title)%></span>
       <div class="circle"/>
       <a class="add-position"><span class="glyphicon glyphicon-plus" rv-show="user_p:editable | eq true"></span></a>
     </div>    
   </div>
-  <div class="row">
+  <div class="row profile-row">
     <div class="col-md-offset-2 col-md-7">
       <div class="positions-ph">
       </div>
+      
+    </div>
+    <div class="col-md-offset-2 col-md-9">
       <div class="line-separator"/>
     </div>  
   </div>    
-  <div class="row">
+  <div class="row profile-row">
     <div class="col-md-offset-1 col-md-2">
       <span><%=l(:education_title)%></span>
       <div class="circle"/>
       <a class="add-background"><span class="glyphicon glyphicon-plus" rv-show="user_p:editable | eq true"></span></a>
     </div>    
   </div>
-  <div class="row">
-    <div class="col-md-offset-2 col-md-9">
+  <div class="row profile-row">
+    <div class="col-md-offset-2 col-md-9 profile-lg-item">
       <div class="backgrounds-ph">
       </div>
       <div class="line-separator"/>
     </div>  
   </div>    
-  <div class="row">
+  <div class="row profile-row">
     <div class="col-md-offset-1 col-md-2 edit-emp-item">
       <span><%=l(:coureses_title)%></span>
       <div class="circle"/>
@@ -266,7 +269,7 @@
         <a rv-show="user_p:editable | eq true" value="coureses"><i class="glyphicon glyphicon-pencil"/></a>
       </span>
     </div>  
-    <div class="col-md-offset-2 col-md-9">
+    <div class="col-md-offset-2 col-md-9 profile-lg-item">
       <div rv-show="user_p:edit_prop | eq coureses">
         <div contentEditable=true class="editable profile-data-htm profile-coureses" data-ph='<%=l(:put_coureses_here) %>' data-prop="coureses" data-button-class="format" data-prop="coureses" rv-html="user_p:coureses">
         </div>        
@@ -277,7 +280,7 @@
         <span class="glyphicon glyphicon-floppy-remove profile-notify coureses-notify-fail"/>
       </div>
     </div>
-    <div class="col-md-offset-2 col-md-9">
+    <div class="col-md-offset-2 col-md-9 profile-lg-item">
       <div rv-show="user_p:edit_prop | eq coureses">
         <a class="emp-item-cancel" value="coureses"><i class="glyphicon">Cancel</i></a>
         <a class="emp-item-save" value="coureses"><i class="glyphicon">Save</i></a>
@@ -287,7 +290,7 @@
     </div>
   </div>  
   
-  <div class="row">
+  <div class="row profile-row">
     <div class="col-md-offset-1 col-md-2 edit-emp-item">
       <span><%=l(:languages_title)%></span>
       <div class="circle"/>
