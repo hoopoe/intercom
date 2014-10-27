@@ -143,7 +143,7 @@ $(function() {
             var dataModel = this.model.get('data').set('edit_prop', prop);           
             if (prop === 'birthday')
             {
-                var that = this; //todo: remove
+                var that = this; //todo: refactor tt
                 $( "#birthdayPicker" ).datepicker({
                  changeYear: false, 
                  dateFormat: 'dd/mm', 

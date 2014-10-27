@@ -1,7 +1,6 @@
 var app = app || {};
 
 $(function() {
-
     app.employerTemplate = $("#employer-template").html();
 
     app.EmployerData = Backbone.Model.extend({
@@ -90,16 +89,15 @@ $(function() {
                         var data = JSON.parse(this.get('profile').data);                        
                         return data[name];
                     } catch (e) {                        
-                        return ""; //return empty
+                        return "";
                     }
                 }
             }
-            return ""; //return empty
+            return "";
         }
     });
 
-    app.Employer.prototype.parse = function(response) {        
-
+    app.Employer.prototype.parse = function(response) {
         var attr = response && _.clone(response) || {};
         if (response && response.profile.positions) {
             var positions = $.parseJSON(response.profile.positions);
@@ -127,7 +125,6 @@ $(function() {
     };
 
     app.Employer.prototype.toJSON = function() {
-        console.log('tojson');
       var json = _.clone(this.attributes);      
       for(var attr in json) {
         if((json[attr] instanceof Backbone.Model) && (attr === 'data')) {          
@@ -137,8 +134,7 @@ $(function() {
         }
       }
       delete json['data'];
-      delete json['positions'];
-      // console.log(json);      
+      delete json['positions'];   
       return json;
     };
 

@@ -27,6 +27,10 @@ var app = app || {};
         }
     };
 
+    rivets.formatters.date = function(value) {
+        return moment(value).format('MMM DD, YYYY');
+    }
+
     rivets.formatters.prependRoot = function(value){
       return "/tercomin/" + value;
     }

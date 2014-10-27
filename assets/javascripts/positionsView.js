@@ -25,12 +25,26 @@ $(function() {
         events: {
             'click .add-position-cancel': 'cancel',
             'click .add-position-submit': 'submit',
-            'mouseover .pos-date': 'createDatePicker',            
+            'mouseover .pos-from': 'createFromPicker',
+            'mouseover .pos-to': 'createToPicker',
         },
-        createDatePicker: function(e) {            
-            // $(e.currentTarget).datetimepicker({
-            //     pickTime:false
-            // });        
+        createFromPicker: function(e) {  
+            var that = this; //todo: refactor tt
+            $(e.currentTarget).datepicker({
+                dateFormat: 'M dd, yy', 
+                onSelect: function(dateText) {
+                    that.model.set('from', dateText);                   
+                }
+            });      
+        },
+        createToPicker: function(e) {  
+            var that = this; //todo: refactor tt
+            $(e.currentTarget).datepicker({
+                dateFormat: 'M dd, yy', 
+                onSelect: function(dateText) {
+                    that.model.set('to', dateText);                   
+                }
+            });      
         },
         render: function() {
             this.$el.html('');
