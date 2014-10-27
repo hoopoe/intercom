@@ -42,6 +42,7 @@ div.profile-lbl *{float:right;}
 .no-editable {background-color: #f6f6f6;}
 .profile-data {display: inline-block; min-width: 180px;}
 .profile-data-html{width:95%; word-break: break-all; border:2px inset #eee; -webkit-appearance: textfield; float:left;}
+.profile-data-span{word-break: break-all;}
  [contentEditable=true]:empty:not(:focus):before{content:attr(data-ph)}
 .profile-div {display: none;}
 .profile-table {table-layout: fixed;}

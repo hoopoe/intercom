@@ -14,6 +14,7 @@ body {
 .navbar-default .navbar-nav>.active>a:hover {background-color: #54b4eb;}
 .navbar-default .navbar-nav>li>a:hover{background-color: #54b4eb;}
 
+
 #top-menu a.tercomin {  padding-left: 20px;  background-image: url("../images/pantera.png");  background-repeat: no-repeat;}
 #main { font: 12px Verdana,Tahoma,Arial,sans-serif; background: #e8eaec; }
 #main div.top-menu{  font:80% Verdana,Tahoma,Arial,sans-serif;}
@@ -41,16 +42,17 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 .profile-status { 
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
-    border-radius: 10px;
-    border: 1px solid;
+    border-radius: 10px;    
     background-color: #428BCA;
     height: 100px;
     text-align: center;
-    padding-top: 10px;}
+    padding-top: 10px;
+    margin-top: 1px;}
 .profile-data-html{width:95%; border: 0px; word-break: break-all;  float:left;}
 .profile-data-span{word-break: break-all;}
  [contentEditable=true]:empty:not(:focus):before{content:attr(data-ph)}
-.profile-status h3 {color: #fff; text-decoration: none; border-bottom-width:0px;}
+
+.profile-status h3 {color: #fff; text-decoration: none; }
 .editable {background-color: #fff;}
 .no-editable {background-color: #f6f6f6;}
 .profile-img {  display: block;  margin-left: auto;  margin-right: auto;  margin-top: 10px;}
@@ -63,9 +65,15 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 .profile-header{padding-bottom: 10px;}
 .profile-table-header{padding-bottom: 10px;}
 /*ul.positions-view li:nth-child(odd) {background-color: #E4E4E4;}*/
+.edit-emp-item{}
 
+
+.emp-item-error{color:red;}
 .position-container{margin: 10px;}
 .glyphicon:hover{cursor: pointer;}
+#main .profile-cv a{color: #fff;}
+#main .profile-cv a:hover{color: #fff; text-decoration: none}
+#main .profile-cv :hover{background-color: #54b4eb;}
 /*positions-view*/
 
 /*.cv {
@@ -76,9 +84,7 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
   margin-left: 0px;
   margin-right: auto;  
 }*/
-.profile-cv {
-    text-align: center;  
-}
+.profile-cv { text-align: center;}
 
 a.cv { 
     -moz-border-radius: 10px;
@@ -93,6 +99,7 @@ a.cv {
     font-size: 18px;
     text-decoration: none;
 }
+.profile-cv a{color: #fff;}
 
 /*.add-position {float:right;}*/
 

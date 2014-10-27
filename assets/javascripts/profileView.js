@@ -21,9 +21,10 @@ $(function() {
             'click .add-position': 'addPosition',
             'click .remove-position': 'removePosition',
             'click .edit-position': 'editPosition',
-            'click .edit-emp-item': 'editEmpItem',
+            'click .edit-emp-item a': 'editEmpItem',
             'click .emp-item-cancel': 'cancelEmpItem',
-            'click .emp-item-save': 'saveEmpItem'
+            'click .emp-item-save': 'saveEmpItem',
+            'change #english_lvl': 'selectLanguage',
         },
 
         initialize: function() {
@@ -77,8 +78,18 @@ $(function() {
                 etch.editableInit.call(this, e);
             // }
         },
-        onPositionSubmit: function(positionModel) {
+        selectLanguage: function(e) {
+            var lvl = $('#english_lvl').val();
+            var prop = e.currentTarget.getAttribute('value');
+            this.model.get('data').set('edit_prop', prop);
+            var data = this.model.get('data');
+            data.set(prop, lvl);
+            this.save();
 
+            // console.log(lvl);            
+            // console.log(prop);
+        },
+        onPositionSubmit: function(positionModel) {
             var positions = this.model.get("positions");
             if (positionModel.id && positions.get(positionModel.id) !== undefined) { //update                
                 positions.set(positionModel, {
@@ -129,7 +140,7 @@ $(function() {
 
         editEmpItem: function(e) {
             var prop = e.currentTarget.getAttribute('value');
-            var dataModel = this.model.get('data').set('edit_prop', prop);
+            var dataModel = this.model.get('data').set('edit_prop', prop);           
             if (prop === 'birthday')
             {
                 var that = this; //todo: remove
@@ -138,34 +149,52 @@ $(function() {
                  dateFormat: 'dd/mm', 
                  onSelect: function(dateText) {                
                     var data = that.model.get('data');
-                    data.set('birthday',dateText);
+                    data.set('birthday', dateText);
                     that.save();                    
                   }
                 }); 
-            }
-                      
+            }                    
         },
         cancelEmpItem: function(e) {
-            this.model.get('data').set('edit_prop', "None");
+            var prop = e.currentTarget.getAttribute('value');
+            var dataModel = this.model.get('data').set('edit_prop', prop);
+            dataModel.set(prop, this.model.getData(prop));            
+            this.model.get('data').set('edit_prop', "None");            
+            dataModel.isValid();//remove validataion error
         },
         saveEmpItem: function(e) {            
             var prop = e.currentTarget.getAttribute('value');
             var dataModel = this.model.get('data').set('edit_prop', prop);
-            if (prop === 'summary' || prop === 'skills' || prop == 'coureses'
-                 || prop === 'extra_languages') {                
+            if (prop === 'summary' || prop === 'skills'
+                || prop == 'coureses' || prop === 'extra_languages') {
                 var tmp = $('.profile-' + prop);
-                dataModel.set(prop, tmp.html())
-                console.log(dataModel);
+                dataModel.set(prop, tmp.html());                
             } 
-            this.save();
+            if (!dataModel.isValid()) {
+                var prop = this.model.get('data').get('edit_prop');            
+                var ntf = $('.' + prop + '-notify-fail');            
+                ntf.animate({ opacity: 1 });
+                ntf.fadeTo(1000, 0);            
+                // this.model.get('data').set('edit_prop', "None");
+            } else {
+                this.save();
+            }
         },
         onEditItemCompleted: function() {
-            var prop = this.model.get('data').get('edit_prop');
+            var prop = this.model.get('data').get('edit_prop');            
             var ntf = $('.' + prop + '-notify-ok');            
             ntf.animate({ opacity: 1 });
             ntf.fadeTo(1000, 0);            
             this.model.get('data').set('edit_prop', "None");
         },
+
+        // onEditItemFailed: function() {
+        //     var prop = this.model.get('data').get('edit_prop');            
+        //     var ntf = $('.' + prop + '-notify-fail');            
+        //     ntf.animate({ opacity: 1 });
+        //     ntf.fadeTo(1000, 0);            
+        //     this.model.get('data').set('edit_prop', "None");
+        // },
 
         editPosition: function(e) {
             e.preventDefault();
@@ -257,29 +286,35 @@ $(function() {
             // });
             if (!this.model.isValid()) {
                 console.log("model is not valid");
+                var prop = this.model.get('data').get('edit_prop');            
+                var ntf = $('.' + prop + '-notify-fail');            
+                ntf.animate({ opacity: 1 });
+                ntf.fadeTo(1000, 0);            
+                this.model.get('data').set('edit_prop', "None");
                 // $('div.etch-editor-panel').remove();
                 // notifyFail.animate({
                 //     opacity: 1
                 // });
                 // notifyFail.attr('title', this.model.validationError);
+            } else {
+                this.model.save({}, {
+                    success: function(model, response) {                    
+                        // notifyFail.animate({
+                        //     opacity: 0
+                        // });
+                        // notifyOk.animate({
+                        //     opacity: 1
+                        // });
+                        // notifyOk.fadeTo(1000, 0);
+                        // $('div.etch-editor-panel').remove();
+                        Backbone.positionEvent.trigger('editItemCompleted', this.model);
+                    },
+                    error: function(model, response) {
+                        // Backbone.positionEvent.trigger('editItemFailed', this.model);
+                        // $('div.etch-editor-panel').remove();
+                    },
+                });
             }
-
-            this.model.save({}, {
-                success: function(model, response) {                    
-                    // notifyFail.animate({
-                    //     opacity: 0
-                    // });
-                    // notifyOk.animate({
-                    //     opacity: 1
-                    // });
-                    // notifyOk.fadeTo(1000, 0);
-                    // $('div.etch-editor-panel').remove();
-                    Backbone.positionEvent.trigger('editItemCompleted', this.model);
-                },
-                error: function(model, response) {
-                    // $('div.etch-editor-panel').remove();
-                },
-            });
         }
     });
 });
