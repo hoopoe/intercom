@@ -297,9 +297,29 @@
       <span rv-hide="user_p:edit_prop | eq extra_languages">
         <a rv-show="user_p:editable | eq true" value="extra_languages"><i class="glyphicon glyphicon-pencil"/></a>
       </span>
-      <span class="glyphicon glyphicon-floppy-saved profile-notify extra_languages-notify-ok"/>
-      <span class="glyphicon glyphicon-floppy-remove profile-notify extra_languages-notify-fail"/>            
+                  
     </div>
+    
+    <div class="col-md-offset-2 col-md-9 profile-lg-item">      
+      <div rv-show="user_p:edit_prop | eq extra_languages">
+        <div contentEditable=true class="editable profile-data-html profile-extra_languages" data-ph='<%=l(:put_languages_here) %>' data-prop="extra_languages" data-button-class="format" data-prop="extra_languages" rv-html="user_p:extra_languages">
+        </div>        
+      </div>
+      <div rv-hide="user_p:edit_prop | eq extra_languages">
+        <span rv-html="user_p:extra_languages" class="profile-data-span" />
+        <span class="glyphicon glyphicon-floppy-saved profile-notify extra_languages-notify-ok"/>
+        <span class="glyphicon glyphicon-floppy-remove profile-notify extra_languages-notify-fail"/>
+      </div> 
+    </div>
+
+    <div class="col-md-offset-2 col-md-9">
+      <div rv-show="user_p:edit_prop | eq extra_languages">
+        <a class="emp-item-cancel" value="extra_languages"><i class="glyphicon">Cancel</i></a>
+        <a class="emp-item-save" value="extra_languages"><i class="glyphicon">Save</i></a>
+        <span rv-show="user_p:edit_prop | eq extra_languages" rv-text="user_p.validationError" class="emp-item-error"/>
+      </div> 
+    </div>
+
     <div class="col-md-offset-2 col-md-9">      
       <div class="col-md-4">
         <label for="english_lvl">English</label>
@@ -313,23 +333,6 @@
           <option>Advanced</option>
         </select>        
       </div>
-    </div>
-    <div class="col-md-offset-2 col-md-9">      
-      <div rv-show="user_p:edit_prop | eq extra_languages">
-        <div contentEditable=true class="editable profile-data-html profile-extra_languages" data-ph='<%=l(:put_languages_here) %>' data-prop="extra_languages" data-button-class="format" data-prop="extra_languages" rv-html="user_p:extra_languages">
-        </div>        
-      </div>
-      <div rv-hide="user_p:edit_prop | eq extra_languages">
-        <span rv-html="user_p:extra_languages" class="profile-data-span" />
-      </div> 
-    </div>
-
-    <div class="col-md-offset-2 col-md-9">
-      <div rv-show="user_p:edit_prop | eq extra_languages">
-        <a class="emp-item-cancel" value="extra_languages"><i class="glyphicon">Cancel</i></a>
-        <a class="emp-item-save" value="extra_languages"><i class="glyphicon">Save</i></a>
-        <span rv-show="user_p:edit_prop | eq extra_languages" rv-text="user_p.validationError" class="emp-item-error"/>
-      </div> 
     </div>
 
   </div>  
