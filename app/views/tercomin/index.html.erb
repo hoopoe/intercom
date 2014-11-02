@@ -109,15 +109,15 @@
   <form >       
     <div class="form-group col-md-4">
       <label for="companyName">Company</label>
-      <input type="text" class="form-control" id="companyName" placeholder="Enter company name" rv-value="position:companyName" placeholder="Company">
+      <input type="text" class="form-control" id="companyName" placeholder="Company name" rv-value="position:companyName" placeholder="Company">
     </div>  
     <div class="form-group col-md-4">
       <label for="from_edit">From</label>      
-      <input type="text" class="form-control pos-from" rv-value="position:from" id="from_edit"/>    
+      <input type="text" class="form-control pos-from" rv-value="position:from | date" id="from_edit"/>    
     </div>      
     <div class="form-group col-md-4">
       <label for="to_edit">To</label>  
-      <input type="text" class="form-control pos-to" rv-value="position:to" id="to_edit"/>  
+      <input type="text" class="form-control pos-to" rv-value="position:to | date" id="to_edit"/>  
     </div>
     <div class="form-group col-md-4">
       <label for="project">Project</label>  
