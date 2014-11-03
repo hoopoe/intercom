@@ -39,12 +39,6 @@ $(function() {
         }
     };
 
-    Backbone.View.prototype.renderFinished = function() {
-        if (this.onRenderFinished) {
-            this.onRenderFinished();
-        }
-    };
-
     app.employers = new app.EmployerCollection;
     app.topMenuView = new TopMenuView();
     app.topMenuView.render(); //bind search event 

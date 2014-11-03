@@ -36,7 +36,7 @@ class TercominController < ApplicationController
         puts 'parse positions error'  
       end  
       begin
-        background = JSON.parse(@user_profile.background)
+        background = JSON.parse(@user_profile.backgrounds)
       rescue  
         puts 'parse background error'  
       end  
@@ -63,8 +63,7 @@ class TercominController < ApplicationController
                     replaceNodeContent(row, "[Work_Name]", i['companyName'])
                     replaceNodeContent(row, "[Work_Project]", i['project'])
                     replaceNodeContent(row, "[Work_Position]", i['position'])
-                    replaceNodeContent(row, "[Work_Resp]", i['resp'])
-                    #replaceNodeContent(row, "[Work_Summary]", i['techSummary'])
+                    replaceNodeContent(row, "[Work_Resp]", i['resp'])                    
                     tableNode.add_child(row)
                   end
                 end
@@ -77,11 +76,11 @@ class TercominController < ApplicationController
               if background && !background.empty?
                 tableEduRowsNodes.remove
                 background.each do |i|                  
-                  for j in tableRowsNodes do
+                  for j in tableEduRowsNodes do
                     row = j.clone
                     replaceNodeContent(row, "[EDU_From_Year]", i['from'])
                     replaceNodeContent(row, "[EDU_To_Year]", i['to'])                    
-                    replaceNodeContent(row, "[EDU_Summary]", i['summary'])
+                    replaceNodeContent(row, "[EDU_Summary]", i['name'])
                     tableNode.add_child(row)
                   end
                 end

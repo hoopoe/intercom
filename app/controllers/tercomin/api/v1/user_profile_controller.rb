@@ -57,7 +57,9 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
         respond_with "User is not logged", status: :unprocessable_entity
       else
         users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname,
-         user_profile_t.data, user_profile_t.settings, user_profile_t.positions,
+         user_profile_t.data, user_profile_t.settings,
+         user_profile_t.positions,
+         user_profile_t.backgrounds,
          user_profile_t.avatar_file_name avatar_url")
         .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
 
@@ -117,15 +119,12 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
         profile.settings = settings.to_json
       end
       #profile positions
-      if params[:profile][:positions].present?
-        # if profile.positions.present?
-        #   positions = JSON.parse(profile.positions)
-        # else
-        #   positions = Hash.new
-        # end      
-        # positions.merge!(JSON.parse(params[:profile][:positions]));
-        # profile.positions = positions.to_json
+      if params[:profile][:positions].present?       
         profile.positions = params[:profile][:positions]
+      end
+      #profile backgrounds
+      if params[:profile][:backgrounds].present?       
+        profile.backgrounds = params[:profile][:backgrounds]
       end
     end
 

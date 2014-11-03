@@ -53,34 +53,7 @@ $(function() {
              _.bindAll(this, "getData");
         },
         validate: function(attrs, options) {
-            // if (attrs.data !== undefined) {
-            //     try {                
-            //         JSON.parse(attrs.data);
-            //     } catch (e) {
-            //         console.log("Profile data is not valid");     
-            //         console.log(attrs.data);
-            //         return "Profile data is not valid";
-            //     }
-            // }
-            // if (attrs.positions !== undefined) {
-            //     try {                            
-            //         JSON.parse(attrs.positions);
-            //     } catch (e) {
-            //         console.log("Profile positions is not valid");                    
-            //         return "Profile positions is not valid";
-            //     }
-            // }
-
-            
-            // if (attrs.data.get('room_number')) {                
-            //     if (attrs.data.get('room_number').length > 6) {
-            //         return "Room number should be less than 6 symbols";
-            //     }
-            //     var re = /^[0-9\-]+$/;
-            //     if (!re.test(attrs.data.get('room_number'))) {
-            //         return "Room number is invalid /^[0-9\-]+$/";
-            //     }
-            // }
+          //todo: moved to data model
         },
         getData: function(name) {
             if (this.get('profile') !== undefined) {
@@ -104,7 +77,14 @@ $(function() {
             var tmp = new app.PositionCollection();
             tmp.reset(positions);
             attr['positions'] = tmp;
-        }
+        }     
+        
+        if (response && response.profile.backgrounds) {
+            var backgrounds = $.parseJSON(response.profile.backgrounds);            
+            var tmp = new app.BackgroundCollection();
+            tmp.reset(backgrounds);
+            attr['backgrounds'] = tmp;
+        }        
 
         if (response) {
             var data;
@@ -134,7 +114,8 @@ $(function() {
         }
       }
       delete json['data'];
-      delete json['positions'];   
+      delete json['positions'];
+      delete json['backgrounds'];
       return json;
     };
 

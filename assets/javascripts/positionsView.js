@@ -70,15 +70,13 @@ $(function() {
             this.editable = e;            
         },
         render: function() {
-
             this.collection.each(function(position) {
                 position.set('editable', this.editable);                
                 var positionView = new app.PositionView({
                     model: position                    
                 });
                 this.$el.append(positionView.render().el);
-            }, this);
-            
+            }, this);            
             return this;
         }
     });

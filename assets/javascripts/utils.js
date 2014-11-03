@@ -62,7 +62,6 @@ var app = app || {};
         app.currentView = view;
         app.currentView.render();
         $(".content").html(app.currentView.el);
-        app.currentView.renderFinished();
         app.topMenuView.activate(view.name);
     };
 

@@ -56,15 +56,9 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 .editable {background-color: #fff;}
 .no-editable {background-color: #f6f6f6;}
 .profile-img {  display: block;  margin-left: auto;  margin-right: auto;  margin-top: 10px;}
-/*.btn {border-radius:10px; border: 0px solid transparent;}*/
 .profile-notify{opacity: 0;}
-/*.ui-datepicker-year{display:none;}*/
-/*.ui-datepicker-without-year{display:none;}*/
-/*.position-ph{background: #f4f4f4;}*/
-.positions-view{list-style-type: none;}
-/*.profile-header{padding-bottom: 10px;}*/
+
 .profile-table-header{padding-bottom: 10px;}
-/*ul.positions-view li:nth-child(odd) {background-color: #E4E4E4;}*/
 .edit-emp-item{min-width: 190px;}
 .emp-item-error{color:red;}
 .position-container{margin: 10px;}
@@ -76,7 +70,12 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 .profile-item{padding-top: 3px; padding-bottom: 3px;}
 .profile-lg-item{padding-top: 10px; padding-bottom: 10px;}
 .profile-row{padding-bottom: 10px;}
+
 /*positions-view*/
+.positions-view{list-style-type: none;}
+
+/*backgrounds-view*/
+.backgrounds-view{list-style-type: none;}
 
 /*.cv {
   width: 81px;

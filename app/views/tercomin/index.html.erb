@@ -1,5 +1,5 @@
 <% content_for :header_tags do %>
-  <%= javascript_include_tag 'underscore-min.js', 'backbone-min.js', 'moment.min.js', 'rivets.min.js', 'bootstrap.min.js', 'infiniScroll.js', 'etch.js', 'utils.js', 'topView.js', 'positionsView.js', 'settingsView.js', 'eventsView.js', 'profileView.js', 'employersView.js', 'tercomin.js', :plugin => 'tercomin' %>
+  <%= javascript_include_tag 'underscore-min.js', 'backbone-min.js', 'moment.min.js', 'rivets.min.js', 'bootstrap.min.js', 'infiniScroll.js', 'etch.js', 'utils.js', 'topView.js', 'positionsView.js','backgroundsView.js', 'settingsView.js', 'eventsView.js', 'profileView.js', 'employersView.js', 'tercomin.js', :plugin => 'tercomin' %>
   <% if @themeName == 'bootswatch' %>
     <%= stylesheet_link_tag 'bootstrap.min.css', 'etch.css', 'tercomin.css', :plugin => 'tercomin' %>
   <% else %>
@@ -64,7 +64,7 @@
     Event item
   </div>
 </script>
-<%= render :partial => 'employer' %>
+<%= render :partial => 'profile' %>
 
 <script type="text/html" id="position-li-template" >
   <div class='row position-container'>     
@@ -102,9 +102,9 @@
       </a>   
     </div>    
     <div class="line-separator-gray"/> 
-  </div> 
-  
+  </div>   
 </script>
+
 <script type="text/html" id="position-template" >
   <form >       
     <div class="form-group col-md-4">
@@ -136,6 +136,54 @@
       <a class="add-position-cancel btn btn-primary">Cancel</a>    
     <div>    
   </form>
+</script>
+
+<script type="text/html" id="background-template" >
+  <form>           
+    <div class="form-group col-md-4">
+      <label for="from_edit">From</label>      
+      <input type="text" class="form-control background-from" rv-value="background:from | date" id="from_edit"/>    
+    </div>      
+    <div class="form-group col-md-4">
+      <label for="to_edit">To</label>  
+      <input type="text" class="form-control background-to" rv-value="background:to | date" id="to_edit"/>  
+    </div>
+    <div class="form-group col-md-4">
+      <label for="eduName">Title</label>
+      <input type="text" class="form-control" id="eduName" placeholder="University Title" rv-value="background:name" placeholder="Title">
+    </div>    
+    <div class="form-group col-md-12">
+      <a class="add-background-submit btn btn-primary">Save</a>
+      <a class="add-background-cancel btn btn-primary">Cancel</a>    
+    <div>    
+  </form>
+</script>
+
+<script type="text/html" id="background-li-template" >
+  <div class='row background-container'>     
+    <div class='background-info'>          
+      <label for="from">From</label>
+      <span id="from">{ background:from | date}</span>
+      <span><b>&#8211</b></span>
+      <label for="to">To</label>
+      <span id="to">{ background:to | date}</span>            
+      <label for="eduName">Title</label>
+      <span id="eduName">{ background:name }</span>
+    </div>
+    <div rv-show="background:editable | eq true">
+      <a class="remove-background" rv-data-id="background:id">
+        <i class="glyphicon glyphicon-remove">
+            Remove
+        </i>  
+      </a>
+      <a class="edit-background" rv-data-id="background:id">
+        <i class="glyphicon glyphicon-edit">
+            Edit
+        </i>  
+      </a>   
+    </div>    
+    <div class="line-separator-gray"/> 
+  </div>   
 </script>
 
 <% if @themeName == 'bootswatch' %>  
