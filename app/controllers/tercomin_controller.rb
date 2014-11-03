@@ -64,7 +64,7 @@ class TercominController < ApplicationController
                     replaceNodeContent(row, "[Work_Project]", i['project'])
                     replaceNodeContent(row, "[Work_Position]", i['position'])
                     replaceNodeContent(row, "[Work_Resp]", i['resp'])
-                    replaceNodeContent(row, "[Work_Summary]", i['techSummary'])
+                    #replaceNodeContent(row, "[Work_Summary]", i['techSummary'])
                     tableNode.add_child(row)
                   end
                 end
