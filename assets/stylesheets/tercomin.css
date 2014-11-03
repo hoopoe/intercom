@@ -65,7 +65,7 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 /*.profile-header{padding-bottom: 10px;}*/
 .profile-table-header{padding-bottom: 10px;}
 /*ul.positions-view li:nth-child(odd) {background-color: #E4E4E4;}*/
-.edit-emp-item{}
+.edit-emp-item{min-width: 190px;}
 .emp-item-error{color:red;}
 .position-container{margin: 10px;}
 .glyphicon:hover{cursor: pointer;}
