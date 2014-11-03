@@ -105,9 +105,13 @@ class TercominController < ApplicationController
                   tmp = Nokogiri::HTML(pd['coureses'].gsub(/>\s+</, "><"))                
                   doc = doc.force_encoding("UTF-8").gsub("[Certificates]", tmp.xpath("//text()").to_s)
                 end
-                if pd['languages'].present?
-                  tmp = Nokogiri::HTML(pd['languages'].gsub(/>\s+</, "><"))                
-                  doc = doc.force_encoding("UTF-8").gsub("[Languages]", tmp.xpath("//text()").to_s)
+                if pd['english_lvl'].present?                  
+                  tmp = Nokogiri::HTML(pd['english_lvl'].gsub(/>\s+</, "><"))                
+                  doc = doc.force_encoding("UTF-8").gsub("[EnglishLVL]", tmp.xpath("//text()").to_s)
+                end
+                if pd['extra_languages'].present?                  
+                  tmp = Nokogiri::HTML(pd['extra_languages'].gsub(/>\s+</, "><"))                
+                  doc = doc.force_encoding("UTF-8").gsub("[Languages_Extra]", tmp.xpath("//text()").to_s)
                 end
               end
             
