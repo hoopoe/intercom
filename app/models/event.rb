@@ -1,3 +1,6 @@
 class Event < ActiveRecord::Base
-  self.table_name = "events_t" 
+	include Redmine::SafeAttributes
+  	self.table_name = "events_t" 
+
+  	safe_attributes ':user_id', 'event_id', 'body', 'name'   
 end

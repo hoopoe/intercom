@@ -1,5 +1,5 @@
 <% content_for :header_tags do %>
-  <%= javascript_include_tag 'underscore-min.js', 'backbone-min.js', 'moment.min.js', 'rivets.min.js', 'bootstrap.min.js', 'infiniScroll.js', 'etch.js', 'utils.js', 'topView.js', 'positionsView.js','backgroundsView.js', 'settingsView.js', 'eventsView.js', 'profileView.js', 'employersView.js', 'tercomin.js', :plugin => 'tercomin' %>
+  <%= javascript_include_tag 'underscore-min.js', 'backbone-min.js', 'moment.min.js', 'rivets.min.js', 'bootstrap.min.js', 'infiniScroll.js', 'etch.js', 'utils.js', 'topView.js', 'positionsView.js','backgroundsView.js', 'settingsView.js', 'eventsView.js','userEventView.js', 'profileView.js', 'employersView.js', 'tercomin.js', :plugin => 'tercomin' %>
   <% if @themeName == 'bootswatch' %>
     <%= stylesheet_link_tag 'bootstrap.min.css', 'etch.css', 'tercomin.css', :plugin => 'tercomin' %>
   <% else %>
@@ -190,9 +190,37 @@
   <div class='row event-container'>     
     <div class='event-info'>
       <label for="eventName">Title</label>
-      <a rv-href-rooted="evnt:event.id" data-root='#user_event/<%= @currentUserId %>'>test</a>
+      <a rv-href-rooted="evnt:event.id" data-root='#user_event/<%= @currentUserId %>'>{evnt:event.name}</a>
     </div> 
     <div class="line-separator-gray"/> 
+  </div>   
+</script>
+
+<script type="text/html" id="user-event-template">
+  <div class='row ue-container'>     
+    <div class='ue-info'>
+      <label for="ueBody">Body</label>
+      <span id="ueBody">{ ue:user_event.body }</span>
+    </div> 
+    <div class="questions-ph">
+    </div>
+    <div class="">
+      <a class="ue-submit btn btn-primary">Save</a>
+      <a class="ue-cancel btn btn-primary">Cancel</a>    
+    <div>
+    <div class="line-separator-gray"/> 
+  </div>   
+</script>
+
+<script type="text/html" id="question-li-template" >
+  <div class='row question-container'>     
+    <div class='question-info'>
+      <!--label for="questionName">Title</label-->
+     <span id="questionName">{ t:q }</span>
+     <br>
+     <input rv-value="t:a" placeholder="answer">
+    </div> 
+    <!--div class="line-separator-gray"/--> 
   </div>   
 </script>
 

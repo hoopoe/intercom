@@ -44,7 +44,7 @@ var app = app || {};
 
     rivets.binders['href-rooted'] = function(el, value) {
         var root = el.getAttribute('data-root');
-        el.href = root + "/" + value;
+        el.href = root + "_" + value;
     }
 
     rivets.binders['src-strict'] = function(el, value) {

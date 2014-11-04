@@ -42,6 +42,8 @@ $(function() {
     app.employers = new app.EmployerCollection;
     app.events = new app.EventCollection;
 
+    app.userEvent = new app.UserEvent;
+
     app.topMenuView = new TopMenuView();
     app.topMenuView.render(); //bind search event 
 
@@ -52,7 +54,7 @@ $(function() {
             'mypage/(:param)': 'mypage',
             'employers/(:param)': 'employers',
             'events': 'events',
-            'user_event/(:uid)/(:eid)': 'user_event',
+            'user_event/(:u_e)': 'user_event',
             'settings': 'settings',
             'settings/(:param)': 'settings',
             '*actions': 'mypage'
@@ -117,8 +119,20 @@ $(function() {
                 },
             });
         },
-        user_event: function(uid, eid) {
-            console.log('user_event', uid, eid);
+        user_event: function(u_e) {            
+            var req = {'id': u_e};            
+            app.userEvent = new app.UserEvent(req);
+            app.userEvent.fetch({                
+                success: function(m, r) {                    
+                    var ueView = new app.UserEventView({
+                        model: app.userEvent
+                    });
+                    app.showView(ueView);
+                },
+                error: function(m, r) {
+                    console.log(r.responseText);
+                },
+            });
         },
         settings: function(param) {
             //todo: dup

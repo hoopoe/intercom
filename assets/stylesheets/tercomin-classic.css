@@ -60,6 +60,10 @@ div.profile-status{text-align: right;}
 .backgrounds-view{list-style-type: none;}
 .backgrounds-container{margin: 10px;}
 
+/*events-view*/
+.events-view{list-style-type: none;}
+.events-container{margin: 10px;}
+
 
 /*employers*/
 div.employer-img img {

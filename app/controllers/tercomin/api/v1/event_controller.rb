@@ -13,7 +13,8 @@ class Tercomin::Api::V1::EventController < ApplicationController
   end
  
   def create  	    
-  	@event = Event.new(params[:event])  	    
+  	@event = Event.new()
+    @event.safe_attributes = params[:event]    
   	respond_to do |format|
       if @event.save       
         format.json  { render :text => @event.id, :status => :created}
@@ -32,7 +33,7 @@ class Tercomin::Api::V1::EventController < ApplicationController
 
   private
 
-  def find_event
+  def find_event    
     @event = Event.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     render_404

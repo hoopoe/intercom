@@ -55,7 +55,7 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 .profile-status h3 {color: #fff; text-decoration: none; }
 .editable {background-color: #fff;}
 .no-editable {background-color: #f6f6f6;}
-.profile-img {  display: block;  margin-left: auto;  margin-right: auto;  margin-top: 10px;}
+.profile-img {  display: block;  margin-left: auto;  margin-right: auto;  margin-top: 5px; margin-bottom: 5px;}
 .profile-notify{opacity: 0;}
 
 .profile-table-header{padding-bottom: 10px;}
@@ -76,6 +76,10 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 
 /*backgrounds-view*/
 .backgrounds-view{list-style-type: none;}
+
+/*events-view*/
+.events-view{list-style-type: none;}
+.event-container{margin: 10px;}
 
 /*.cv {
   width: 81px;
@@ -113,7 +117,8 @@ div.employer-img img {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 .no-profile-img {    
   display: block;
