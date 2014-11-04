@@ -330,7 +330,7 @@ $(function() {
         },
         save: function() {           
             if (!this.model.isValid()) {
-                console.log("model is not valid");
+                // console.log("model is not valid");
                 var prop = this.model.get('data').get('edit_prop');
                 var ntf = $('.' + prop + '-notify-fail');
                 ntf.animate({

@@ -52,7 +52,7 @@ $(function() {
             'mypage/(:param)': 'mypage',
             'employers/(:param)': 'employers',
             'events': 'events',
-            'events/(:param)': 'events',
+            'user_event/(:uid)/(:eid)': 'user_event',
             'settings': 'settings',
             'settings/(:param)': 'settings',
             '*actions': 'mypage'
@@ -80,7 +80,6 @@ $(function() {
                 }
             })
         },
-
         employers: function(param) {
             app.employers.reset();
             app.topMenuView.setSearch(param);
@@ -104,23 +103,23 @@ $(function() {
                 }
             });
         },
-
-        events: function(param) {
-            // var eventsView = new EventsView({
-
-            // });
-            // app.showView(eventsView);
+        events: function() {
+            app.events.reset();
             app.events.fetch({                
                 success: function(m, r) {
-                    console.log(m);
-                    console.log(r);
+                    var eventsView = new app.EventsView({
+                        collection: app.events
+                    });
+                    app.showView(eventsView);
                 },
                 error: function(m, r) {
                     console.log(r.responseText);
                 },
             });
         },
-
+        user_event: function(uid, eid) {
+            console.log('user_event', uid, eid);
+        },
         settings: function(param) {
             //todo: dup
             var req = {};

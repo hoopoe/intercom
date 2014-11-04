@@ -8,6 +8,7 @@ class TercominController < ApplicationController
   def index   
   	@themeName = "default"
   	if User.current.logged?
+      @currentUserId = User.current.id
   		profile = UserProfile.find_by_user_id(User.current.id)
   		if UserProfile.exists?(profile)
   			if profile.settings.present?

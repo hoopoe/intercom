@@ -42,6 +42,11 @@ var app = app || {};
         return value === args;
     };
 
+    rivets.binders['href-rooted'] = function(el, value) {
+        var root = el.getAttribute('data-root');
+        el.href = root + "/" + value;
+    }
+
     rivets.binders['src-strict'] = function(el, value) {
         if (value === 'noavatar')
             value = "";
