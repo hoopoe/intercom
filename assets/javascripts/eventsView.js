@@ -4,6 +4,10 @@ $(function() {
 
     app.eventsTemplate = $("#events-template").html();
 
+    app.EventCollection = Backbone.Collection.extend({
+        url: '/tercomin/api/v1/event'
+    });
+
     EventsView = Backbone.View.extend({
         name: "events",
 

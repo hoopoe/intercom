@@ -100,7 +100,7 @@ $(function() {
             dataModel.set('editable', response.editable);      
             attr['data'] = dataModel;
         }
-        console.log(attr);
+        // console.log(attr);
         return attr;
     };
 

@@ -1,7 +1,6 @@
 class CreateEvents < ActiveRecord::Migration
   def up
-    create_table :events_t do |t|
-      t.integer :id
+    create_table :events_t do |t|      
       t.string :name
     end
   end

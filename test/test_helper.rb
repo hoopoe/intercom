@@ -9,6 +9,9 @@ require "paperclip/matchers"
 ActiveRecord::Fixtures.create_fixtures(File.dirname(__FILE__) + '/fixtures/', 
                             [:user_profile_t])
 
+# ActiveRecord::Fixtures.create_fixtures(File.dirname(__FILE__) + '/fixtures/', 
+#                             [:users])
+
 def UserProfile.generate!(attributes={})
   userProfile = UserProfile.new(attributes)
   userProfile.save!

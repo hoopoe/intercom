@@ -40,6 +40,8 @@ $(function() {
     };
 
     app.employers = new app.EmployerCollection;
+    app.events = new app.EventCollection;
+
     app.topMenuView = new TopMenuView();
     app.topMenuView.render(); //bind search event 
 
@@ -104,10 +106,19 @@ $(function() {
         },
 
         events: function(param) {
-            var eventsView = new EventsView({
+            // var eventsView = new EventsView({
 
+            // });
+            // app.showView(eventsView);
+            app.events.fetch({                
+                success: function(m, r) {
+                    console.log(m);
+                    console.log(r);
+                },
+                error: function(m, r) {
+                    console.log(r.responseText);
+                },
             });
-            app.showView(eventsView);
         },
 
         settings: function(param) {
