@@ -2,7 +2,7 @@ require File.expand_path('../../test_helper', __FILE__)
 
 class Redmine::ApiTest::CorpEventTest < Redmine::ApiTest::Base
 	def setup
-		@controller = Tercomin::Api::V1::CorpEventController.new
+		@controller = Tercomin::Api::V1::EventController.new
 	end
 
 	def test_api_offset_and_limit_without_params
