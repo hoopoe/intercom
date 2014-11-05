@@ -14,13 +14,20 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
 
   def show    
   	@ue = UserEvent.find_by_user_id_and_event_id(@user.id, @event.id)
-  	if @ue.present?
-  		respond_with @ue
+  	if @ue.present?      
+      @response = {:user_event=> {:body => @ue.body},
+        :lastname=>@user.lastname,
+        :firstname=>@user.firstname}
+      respond_with @response
   	else
   		@ue = UserEvent.find_or_create_by_user_id_and_event_id(@user.id, @event.id)
   		@ue.body = @event.body
   		@ue.save!
-  		respond_with @ue
+
+      @response = {:user_event=> {:body => @ue.body},
+        :lastname=>@user.lastname,
+        :firstname=>@user.firstname}
+      respond_with @response  	
   	end
   end
 

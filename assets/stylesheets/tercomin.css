@@ -81,6 +81,15 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 .events-view{list-style-type: none;}
 .event-container{margin: 10px;}
 
+/*user_event*/
+.ue-info{margin: 12px; background: #E6E6E6;}
+
+/*question*/
+.questions-view{list-style-type: none;}
+.questionItem {font-size: 16px;}
+.questions-buttons{text-align: center;}
+#main .questions-buttons a {color: #fff;}
+
 /*.cv {
   width: 81px;
   height: 101px;

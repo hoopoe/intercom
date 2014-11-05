@@ -198,13 +198,13 @@
 
 <script type="text/html" id="user-event-template">
   <div class='row ue-container'>     
-    <div class='ue-info'>
-      <label for="ueBody">Body</label>
-      <span id="ueBody">{ ue:user_event.body }</span>
+    <div class='ue-info'>      
+      <h3>{ ue:lastname } {ue:firstname}</h3>
+      
     </div> 
-    <div class="questions-ph">
-    </div>
-    <div class="">
+    <form class="questions-ph">
+    </form>
+    <div class="questions-buttons">
       <a class="ue-submit btn btn-primary">Save</a>
       <a class="ue-cancel btn btn-primary">Cancel</a>    
     <div>
@@ -213,15 +213,10 @@
 </script>
 
 <script type="text/html" id="question-li-template" >
-  <div class='row question-container'>     
-    <div class='question-info'>
-      <!--label for="questionName">Title</label-->
-     <span id="questionName">{ t:q }</span>
-     <br>
-     <input rv-value="t:a" placeholder="answer">
-    </div> 
-    <!--div class="line-separator-gray"/--> 
-  </div>   
+  <div class="form-group col-md-12 questionItem">
+      <span id="questionName">{ t:q }</span>
+      <input type="text" class="form-control" rv-value="t:a" placeholder="answer">        
+  </div> 
 </script>
 
 <% if @themeName == 'bootswatch' %>  
