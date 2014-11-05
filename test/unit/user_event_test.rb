@@ -7,7 +7,11 @@ class UserEventTest < ActiveSupport::TestCase
     
     e = Event.new(:body => "ev body")
     e.save!
-    u = User.find_by_login('admin');
+
+    u = User.new(:firstname => "test", :lastname => "test", :mail => "test@test.foo")
+    u.login = "test"
+    u.save!
+    u = User.find_by_login('test');
 
     ue.user = u
     ue.event = e
