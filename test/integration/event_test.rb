@@ -1,6 +1,7 @@
 require File.expand_path('../../test_helper', __FILE__)
 
-class Redmine::ApiTest::EventTest < Redmine::ApiTest::Base	
+class Redmine::ApiTest::EventTest < Redmine::ApiTest::Base
+	fixtures :users
 	def setup
 		@controller = Tercomin::Api::V1::EventController.new
 		Setting.rest_api_enabled = '1'	
