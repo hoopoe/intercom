@@ -21,7 +21,8 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
         :created_on=>@user.created_on,
         :position=>@uPosition,
         :project=>@uProject,
-        :extraProject=>@uExtraProject}
+        :extraProject=>@uExtraProject,
+        :eventName => @event.name}
       respond_with @response
   	else
   		@ue = UserEvent.find_or_create_by_user_id_and_event_id(@user.id, @event.id)
@@ -34,7 +35,8 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
         :created_on=>@user.created_on,
         :position=>@uPosition,
         :project=>@uProject,
-        :extraProject=>@uExtraProject}
+        :extraProject=>@uExtraProject,
+        :eventName => @event.name}
       respond_with @response  	
   	end
   end
