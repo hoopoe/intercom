@@ -82,7 +82,7 @@ class TercominController < ApplicationController
                     replaceNodeContent(row, "[EDU_From_Year]", i['from'])
                     replaceNodeContent(row, "[EDU_To_Year]", i['to'])                    
                     replaceNodeContent(row, "[EDU_Summary]", i['name'])
-                    tableNode.add_child(row)
+                    tableEduNode.add_child(row)
                   end
                 end
               end
