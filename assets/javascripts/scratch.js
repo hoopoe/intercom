@@ -18,7 +18,7 @@ q.push({"q":"Соответствие моей квалификации рабо
 var t = new app.Event
 var event = {}
 event['body'] = JSON.stringify(q);
-event['name'] = "Attestation";
+event['name'] = "Аттестация 2014";
 t.set('event', event)
 t.save()
 
