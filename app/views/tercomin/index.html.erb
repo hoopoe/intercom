@@ -197,31 +197,34 @@
 </script>
 
 <script type="text/html" id="user-event-template">
-  <div class='row ue-container'>     
-    <div class='ue-info'>      
-      <h3>{ ue:lastname } {ue:firstname}</h3>
-      <label for="evntName">Event: </label>
-      <span id="evntName"> {ue:eventName}</span>
-      <br/>
-      <label for="uPosition">Position: </label>
-      <span id="uPosition"> {ue:position}</span>
-      <br/>
-      <label for="uProject">Project: </label>
-      <span id="uProject"> {ue:project}</span>
-      <br/>
-      <label for="uExtraProject">Extra project: </label>
-      <span id="uExtraProject"> {ue:extraProject}</span>
-      <br/>
-      <label for="uCreatedOn">Employment date: </label>
-      <span id="uCreatedOn"> {ue:created_on | date}</span>
-    </div> 
-    <form class="questions-ph">
-    </form>
-    <div class="questions-buttons">
-      <a class="ue-submit btn btn-primary">Save</a>
-      <a class="ue-cancel btn btn-primary">Cancel</a>    
+  <div class='row ue-container'>
+    <div class="col-md-12">
+      <div class='ue-info col-md-offset-2 col-md-8 col-md-offset-2'>
+        <h3>{ ue:lastname } {ue:firstname}</h3>
+        <label for="evntName">Event: </label>
+        <span id="evntName"> {ue:eventName}</span>
+        <br/>
+        <label for="uPosition">Position: </label>
+        <span id="uPosition"> {ue:position}</span>
+        <br/>
+        <label for="uProject">Project: </label>
+        <span id="uProject"> {ue:project}</span>
+        <br/>
+        <label for="uExtraProject">Extra project: </label>
+        <span id="uExtraProject"> {ue:extraProject}</span>
+        <br/>
+        <label for="uCreatedOn">Employment date: </label>
+        <span id="uCreatedOn"> {ue:created_on | date}</span>
+      </div> 
+      <div class="col-md-12">
+        <form class="questions-ph"/>
+        <div class="questions-buttons">
+          <a class="ue-submit btn btn-primary">Save</a>
+          <a class="ue-cancel btn btn-primary">Cancel</a>    
+        <div>
+      </div>      
+      <div class="line-separator-gray"/> 
     <div>
-    <div class="line-separator-gray"/> 
   </div>   
 </script>
 
