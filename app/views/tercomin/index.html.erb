@@ -201,6 +201,17 @@
     <div class='ue-info'>      
       <h3>{ ue:lastname } {ue:firstname}</h3>
       
+      <label for="uPosition">Position: </label>
+      <span id="uPosition"> {ue:position}</span>
+      <br/>
+      <label for="uProject">Project: </label>
+      <span id="uProject"> {ue:project}</span>
+      <br/>
+      <label for="uExtraProject">Extra project: </label>
+      <span id="uExtraProject"> {ue:extraProject}</span>
+      <br/>
+      <label for="uCreatedOn">Employment date: </label>
+      <span id="uCreatedOn"> {ue:created_on | date}</span>
     </div> 
     <form class="questions-ph">
     </form>

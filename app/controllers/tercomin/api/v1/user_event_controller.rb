@@ -3,7 +3,7 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
   before_filter :find_event, :except => [:index, :create]
   
   # before_filter :require_hr, :only => [:index, :show]
-  before_filter :require_self, :only => [:show]
+  before_filter :require_self, :only => [:show, :update]
   before_filter :require_tercomin_pm, :only => [:destroy]
   
   accept_api_auth :index, :show
@@ -17,7 +17,11 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
   	if @ue.present?      
       @response = {:user_event=> {:body => @ue.body},
         :lastname=>@user.lastname,
-        :firstname=>@user.firstname}
+        :firstname=>@user.firstname,
+        :created_on=>@user.created_on,
+        :position=>@uPosition,
+        :project=>@uProject,
+        :extraProject=>@uExtraProject}
       respond_with @response
   	else
   		@ue = UserEvent.find_or_create_by_user_id_and_event_id(@user.id, @event.id)
@@ -26,7 +30,11 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
 
       @response = {:user_event=> {:body => @ue.body},
         :lastname=>@user.lastname,
-        :firstname=>@user.firstname}
+        :firstname=>@user.firstname,
+        :created_on=>@user.created_on,
+        :position=>@uPosition,
+        :project=>@uProject,
+        :extraProject=>@uExtraProject}
       respond_with @response  	
   	end
   end
@@ -62,7 +70,18 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
   	event_id = tmp.pop
   	user_id = tmp.pop
   	@event = Event.find(event_id)
-  	@user = User.find(user_id)  	
+  	@user = User.find(user_id)
+    profile = UserProfile.find_by_user_id(user_id)
+    if profile.present?
+      begin
+        data = JSON.parse(profile.data)
+        @uPosition = data['position'];
+        @uProject = data['project'];
+        @uExtraProject = data['project_extra']
+      rescue JSON::ParserError => e
+        Rails.logger.info "can't parse user profile"
+      end
+    end
   rescue ActiveRecord::RecordNotFound
     render_404
   end
