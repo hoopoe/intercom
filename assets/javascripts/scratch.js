@@ -1,25 +1,26 @@
-var q = [];
-q.push({"q":"Какое событие прошедшего года, относящиеся к Вашей работе, является для Вас самым важным?: ", "a": "N/A"});
-q.push({"q":"Есть ли у Вас проблемы, связанные с текущими обязанностями? Какие?: ", "a": "N/A"});
-q.push({"q":"Чему Вы хотели бы поучиться?: ", "a": "N/A"});
-q.push({"q":"Какие претензии у Вас есть к компании? К руководству компании?: ", "a": "N/A"});
-q.push({"q":"Какие негативные изменения в компании или руководстве Вы хотели бы отметить?: ", "a": "N/A"});
-q.push({"q":"Есть ли у Вас желание сменить проект?: ", "a": "N/A"});
-q.push({"q":"Какие прочие темы Вы хотели бы поднять на аттестации?: ", "a": "N/A"});
-q.push({"q":"Сильная сторона 1:", "a": "N/A"});
-q.push({"q":"Сильная сторона 2:", "a": "N/A"});
-q.push({"q":"Сильная сторона 3:", "a": "N/A"});
-q.push({"q":"Стоило бы улучшить 1: ", "a": "N/A"});
-q.push({"q":"Стоило бы улучшить 2: ", "a": "N/A"});
-q.push({"q":"Стоило бы улучшить 3: ", "a": "N/A"});
-q.push({"q":"Интересность работы (проекта): ", "a": "N/A"});
-q.push({"q":"Соответствие моей квалификации работе, которую я выполняю: ", "a": "N/A"});
+var empq = [];
+empq.push({"q":"Emp Question 1?: ", "a": "N/A"});
+empq.push({"q":"Emp Question 2?: ", "a": "N/A"});
+
+var mgrq = [];
+mgrq.push({"q":"Test 1?: ", "a": "N/A"});
+mgrq.push({"q":"Test 2?: ", "a": "N/A"});
+
+var groups = [];
+groups.push({"n":"area 8", "m": {"12":"Pomidor Senior"}, "e":{"10":"Ivan Ivanov", "11":"Petr Petrov"}})
+groups.push({"n":"test group", "m": {"12":"Pomidor Senior", "10":"Ivan Ivanov"}, "e":{"14":"Walle Walle"}})
+	
+var body = {};
+body['empForm'] = empq;
+body['mgrForm'] = mgrq;
 
 var t = new app.Event
-var event = {}
-event['body'] = JSON.stringify(q);
-event['name'] = "Аттестация 2014";
-t.set('event', event)
+var evnt = {}
+evnt['body'] = JSON.stringify(body);
+evnt['name'] = "Аттестация 2014";
+evnt['groups'] = JSON.stringify(groups);
+
+t.set('event', evnt)
 t.save()
 
 
