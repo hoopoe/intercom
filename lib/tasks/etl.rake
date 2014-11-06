@@ -80,7 +80,7 @@ namespace :redmine do
             end
           end
                    
-          imageName = "#{lastname} #{firstname}.png"
+          imageName = "#{lastname} #{firstname}.jpg"
           user = User.find(:first, :conditions => ["firstname =? and lastname =?", firstname, lastname])
           if user.nil?      
             puts "User not found: #{i}"
