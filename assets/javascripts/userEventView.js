@@ -71,12 +71,14 @@ $(function() {
         cancel: function(e) {            
             this.remove();//todo: redirect
         },        
-        submit: function(e) {                             
-            this.model.set('user_event', { 'body': JSON.stringify(this.qs) });            
+        submit: function(e) {
+            that = this;                 
+            this.model.set('user_event', { 'body': JSON.stringify(that.qs) });            
             this.model.save({}, {
                 success: function(model, response) {
                     // Backbone.positionEvent.trigger('renderPositions');
-                    console.log("save done");
+                    console.log(that.qs);
+                    console.log("save done 1");
                 },
                 error: function(model, response) {
                     console.log("save: failed");
