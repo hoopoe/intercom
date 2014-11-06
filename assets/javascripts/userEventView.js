@@ -56,18 +56,21 @@ $(function() {
             return this;
         },
         onRenderQuestions:function(){
-            var questions = $.parseJSON(this.model.get('body'));
-            console.log(questions);
-            this.qs.reset(questions);
-
-            if (this.currentQuestionsView !== undefined)
-                this.currentQuestionsView.remove();
-
-             this.currentQuestionsView = new QuestionsView({
-                collection: this.qs
-            });            
-            this.$el.find('.questions-ph').append(this.currentQuestionsView.$el);
-            this.currentQuestionsView.render();
+            var data = $.parseJSON(this.model.get('body'));
+            if (data.length > 0 && data[0].header !== undefined) {
+                console.log("manager");
+            }
+            else {
+                console.log("employee");
+                this.qs.reset(data);
+                if (this.currentForm !== undefined)
+                    this.currentForm.remove();
+                 this.currentForm = new QuestionsView({
+                    collection: this.qs
+                });            
+                this.$el.find('.questions-ph').append(this.currentForm.$el);
+                this.currentForm.render();
+            }           
         },
         cancel: function(e) {            
             this.remove();//todo: redirect
