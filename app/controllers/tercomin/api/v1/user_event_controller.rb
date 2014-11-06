@@ -15,7 +15,7 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
   def show    
   	@ue = UserEvent.find_by_user_id_and_event_id(@user.id, @event.id)
   	if @ue.present?      
-      @response = {:user_event=> {:body => @ue.body},
+      @response = {:body => @ue.body,
         :lastname=>@user.lastname,
         :firstname=>@user.firstname,
         :created_on=>@user.created_on,
@@ -25,27 +25,66 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
         :eventName => @event.name}
       respond_with @response
   	else
-  		@ue = UserEvent.find_or_create_by_user_id_and_event_id(@user.id, @event.id)
-  		@ue.body = @event.body
-  		@ue.save!
+  		# @ue = UserEvent.find_or_create_by_user_id_and_event_id(@user.id, @event.id)
+      begin        
+        form = JSON.parse(@event.body)
+        groups = JSON.parse(@event.groups) 
 
-      @response = {:user_event=> {:body => @ue.body},
-        :lastname=>@user.lastname,
-        :firstname=>@user.firstname,
-        :created_on=>@user.created_on,
-        :position=>@uPosition,
-        :project=>@uProject,
-        :extraProject=>@uExtraProject,
-        :eventName => @event.name}
-      respond_with @response  	
+        @manageGroups = groups.find_all{ |i| i['m'].keys.include?(@user.id.to_s) }       
+
+        @ue = UserEvent.new
+        @ue.user_id = @user.id        
+        @ue.event_id = @event.id
+
+        if @manageGroups.empty? #employee form 
+           @ue.body = form['empForm'].to_json
+           @ue.save!
+
+           @response = {:body => @ue.body,
+              :lastname => @user.lastname,
+              :firstname => @user.firstname,
+              :created_on => @user.created_on,
+              :position => @uPosition,
+              :project => @uProject,
+              :extraProject => @uExtraProject,
+              :eventName => @event.name}
+            respond_with @response
+        else
+          forms = [] #manager form 
+          for i in @manageGroups            
+            for j in i['e'].values
+              subF = Hash.new
+              subF[:header] = i['n']
+              subF[:employee] = j
+              subF[:managers] = i['m']
+              subF[:body] = form['mgrForm']
+              forms.push(subF)
+            end
+          end
+          @ue.body = forms.to_json     
+          @ue.save!
+
+          @response = {:body => @ue.body,              
+              :lastname=>@user.lastname,
+              :firstname=>@user.firstname,
+              :created_on=>@user.created_on,
+              :position=>@uPosition,
+              :project=>@uProject,
+              :extraProject=>@uExtraProject,
+              :eventName => @event.name}
+          respond_with @response
+        end      
+      rescue        
+        render_error({:message => :error_t_parse_error})
+      end     
   	end
   end
 
   def update    
-    if params[:user_event][:body].present?
+    if params[:body].present?
       @ue = UserEvent.find_by_user_id_and_event_id(@user.id, @event.id)
       if @ue.present?
-        @ue.body = params[:user_event][:body]
+        @ue.body = params[:body]
         @ue.save!
         respond_with @ue
       else

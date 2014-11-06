@@ -30,3 +30,4 @@ en:
   put_coureses_here: "Put certificates and trainings"
   put_languages_here: "Put languages here"
   put_skills_here: "List your skills"  
+  error_t_parse_error: "Parse json error"

@@ -56,7 +56,8 @@ $(function() {
             return this;
         },
         onRenderQuestions:function(){
-            var questions = $.parseJSON(this.model.get('user_event').body);
+            var questions = $.parseJSON(this.model.get('body'));
+            console.log(questions);
             this.qs.reset(questions);
 
             if (this.currentQuestionsView !== undefined)
@@ -73,7 +74,7 @@ $(function() {
         },        
         submit: function(e) {                             
             that = this;
-            this.model.set('user_event', { 'body': JSON.stringify(that.qs) });            
+            this.model.set('body', JSON.stringify(that.qs) );            
             this.model.save({}, {
                 success: function(model, response) {
                     // Backbone.positionEvent.trigger('renderPositions');
