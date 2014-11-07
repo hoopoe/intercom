@@ -1,6 +1,6 @@
 require File.expand_path('../../test_helper', __FILE__)
 
-class CreateAndSearchUserProfileTest < ActiveSupport::TestCase
+class UserProfileTest < ActiveSupport::TestCase
 
   should "create" do    
     User.delete_all

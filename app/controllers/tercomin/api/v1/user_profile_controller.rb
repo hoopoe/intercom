@@ -41,14 +41,18 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
     end
 
     users = users
-    .where("#{User.table_name}.status != 3")
+    .where("#{User.table_name}.status != 3")    
     .order(sort_clause)
     .limit(@limit)
     .offset(@offset)
     .all
 
+    ids = users.map{|i| i.id}
+    user_groups = get_users_groups(ids)
+
     set_avatars(users)
     respond_with users
+    # respond_with user_groups
   end
 
   def show
@@ -190,5 +194,19 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
         i.avatar_url = "noavatar" #don't have profile at all
       end
     end
+  end
+
+  def get_users_groups(ids)
+    t = Hash.new
+    user_groups = UserEvent.includes(:event)
+    .where(:user_id => ids)
+    .all    
+    for i in user_groups       
+        if t[i.user_id].blank?
+            t[i.user_id] = []
+        end
+        t[i.user_id] << {i.event.id => i.event.name}
+    end
+    return t
   end
 end

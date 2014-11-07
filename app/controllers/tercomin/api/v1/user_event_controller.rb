@@ -26,57 +26,21 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
       respond_with @response
   	else
   		# @ue = UserEvent.find_or_create_by_user_id_and_event_id(@user.id, @event.id)
-      begin        
-        form = JSON.parse(@event.body)
-        groups = JSON.parse(@event.groups) 
-
-        @manageGroups = groups.find_all{ |i| i['m'].keys.include?(@user.id.to_s) }       
-
-        @ue = UserEvent.new
-        @ue.user_id = @user.id        
-        @ue.event_id = @event.id
-
-        if @manageGroups.empty? #employee form 
-           @ue.body = form['empForm'].to_json
-           @ue.save!
-
-           @response = {:body => @ue.body,
-              :lastname => @user.lastname,
-              :firstname => @user.firstname,
-              :created_on => @user.created_on,
-              :position => @uPosition,
-              :project => @uProject,
-              :extraProject => @uExtraProject,
-              :eventName => @event.name}
-            respond_with @response
-        else
-          forms = [] #manager form 
-          for i in @manageGroups            
-            for j in i['e'].values
-              subF = Hash.new
-              subF[:header] = i['n']
-              subF[:employee] = j
-              subF[:managers] = i['m']
-              subF[:body] = form['mgrForm']
-              forms.push(subF)
-            end
-          end
-          @ue.body = forms.to_json     
-          @ue.save!
-
-          @response = {:body => @ue.body,              
-              :lastname=>@user.lastname,
-              :firstname=>@user.firstname,
-              :created_on=>@user.created_on,
-              :position=>@uPosition,
-              :project=>@uProject,
-              :extraProject=>@uExtraProject,
-              :eventName => @event.name}
-          respond_with @response
-        end      
-      rescue        
-        render_error({:message => :error_t_parse_error})
-      end     
+      if @event.body.present? && @event.groups.present?
+        handle_attestation_response
+      else
+        @ue = UserEvent.find_or_create_by_user_id_and_event_id(@user.id, @event.id)
+        @ue.body = @event.body
+        @response = {:body => @ue.body,
+          :lastname=>@user.lastname,
+          :firstname=>@user.firstname,
+          :created_on=>@user.created_on,
+          :position=>@uPosition,
+          :project=>@uProject,
+          :extraProject=>@uExtraProject,
+          :eventName => @event.name}
+        respond_with @response
+      end
   	end
   end
 
@@ -149,6 +113,59 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
       return false
     end
     true
+  end
+
+  def handle_attestation_response
+    begin        
+      form = JSON.parse(@event.body)
+      groups = JSON.parse(@event.groups) 
+      @manageGroups = groups.find_all{ |i| i['m'].keys.include?(@user.id.to_s) }
+
+      @ue = UserEvent.new
+      @ue.user_id = @user.id        
+      @ue.event_id = @event.id
+
+      if @manageGroups.empty? #employee form 
+         @ue.body = form['empForm'].to_json
+         @ue.save!
+
+         @response = {:body => @ue.body,
+            :lastname => @user.lastname,
+            :firstname => @user.firstname,
+            :created_on => @user.created_on,
+            :position => @uPosition,
+            :project => @uProject,
+            :extraProject => @uExtraProject,
+            :eventName => @event.name}
+          respond_with @response
+      else
+        forms = [] #manager form 
+        for i in @manageGroups            
+          for j in i['e'].values
+            subF = Hash.new
+            subF[:header] = i['n']
+            subF[:employee] = j
+            subF[:managers] = i['m']
+            subF[:body] = form['mgrForm']
+            forms.push(subF)
+          end
+        end
+        @ue.body = forms.to_json     
+        @ue.save!
+
+        @response = {:body => @ue.body,              
+            :lastname=>@user.lastname,
+            :firstname=>@user.firstname,
+            :created_on=>@user.created_on,
+            :position=>@uPosition,
+            :project=>@uProject,
+            :extraProject=>@uExtraProject,
+            :eventName => @event.name}
+        respond_with @response
+      end      
+    rescue        
+      render_error({:message => :error_t_parse_error})
+    end
   end
 
 end  

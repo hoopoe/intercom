@@ -34,6 +34,49 @@ $(function() {
         }
     });
 
+    EmployeeView = Backbone.View.extend({
+        tagName: 'li',
+        template: _.template($('#mgr-emp-li-template').html()),
+        render: function() {
+            this.$el.html('');
+            this.$el.html(this.template);
+            console.log(this.model);
+            rivets.bind(this.el, {
+                t: this.model
+            });            
+            return this;
+        },
+        save:function(){
+            console.log("save emp");
+        }
+    });
+
+    Employee = Backbone.Model.extend({});
+    EmployeeCollection = Backbone.Collection.extend({
+        model: Employee
+    });
+
+    ManagerFormView = Backbone.View.extend({
+        tagName: 'ul',
+        className: 'mgr-emp-view',
+        items: new EmployeeCollection(),
+        initialize: function() {
+            this.items.reset(this.collection);
+        },
+        render: function() {            
+            this.items.each(function(e) {                
+                var empView = new EmployeeView({
+                    model: e                    
+                });
+                this.$el.append(empView.render().el);
+            }, this);            
+            return this;
+        },
+        save:function(){
+            console.log("save manager");
+        }
+    });
+
     app.UserEvent = Backbone.Model.extend({
         urlRoot: '/tercomin/api/v1/user_event'
     });
@@ -57,8 +100,15 @@ $(function() {
         },
         onRenderQuestions:function(){
             var data = $.parseJSON(this.model.get('body'));
-            if (data.length > 0 && data[0].header !== undefined) {
+            if (data && data.length > 0 && data[0].header !== undefined) {
                 console.log("manager");
+                if (this.currentForm !== undefined)
+                    this.currentForm.remove();
+                this.currentForm = new ManagerFormView({
+                    collection: data
+                });
+                this.$el.find('.questions-ph').append(this.currentForm.$el);
+                this.currentForm.render();
             }
             else {
                 console.log("employee");
@@ -76,17 +126,18 @@ $(function() {
             this.remove();//todo: redirect
         },        
         submit: function(e) {                             
-            that = this;
-            this.model.set('body', JSON.stringify(that.qs) );            
-            this.model.save({}, {
-                success: function(model, response) {
-                    // Backbone.positionEvent.trigger('renderPositions');
-                    console.log("save done");
-                },
-                error: function(model, response) {
-                    console.log("save: failed");
-                }
-            });        
+            this.currentForm.save();
+            // that = this;
+            // this.model.set('body', JSON.stringify(that.qs) );            
+            // this.model.save({}, {
+            //     success: function(model, response) {
+            //         // Backbone.positionEvent.trigger('renderPositions');
+            //         console.log("save done");
+            //     },
+            //     error: function(model, response) {
+            //         console.log("save: failed");
+            //     }
+            // });        
         }
     });
 });
