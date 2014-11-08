@@ -79,10 +79,10 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
     profile = UserProfile.find_by_user_id(user_id)
     if profile.present?
       begin
-        data = JSON.parse(profile.data)
-        @uPosition = data['position'];
-        @uProject = data['project'];
-        @uExtraProject = data['project_extra']
+        # data = JSON.parse(profile.data)
+        # @uPosition = data['position'];
+        # @uProject = data['project'];
+        # @uExtraProject = data['project_extra']
       rescue JSON::ParserError => e
         Rails.logger.info "can't parse user profile"
       end

@@ -29,7 +29,6 @@ jQuery.fn.extend({
 
 $(function() {
     $('#header').hide();//hide redmine big logo
-    
 
     Backbone.View.prototype.close = function() {
         this.remove();
@@ -130,7 +129,7 @@ $(function() {
                     app.showView(ueView);
                 },
                 error: function(m, r) {
-                    console.log(r.responseText);
+                    app.showError(r.responseText);
                 },
             });
         },

@@ -48,11 +48,12 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
     .all
 
     ids = users.map{|i| i.id}
-    user_groups = get_users_groups(ids)
-
+    
+    add_groups(users)
     set_avatars(users)
-    respond_with users
-    # respond_with user_groups
+
+    @response = users.map{|i| i.attributes}
+    respond_with @response
   end
 
   def show
@@ -196,16 +197,23 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
     end
   end
 
+  def add_groups(users)
+    users_groups = get_users_groups(users)
+    for i in users
+      i['events'] = users_groups[i.id] #todo: refactor
+    end
+  end
+
   def get_users_groups(ids)
     t = Hash.new
     user_groups = UserEvent.includes(:event)
     .where(:user_id => ids)
     .all    
-    for i in user_groups       
+    for i in user_groups     
         if t[i.user_id].blank?
             t[i.user_id] = []
         end
-        t[i.user_id] << {i.event.id => i.event.name}
+        t[i.user_id] << {:ueid => i.user_id.to_s + '_' + i.event.id.to_s, :name => i.event.name}
     end
     return t
   end

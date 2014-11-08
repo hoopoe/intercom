@@ -3,37 +3,45 @@
     <div class="col-md-12">
       <div class="row">
         <div class="col-md-2 employer-img">
-           <a href='#mypage/<%%- user.id %>'>
-              <%% if (user.avatar_url == "noavatar") { %>
+           <a href='#mypage/<%%- id %>'>
+              <%% if (avatar_url == "noavatar") { %>
                 <img class="no-profile-img"/>
               <%% } else {%>
-                <img src=<%%- user.avatar_url %> alt="no img" />
+                <img src=<%%- avatar_url %> alt="no img" />
               <%% } %>
            </a>
         </div>
         <div class="col-md-10 employer-text">
-          <a href='#mypage/<%%- user.id %>'>
-            <%%- user.lastname %>
-            <%%- user.firstname %>
+          <a rv-href-rooted="emp:id" data-root='#mypage/'>
+            {emp:lastname} {emp:firstname}
           </a>
           <br>
           <label>e-mail:</label>
-          <label><%%- user.mail %></label>
+          <label>{emp:mail}</label>
           <br>
           <label><%=l(:project_title)%>:</label>
-          <%% if ($.parseJSON(user.data) !== null) { %>
-             <label><%%= $.parseJSON(user.data).project%></label>
+          <%% if ($.parseJSON(data) !== null) { %>
+             <label><%%= $.parseJSON(data).project%></label>
           <%% } %>
           <br>
           <label><%=l(:project_extra_title)%>:</label>
-          <%% if ($.parseJSON(user.data) !== null) { %>
-             <label><%%= $.parseJSON(user.data).project_extra%></label>
+          <%% if ($.parseJSON(data) !== null) { %>
+             <label><%%= $.parseJSON(data).project_extra%></label>
           <%% } %>
           <br>
           <label><%=l(:room_number)%>:</label>
-          <%% if ($.parseJSON(user.data) !== null) { %>
-             <label><%%= $.parseJSON(user.data).room_number%></label>
+          <%% if ($.parseJSON(data) !== null) { %>
+             <label><%%= $.parseJSON(data).room_number%></label>
           <%% } %>
+          <br/>
+          <label><%=l(:groups_name)%>:</label>
+          <ul>
+            <li rv-each-i="emp:events">
+              <a rv-href-rooted="i.ueid" data-root='#user_event/'>
+                {i.name} 
+              </a>
+            </li>
+          <ul>
         </div>
       </div>
       <div class="line-separator"/>

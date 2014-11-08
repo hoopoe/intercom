@@ -88,7 +88,6 @@ $(function() {
             'click .ue-submit': 'submit',
             'click .ue-cancel': 'cancel'
         },
-        initialize: function() {},
         render: function() {
             this.$el.html('');
             this.$el.html(this.template);

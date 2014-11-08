@@ -125,9 +125,12 @@ $(function() {
 
     app.EmployerView = Backbone.View.extend({
         template: _.template(app.employerTemplate),
-        initialize: function() {},
         render: function() {
+            console.log(this.model)
             this.$el.html(this.template(this.model.toJSON()));
+            rivets.bind(this.el, {
+                emp: this.model
+            });
             return this;
         },
     });
@@ -142,6 +145,7 @@ $(function() {
         },
 
         add: function(item) {
+            // console.log(item);
             var view = new app.EmployerView({
                 model: item
             });

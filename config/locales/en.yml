@@ -31,3 +31,4 @@ en:
   put_languages_here: "Put languages here"
   put_skills_here: "List your skills"  
   error_t_parse_error: "Parse json error"
+  groups_name: "Groups"

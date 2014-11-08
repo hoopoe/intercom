@@ -44,7 +44,7 @@ var app = app || {};
 
     rivets.binders['href-rooted'] = function(el, value) {
         var root = el.getAttribute('data-root');
-        el.href = root + "_" + value;
+        el.href = root + value;
     }
 
     rivets.binders['src-strict'] = function(el, value) {
@@ -59,6 +59,8 @@ var app = app || {};
       img.src = value
     }
 
+    
+
     app.showView = function(view) {
         if (app.currentView) {
             app.topMenuView.deactivate(view.name);
@@ -68,6 +70,13 @@ var app = app || {};
         app.currentView.render();
         $(".content").html(app.currentView.el);
         app.topMenuView.activate(view.name);
+    };
+
+    app.showError = function(html) {
+        if (app.currentView) {
+            app.currentView.close();
+        }
+        $(".content").html(html);
     };
 
     app.getDateOfBirth = function(date) {
