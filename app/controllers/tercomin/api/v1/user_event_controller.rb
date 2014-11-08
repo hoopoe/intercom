@@ -2,7 +2,7 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
   respond_to :json  
   before_filter :find_event, :except => [:index, :create]
   
-  # before_filter :require_hr, :only => [:index, :show]
+  before_filter :require_hr, :only => [:index]
   before_filter :require_self, :only => [:show, :update]
   before_filter :require_tercomin_pm, :only => [:destroy]
   
@@ -109,6 +109,15 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
   def require_self    
     return unless require_login        
     if @user.id != User.current.id
+      render_403
+      return false
+    end
+    true
+  end
+
+  def require_hr
+    return unless require_login        
+    if !is_ingroup(['hr'])
       render_403
       return false
     end
