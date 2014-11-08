@@ -24,6 +24,13 @@ t.set('event', evnt)
 t.save()
 
 
+var t = new app.Event
+var evnt = {}
+evnt['name'] = "Test 2014";
+t.set('event', evnt)
+t.save()
+
+
 ////////////////////////////// delete
 var t = new app.Event
 t.set('id', 1)
