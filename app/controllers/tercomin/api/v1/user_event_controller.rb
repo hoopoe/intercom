@@ -154,7 +154,7 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
       end
     else      
       if is_current_is_manager_for_user
-        @ue = UserEvent.find_by_user_id_and_event_id_and_mgr_id!(@user.id, @event.id, User.current.id)
+        @ue = UserEvent.find_by_user_id_and_event_id_and_mgr_id(@user.id, @event.id, User.current.id)
         if @ue.blank?
           @ue = UserEvent.new(:user_id => @user.id, :event_id => @event.id, :mgr_id => User.current.id)
           @ue.body = @ev_body['mgrForm'].to_json  

@@ -32,3 +32,6 @@ en:
   put_skills_here: "List your skills"  
   error_t_parse_error: "Parse json error"
   groups_name: "Groups"
+  lbl_qualityq: "Quality"
+  lbl_qualitya1: "Work result"
+  lbl_qualitya2: "Productivity"

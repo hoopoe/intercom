@@ -20,14 +20,31 @@ $(function() {
         }
     });
 
+    QualityQView = Backbone.View.extend({
+        tagName: 'li',
+        template: _.template($('#qualityq-li-template').html()),
+        render: function() {
+            this.$el.html('');
+            this.$el.html(this.template);
+            rivets.bind(this.el, {
+                t: this.model
+            });            
+            return this;
+        }
+    });
+
     QuestionsView = Backbone.View.extend({
         tagName: 'ul',
         className: 'questions-view',                
         render: function() {
-            this.collection.each(function(q) {                
-                var qView = new QuestionView({
-                    model: q                    
-                });
+            this.collection.each(function(q) {
+                if (q.get('qq')) {
+                    console.log(q);
+                    var qView = new QualityQView({model: q});
+                }
+                else {
+                    var qView = new QuestionView({model: q});
+                }
                 this.$el.append(qView.render().el);
             }, this);            
             return this;
@@ -84,7 +101,6 @@ $(function() {
     app.UserEventView = Backbone.View.extend({        
         template: _.template($('#user-event-template').html()),        
         qs: new QuestionCollection(),
-        kind: "self",
         events: {
             'click .ue-submit': 'submit',
             'click .ue-cancel': 'cancel'
@@ -102,11 +118,11 @@ $(function() {
             return this;
         },
         onRenderQuestions:function() {
-            this.kind = this.model.get('kind');
+            var kind = this.model.get('kind');
             var data = $.parseJSON(this.model.get('body'));
             if (this.currentForm !== undefined)
                     this.currentForm.remove();
-            if ( this.kind === "mgr") {
+            if (kind === "mgr") {
                 console.log("manager");
                 this.qs.reset(data);
                 this.currentForm = new QuestionsView({
@@ -114,7 +130,7 @@ $(function() {
                 });
                 this.$el.find('.questions-ph').append(this.currentForm.$el);
                 this.currentForm.render();
-            }else if (this.kind === "self") {
+            } else if (kind === "self") {
                 console.log("employee");
                 this.qs.reset(data);
                  this.currentForm = new QuestionsView({
@@ -122,13 +138,14 @@ $(function() {
                 });            
                 this.$el.find('.questions-ph').append(this.currentForm.$el);
                 this.currentForm.render();
-            }           
+            } else if (kind === "hr") {
+                console.log("todo: hr view");
+            }
         },
         cancel: function(e) {            
             this.remove();//todo: redirect
         },        
-        submit: function(e) {                             
-            // this.currentForm.save();
+        submit: function(e) {
             that = this;
             this.model.set('body', JSON.stringify(that.qs) );            
             this.model.save({}, {
