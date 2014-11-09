@@ -229,16 +229,21 @@
 </script>
 
 <script type="text/html" id="question-li-template" >
-  <div class="form-group col-md-12 questionItem">
+  <div class="form-group col-md-12 question-item">
     <span id="questionName">{ t:q }</span>
     <input type="text" class="form-control" rv-value="t:a"/>
   </div> 
 </script>
 
+<script type="text/html" id="headerq-li-template" >
+  <div class="form-group col-md-12 question-header">
+    <span>{ t:qh }</span>
+  </div> 
+</script>
+
 <script type="text/html" id="qualityq-li-template" >
-  <div class="form-group col-md-12 questionItem">
-    <span><%=l(:lbl_qualityq)%>:</span>
-    <span>{t:a}</span>
+  <div class="form-group col-md-12 question-item">
+    <span>{ t:qq }:</span>
     <select class="form-control" rv-value="t:a">
       <option value=1><%=l(:lbl_qualitya1)%></option>
       <option value=2><%=l(:lbl_qualitya2)%></option>
@@ -253,6 +258,38 @@
       <option value=11><%=l(:lbl_qualitya11)%></option>
       <option value=12><%=l(:lbl_qualitya12)%></option>
     </select>
+  </div> 
+</script>
+
+<script type="text/html" id="loyalityq-li-template" >
+  <div class="form-group col-md-12 question-item">
+    <span>{ t:lq }:</span>
+    <select class="form-control" rv-value="t:a">
+      <option value=1><%=l(:loyalitya1)%></option>
+      <option value=2><%=l(:loyalitya2)%></option>
+      <option value=3><%=l(:loyalitya3)%></option>
+      <option value=4><%=l(:loyalitya4)%></option>
+      <option value=5><%=l(:loyalitya5)%></option>
+    </select>
+  </div> 
+</script>
+
+<script type="text/html" id="personalq-li-template" >
+  <div class="form-group col-md-12 question-item">
+    <span>{ t:rq }:</span>
+    <select class="form-control" rv-value="t:a">
+      <option value=1><%=l(:general_text_Yes)%></option>
+      <option value=2><%=l(:general_text_No)%></option>
+    </select>
+  </div> 
+</script>
+
+<script type="text/html" id="freeformq-li-template" >
+  <div class="form-group col-md-12 question-item">
+    <span>{ t:fq }:</span>
+    <textarea rv-value="t:a">
+
+    </textarea>
   </div> 
 </script>
 

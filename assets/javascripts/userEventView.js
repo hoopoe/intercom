@@ -20,31 +20,45 @@ $(function() {
         }
     });
 
-    QualityQView = Backbone.View.extend({
-        tagName: 'li',
-        template: _.template($('#qualityq-li-template').html()),
-        render: function() {
-            this.$el.html('');
-            this.$el.html(this.template);
-            rivets.bind(this.el, {
-                t: this.model
-            });            
-            return this;
-        }
+    QualityQView = QuestionView.extend({
+        template: _.template($('#qualityq-li-template').html())
+    });
+
+    HeaderQView = QuestionView.extend({
+        template: _.template($('#headerq-li-template').html())
+    });
+
+    LoyaltyQView = QuestionView.extend({
+        template: _.template($('#loyalityq-li-template').html())
+    });
+
+    RequiredQView = QuestionView.extend({
+        template: _.template($('#personalq-li-template').html())
+    });
+
+    FreeFormQView = QuestionView.extend({
+        template: _.template($('#freeformq-li-template').html())
     });
 
     QuestionsView = Backbone.View.extend({
         tagName: 'ul',
-        className: 'questions-view',                
+        className: 'questions-view',  
+        getView: function(q){
+            if(q.has('qh')) 
+                return new HeaderQView({model: q});
+            if(q.has('qq')) 
+                return new QualityQView({model: q});
+            if(q.has('lq')) 
+                return new LoyaltyQView({model: q});
+            if(q.has('rq')) 
+                return new RequiredQView({model: q});
+            if(q.has('fq')) 
+                return new FreeFormQView({model: q});
+            return new QuestionView({model: q});
+        },              
         render: function() {
             this.collection.each(function(q) {
-                if (q.get('qq')) {
-                    console.log(q);
-                    var qView = new QualityQView({model: q});
-                }
-                else {
-                    var qView = new QuestionView({model: q});
-                }
+                var qView = this.getView(q);
                 this.$el.append(qView.render().el);
             }, this);            
             return this;
