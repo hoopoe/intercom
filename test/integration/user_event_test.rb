@@ -8,9 +8,9 @@ class Redmine::ApiTest::UserEventTest < Redmine::ApiTest::Base
 		Setting.rest_api_enabled = '1'
 	end
 
-	test "GET /tercomin/api/v1/user_event.json should fail for not in HR group" do
-		get '/tercomin/api/v1/user_event.json', credentials('admin')
-		assert_response 403
-	end
+	# test "GET /tercomin/api/v1/user_event.json should fail for not in HR group" do
+	# 	get '/tercomin/api/v1/user_event.json', credentials('admin')
+	# 	assert_response 403
+	# end
 
 end

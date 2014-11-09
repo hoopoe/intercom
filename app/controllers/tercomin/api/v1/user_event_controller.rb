@@ -1,15 +1,14 @@
 class Tercomin::Api::V1::UserEventController < ApplicationController
   respond_to :json
 
-  before_filter :find_or_create_ue, :except => [:index, :create]
-  
+  before_filter :build_event_groups, :except => [:index, :create]
   # before_filter :require_hr, :only => [:index]
   before_filter :require_self_or_manager, :only => [:show, :update]
-  before_filter :require_tercomin_pm, :only => [:destroy]
+  before_filter :find_user_event, :except => [:index, :create]
 
+  before_filter :require_tercomin_pm, :only => [:destroy]
   accept_api_auth :index, :show
   
-
   def index
     @offset, @limit = api_offset_and_limit   
   	respond_with UserEvent.limit(@limit)
@@ -19,7 +18,20 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
   end
 
   def show #hide @ue
+    if User.current == @user
       @response = {:body => @ue.body,
+      :lastname=>@user.lastname,
+      :firstname=>@user.firstname,
+      :created_on=>@user.created_on,
+      :position=>@uPosition,
+      :project=>@uProject,
+      :extraProject=>@uExtraProject,
+      :eventName => @event.name,
+      :kind => "self"}
+      respond_with @response
+    else 
+      if @ue.mgr.present?
+        @response = {:body => @ue.body,
         :lastname=>@user.lastname,
         :firstname=>@user.firstname,
         :created_on=>@user.created_on,
@@ -27,19 +39,26 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
         :project=>@uProject,
         :extraProject=>@uExtraProject,
         :eventName => @event.name,
-        :kind => "self"}
+        :kind => "mgr"}
         respond_with @response
+      else
+        respond_with "prevent access"
+      end
+    end
   end
 
   def update
     if params[:body].present?
-      ue = UserEvent.find_by_user_id_and_event_id_and_mgr_id!(@user.id, @event.id, nil)
-      if ue.present?
-        ue.body = params[:body]
-        ue.save!
-        respond_with ue
+      if User.current == @user
+        @ue.body = params[:body]
+        @ue.save!
+        respond_with @ue
       else
-        render_403
+        if @ue.mgr.present?
+          @ue.body = params[:body]
+          @ue.save!
+          respond_with @ue  
+        end
       end
     else
       render_403
@@ -57,7 +76,7 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
   end
 
   private
-  def find_or_create_ue  	
+  def build_event_groups  	
   	tmp = params[:id].split('_')
   	event_id = tmp.pop
   	user_id = tmp.pop
@@ -73,26 +92,11 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
       end
     end
 
-    if User.current == @user
-      @ue = UserEvent.find_by_user_id_and_event_id_and_mgr_id(@user.id, @event.id, nil)
-      if @ue.blank?
-        @ue = UserEvent.new(:user_id => @user.id, :event_id => @event.id, :mgr_id => nil)
-        if @event.body.present?
-          begin
-            ev_body = JSON.parse(@event.body)
-            @ue.body  = ev_body['empForm']
-            # @ev_mgr_form = ev_body['mgrForm']
-          rescue JSON::ParserError => e
-            Rails.logger.info "can't parse event body"
-          end
-        end
-        @ue.save!
-      end
-    else
-      if is_event_manager
-        respond_with "manager"
-      else is_hr
-        respond_with "hr"
+    if @event.body.present?
+        begin
+          @ev_body = JSON.parse(@event.body)
+        rescue JSON::ParserError => e
+          Rails.logger.info "can't parse event body"
       end
     end
 
@@ -111,11 +115,9 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
     render_404
   end
 
-  def is_event_manager
-    mgr_groups = @ev_groups.find_all {|i| i['m'].include?(User.current.id.to_s) }
-    @ev_groups_by_mgr_emp = mgr_groups
-    .find_all { |i| i['m'].include?(@user.id.to_s) || i['e'].include?(@user.id.to_s)}
-    return !@ev_groups_by_mgr_emp.empty?
+  def is_current_is_manager_for_user
+    mgr_groups = @ev_groups.find_all {|i| i['m'].include?(User.current.id.to_s) && i['e'].include?(@user.id.to_s) }
+    return mgr_groups.present?
   end
 
   def is_ingroup(groupNames)
@@ -135,77 +137,42 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
 
   def require_self_or_manager    
     return unless require_login        
-    if (@user.id != User.current.id && !is_event_manager)
+    if (@user.id != User.current.id && !is_current_is_manager_for_user)
       render_403
       return false
     end
     true
   end
 
+  def find_user_event
+    if User.current == @user
+      @ue = UserEvent.find_by_user_id_and_event_id_and_mgr_id(@user.id, @event.id, nil)
+      if @ue.blank?
+        @ue = UserEvent.new(:user_id => @user.id, :event_id => @event.id, :mgr_id => nil)
+        @ue.body = @ev_body['empForm'].to_json  
+        @ue.save!
+      end
+    else      
+      if is_current_is_manager_for_user
+        @ue = UserEvent.find_by_user_id_and_event_id_and_mgr_id!(@user.id, @event.id, User.current.id)
+        if @ue.blank?
+          @ue = UserEvent.new(:user_id => @user.id, :event_id => @event.id, :mgr_id => User.current.id)
+          @ue.body = @ev_body['mgrForm'].to_json  
+          @ue.save!
+        end
+      else #is_hr
+        respond_with "hr"
+      end
+    end
+  end
+
   def require_hr
-    # Rails.logger.info "GGGGGGGGGGGF"
-    # puts "GGGGGGGGGGGF"
-    # puts User.current
-    # Rails.logger.info User.current
     return unless require_login
     if !is_ingroup(['hr'])
       render_403
       return false
     end
     true
-  end
-
-  def handle_attestation_response
-    begin        
-      form = JSON.parse(@event.body)
-      groups = JSON.parse(@event.groups) 
-      @manageGroups = groups.find_all{ |i| i['m'].keys.include?(@user.id.to_s) }
-
-      @ue = UserEvent.new
-      @ue.user_id = @user.id        
-      @ue.event_id = @event.id
-
-      if @manageGroups.empty? #employee form 
-         @ue.body = form['empForm'].to_json
-         @ue.save!
-
-         @response = {:body => @ue.body,
-            :lastname => @user.lastname,
-            :firstname => @user.firstname,
-            :created_on => @user.created_on,
-            :position => @uPosition,
-            :project => @uProject,
-            :extraProject => @uExtraProject,
-            :eventName => @event.name}
-          respond_with @response
-      else
-        forms = [] #manager form 
-        for i in @manageGroups            
-          for j in i['e'].values
-            subF = Hash.new
-            subF[:header] = i['n']
-            subF[:employee] = j
-            subF[:managers] = i['m']
-            subF[:body] = form['mgrForm']
-            forms.push(subF)
-          end
-        end
-        @ue.body = forms.to_json     
-        @ue.save!
-
-        @response = {:body => @ue.body,              
-            :lastname=>@user.lastname,
-            :firstname=>@user.firstname,
-            :created_on=>@user.created_on,
-            :position=>@uPosition,
-            :project=>@uProject,
-            :extraProject=>@uExtraProject,
-            :eventName => @event.name}
-        respond_with @response
-      end      
-    rescue        
-      render_error({:message => :error_t_parse_error})
-    end
   end
 
 end  

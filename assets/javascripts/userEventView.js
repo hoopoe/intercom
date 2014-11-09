@@ -103,22 +103,20 @@ $(function() {
         },
         onRenderQuestions:function() {
             this.kind = this.model.get('kind');
+            var data = $.parseJSON(this.model.get('body'));
+            if (this.currentForm !== undefined)
+                    this.currentForm.remove();
             if ( this.kind === "mgr") {
                 console.log("manager");
-                var data = $.parseJSON(this.model.get('body'));
-                if (this.currentForm !== undefined)
-                    this.currentForm.remove();
-                this.currentForm = new ManagerFormView({
-                    collection: data
+                this.qs.reset(data);
+                this.currentForm = new QuestionsView({
+                    collection: this.qs
                 });
                 this.$el.find('.questions-ph').append(this.currentForm.$el);
                 this.currentForm.render();
             }else if (this.kind === "self") {
                 console.log("employee");
-                console.log("add links to emps for manager");
-                this.qs.reset(this.model.get('body'));
-                if (this.currentForm !== undefined)
-                    this.currentForm.remove();
+                this.qs.reset(data);
                  this.currentForm = new QuestionsView({
                     collection: this.qs
                 });            

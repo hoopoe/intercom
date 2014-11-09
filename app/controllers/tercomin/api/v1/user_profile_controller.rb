@@ -208,13 +208,17 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
     t = Hash.new
     user_groups = UserEvent.includes(:event)
     .where(:user_id => ids)
+    .group(:user_id, :event_id)
     .all    
+    Rails.logger.info user_groups
     for i in user_groups     
-        if t[i.user_id].blank?
-            t[i.user_id] = []
-        end
-        t[i.user_id] << {:ueid => i.user_id.to_s + '_' + i.event.id.to_s, :name => i.event.name}
+      if t[i.user_id].blank?
+          t[i.user_id] = []
+      end
+      t[i.user_id] << {:ueid => i.user_id.to_s + '_' + i.event.id.to_s, :name => i.event.name}
     end
+    
+    # {15=>[{:ueid=>"15_4", :name=>"Аттестация 2014"}, {:ueid=>"15_4", :name=>"Аттестация 2014"}], 17=>[{:ueid=>"17_4", :name=>"Аттестация 2014"}]}
     return t
   end
 end
