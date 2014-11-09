@@ -84,9 +84,13 @@ $(function() {
     app.UserEventView = Backbone.View.extend({        
         template: _.template($('#user-event-template').html()),        
         qs: new QuestionCollection(),
+        kind: "self",
         events: {
             'click .ue-submit': 'submit',
             'click .ue-cancel': 'cancel'
+        },
+        initialize: function() {
+            // Backbone.positionEvent.on('saveUE', this.onSaveUE, this);
         },
         render: function() {
             this.$el.html('');
@@ -97,10 +101,11 @@ $(function() {
             this.onRenderQuestions();   
             return this;
         },
-        onRenderQuestions:function(){
-            var data = $.parseJSON(this.model.get('body'));
-            if (data && data.length > 0 && data[0].header !== undefined) {
+        onRenderQuestions:function() {
+            this.kind = this.model.get('kind');
+            if ( this.kind === "mgr") {
                 console.log("manager");
+                var data = $.parseJSON(this.model.get('body'));
                 if (this.currentForm !== undefined)
                     this.currentForm.remove();
                 this.currentForm = new ManagerFormView({
@@ -108,10 +113,10 @@ $(function() {
                 });
                 this.$el.find('.questions-ph').append(this.currentForm.$el);
                 this.currentForm.render();
-            }
-            else {
+            }else if (this.kind === "self") {
                 console.log("employee");
-                this.qs.reset(data);
+                console.log("add links to emps for manager");
+                this.qs.reset(this.model.get('body'));
                 if (this.currentForm !== undefined)
                     this.currentForm.remove();
                  this.currentForm = new QuestionsView({
@@ -125,18 +130,18 @@ $(function() {
             this.remove();//todo: redirect
         },        
         submit: function(e) {                             
-            this.currentForm.save();
-            // that = this;
-            // this.model.set('body', JSON.stringify(that.qs) );            
-            // this.model.save({}, {
-            //     success: function(model, response) {
-            //         // Backbone.positionEvent.trigger('renderPositions');
-            //         console.log("save done");
-            //     },
-            //     error: function(model, response) {
-            //         console.log("save: failed");
-            //     }
-            // });        
+            // this.currentForm.save();
+            that = this;
+            this.model.set('body', JSON.stringify(that.qs) );            
+            this.model.save({}, {
+                success: function(model, response) {
+                    // Backbone.positionEvent.trigger('renderPositions');
+                    console.log("save done");
+                },
+                error: function(model, response) {
+                    console.log("save: failed");
+                }
+            });        
         }
     });
 });

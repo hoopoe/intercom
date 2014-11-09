@@ -7,8 +7,8 @@ mgrq.push({"q":"Test 1?: ", "a": "N/A"});
 mgrq.push({"q":"Test 2?: ", "a": "N/A"});
 
 var groups = [];
-groups.push({"n":"area 8", "m": {"12":"Pomidor Senior"}, "e":{"10":"Ivan Ivanov", "11":"Petr Petrov"}})
-groups.push({"n":"test group", "m": {"12":"Pomidor Senior", "10":"Ivan Ivanov"}, "e":{"14":"Walle Walle"}})
+groups.push({"n":"area 8", "m": {"17":"Pomidor Senior"}, "e":{"15":"Ivan Ivanov", "16":"Petr Petrov"}})
+groups.push({"n":"test group", "m": {"17":"Pomidor Senior", "15":"Ivan Ivanov"}, "e":{"19":"Walle Walle"}})
 	
 var body = {};
 body['empForm'] = empq;

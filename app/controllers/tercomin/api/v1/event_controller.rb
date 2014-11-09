@@ -13,7 +13,7 @@ class Tercomin::Api::V1::EventController < ApplicationController
   end
  
   def create  	    
-  	@event = Event.new()
+  	@event = Event.new
     @event.safe_attributes = params[:event]    
   	respond_to do |format|
       if @event.save       

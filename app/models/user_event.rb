@@ -7,9 +7,9 @@ class UserEvent < ActiveRecord::Base
   belongs_to :event
   validates :event, :presence => true
 
+  belongs_to :mgr, :class_name => "User"
+  # validates :mgr, :presence => true
 
-  # def to_s
-  # 	"#{user.id - event.id}"
-  # end
+  # safe_attributes 'body'
 
 end
