@@ -113,47 +113,69 @@ $(function() {
     });
 
     app.UserEventView = Backbone.View.extend({        
-        template: _.template($('#user-event-template').html()),        
+        template: _.template($('#user-event-template').html()), 
+        HRtemplate: _.template($('#hr-emp-view').html()),        
         qs: new QuestionCollection(),
+        kind:"",
         events: {
             'click .ue-submit': 'submit',
             'click .ue-cancel': 'cancel'
         },
         initialize: function() {
-            // Backbone.positionEvent.on('saveUE', this.onSaveUE, this);
+            this.kind = this.model.get('kind');
         },
         render: function() {
             this.$el.html('');
-            this.$el.html(this.template);
-            rivets.bind(this.el, {
-                ue: this.model
-            });         
-            this.onRenderQuestions();   
+            if (this.kind === "hr") {
+                this.$el.html(this.HRtemplate);
+                _.each(this.model.get('mgrForms'), function(form){
+                    var data = $.parseJSON(form.body);
+                    var qs = new QuestionCollection()
+                    qs.reset(data);
+                    var mgrView = new QuestionsView({
+                        collection: qs
+                    });
+                    mgrView.render();
+                    this.$el.find('.mgrs-ph').append(mgrView.$el);
+                }, this);
+
+                var data = $.parseJSON(this.model.get('empForm').body);
+                var qs = new QuestionCollection()
+                qs.reset(data);
+                var empView = new QuestionsView({
+                    collection: qs
+                });
+                empView.render();
+                this.$el.find('.emp-ph').append(empView.$el);
+            }
+            else {
+                this.$el.html(this.template);
+                rivets.bind(this.el, {
+                    ue: this.model
+                });         
+                this.onRenderQuestions();  
+            } 
             return this;
         },
         onRenderQuestions:function() {
-            var kind = this.model.get('kind');
-            var data = $.parseJSON(this.model.get('body'));
             if (this.currentForm !== undefined)
                     this.currentForm.remove();
-            if (kind === "mgr") {
-                console.log("manager");
+            if (this.kind === "mgr") {
+                var data = $.parseJSON(this.model.get('body'));
                 this.qs.reset(data);
                 this.currentForm = new QuestionsView({
                     collection: this.qs
                 });
                 this.$el.find('.questions-ph').append(this.currentForm.$el);
                 this.currentForm.render();
-            } else if (kind === "self") {
-                console.log("employee");
+            } else if (this.kind === "self") {
+                var data = $.parseJSON(this.model.get('body'));
                 this.qs.reset(data);
-                 this.currentForm = new QuestionsView({
+                this.currentForm = new QuestionsView({
                     collection: this.qs
                 });            
                 this.$el.find('.questions-ph').append(this.currentForm.$el);
                 this.currentForm.render();
-            } else if (kind === "hr") {
-                console.log("todo: hr view");
             }
         },
         cancel: function(e) {            
@@ -164,7 +186,6 @@ $(function() {
             this.model.set('body', JSON.stringify(that.qs) );            
             this.model.save({}, {
                 success: function(model, response) {
-                    // Backbone.positionEvent.trigger('renderPositions');
                     console.log("save done");
                 },
                 error: function(model, response) {

@@ -46,10 +46,7 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
     .limit(@limit)
     .offset(@offset)
     .all
-
-    ids = users.map{|i| i.id}
     
-    # Rails.logger.info users
     add_groups(users)
     set_avatars(users)
 
@@ -205,25 +202,18 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
     end
   end
 
-  def get_users_groups(ids)
+  def get_users_groups(users)
     t = Hash.new
     user_groups = UserEvent.includes(:event)
-    .where(:user_id => ids)
+    .where(:user_id => users)
     .group(:user_id, :event_id)
     .all    
-    Rails.logger.info "FFFF"
-    Rails.logger.info user_groups
-    Rails.logger.info "FFFFDDD"
     for i in user_groups     
       if t[i.user_id].blank?
           t[i.user_id] = []
       end
-      # Rails.logger.info i.user_id
-      # Rails.logger.info i.event
       t[i.user_id] << {:ueid => i.user_id.to_s + '_' + i.event.id.to_s, :name => i.event.name}
     end
-    
-    # {15=>[{:ueid=>"15_4", :name=>"Аттестация 2014"}, {:ueid=>"15_4", :name=>"Аттестация 2014"}], 17=>[{:ueid=>"17_4", :name=>"Аттестация 2014"}]}
     return t
   end
 end

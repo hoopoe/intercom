@@ -3,7 +3,8 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
 
   before_filter :build_event_groups, :except => [:index, :create]
   # before_filter :require_hr, :only => [:index]
-  before_filter :require_self_or_manager, :only => [:show, :update]
+  before_filter :require_self_or_manager, :only => [:update]
+  before_filter :require_self_or_manager_or_hr, :only => [:show]
   before_filter :find_user_event, :except => [:index, :create]
 
   before_filter :require_tercomin_pm, :only => [:destroy]
@@ -17,8 +18,8 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
     .map{|i| {'uid' => i.user_id, 'eid' => i.event_id, 'body' => 'hidden'}}
   end
 
-  def show #hide @ue
-    if User.current == @user
+  def show
+    if @role == :self
       @response = {:body => @ue.body,
       :lastname=>@user.lastname,
       :firstname=>@user.firstname,
@@ -30,7 +31,7 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
       :kind => "self"}
       respond_with @response
     else 
-      if @ue.mgr.present?
+      if @role == :mgr
         @response = {:body => @ue.body,
         :lastname=>@user.lastname,
         :firstname=>@user.firstname,
@@ -42,7 +43,13 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
         :kind => "mgr"}
         respond_with @response
       else
-        respond_with "prevent access"
+        if @role == :hr
+          @response = {
+            :mgrForms => @ue_by_mgr.map{ |i| i.attributes },
+            :empForm => @ue.attributes,
+            :kind => "hr"}
+          respond_with @response
+        end
       end
     end
   end
@@ -81,6 +88,7 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
   	event_id = tmp.pop
   	user_id = tmp.pop
     @user = User.find(user_id)
+    
   	@event = Event.find(event_id)
 
     @ev_groups = []
@@ -100,17 +108,7 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
       end
     end
 
-    profile = UserProfile.find_by_user_id(user_id)
-    if profile.present?
-      begin
-        data = JSON.parse(profile.data)
-        @uPosition = data['position'];
-        @uProject = data['project'];
-        @uExtraProject = data['project_extra']
-      rescue JSON::ParserError => e
-        Rails.logger.info "can't parse user profile"
-      end
-    end
+    
   rescue ActiveRecord::RecordNotFound
     render_404
   end
@@ -135,9 +133,26 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
     true
   end
 
+  def set_current_role
+      @role = :hr if is_ingroup(['hr'])
+      @role = :mgr if is_current_is_manager_for_user
+      @role = :self if @user.id == User.current.id
+  end
+
   def require_self_or_manager    
-    return unless require_login        
-    if (@user.id != User.current.id && !is_current_is_manager_for_user)
+    return unless require_login
+    set_current_role       
+    if (@role == :self && @role == :mgr)
+      render_403
+      return false
+    end
+    true
+  end
+
+  def require_self_or_manager_or_hr
+    return unless require_login
+    set_current_role
+    if (@role == :self && @role == :mgr && @role == :hr)
       render_403
       return false
     end
@@ -145,7 +160,18 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
   end
 
   def find_user_event
-    if User.current == @user
+    # @profile = UserProfile.find_or_create_by_user_id(@user.id)
+    # if @profile.present?
+    #   begin
+    #     data = JSON.parse(@profile.data)
+    #     @uPosition = data['position'];
+    #     @uProject = data['project'];
+    #     @uExtraProject = data['project_extra']
+    #   rescue JSON::ParserError => e
+    #     Rails.logger.info "can't parse user profile"
+    #   end
+    # end
+    if @role == :self
       @ue = UserEvent.find_by_user_id_and_event_id_and_mgr_id(@user.id, @event.id, nil)
       if @ue.blank?
         @ue = UserEvent.new(:user_id => @user.id, :event_id => @event.id, :mgr_id => nil)
@@ -153,15 +179,37 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
         @ue.save!
       end
     else      
-      if is_current_is_manager_for_user
+      if @role == :mgr
         @ue = UserEvent.find_by_user_id_and_event_id_and_mgr_id(@user.id, @event.id, User.current.id)
         if @ue.blank?
           @ue = UserEvent.new(:user_id => @user.id, :event_id => @event.id, :mgr_id => User.current.id)
           @ue.body = @ev_body['mgrForm'].to_json  
           @ue.save!
         end
-      else #is_hr
-        respond_with "hr"
+      else
+        if @role == :hr
+          @ue = UserEvent
+          .select("user_events_t.body, user_profile_t.data, user_events_t.user_id, 
+            user_events_t.mgr_id")
+          .joins("INNER JOIN #{UserProfile.table_name} 
+            ON #{UserEvent.table_name}.user_id = #{UserProfile.table_name}.user_id")
+          .where("#{UserEvent.table_name}.user_id = :uid
+            and #{UserEvent.table_name}.event_id = :eid
+            and #{UserEvent.table_name}.mgr_id IS :mid",
+           {:uid => @user.id, :eid => @event.id, :mid => nil})
+          .limit(1)
+          .first
+          
+          @ue_by_mgr = UserEvent
+          .select("user_events_t.body, user_profile_t.data, user_events_t.user_id, 
+            user_events_t.mgr_id")
+          .joins("INNER JOIN #{UserProfile.table_name} 
+            ON #{UserEvent.table_name}.mgr_id = #{UserProfile.table_name}.user_id")
+          .where("#{UserEvent.table_name}.user_id = :uid
+            and #{UserEvent.table_name}.event_id = :eid",
+           {:uid => @user.id, :eid => @event.id})
+          .all
+        end
       end
     end
   end

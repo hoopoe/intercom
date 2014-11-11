@@ -1,6 +1,6 @@
 class UserProfile < ActiveRecord::Base
   self.table_name = "user_profile_t"
-  belongs_to :user  
+  belongs_to :user
 
   attr_accessible :data, :settings, :positions, :user_id, :avatar  
   
