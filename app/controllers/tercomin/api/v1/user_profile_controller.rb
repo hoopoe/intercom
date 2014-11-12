@@ -197,6 +197,7 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
 
   def add_groups(users)
     users_groups = get_users_groups(users)
+    Rails.logger.info users_groups
     for i in users
       i['events'] = users_groups[i.id] #todo: refactor
     end
@@ -204,15 +205,22 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
 
   def get_users_groups(users)
     t = Hash.new
-    user_groups = UserEvent.includes(:event)
-    .where(:user_id => users)
-    .group(:id, :user_id, :event_id) #todo: review id group error
-    .all    
+
+    user_groups = UserEvent.select("events_t.name, user_events_t.user_id, user_events_t.event_id")
+            .joins("INNER JOIN #{Event.table_name} 
+              ON #{UserEvent.table_name}.event_id = #{Event.table_name}.id")
+            .group(:user_id, :event_id)
+            .all
+    # user_groups = UserEvent.includes(:event)
+    # .where(:user_id => users)
+    # .group(:id, :user_id, :event_id) #todo: review id group error
+    # .all    
     for i in user_groups     
       if t[i.user_id].blank?
           t[i.user_id] = []
       end
-      t[i.user_id] << {:ueid => i.user_id.to_s + '_' + i.event.id.to_s, :name => i.event.name}
+      #t[i.user_id] << {:ueid => i.user_id.to_s + '_' + i.event.id.to_s, :name => i.event.name}
+      t[i.user_id] << {:ueid => i.user_id.to_s + '_' + i.event_id.to_s, :name => i.name}
     end
     return t
   end
