@@ -206,7 +206,7 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
     t = Hash.new
     user_groups = UserEvent.includes(:event)
     .where(:user_id => users)
-    .group(:user_id, :event_id)
+    .group(:id, :user_id, :event_id) #todo: review id group error
     .all    
     for i in user_groups     
       if t[i.user_id].blank?
