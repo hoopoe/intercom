@@ -209,7 +209,7 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
     user_groups = UserEvent.select("events_t.name, user_events_t.user_id, user_events_t.event_id")
             .joins("INNER JOIN #{Event.table_name} 
               ON #{UserEvent.table_name}.event_id = #{Event.table_name}.id")
-            .group(:user_id, :event_id)
+            .group(:user_id, :event_id, :name)
             .all
     # user_groups = UserEvent.includes(:event)
     # .where(:user_id => users)
