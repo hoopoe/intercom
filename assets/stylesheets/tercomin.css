@@ -92,6 +92,9 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 .questions-buttons{text-align: center;}
 #main .questions-buttons a {color: #fff;}
 
+/*hr*/
+.hr-view div{text-align: center;}
+
 /*.cv {
   width: 81px;
   height: 101px;
@@ -122,6 +125,7 @@ a.cv {
 /*.cv{display:none;}*/
 
 /*employers*/
+.groups-list{display: inline-block; list-style-type: none;}
 div.employer-img img {
   /*width: 90px;*/
   height: 120px;

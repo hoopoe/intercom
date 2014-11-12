@@ -60,6 +60,18 @@ $(function() {
         template: _.template($('#activityq-li-template').html())
     });
 
+    QuestionsHeaderView = Backbone.View.extend({
+        template: _.template($('#q-header-li-template').html()),
+        render: function() {
+            this.$el.html('');
+            this.$el.html(this.template);
+            rivets.bind(this.el, {
+                t: this.model
+            });            
+            return this;
+        }
+    });
+
     QuestionsView = Backbone.View.extend({
         tagName: 'ul',
         className: 'questions-view',  
@@ -87,6 +99,9 @@ $(function() {
             return new QuestionView({model: q});
         },              
         render: function() {
+            var qHeader = new QuestionsHeaderView({model: this.model});
+            this.$el.append(qHeader.render().el);
+
             this.collection.each(function(q) {
                 var qView = this.getView(q);
                 this.$el.append(qView.render().el);
@@ -101,7 +116,7 @@ $(function() {
         render: function() {
             this.$el.html('');
             this.$el.html(this.template);
-            console.log(this.model);
+            // console.log(this.model);
             rivets.bind(this.el, {
                 t: this.model
             });            
@@ -159,27 +174,38 @@ $(function() {
             if (this.kind === "hr") {
                 this.$el.html(this.HRtemplate);
                 _.each(this.model.get('mgrForms'), function(form){
-                    var data = $.parseJSON(form.body);
+                    var data = $.parseJSON(form.data);
+                    var body = $.parseJSON(form.body);
                     var qs = new QuestionCollection()
-                    qs.reset(data);
+                    qs.reset(body);
+                    qs.each(function(i){i.set('hrview', true);});
                     var mgrView = new QuestionsView({
-                        collection: qs
+                        collection: qs,
+                        model: data
                     });
                     mgrView.render();
                     this.$el.find('.mgrs-ph').append(mgrView.$el);
                 }, this);
 
-                var data = $.parseJSON(this.model.get('empForm').body);
+                var data = $.parseJSON(this.model.get('empForm').data);
+                var body = $.parseJSON(this.model.get('empForm').body);
                 var qs = new QuestionCollection()
-                qs.reset(data);
+                qs.reset(body);
+                qs.each(function(i){i.set('hrview', true);});
                 var empView = new QuestionsView({
-                    collection: qs
+                    collection: qs,
+                    model: data
                 });
                 empView.render();
                 this.$el.find('.emp-ph').append(empView.$el);
+
+                rivets.bind(this.el, {
+                    ue: this.model
+                });
             }
             else {
                 this.$el.html(this.template);
+                console.log(this.model);
                 rivets.bind(this.el, {
                     ue: this.model
                 });         
@@ -191,18 +217,22 @@ $(function() {
             if (this.currentForm !== undefined)
                     this.currentForm.remove();
             if (this.kind === "mgr") {
-                var data = $.parseJSON(this.model.get('body'));
-                this.qs.reset(data);
+                var body = $.parseJSON(this.model.get('body'));
+                var data = $.parseJSON(this.model.get('data'));
+                this.qs.reset(body);
                 this.currentForm = new QuestionsView({
-                    collection: this.qs
+                    collection: this.qs,
+                    model: data
                 });
                 this.$el.find('.questions-ph').append(this.currentForm.$el);
                 this.currentForm.render();
             } else if (this.kind === "self") {
-                var data = $.parseJSON(this.model.get('body'));
-                this.qs.reset(data);
+                var body = $.parseJSON(this.model.get('body'));
+                var data = $.parseJSON(this.model.get('data'));
+                this.qs.reset(body);
                 this.currentForm = new QuestionsView({
-                    collection: this.qs
+                    collection: this.qs,
+                    model: data
                 });            
                 this.$el.find('.questions-ph').append(this.currentForm.$el);
                 this.currentForm.render();

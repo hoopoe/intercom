@@ -21,6 +21,7 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
   def show
     if @role == :self
       @response = {:body => @ue.body,
+      :data=>@profile.data,
       :lastname=>@user.lastname,
       :firstname=>@user.firstname,
       :created_on=>@user.created_on,
@@ -33,6 +34,7 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
     else 
       if @role == :mgr
         @response = {:body => @ue.body,
+        :data=>@profile.data,
         :lastname=>@user.lastname,
         :firstname=>@user.firstname,
         :created_on=>@user.created_on,
@@ -47,6 +49,7 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
           @response = {
             :mgrForms => @ue_by_mgr.map{ |i| i.attributes },
             :empForm => @ue.attributes,
+            :eventname => @event.name,
             :kind => "hr"}
           respond_with @response
         end
@@ -178,6 +181,10 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
         @ue.body = @ev_body['empForm'].to_json  
         @ue.save!
       end
+      @profile = UserProfile.find_by_user_id(@ue.user_id)
+      # @ue = getPersonalEvent
+      # Rails.logger.info "FFFF"
+      # Rails.logger.info @ue
     else      
       if @role == :mgr
         @ue = UserEvent.find_by_user_id_and_event_id_and_mgr_id(@user.id, @event.id, User.current.id)
@@ -186,29 +193,29 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
           @ue.body = @ev_body['mgrForm'].to_json  
           @ue.save!
         end
+        @profile = UserProfile.find_by_user_id(@ue.user_id)
       else
         if @role == :hr
           @ue = UserEvent
-          .select("user_events_t.body, user_profile_t.data, user_events_t.user_id, 
-            user_events_t.mgr_id")
-          .joins("INNER JOIN #{UserProfile.table_name} 
-            ON #{UserEvent.table_name}.user_id = #{UserProfile.table_name}.user_id")
-          .where("#{UserEvent.table_name}.user_id = :uid
-            and #{UserEvent.table_name}.event_id = :eid
-            and #{UserEvent.table_name}.mgr_id IS :mid",
-           {:uid => @user.id, :eid => @event.id, :mid => nil})
-          .limit(1)
-          .first
-          
+            .select("user_events_t.body, user_profile_t.data, user_events_t.user_id, 
+              user_events_t.mgr_id")
+            .joins("INNER JOIN #{UserProfile.table_name} 
+              ON #{UserEvent.table_name}.user_id = #{UserProfile.table_name}.user_id")
+            .where("#{UserEvent.table_name}.user_id = :uid
+              and #{UserEvent.table_name}.event_id = :eid
+              and #{UserEvent.table_name}.mgr_id IS :mid",
+             {:uid => @user.id, :eid => @event.id, :mid => nil})
+            .limit(1)
+            .first
           @ue_by_mgr = UserEvent
-          .select("user_events_t.body, user_profile_t.data, user_events_t.user_id, 
-            user_events_t.mgr_id")
-          .joins("INNER JOIN #{UserProfile.table_name} 
-            ON #{UserEvent.table_name}.mgr_id = #{UserProfile.table_name}.user_id")
-          .where("#{UserEvent.table_name}.user_id = :uid
-            and #{UserEvent.table_name}.event_id = :eid",
-           {:uid => @user.id, :eid => @event.id})
-          .all
+            .select("user_events_t.body, user_profile_t.data, user_events_t.user_id, 
+              user_events_t.mgr_id")
+            .joins("INNER JOIN #{UserProfile.table_name} 
+              ON #{UserEvent.table_name}.mgr_id = #{UserProfile.table_name}.user_id")
+            .where("#{UserEvent.table_name}.user_id = :uid
+              and #{UserEvent.table_name}.event_id = :eid",
+             {:uid => @user.id, :eid => @event.id})
+            .all
         end
       end
     end

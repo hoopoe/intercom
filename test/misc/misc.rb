@@ -36,7 +36,7 @@ for g in org
 	end
 	orgid.push(gid)
 end
-puts orgid
+puts orgid.to_json
 
 # puts orgid[1]['e'].to_json
 # puts orgid[1][:m].keys.include?(10)

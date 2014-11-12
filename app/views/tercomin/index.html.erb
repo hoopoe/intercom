@@ -198,24 +198,7 @@
 
 <script type="text/html" id="user-event-template">
   <div class='row ue-container'>
-    <div class="col-md-12">
-      <div class='ue-info col-md-offset-2 col-md-8 col-md-offset-2'>
-        <h3>{ ue:lastname } {ue:firstname}</h3>
-        <label for="evntName">Event: </label>
-        <span id="evntName"> {ue:eventName}</span>
-        <br/>
-        <label for="uPosition">Position: </label>
-        <span id="uPosition"> {ue:position}</span>
-        <br/>
-        <label for="uProject">Project: </label>
-        <span id="uProject"> {ue:project}</span>
-        <br/>
-        <label for="uExtraProject">Extra project: </label>
-        <span id="uExtraProject"> {ue:extraProject}</span>
-        <br/>
-        <label for="uCreatedOn">Employment date: </label>
-        <span id="uCreatedOn"> {ue:created_on | date}</span>
-      </div> 
+    <div class="col-md-12"> 
       <div class="col-md-12">
         <form class="questions-ph"/>
         <div class="questions-buttons">
@@ -228,10 +211,47 @@
   </div>   
 </script>
 
+<script type="text/html" id="hr-emp-view" >
+<div class="row hr-view">
+  <div class="col-md-12">
+    <h2>{ue:eventname}</h2>
+  </div>
+</div
+<div class="row">
+  <div class="col-md-12">
+    <div class="col-md-6">
+      <div class="emp-ph">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="mgrs-ph">
+      </div>
+    </div>
+  <div>
+<div>
+</script>
+
 <script type="text/html" id="question-li-template" >
   <div class="form-group col-md-12 question-item">
     <span id="questionName">{ t:q }</span>
     <input type="text" class="form-control" rv-value="t:a"/>
+  </div> 
+</script>
+
+<script type="text/html" id="q-header-li-template" >
+  <div class="form-group col-md-12 questions-header">
+    <h3>{t.lastname} {t.firstname}</h3>
+    <label for="uPosition">Position: </label>
+    <span id="uPosition"> {t.position}</span>
+    <br/>
+    <label for="uProject">Project: </label>
+    <span id="uProject"> {t.project}</span>
+    <br/>
+    <label for="uExtraProject">Extra project: </label>
+    <span id="uExtraProject"> {t.extraProject}</span>
+    <br/>
+    <label for="uCreatedOn">Employment date: </label>
+    <span id="uCreatedOn"> {t.created_on | date}</span>
   </div> 
 </script>
 
@@ -349,7 +369,8 @@
 <script type="text/html" id="freeformq-li-template" >
   <div class="form-group col-md-12 question-item">
     <span>{ t:fq }:</span>
-    <textarea rv-value="t:a" class="form-control"/>
+    <textarea rv-disabled="t:hrview" rv-value="t:a" class="form-control"/>
+    {t:hrview}
   </div> 
 </script>
 
@@ -368,21 +389,6 @@
     <span>Вопрос:</span>
     <input type="text" class="form-control" rv-value="t:a"/>
   </div> 
-</script>
-
-<script type="text/html" id="hr-emp-view" >
-<div class="row">
-  <div class="col-md-12">
-    <div class="col-md-6">
-      <div class="emp-ph">
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="mgrs-ph">
-      </div>
-    </div>
-  <div>
-<div>
 </script>
 
 <% if @themeName == 'bootswatch' %>  

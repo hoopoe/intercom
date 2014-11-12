@@ -96,8 +96,8 @@ mgrq.push({"q":"Комментарий ", "a": ""});
 mgrq.push({"fq":"Решения и задачи на ближайший год", "a": ""});
 
 var groups = [];
-groups.push({"n":"area 8", "m": {"17":"Pomidor Senior"}, "e":{"15":"Ivan Ivanov", "16":"Petr Petrov"}})
-groups.push({"n":"test group", "m": {"17":"Pomidor Senior", "15":"Ivan Ivanov"}, "e":{"19":"Walle Walle"}})
+// groups.push({"n":"area 8", "m": {"17":"Pomidor Senior"}, "e":{"15":"Ivan Ivanov", "16":"Petr Petrov"}})
+groups.push({"n":"test group", "m": {"17":"Pomidor Senior", "15":"Ivan Ivanov"}, "e":{"19":"Walle Walle", "15":"Ivan Ivanov"}})
 	
 var body = {};
 body['empForm'] = empq;
@@ -114,7 +114,11 @@ t.save()
 
 ///////////////////////////////
 var t = new app.Event
+var body = {};
+body['empForm'] = {};
+body['mgrForm'] = {};
 var evnt = {}
+evnt['body'] = JSON.stringify(body);
 evnt['name'] = "Test 2014";
 t.set('event', evnt)
 t.save()
