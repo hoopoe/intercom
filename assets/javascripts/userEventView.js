@@ -40,6 +40,26 @@ $(function() {
         template: _.template($('#freeformq-li-template').html())
     });
 
+    SatisfactionQView = QuestionView.extend({
+        template: _.template($('#satisfactionq-li-template').html())
+    });
+
+    EasyQView = QuestionView.extend({
+        template: _.template($('#easyq-li-template').html())
+    });
+
+    BonusQView = QuestionView.extend({
+        template: _.template($('#bonusq-li-template').html())
+    });
+
+    CorrQView = QuestionView.extend({
+        template: _.template($('#corrq-li-template').html())
+    });
+
+    ActivityQView = QuestionView.extend({
+        template: _.template($('#activityq-li-template').html())
+    });
+
     QuestionsView = Backbone.View.extend({
         tagName: 'ul',
         className: 'questions-view',  
@@ -54,6 +74,16 @@ $(function() {
                 return new RequiredQView({model: q});
             if(q.has('fq')) 
                 return new FreeFormQView({model: q});
+            if(q.has('sq')) 
+                return new SatisfactionQView({model: q});
+            if(q.has('bq')) 
+                return new BonusQView({model: q});
+            if(q.has('eq')) 
+                return new EasyQView({model: q});
+            if(q.has('cq')) 
+                return new CorrQView({model: q});
+            if(q.has('aq'))
+                return new ActivityQView({model: q});
             return new QuestionView({model: q});
         },              
         render: function() {
@@ -185,7 +215,7 @@ $(function() {
             that = this;
             this.model.set('body', JSON.stringify(that.qs) );            
             this.model.save({}, {
-                success: function(model, response) {
+                success: function(model, response) {    
                     console.log("save done");
                 },
                 error: function(model, response) {

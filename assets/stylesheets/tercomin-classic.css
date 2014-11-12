@@ -65,6 +65,9 @@ div.profile-status{text-align: right;}
 .events-container{margin: 10px;}
 
 
+.questions-view{list-style-type: none;}
+.questions-buttons{text-align: center;}
+
 /*employers*/
 div.employer-img img {
   width: 90px;
