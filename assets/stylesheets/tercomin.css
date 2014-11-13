@@ -87,8 +87,9 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 
 /*question*/
 .questions-view{list-style-type: none;}
-.question-item span{font-weight: bold;}
-.question-header span{font-size: 18px;}
+/*.question-item span{font-weight: bold;}*/
+.question-header span{font-weight: bold;}
+.questions-header span.fio{font-size: 20px;}
 .questions-buttons{text-align: center;}
 #main .questions-buttons a {color: #fff;}
 

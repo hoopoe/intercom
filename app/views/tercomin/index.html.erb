@@ -214,7 +214,7 @@
 <script type="text/html" id="hr-emp-view" >
 <div class="row hr-view">
   <div class="col-md-12">
-    <h2>{ue:eventname}</h2>
+    <h2>{t:eventname}</h2>
   </div>
 </div
 <div class="row">
@@ -231,16 +231,13 @@
 <div>
 </script>
 
-<script type="text/html" id="question-li-template" >
-  <div class="form-group col-md-12 question-item">
-    <span id="questionName">{ t:q }</span>
-    <input type="text" class="form-control" rv-value="t:a"/>
-  </div> 
-</script>
-
-<script type="text/html" id="q-header-li-template" >
+<script type="text/html" id="questions-header-template" >
   <div class="form-group col-md-12 questions-header">
-    <h3>{t.lastname} {t.firstname}</h3>
+    <span class="fio">{t.lastname} </span>
+    <span class="fio"> {t.firstname}</span>
+    <span class="fio" rv-unless="t.lastname" rv-text="t.lastnameRu"></span>
+    <span class="fio" rv-unless="t.firstname" rv-text="t.firstnameRu"></span>
+    <br>
     <label for="uPosition">Position: </label>
     <span id="uPosition"> {t.position}</span>
     <br/>
@@ -252,6 +249,13 @@
     <br/>
     <label for="uCreatedOn">Employment date: </label>
     <span id="uCreatedOn"> {t.created_on | date}</span>
+  </div> 
+</script>
+
+<script type="text/html" id="question-li-template" >
+  <div class="form-group col-md-12 question-item">
+    <span id="questionName">{ t:q }</span>
+    <input type="text" class="form-control" rv-value="t:a"/>
   </div> 
 </script>
 
@@ -369,7 +373,7 @@
 <script type="text/html" id="freeformq-li-template" >
   <div class="form-group col-md-12 question-item">
     <span>{ t:fq }:</span>
-    <textarea class="form-control">{t:a}</textarea>
+    <textarea class="form-control" rv-value="t:a"></textarea>
   </div> 
 </script>
 

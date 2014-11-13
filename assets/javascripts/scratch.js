@@ -102,7 +102,8 @@ mgrq.push({"fq":"Решения и задачи на ближайший год",
 
 var groups = [];
 // groups.push({"n":"area 8", "m": {"17":"Pomidor Senior"}, "e":{"15":"Ivan Ivanov", "16":"Petr Petrov"}})
-groups.push({"n":"test group", "m": {"17":"Pomidor Senior", "15":"Ivan Ivanov"}, "e":{"19":"Walle Walle", "15":"Ivan Ivanov"}})
+// groups.push({"n":"test group", "m": {"13":"Pomidor Senior", "11":"Ivan Ivanov"}, "e":{"15":"Walle Walle", "11":"Ivan Ivanov"}})
+groups.push({"n":"test group", "m": {"12":"Pomidor Senior", "10":"Ivan Ivanov"}, "e":{"14":"Walle Walle", "10":"Ivan Ivanov"}})
 	
 var body = {};
 body['empForm'] = empq;

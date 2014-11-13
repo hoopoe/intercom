@@ -61,7 +61,7 @@ $(function() {
     });
 
     QuestionsHeaderView = Backbone.View.extend({
-        template: _.template($('#q-header-li-template').html()),
+        template: _.template($('#questions-header-template').html()),
         render: function() {
             this.$el.html('');
             this.$el.html(this.template);
@@ -173,6 +173,9 @@ $(function() {
             this.$el.html('');
             if (this.kind === "hr") {
                 this.$el.html(this.HRtemplate);
+                rivets.bind(this.el, {
+                    t: this.model
+                });
                 _.each(this.model.get('mgrForms'), function(form){
                     var data = $.parseJSON(form.data);
                     var body = $.parseJSON(form.body);
@@ -198,10 +201,6 @@ $(function() {
                 });
                 empView.render();
                 this.$el.find('.emp-ph').append(empView.$el);
-
-                rivets.bind(this.el, {
-                    ue: this.model
-                });
             }
             else {
                 this.$el.html(this.template);
