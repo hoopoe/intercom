@@ -21,7 +21,6 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
   def show
     if @role == :self
       @response = {:body => @ue.body,
-      :data=>@profile.data,
       :lastname=>@user.lastname,
       :firstname=>@user.firstname,
       :created_on=>@user.created_on,
@@ -30,11 +29,12 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
       :extraProject=>@uExtraProject,
       :eventName => @event.name,
       :kind => "self"}
+      @response[:data] = @profile.data if @profile
+      @response[:employees] = @im_responsible_for
       respond_with @response
     else 
       if @role == :mgr
         @response = {:body => @ue.body,
-        :data=>@profile.data,
         :lastname=>@user.lastname,
         :firstname=>@user.firstname,
         :created_on=>@user.created_on,
@@ -43,6 +43,8 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
         :extraProject=>@uExtraProject,
         :eventName => @event.name,
         :kind => "mgr"}
+        @response[:data] = @profile.data if @profile
+        # @response[:employees] = @im_responsible_for
         respond_with @response
       else
         if @role == :hr
@@ -91,7 +93,6 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
   	event_id = tmp.pop
   	user_id = tmp.pop
     @user = User.find(user_id)
-    
   	@event = Event.find(event_id)
 
     @ev_groups = []
@@ -110,15 +111,14 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
           Rails.logger.info "can't parse event body"
       end
     end
-
     
   rescue ActiveRecord::RecordNotFound
     render_404
   end
 
   def is_current_is_manager_for_user
-    mgr_groups = @ev_groups.find_all {|i| i['m'].include?(User.current.id.to_s) && i['e'].include?(@user.id.to_s) }
-    return mgr_groups.present?
+    @mgr_groups = @ev_groups.find_all {|i| i['m'].include?(User.current.id.to_s) && i['e'].include?(@user.id.to_s) }
+    return @mgr_groups.present?
   end
 
   def is_ingroup(groupNames)
@@ -182,9 +182,11 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
         @ue.save!
       end
       @profile = UserProfile.find_by_user_id(@ue.user_id)
-      # @ue = getPersonalEvent
-      # Rails.logger.info "FFFF"
-      # Rails.logger.info @ue
+      my_emps = @ev_groups
+        .map{|i| i['e'] if i['m']
+        .include?(@user.id.to_s)}
+        .compact
+      @im_responsible_for = my_emps.reduce({}, :merge) if my_emps.present? 
     else      
       if @role == :mgr
         @ue = UserEvent.find_by_user_id_and_event_id_and_mgr_id(@user.id, @event.id, User.current.id)
@@ -194,6 +196,11 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
           @ue.save!
         end
         @profile = UserProfile.find_by_user_id(@ue.user_id)
+        # my_emps = @ev_groups
+        # .map{|i| i['e'] if i['m']
+        # .include?(User.current.id.to_s)}
+        # .compact
+        # @im_responsible_for = my_emps.reduce({}, :merge) if my_emps.present?
       else
         if @role == :hr
           @ue = UserEvent

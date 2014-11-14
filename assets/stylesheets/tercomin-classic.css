@@ -67,6 +67,7 @@ div.profile-status{text-align: right;}
 
 .questions-view{list-style-type: none;}
 .questions-buttons{text-align: center;}
+#main .questions-buttons a {color: #fff;}
 
 /*employers*/
 .groups-list{display: inline-block; list-style-type: none;}

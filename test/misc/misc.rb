@@ -17,7 +17,7 @@ end
 
 org = []
 org.push(:n=>"area 8", :m=>["Pomidor Senior"], :e=>["Ivan Ivanov", "Petr Petrov"])
-org.push(:n=>"test group", :m=>["Pomidor Senior", "Ivan Ivanov"], :e=>["Walle Walle"])
+org.push(:n=>"test group", :m=>["Pomidor Senior", "Ivan Ivanov"], :e=>["Ivan Ivanov","Walle Walle"])
 
 
 orgid = []
@@ -29,14 +29,20 @@ for g in org
 		m[pp[mgr].to_i] = mgr
 	end
 	gid[:m] = m
-
-	gid['e'] = []
+	e = {}
 	for emp in g[:e]
-		gid['e'].push(pp[emp].to_i => emp)
+		e[pp[emp].to_i] = emp
 	end
+	gid[:e] = e
 	orgid.push(gid)
 end
-puts orgid.to_json
+a = orgid.to_json
+
+@ev_groups = JSON.parse(a)
+puts @ev_groups.to_json
+
+b = @ev_groups.map{|i| i['e'] if i['m'].include?("12")}    
+puts b.reduce({}, :merge)
 
 # puts orgid[1]['e'].to_json
 # puts orgid[1][:m].keys.include?(10)
