@@ -29,7 +29,7 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
       :eventName => @event.name,
       :kind => "self"}
       @response[:data] = @profile.data if @profile
-      @response[:employees] = @im_responsible_for
+      @response[:peons] = @im_responsible_for
       respond_with @response
     else 
       if @role == :mgr
@@ -182,7 +182,8 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
         .map{|i| i['e'] if i['m']
         .include?(@user.id.to_s)}
         .compact
-      @im_responsible_for = my_emps.reduce({}, :merge) if my_emps.present? 
+      my_emps_hash = my_emps.reduce({}, :merge) if my_emps.present? 
+      @im_responsible_for = my_emps_hash.map{ |k,v| { 'id' => k, 'name' => v } }
     else      
       if @role == :mgr
         @ue = UserEvent.find_by_user_id_and_event_id_and_mgr_id(@user.id, @event.id, User.current.id)

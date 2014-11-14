@@ -239,7 +239,11 @@
     <span class="fio" rv-unless="t.firstname" rv-text="t.firstnameRu"></span>
     <br>
     <label for="uPosition">Position: </label>
-    <span id="uPosition"> {t.position}</span>
+    <span id="uPosition"> {t.position} (</span>
+      <a rv-each-i="t.peons">
+          {i.name} 
+      </a>
+    <span>)</span>
     <br/>
     <label for="uProject">Project: </label>
     <span id="uProject"> {t.project}</span>

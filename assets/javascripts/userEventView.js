@@ -65,6 +65,7 @@ $(function() {
         render: function() {
             this.$el.html('');
             this.$el.html(this.template);
+            // console.log(this.model);
             rivets.bind(this.el, {
                 t: this.model
             });            
@@ -204,7 +205,7 @@ $(function() {
             }
             else {
                 this.$el.html(this.template);
-                console.log(this.model);
+                // console.log(this.model);
                 rivets.bind(this.el, {
                     ue: this.model
                 });         
@@ -218,6 +219,7 @@ $(function() {
             if (this.kind === "mgr") {
                 var body = $.parseJSON(this.model.get('body'));
                 var data = $.parseJSON(this.model.get('data'));
+
                 this.qs.reset(body);
                 this.currentForm = new QuestionsView({
                     collection: this.qs,
@@ -228,6 +230,7 @@ $(function() {
             } else if (this.kind === "self") {
                 var body = $.parseJSON(this.model.get('body'));
                 var data = $.parseJSON(this.model.get('data'));
+                data.peons = this.model.get('peons');
                 this.qs.reset(body);
                 this.currentForm = new QuestionsView({
                     collection: this.qs,
