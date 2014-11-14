@@ -183,7 +183,7 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
         .include?(@user.id.to_s)}
         .compact
       my_emps_hash = my_emps.reduce({}, :merge) if my_emps.present? 
-      @im_responsible_for = my_emps_hash.map{ |k,v| { 'id' => k, 'name' => v } }
+      @im_responsible_for = my_emps_hash.map{ |k,v| { 'id' => "#{k.to_s}_#{@event.id}", 'name' => v } }
     else      
       if @role == :mgr
         @ue = UserEvent.find_by_user_id_and_event_id_and_mgr_id(@user.id, @event.id, User.current.id)

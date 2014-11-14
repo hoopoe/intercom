@@ -239,11 +239,13 @@
     <span class="fio" rv-unless="t.firstname" rv-text="t.firstnameRu"></span>
     <br>
     <label for="uPosition">Position: </label>
-    <span id="uPosition"> {t.position} (</span>
-      <a rv-each-i="t.peons">
+    <span id="uPosition"> {t.position} </span>
+
+    <span rv-if="t.peons"> (</span>
+      <a rv-each-i="t.peons" rv-href-rooted="i.id" data-root='#user_event/'>
           {i.name} 
       </a>
-    <span>)</span>
+    <span rv-if="t.peons">)</span>
     <br/>
     <label for="uProject">Project: </label>
     <span id="uProject"> {t.project}</span>
