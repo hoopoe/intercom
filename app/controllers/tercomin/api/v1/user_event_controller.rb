@@ -2,12 +2,11 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
   respond_to :json
 
   before_filter :build_event_groups, :except => [:index, :create]
-  # before_filter :require_hr, :only => [:index]
   before_filter :require_self_or_manager, :only => [:update]
   before_filter :require_self_or_manager_or_hr, :only => [:show]
   before_filter :find_user_event, :except => [:index, :create]
-
   before_filter :require_tercomin_pm, :only => [:destroy]
+  
   accept_api_auth :index, :show
   
   def index
@@ -44,7 +43,6 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
         :eventName => @event.name,
         :kind => "mgr"}
         @response[:data] = @profile.data if @profile
-        # @response[:employees] = @im_responsible_for
         respond_with @response
       else
         if @role == :hr
@@ -162,18 +160,16 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
     true
   end
 
+  def require_hr
+    return unless require_login
+    if !is_ingroup(['hr'])
+      render_403
+      return false
+    end
+    true
+  end
+
   def find_user_event
-    # @profile = UserProfile.find_or_create_by_user_id(@user.id)
-    # if @profile.present?
-    #   begin
-    #     data = JSON.parse(@profile.data)
-    #     @uPosition = data['position'];
-    #     @uProject = data['project'];
-    #     @uExtraProject = data['project_extra']
-    #   rescue JSON::ParserError => e
-    #     Rails.logger.info "can't parse user profile"
-    #   end
-    # end
     if @role == :self
       @ue = UserEvent.find_by_user_id_and_event_id_and_mgr_id(@user.id, @event.id, nil)
       if @ue.blank?
@@ -196,11 +192,6 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
           @ue.save!
         end
         @profile = UserProfile.find_by_user_id(@ue.user_id)
-        # my_emps = @ev_groups
-        # .map{|i| i['e'] if i['m']
-        # .include?(User.current.id.to_s)}
-        # .compact
-        # @im_responsible_for = my_emps.reduce({}, :merge) if my_emps.present?
       else
         if @role == :hr
           @ue = UserEvent
@@ -226,15 +217,6 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
         end
       end
     end
-  end
-
-  def require_hr
-    return unless require_login
-    if !is_ingroup(['hr'])
-      render_403
-      return false
-    end
-    true
   end
 
 end  
