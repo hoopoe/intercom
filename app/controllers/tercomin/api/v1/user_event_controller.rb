@@ -48,9 +48,12 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
         if @role == :hr
           @response = {
             :mgrForms => @ue_by_mgr.map{ |i| i.attributes },
-            :empForm => @ue.attributes,
+            # :empForm => @ue.attributes,
             :eventname => @event.name,
             :kind => "hr"}
+            
+          @response[:empForm] = @ue ? @ue.attributes: ""
+           
           respond_with @response
         end
       end
@@ -182,8 +185,10 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
         .map{|i| i['e'] if i['m']
         .include?(@user.id.to_s)}
         .compact
-      my_emps_hash = my_emps.reduce({}, :merge) if my_emps.present? 
-      @im_responsible_for = my_emps_hash.map{ |k,v| { 'id' => "#{k.to_s}_#{@event.id}", 'name' => v } }
+      if my_emps.present? 
+        my_emps_hash = my_emps.reduce({}, :merge) 
+        @im_responsible_for = my_emps_hash.map{ |k,v| { 'id' => "#{k.to_s}_#{@event.id}", 'name' => v } }
+      end
     else      
       if @role == :mgr
         @ue = UserEvent.find_by_user_id_and_event_id_and_mgr_id(@user.id, @event.id, User.current.id)
