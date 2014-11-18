@@ -1,8 +1,9 @@
 <% content_for :header_tags do %>
-  <%= javascript_include_tag 'underscore-min.js', 'backbone-min.js', 'moment.min.js', 'rivets.min.js', 'bootstrap.min.js', 'infiniScroll.js', 'etch.js', 'utils.js', 'topView.js', 'positionsView.js','backgroundsView.js', 'settingsView.js', 'eventsView.js','userEventView.js', 'profileView.js', 'employersView.js', 'tercomin.js', :plugin => 'tercomin' %>
   <% if @themeName == 'bootswatch' %>
+    <%= javascript_include_tag 'lib/underscore-min.js', 'lib/backbone-min.js', 'lib/rivets.min.js', 'require.js', 'app.js', :plugin => 'tercomin' %>
     <%= stylesheet_link_tag 'bootstrap.min.css', 'etch.css', 'tercomin.css', :plugin => 'tercomin' %>
   <% else %>
+    <%= javascript_include_tag 'lib/underscore-min.js', 'lib/backbone-min.js', 'lib/rivets.min.js', 'require.js', 'app-classic.js', :plugin => 'tercomin' %>
     <%= stylesheet_link_tag 'bootstrap.min.css', 'etch.css', 'tercomin-classic.css', :plugin => 'tercomin' %>
   <% end %>
 <% end %>
