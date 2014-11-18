@@ -3,6 +3,7 @@ define([
     'app/profile/profileM',
     'profileView',
 ], function(util, ProfileModel, ProfileView) {
+    $('#header').hide(); //todo: fix blinking
 	var appRouter = Backbone.Router.extend({
         routes: {
             'employers': 'employers',
@@ -23,7 +24,6 @@ define([
                 req.id = "logged";
             };
             var m = new ProfileModel(req);
-            // console.log(m);
             m.fetch({
                 error: function(m, r) {
                     if (r.status === 422) { //not logged
@@ -37,7 +37,6 @@ define([
                     util.showView(profileView);
                 }
             });
-        	// $(".content").html(pv.render().el);
         }
     });
 

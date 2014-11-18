@@ -1,5 +1,25 @@
 define(['router'], function (Router, require) {
   var initialize = function() {
+    /* alias away the sync method */
+    Backbone._sync = Backbone.sync;
+
+    /* define a new sync method */
+    Backbone.sync = function(method, model, success, error) {
+        /* only need a token for non-get requests */
+        if (method == 'create' || method == 'update' || method == 'delete') {
+            /* grab the token from the meta tag rails embeds */
+            var auth_options = {};
+            auth_options[$("meta[name='csrf-param']").attr('content')] =
+                $("meta[name='csrf-token']").attr('content');
+            /* set it as a model attribute without triggering events */
+            model.set(auth_options, {
+                silent: true
+            });
+        }
+        /* proxy the call to the old sync method */
+        return Backbone._sync(method, model, success, error);
+    }
+    
   	rivets.adapters[':'] = {
         // set the listeners to update the corresponding DOM element
         observe: function(obj, keypath, callback) {
@@ -26,14 +46,45 @@ define(['router'], function (Router, require) {
         }
     };
 
-    Backbone.View = (function(View) {
-       return View.extend({
-            constructor: function(options) {
-                this.options = options || {};
-                View.apply(this, arguments);
-            }
-        });
-    })(Backbone.View);
+    rivets.formatters.date = function(value) {
+        return moment(value).format('MMM DD, YYYY');
+    }
+
+    rivets.formatters.prependRoot = function(value){
+      return "/tercomin/" + value;
+    }
+
+    rivets.formatters.eq = function (value, args) {
+        if (typeof value === 'boolean') {
+            return value === Boolean(args);
+        }
+        return value === args;
+    };
+
+    rivets.binders['href-rooted'] = function(el, value) {
+        var root = el.getAttribute('data-root');
+        el.href = root + value;
+    }
+
+    rivets.binders['src-strict'] = function(el, value) {
+        if (value === 'noavatar')
+            value = "";
+      var img = new Image()
+
+      img.onload = function() {        
+        $(el).attr('src', value)
+      }
+      img.src = value
+    }
+
+    // Backbone.View = (function(View) {
+    //    return View.extend({
+    //         constructor: function(options) {
+    //             this.options = options || {};
+    //             View.apply(this, arguments);
+    //         }
+    //     });
+    // })(Backbone.View);
 
     Router.initialize();
   }
