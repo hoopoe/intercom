@@ -2,8 +2,9 @@ requirejs.config({
     baseUrl: 'plugin_assets/tercomin/javascripts',
     paths: {
         // app: 'app',
+        i18n: 'lib/i18next.amd.min',
         router: 'app/router',
-        profileView: 'app/profile/profileV1'
+        profileView: 'app/profile/profileV'
     }
 });
 

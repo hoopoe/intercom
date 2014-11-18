@@ -1,6 +1,8 @@
 define([
+    'app/util',
+    'app/profile/profileM',
     'profileView',
-], function(ProfileView) {
+], function(util, ProfileModel, ProfileView) {
 	var appRouter = Backbone.Router.extend({
         routes: {
             'employers': 'employers',
@@ -14,10 +16,28 @@ define([
             '*actions': 'mypage'
         },
         mypage: function(param) {
-        	var pv = new ProfileView({
-                test: "tt"
+            var req = {};
+            if (param !== null) {
+                req.id = param;
+            } else {
+                req.id = "logged";
+            };
+            var m = new ProfileModel(req);
+            // console.log(m);
+            m.fetch({
+                error: function(m, r) {
+                    if (r.status === 422) { //not logged
+                        util.logMeIn();
+                    }
+                },
+                success: function(m, r) {
+                    var profileView = new ProfileView({
+                        model: m
+                    });
+                    util.showView(profileView);
+                }
             });
-        	$(".content").html(pv.render().el);
+        	// $(".content").html(pv.render().el);
         }
     });
 
