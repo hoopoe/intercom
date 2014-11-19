@@ -11,7 +11,6 @@ define([
             this.currentId = id.substring(id.lastIndexOf('/') + 1, id.length);
           }
         },
-
         render: function() {
             this.collection.each(function(evnt) {
               if (this.currentId) {

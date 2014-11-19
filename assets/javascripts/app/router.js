@@ -7,10 +7,13 @@ define([
     'app/employees/employeesV',
     'app/events/eventsC',
     'app/events/eventsV',
+    'app/userevent/usereventM',
+    'app/userevent/usereventV',
     'app/settings/settingsV',
 ], function(util, TopMenu, ProfileModel, ProfileView,
   EmployeeCollection, EmployeesView,
   EventCollection, EventsView,
+  UserEvent, UserEventView,
   SettingsView) {
     $('#header').hide(); //todo: fix blinking
 	var appRouter = Backbone.Router.extend({
@@ -79,6 +82,21 @@ define([
                 },
                 error: function(m, r) {
                     console.log(r.responseText);
+                },
+            });
+        },
+        user_event: function(u_e) {            
+            var req = {'id': u_e};            
+            userEvent = new UserEvent(req);
+            userEvent.fetch({                
+                success: function(m, r) {                    
+                    var ueView = new UserEventView({
+                        model: userEvent
+                    });
+                    util.showView(ueView);
+                },
+                error: function(m, r) {
+                    // util.showError(r.responseText); //TODO:
                 },
             });
         },
