@@ -5,8 +5,13 @@ define([
     'app/profile/profileV',
     'app/employees/employeesC',
     'app/employees/employeesV',
+    'app/events/eventsC',
+    'app/events/eventsV',
     'app/settings/settingsV',
-], function(util, TopMenu, ProfileModel, ProfileView, EmployeeCollection, EmployeesView, SettingsView) {
+], function(util, TopMenu, ProfileModel, ProfileView,
+  EmployeeCollection, EmployeesView,
+  EventCollection, EventsView,
+  SettingsView) {
     $('#header').hide(); //todo: fix blinking
 	var appRouter = Backbone.Router.extend({
         routes: {
@@ -44,23 +49,14 @@ define([
         },
         employers: function(param) {
             var employees = new EmployeeCollection;
-            // app.employers.reset();
-            // app.topMenuView.setSearch(param);
-            // var empView = new app.EmployeesView({
-            //     collection: employees
-            // });
-            // app.showView(empView);
-
             var view = new EmployeesView({
                 collection: employees
             });
             util.showView(view);
-
             var req = {};
             if (param !== null) {
                 req.criteria = param.split(' ');
             }
-
             employees.fetch({
                 data: req,
                 error: function(m, r) {
@@ -69,6 +65,21 @@ define([
                 success: function() {
                     util.currentView.initScroll(req);
                 }
+            });
+        },
+        events: function() {
+            // app.events.reset();
+            var events = new EventCollection;
+            events.fetch({                
+                success: function(m, r) {
+                    var eventsView = new EventsView({
+                        collection: events
+                    });
+                    util.showView(eventsView);
+                },
+                error: function(m, r) {
+                    console.log(r.responseText);
+                },
             });
         },
         settings: function(param) {            

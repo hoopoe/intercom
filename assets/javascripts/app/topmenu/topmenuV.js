@@ -22,7 +22,6 @@ define([
     },
 
     initialize: function() {
-      console.log("init");
     },
 
     render: function() {
