@@ -1,8 +1,9 @@
 define([
     'app/util',
     'app/profile/profileM',
-    'profileView',
-], function(util, ProfileModel, ProfileView) {
+    'app/profile/profileV',
+    'app/settings/settingsV',
+], function(util, ProfileModel, ProfileView, SettingsView) {
     $('#header').hide(); //todo: fix blinking
 	var appRouter = Backbone.Router.extend({
         routes: {
@@ -37,6 +38,28 @@ define([
                     util.showView(profileView);
                 }
             });
+        },
+        settings: function(param) {            
+            var req = {};
+            if (param !== null) {
+                req.id = param;
+            } else {
+                req.id = "logged";
+            };
+            var m = new ProfileModel(req);
+            m.fetch({
+                error: function(m, r) {
+                    if (r.status === 422) { //not logged
+                        util.logMeIn();
+                    }
+                },
+                success: function(m, r) {
+                    var settingsView = new SettingsView({
+                        model: m
+                    });
+                    util.showView(settingsView);
+                }
+            })
         }
     });
 

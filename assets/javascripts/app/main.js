@@ -19,6 +19,14 @@ define(['router'], function (Router, require) {
         /* proxy the call to the old sync method */
         return Backbone._sync(method, model, success, error);
     }
+
+    Backbone.View.prototype.close = function() {
+        this.remove();
+        this.unbind();
+        if (this.onClose) {
+            this.onClose();
+        }
+    };
     
   	rivets.adapters[':'] = {
         // set the listeners to update the corresponding DOM element

@@ -1,6 +1,6 @@
 define([
   'i18n',
-  'text!app/profile/profile.html'
+  'text!profileTemplate'
 ], function(i18n, profileT) {
   var i18NOptions = { 
       detectFromHeaders: false,
@@ -34,14 +34,11 @@ define([
       'click .emp-item-save': 'saveEmpItem',
       'change #english_lvl': 'selectLanguage',
     },
-    initialize: function() {
-      // console.log();
-
+    initialize: function() {      
       _.bindAll(this, 'save');
       this.model.bind('save', this.save);
     },
-    render: function() {
-      console.log(this.model);
+    render: function() {      
       var template =  _.template( profileT );
       this.$el.html('');
       this.$el.html(template({l:_tr}));
