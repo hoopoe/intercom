@@ -1,9 +1,10 @@
 <% content_for :header_tags do %>
+
   <% if @themeName == 'bootswatch' %>
-    <%= javascript_include_tag 'lib/underscore-min.js', 'lib/backbone-min.js', 'lib/infiniScroll.js', 'lib/rivets.min.js', 'require.js', 'app.js', :plugin => 'tercomin' %>
+    <%= javascript_include_tag 'lib/underscore-min.js', 'lib/backbone-min.js', 'lib/infiniScroll.js', 'lib/rivets.min.js', 'lib/etch.js', 'lib/moment.min.js', 'require.js', 'app.js', :plugin => 'tercomin' %>
     <%= stylesheet_link_tag 'bootstrap.min.css', 'etch.css', 'tercomin.css', :plugin => 'tercomin' %>
   <% else %>
-    <%= javascript_include_tag 'lib/underscore-min.js', 'lib/backbone-min.js', 'lib/infiniScroll.js', 'lib/rivets.min.js', 'require.js', 'app-classic.js', :plugin => 'tercomin' %>
+    <%= javascript_include_tag 'lib/underscore-min.js', 'lib/backbone-min.js', 'lib/infiniScroll.js', 'lib/rivets.min.js', 'lib/etch.js', 'lib/moment.min.js', 'require.js', 'app-classic.js', :plugin => 'tercomin' %>
     <%= stylesheet_link_tag 'bootstrap.min.css', 'etch.css', 'tercomin-classic.css', :plugin => 'tercomin' %>
   <% end %>
 <% end %>
@@ -65,7 +66,7 @@
     Event item
   </div>
 </script>
-<%= render :partial => 'profile' %>
+
 
 <script type="text/html" id="position-li-template" >
   <div class='row position-container'>     
@@ -401,10 +402,8 @@
   </div> 
 </script>
 
-<% if @themeName == 'bootswatch' %>  
-  <%= render :partial => 'employers' %>
-<%else%>  
-  <%= render :partial => 'employers-classic' %>
-<%end%>
+<script type="text/javascript">
+  $('#header').hide();
+</script>
 
 

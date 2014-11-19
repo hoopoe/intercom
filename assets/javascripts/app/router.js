@@ -15,7 +15,7 @@ define([
   EventCollection, EventsView,
   UserEvent, UserEventView,
   SettingsView) {
-    $('#header').hide(); //todo: fix blinking
+    
 	var appRouter = Backbone.Router.extend({
         routes: {
             'employers': 'employers',
@@ -96,7 +96,7 @@ define([
                     util.showView(ueView);
                 },
                 error: function(m, r) {
-                    // util.showError(r.responseText); //TODO:
+                    util.showError(r.responseText); //TODO:
                 },
             });
         },

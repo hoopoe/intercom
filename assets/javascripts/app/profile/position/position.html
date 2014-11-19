@@ -1,0 +1,36 @@
+<div class='row position-container'>     
+  <div class='position-info'>
+    <label for="companyName">Company</label>
+    <span id="companyName">{ position:companyName }</span>
+    <br>
+    <label for="from">From</label>
+    <span id="from">{ position:from | 'date'}</span>
+    <span><b>&#8211</b></span>
+    <label for="to">To</label>
+    <span id="to">{ position:to | 'date'}</span>  
+    <br>
+
+    <label for="position">Position</label>
+    <span id="position">{ position:position }</span>
+    <br>
+    <label for="project">Project</label>
+    <span id="project">{ position:project }</span>
+
+    <br>
+    <label for="resp">Responsibility</label>
+    <span id="resp">{ position:resp }</span>      
+  </div>
+  <div rv-show="position:editable | eq 'true'">
+    <a class="remove-position" rv-data-id="position:id">
+      <i class="glyphicon glyphicon-remove">
+          Remove
+      </i>  
+    </a>
+    <a class="edit-position" rv-data-id="position:id">
+      <i class="glyphicon glyphicon-edit">
+          Edit
+      </i>  
+    </a>   
+  </div>    
+  <div class="line-separator-gray"/> 
+</div> 

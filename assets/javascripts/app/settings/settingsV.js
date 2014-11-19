@@ -15,6 +15,7 @@ define([
     _tr = tr;
   }); 
   var view = Backbone.View.extend({
+    name: "settings",
     events: {        
         'change .theme-settings': 'selectTheme',
     },

@@ -2,6 +2,7 @@ define([
   'app/events/eventV'
 ], function(EventView) {
   var view = Backbone.View.extend({
+    name: "events",
     tagName: 'ul',
         className: 'events-view',
         currentId: undefined,

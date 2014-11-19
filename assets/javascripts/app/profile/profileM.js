@@ -1,6 +1,8 @@
 define([
- 'app/profile/generalM'
-], function(EmployerData) {
+ 'app/profile/generalM',
+ 'app/profile/position/positionsC',
+ 'app/profile/background/backgroundsC'
+], function(EmployerData, PositionCollection, BackgroundCollection) {
     var emp = Backbone.Model.extend({
         urlRoot: '/tercomin/api/v1/user_profile/',
         initialize: function() {
@@ -28,14 +30,14 @@ define([
         var attr = response && _.clone(response) || {};
         if (response && response.profile.positions) {
             var positions = $.parseJSON(response.profile.positions);
-            // var tmp = new app.PositionCollection();
+            var tmp = new PositionCollection();
             tmp.reset(positions);
             attr['positions'] = tmp;
         }     
         
         if (response && response.profile.backgrounds) {
             var backgrounds = $.parseJSON(response.profile.backgrounds);            
-            // var tmp = new app.BackgroundCollection();
+            var tmp = new BackgroundCollection();
             tmp.reset(backgrounds);
             attr['backgrounds'] = tmp;
         }        
