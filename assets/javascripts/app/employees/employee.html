@@ -1,0 +1,47 @@
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-2 employer-img">
+           <a rv-href-rooted="emp:id" data-root='#mypage/'>
+              
+                <img class="no-profile-img"/>
+              
+           </a>
+        </div>
+        <div class="col-md-10 employer-text">
+          <a rv-href-rooted="emp:id" data-root='#mypage/'>
+            {emp:lastname} {emp:firstname}
+          </a>
+          <br>
+          <label>e-mail:</label>
+          <label>{emp:mail}</label>
+          <br>
+          <label><%=l(':project_title')%>:</label>
+          
+             <label>{emp:project}</label>
+          
+          <br>
+          <label><%=l(':project_extra_title')%>:</label>
+          
+             <label>{emp:project_extra}</label>
+          
+          <br>
+          <label><%=l(':room_number')%>:</label>
+          
+             <label>{emp:room_number}</label>
+          
+          <br/>
+          <label><%=l(':groups_name')%>:</label>
+          <ul class="groups-list">
+            <li rv-each-i="emp:events">
+              <a rv-href-rooted="i.ueid" data-root='#user_event/'>
+                {i.name} 
+              </a>
+            </li>
+          <ul>
+        </div>
+      </div>
+      <div class="line-separator"/>
+    </div>
+  </div>

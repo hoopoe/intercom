@@ -13,7 +13,7 @@ define([
             if (this.get('profile') !== undefined) {
                 if (this.get('profile').data !== undefined) {
                     try {                
-                        var data = JSON.parse(this.get('profile').data);                        
+                        var data = JSON.parse(this.get('profile').data);
                         return data[name];
                     } catch (e) {                        
                         return "";

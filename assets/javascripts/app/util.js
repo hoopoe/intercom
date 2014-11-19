@@ -13,12 +13,14 @@ define([
 
 	var currentView;
 	var showView = function(view) {
-        if (this.currentView) {           
+        if (this.currentView) {
+        	// app.topMenuView.deactivate(view.name);          
             this.currentView.close();
         }
         this.currentView = view;
         this.currentView.render();
-        $(".content").html(this.currentView.el);        
+        $(".content").html(this.currentView.el); 
+        // app.topMenuView.activate(view.name);       
     }
 
 	return {

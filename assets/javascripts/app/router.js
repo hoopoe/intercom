@@ -1,9 +1,12 @@
 define([
     'app/util',
+    'app/topmenu/topmenuV',
     'app/profile/profileM',
     'app/profile/profileV',
+    'app/employees/employeesC',
+    'app/employees/employeesV',
     'app/settings/settingsV',
-], function(util, ProfileModel, ProfileView, SettingsView) {
+], function(util, TopMenu, ProfileModel, ProfileView, EmployeeCollection, EmployeesView, SettingsView) {
     $('#header').hide(); //todo: fix blinking
 	var appRouter = Backbone.Router.extend({
         routes: {
@@ -36,6 +39,35 @@ define([
                         model: m
                     });
                     util.showView(profileView);
+                }
+            });
+        },
+        employers: function(param) {
+            var employees = new EmployeeCollection;
+            // app.employers.reset();
+            // app.topMenuView.setSearch(param);
+            // var empView = new app.EmployeesView({
+            //     collection: employees
+            // });
+            // app.showView(empView);
+
+            var view = new EmployeesView({
+                collection: employees
+            });
+            util.showView(view);
+
+            var req = {};
+            if (param !== null) {
+                req.criteria = param.split(' ');
+            }
+
+            employees.fetch({
+                data: req,
+                error: function(m, r) {
+                    console.log(r.responseText);
+                },
+                success: function() {
+                    util.currentView.initScroll(req);
                 }
             });
         },

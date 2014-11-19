@@ -1,4 +1,7 @@
-define(['router'], function (Router, require) {
+define([
+    'router',
+    'app/topmenu/topmenuV'
+], function (Router, Topmenu, require) {
   var initialize = function() {
     /* alias away the sync method */
     Backbone._sync = Backbone.sync;
@@ -94,9 +97,17 @@ define(['router'], function (Router, require) {
     //     });
     // })(Backbone.View);
 
-    Router.initialize();
+    Router.initialize(); 
+
   }
+
+  var topmenu = function() {
+    var menu = new Topmenu();
+    return menu;
+  }
+
   return {
-    initialize: initialize
+    initialize: initialize,
+    topmenu: topmenu
   };
 });
