@@ -87,7 +87,7 @@ define([
         },
         user_event: function(u_e) {            
             var req = {'id': u_e};            
-            userEvent = new UserEvent(req);
+            var userEvent = new UserEvent(req);
             userEvent.fetch({                
                 success: function(m, r) {                    
                     var ueView = new UserEventView({

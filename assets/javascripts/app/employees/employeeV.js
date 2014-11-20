@@ -19,31 +19,30 @@ define([
         	var template =  _.template( EmployeeT );
       		this.$el.html('');
       		this.$el.html(template({l:_tr}));
-            
-            var Data = Backbone.Model.extend({
-              defaults: {
-                'id':'',
-                'lastname':'',
-                'firstname':'',
-                'mail':'',
-                'project':'',
-                'project_extra':'',
-                'room_number':'',
-                'events':[]
-              }
-            });
-            var data = JSON.parse(this.model.get('data'));
-            var d = new Data(data);
-            d.set('id', this.model.get('id'));
-            d.set('mail', this.model.get('mail'));
-            d.set('firstname', this.model.get('firstname'));
-            d.set('lastname', this.model.get('lastname'));
-            d.set('events', this.model.get('events'));
-            d.set('avatar_url', this.model.get('avatar_url'));
-            rivets.bind(this.el, {
-                emp: d
-            });
-            return this;
+          var Data = Backbone.Model.extend({
+            defaults: {
+              'id':'',
+              'lastname':'',
+              'firstname':'',
+              'mail':'',
+              'project':'',
+              'project_extra':'',
+              'room_number':'',
+              'events':[]
+            }
+          });
+          var data = JSON.parse(this.model.get('data'));
+          var d = new Data(data);
+          d.set('id', this.model.get('id'));
+          d.set('mail', this.model.get('mail'));
+          d.set('firstname', this.model.get('firstname'));
+          d.set('lastname', this.model.get('lastname'));
+          d.set('events', this.model.get('events'));
+          d.set('avatar_url', this.model.get('avatar_url'));
+          rivets.bind(this.el, {
+              emp: d
+          });
+          return this;
         },
     });
     return view;
