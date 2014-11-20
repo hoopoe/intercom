@@ -69,6 +69,7 @@ define([
       }
   });
 
+  //todo: remove
   EmployeeView = Backbone.View.extend({
       tagName: 'li',
       template: _.template($('#mgr-emp-li-template').html()),
