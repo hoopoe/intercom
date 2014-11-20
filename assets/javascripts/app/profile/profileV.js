@@ -309,6 +309,40 @@ define([
         ntf.fadeTo(1000, 0);
         this.model.get('data').set('edit_prop', "None");
     },
+    dragoverHandler: function(e) {
+        e.preventDefault();
+    },
+    dropHandler: function(e) {
+        e.originalEvent.stopPropagation();
+        e.originalEvent.preventDefault();
+
+        e.originalEvent.dataTransfer.dropEffect = 'copy';
+        this.pictureFile = e.originalEvent.dataTransfer.files[0];
+
+        // Read the image file from the local file system and display it in the img tag
+        var reader = new FileReader();
+        reader.onloadend = function() {
+            util.resample(this.result, 290, 330, photoResult);
+        };
+
+        reader.readAsDataURL(this.pictureFile);
+
+        function photoResult(data) {
+            $('.profile-div img').removeClass("no-profile-img");
+            $('.profile-div img').attr('src', data).show();
+            $('.profile-img-save').removeClass("profile-img-save-hide");
+        }
+    },
+    profileImgSave: function() {
+        var img = $('.profile-div img').attr('src');
+        this.model.save({
+            avatar: img
+        }, {
+            success: function(model, response) {
+                $('.profile-img-save').addClass("profile-img-save-hide");
+            }
+        });
+    },
     save: function() {
       if (!this.model.isValid()) {
           var prop = this.model.get('data').get('edit_prop');

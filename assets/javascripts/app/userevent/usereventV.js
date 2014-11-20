@@ -55,14 +55,22 @@ define([
       template: _.template($('#satisfactionq-li-template').html())
   });
 
+  InterestQView = QuestionView.extend({
+      template: _.template($('#interest_q-template').html())
+  });
+
   EasyQView = QuestionView.extend({
       template: _.template($('#easyq-li-template').html())
   });
 
   BonusQView = QuestionView.extend({
-      template: _.template($('#bonusq-li-template').html())
+      template: _.template($('#bonus_q-template').html())
   });
 
+  InsuranceQView = QuestionView.extend({
+      template: _.template($('#insurance_q-template').html())
+  });
+  
   CorrQView = QuestionView.extend({
       template: _.template($('#corrq-li-template').html())
   });
@@ -84,6 +92,54 @@ define([
       }
   });
 
+  CorrespondQView = QuestionView.extend({
+      template: _.template($('#correspond_q-template').html())
+  });
+
+  ProspectsQView = QuestionView.extend({
+      template: _.template($('#prospects_q-template').html())
+  });
+
+  MyqualificationQView = QuestionView.extend({
+      template: _.template($('#myqualification_q-template').html())
+  });
+
+  InfoQView = QuestionView.extend({
+      template: _.template($('#info_q-template').html())
+  });
+
+  WorkspaceQView = QuestionView.extend({
+      template: _.template($('#workspace_q-template').html())
+  });
+
+  InfraQView = QuestionView.extend({
+      template: _.template($('#infra_q-template').html())
+  });
+
+  SalaryQView = QuestionView.extend({
+      template: _.template($('#salary_q-template').html())
+  });
+
+  FeedbackQView = QuestionView.extend({
+      template: _.template($('#feedback_q-template').html())
+  });
+
+  HelpQView = QuestionView.extend({
+      template: _.template($('#help_q-template').html())
+  });
+
+  RelationshipQView = QuestionView.extend({
+      template: _.template($('#relationship_q-template').html())
+  });
+
+  DesireQView = QuestionView.extend({
+      template: _.template($('#desire_q-template').html())
+  });
+
+  SatisfiedQView = QuestionView.extend({
+      template: _.template($('#satisfied_q-template').html())
+  });
+
   QuestionsView = Backbone.View.extend({
       tagName: 'ul',
       className: 'questions-view',  
@@ -99,9 +155,37 @@ define([
           if(q.has('fq')) 
               return new FreeFormQView({model: q});
           if(q.has('sq')) 
-              return new SatisfactionQView({model: q});
-          if(q.has('bq')) 
+              return new SatisfactionQView({model: q});          
+          if(q.has('bonus_q'))
               return new BonusQView({model: q});
+          if(q.has('insurance_q'))
+              return new InsuranceQView({model: q});
+          if(q.has('interest_q'))
+              return new InterestQView({model: q});
+          if(q.has('correspond_q'))
+              return new CorrespondQView({model: q});
+          if(q.has('prospects_q'))
+            return new ProspectsQView({model: q});
+          if(q.has('myqualification_q'))
+              return new MyqualificationQView({model: q});
+          if(q.has('info_q'))
+              return new InfoQView({model: q});
+          if(q.has('workspace_q'))
+              return new WorkspaceQView({model: q});
+          if(q.has('infra_q'))
+            return new InfraQView({model: q});
+          if(q.has('salary_q'))
+            return new SalaryQView({model: q});
+          if(q.has('feedback_q'))
+            return new FeedbackQView({model: q});
+          if(q.has('help_q'))
+            return new HelpQView({model: q});
+          if(q.has('relationship_q'))
+            return new RelationshipQView({model: q});
+          if(q.has('desire_q'))
+            return new DesireQView({model: q});
+          if(q.has('satisfied_q'))
+            return new SatisfiedQView({model: q});
           if(q.has('eq')) 
               return new EasyQView({model: q});
           if(q.has('cq')) 

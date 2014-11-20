@@ -39,6 +39,7 @@ define([
             d.set('firstname', this.model.get('firstname'));
             d.set('lastname', this.model.get('lastname'));
             d.set('events', this.model.get('events'));
+            d.set('avatar_url', this.model.get('avatar_url'));
             rivets.bind(this.el, {
                 emp: d
             });

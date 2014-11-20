@@ -55,6 +55,8 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
           @response[:empForm] = @ue ? @ue.attributes: ""
            
           respond_with @response
+        else
+          render_403        
         end
       end
     end
@@ -78,10 +80,10 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
     end    
   end
 
-  def destroy
-    @ue = UserEvent.find_by_user_id_and_event_id(@user.id, @event.id)
-    if @ue.present?
-      @ue.destroy
+  def destroy    
+    ue = UserEvent.find_by_user_id_and_event_id(@user.id, @event.id)    
+    if ue.present?
+      ue.destroy
     end  
     respond_to do |format|
       format.api  { render_api_ok }

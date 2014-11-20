@@ -1,6 +1,29 @@
 {
-    "test": "Превед",
-    "nav": {
-    	"home": "Тест вложенности"
-    }
+    "skills_title": "Технические навыки",
+  "positions_title": "Место работы",
+  "education_title": "Образование",
+  "languages_title": "Иностранные языки",
+  "communication_skills_title": "Коммуникативные навыки",
+  "coureses_title": "Курсы и тренинги",
+  "project_title": "Проект", 
+  "position_title": "Должность",
+  "email_title": "e-mail",
+  "room_number": "Номер комнаты",
+  "birthday_title": "День рождения",
+  "interest_title": "Мои интересы",
+  "summary_title": "О себе",
+  "project_extra_title": "Доп. проект",
+  "events": "События",
+  "settings": "Мои настройки",
+  "put_projects_here": "Ваши проекты",
+  "put_projects_extra_here": "Ваши доп. проекты", 
+  "put_position_here": "Ваша должность",
+  "put_room_number_here": "Номер Вашей комнаты",
+  "put_birthday_here":  "Ваш день рождения (дд.мм)",
+  "put_summary_here": "Введите информацию о себе",
+  "put_skills_here": "Перечислите свои навыки",
+  "put_coureses_here": "Сертификаты и курсы",
+  "put_languages_here": "Языки",
+  "error_t_parse_error": "Ошибка парсинга данных",
+  "groups_name": "События"
 }

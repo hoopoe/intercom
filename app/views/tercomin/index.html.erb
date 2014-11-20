@@ -40,163 +40,6 @@
   <div class="col-md-1">
   </div>
 </div>
-<script type="html/template" id="settings-template">
-<div class="col-md-12">
-  <div class="row theme-picker">
-    <div class="col-md-1">
-      <%=l(:label_theme)%>:
-    </div>
-    <div class="col-md-2">
-      <select class="form-control theme-select">
-         <%% if ((profile.settings) && ($.parseJSON(profile.settings) !== null) 
-          && ($.parseJSON(profile.settings).theme !== null) && ($.parseJSON(profile.settings).theme == "bootswatch")) { %>
-                <option value="default" >default</option>
-                <option value="bootswatch" selected="selected"> bootswatch</option>
-          <%% } else {%>
-                <option value="default" selected="selected">default</option>
-                <option value="bootswatch"> bootswatch</option>
-          <%% } %>          
-      </select> 
-    </div>
-  </div>
-</div>
-</script>
-<script type="html/template" id="events-template">
-  <div>
-    Event item
-  </div>
-</script>
-
-
-<script type="text/html" id="position-li-template" >
-  <div class='row position-container'>     
-    <div class='position-info'>
-      <label for="companyName">Company</label>
-      <span id="companyName">{ position:companyName }</span>
-      <br>
-      <label for="from">From</label>
-      <span id="from">{ position:from | date}</span>
-      <span><b>&#8211</b></span>
-      <label for="to">To</label>
-      <span id="to">{ position:to | date}</span>  
-      <br>
-
-      <label for="position">Position</label>
-      <span id="position">{ position:position }</span>
-      <br>
-      <label for="project">Project</label>
-      <span id="project">{ position:project }</span>
-
-      <br>
-      <label for="resp">Responsibility</label>
-      <span id="resp">{ position:resp }</span>      
-    </div>
-    <div rv-show="position:editable | eq true">
-      <a class="remove-position" rv-data-id="position:id">
-        <i class="glyphicon glyphicon-remove">
-            Remove
-        </i>  
-      </a>
-      <a class="edit-position" rv-data-id="position:id">
-        <i class="glyphicon glyphicon-edit">
-            Edit
-        </i>  
-      </a>   
-    </div>    
-    <div class="line-separator-gray"/> 
-  </div>   
-</script>
-
-<script type="text/html" id="position-template" >
-  <form >       
-    <div class="form-group col-md-4">
-      <label for="companyName">Company</label>
-      <input type="text" class="form-control" id="companyName" placeholder="Company name" rv-value="position:companyName" placeholder="Company">
-    </div>  
-    <div class="form-group col-md-4">
-      <label for="from_edit">From</label>      
-      <input type="text" class="form-control pos-from" rv-value="position:from | date" id="from_edit"/>    
-    </div>      
-    <div class="form-group col-md-4">
-      <label for="to_edit">To</label>  
-      <input type="text" class="form-control pos-to" rv-value="position:to | date" id="to_edit"/>  
-    </div>
-    <div class="form-group col-md-4">
-      <label for="project">Project</label>  
-      <input type="text" class="form-control" rv-value="position:project" id="project" placeholder="Project"/>
-    </div>   
-    <div class="form-group col-md-8">
-      <label for="position">Position</label>   
-      <input type="text" class="form-control" rv-value="position:position" id="position" placeholder="Position"/>
-    </div>
-    <div class="form-group col-md-12">
-      <label for="resp">Responsibility</label>
-      <textarea class="form-control" rows="3" rv-value="position:resp" id="resp" placeholder="Responsibility"></textarea>
-    </div>    
-    <div class="form-group col-md-12">
-      <a class="add-position-submit btn btn-primary">Save</a>
-      <a class="add-position-cancel btn btn-primary">Cancel</a>    
-    <div>    
-  </form>
-</script>
-
-<script type="text/html" id="background-template" >
-  <form>           
-    <div class="form-group col-md-4">
-      <label for="from_edit">From</label>      
-      <input type="text" class="form-control background-from" rv-value="background:from | date" id="from_edit"/>    
-    </div>      
-    <div class="form-group col-md-4">
-      <label for="to_edit">To</label>  
-      <input type="text" class="form-control background-to" rv-value="background:to | date" id="to_edit"/>  
-    </div>
-    <div class="form-group col-md-4">
-      <label for="eduName">Title</label>
-      <input type="text" class="form-control" id="eduName" placeholder="University Title" rv-value="background:name" placeholder="Title">
-    </div>    
-    <div class="form-group col-md-12">
-      <a class="add-background-submit btn btn-primary">Save</a>
-      <a class="add-background-cancel btn btn-primary">Cancel</a>    
-    <div>    
-  </form>
-</script>
-
-<script type="text/html" id="background-li-template" >
-  <div class='row background-container'>     
-    <div class='background-info'>          
-      <label for="from">From</label>
-      <span id="from">{ background:from | date}</span>
-      <span><b>&#8211</b></span>
-      <label for="to">To</label>
-      <span id="to">{ background:to | date}</span>            
-      <label for="eduName">Title</label>
-      <span id="eduName">{ background:name }</span>
-    </div>
-    <div rv-show="background:editable | eq true">
-      <a class="remove-background" rv-data-id="background:id">
-        <i class="glyphicon glyphicon-remove">
-            Remove
-        </i>  
-      </a>
-      <a class="edit-background" rv-data-id="background:id">
-        <i class="glyphicon glyphicon-edit">
-            Edit
-        </i>  
-      </a>   
-    </div>    
-    <div class="line-separator-gray"/> 
-  </div>   
-</script>
-
-<script type="text/html" id="event-li-template" >
-  <div class='row event-container'>     
-    <div class='event-info'>
-      <label for="eventName">Title</label>
-      <a rv-href-rooted="evnt:event.id" data-root='#user_event/<%= @currentUserId %>_'>{evnt:event.name}</a>
-    </div> 
-    <div class="line-separator-gray"/> 
-  </div>   
-</script>
 
 <script type="text/html" id="user-event-template">
   <div class='row ue-container'>
@@ -317,17 +160,173 @@
   </div> 
 </script>
 
-<script type="text/html" id="bonusq-li-template" >
+<script type="text/html" id="bonus_q-template" >
   <div class="form-group col-md-12 question-item">
-    <span>{ t:bq }</span>
+    <span>{ t:bonus_q }</span>
     <select class="form-control" rv-value="t:a">
       <option value=1><%=l(:bonus_q_1)%></option>
       <option value=2><%=l(:bonus_q_2)%></option>
       <option value=3><%=l(:bonus_q_3)%></option>
       <option value=4><%=l(:bonus_q_4)%></option>
-      <option value=4><%=l(:bonus_q_5)%></option>
-      <option value=4><%=l(:bonus_q_6)%></option>
-      <option value=4><%=l(:bonus_q_7)%></option>
+      <option value=5><%=l(:bonus_q_5)%></option>
+      <option value=6><%=l(:bonus_q_6)%></option>      
+    </select>
+  </div> 
+</script>
+
+<script type="text/html" id="insurance_q-template" >
+  <div class="form-group col-md-12 question-item">
+    <span>{ t:insurance_q }</span>
+    <select class="form-control" rv-value="t:a">
+      <option value=1><%=l(:insurance_q_1)%></option>
+      <option value=2><%=l(:insurance_q_2)%></option>
+      <option value=3><%=l(:insurance_q_3)%></option>
+      <option value=4><%=l(:insurance_q_4)%></option>
+      <option value=5><%=l(:insurance_q_5)%></option>      
+    </select>
+  </div> 
+</script>
+
+<script type="text/html" id="interest_q-template" >
+  <div class="form-group col-md-12 question-item">
+    <span>{ t:interest_q }:</span>
+    <select class="form-control" rv-value="t:a">
+      <option value=1><%=l(:interest_q_1)%></option>
+      <option value=2><%=l(:interest_q_2)%></option>
+      <option value=3><%=l(:interest_q_3)%></option>      
+    </select>
+  </div> 
+</script>
+
+<script type="text/html" id="correspond_q-template" >
+  <div class="form-group col-md-12 question-item">
+    <span>{ t:correspond_q }:</span>
+    <select class="form-control" rv-value="t:a">
+      <option value=1><%=l(:correspond_q_1)%></option>
+      <option value=2><%=l(:correspond_q_2)%></option>
+      <option value=3><%=l(:correspond_q_3)%></option>
+    </select>
+  </div> 
+</script>
+
+<script type="text/html" id="prospects_q-template" >
+  <div class="form-group col-md-12 question-item">
+    <span>{ t:prospects_q }:</span>
+    <select class="form-control" rv-value="t:a">
+      <option value=1><%=l(:prospects_q_1)%></option>
+      <option value=2><%=l(:prospects_q_2)%></option>
+      <option value=3><%=l(:prospects_q_3)%></option>
+    </select>
+  </div> 
+</script>
+
+<script type="text/html" id="myqualification_q-template" >
+  <div class="form-group col-md-12 question-item">
+    <span>{ t:myqualification_q }:</span>
+    <select class="form-control" rv-value="t:a">
+      <option value=1><%=l(:myqualification_q_1)%></option>
+      <option value=2><%=l(:myqualification_q_2)%></option>
+      <option value=3><%=l(:myqualification_q_3)%></option>      
+    </select>
+  </div> 
+</script>
+
+<script type="text/html" id="info_q-template" >
+  <div class="form-group col-md-12 question-item">
+    <span>{ t:info_q }:</span>
+    <select class="form-control" rv-value="t:a">
+      <option value=1><%=l(:info_q_1)%></option>
+      <option value=2><%=l(:info_q_2)%></option>      
+    </select>
+  </div> 
+</script>
+
+<script type="text/html" id="workspace_q-template" >
+  <div class="form-group col-md-12 question-item">
+    <span>{ t:workspace_q }:</span>
+    <select class="form-control" rv-value="t:a">
+      <option value=1><%=l(:workspace_q_1)%></option>
+      <option value=2><%=l(:workspace_q_2)%></option>
+      <option value=3><%=l(:workspace_q_3)%></option>
+    </select>
+  </div> 
+</script>
+
+<script type="text/html" id="infra_q-template" >
+  <div class="form-group col-md-12 question-item">
+    <span>{ t:infra_q }:</span>
+    <select class="form-control" rv-value="t:a">
+      <option value=1><%=l(:infra_q_1)%></option>
+      <option value=2><%=l(:infra_q_2)%></option>
+      <option value=3><%=l(:infra_q_3)%></option>
+    </select>
+  </div> 
+</script>
+
+<script type="text/html" id="salary_q-template" >
+  <div class="form-group col-md-12 question-item">
+    <span>{ t:salary_q }:</span>
+    <select class="form-control" rv-value="t:a">
+      <option value=1><%=l(:salary_q_1)%></option>
+      <option value=2><%=l(:salary_q_2)%></option>
+      <option value=3><%=l(:salary_q_3)%></option>
+      <option value=4><%=l(:salary_q_4)%></option>
+      <option value=5><%=l(:salary_q_5)%></option>
+    </select>
+  </div> 
+</script>
+
+<script type="text/html" id="feedback_q-template" >
+  <div class="form-group col-md-12 question-item">
+    <span>{ t:feedback_q }:</span>
+    <select class="form-control" rv-value="t:a">
+      <option value=1><%=l(:feedback_q_1)%></option>
+      <option value=2><%=l(:feedback_q_2)%></option>
+      <option value=3><%=l(:feedback_q_3)%></option>
+      <option value=4><%=l(:feedback_q_4)%></option>      
+    </select>
+  </div> 
+</script>
+
+<script type="text/html" id="help_q-template" >
+  <div class="form-group col-md-12 question-item">
+    <span>{ t:help_q }:</span>
+    <select class="form-control" rv-value="t:a">
+      <option value=1><%=l(:help_q_1)%></option>
+      <option value=2><%=l(:help_q_2)%></option>
+      <option value=3><%=l(:help_q_3)%></option>
+      <option value=4><%=l(:help_q_4)%></option>      
+    </select>
+  </div> 
+</script>
+
+<script type="text/html" id="relationship_q-template" >
+  <div class="form-group col-md-12 question-item">
+    <span>{ t:relationship_q }:</span>
+    <select class="form-control" rv-value="t:a">
+      <option value=1><%=l(:relationship_q_1)%></option>
+      <option value=2><%=l(:relationship_q_2)%></option>
+      <option value=3><%=l(:relationship_q_3)%></option>      
+    </select>
+  </div> 
+</script>
+
+<script type="text/html" id="desire_q-template" >
+  <div class="form-group col-md-12 question-item">
+    <span>{ t:desire_q }:</span>
+    <select class="form-control" rv-value="t:a">
+      <option value=1><%=l(:desire_q_1)%></option>
+      <option value=2><%=l(:desire_q_2)%></option>      
+    </select>
+  </div> 
+</script>
+
+<script type="text/html" id="satisfied_q-template" >
+  <div class="form-group col-md-12 question-item">
+    <span>{ t:satisfied_q }:</span>
+    <select class="form-control" rv-value="t:a">
+      <option value=1><%=l(:satisfied_q_1)%></option>
+      <option value=2><%=l(:satisfied_q_2)%></option>      
     </select>
   </div> 
 </script>
@@ -373,7 +372,7 @@
       <option value=1><%=l(:activity_q_1)%></option>
       <option value=2><%=l(:activity_q_2)%></option>
       <option value=3><%=l(:activity_q_3)%></option>
-      <option value=3><%=l(:activity_q_4)%></option>
+      <option value=4><%=l(:activity_q_4)%></option>
     </select>
   </div> 
 </script>

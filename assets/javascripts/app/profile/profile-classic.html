@@ -18,7 +18,7 @@
         <div class="row">
           <div class="col-md-12 profile-item">
             <div class="col-md-2 profile-data-title">
-              <span><%=l(':project_title')%>:</span>
+              <span><%=l('project_title')%>:</span>
               <span rv-hide="user_p:edit_prop | eq 'project'" class="edit-emp-item">
                   <a rv-show="user_p:editable | eq 'true'" value="project">
                     <i class="glyphicon glyphicon-pencil"/>                
@@ -27,7 +27,7 @@
             </div>
             <div class="col-md-6">
               <div rv-show="user_p:edit_prop | eq 'project'">
-                <input rv-value="user_p:project" placeholder="<%=l(':put_projects_here') %>"/>
+                <input rv-value="user_p:project" placeholder="<%=l('put_projects_here') %>"/>
                 <a class="emp-item-cancel" value="project"><i class="glyphicon">Cancel</i></a>
                 <a class="emp-item-save" value="project"><i class="glyphicon">Save</i></a>
               </div>
@@ -44,7 +44,7 @@
         <div class="row">
           <div class="col-md-12 profile-item">
             <div class="col-md-2 profile-data-title">
-              <span><%=l(':project_extra_title')%>:</span>
+              <span><%=l('project_extra_title')%>:</span>
               <span rv-hide="user_p:edit_prop | eq 'project_extra'" class="edit-emp-item">
                 <a rv-show="user_p:editable | eq 'true'" value="project_extra">
                   <i class="glyphicon glyphicon-pencil"/>                
@@ -53,7 +53,7 @@
             </div>
             <div class="col-md-6">
               <div rv-show="user_p:edit_prop | eq 'project_extra'">
-                <input rv-value="user_p:project_extra" placeholder="<%=l(':put_projects_extra_here') %>"/>
+                <input rv-value="user_p:project_extra" placeholder="<%=l('put_projects_extra_here') %>"/>
                 <a class="emp-item-cancel" value="project_extra"><i class="glyphicon">Cancel</i></a>
                 <a class="emp-item-save" value="project_extra"><i class="glyphicon">Save</i></a>
               </div>
@@ -70,7 +70,7 @@
         <div class="row">
           <div class="col-md-12 profile-item">
             <div class="col-md-2 profile-data-title">
-              <span><%=l(':position_title')%>:</span>
+              <span><%=l('position_title')%>:</span>
               <span rv-hide="user_p:edit_prop | eq 'position'" class="edit-emp-item">
                 <a rv-show="user_p:editable | eq 'true'" value="position">
                   <i class="glyphicon glyphicon-pencil"/>                
@@ -79,7 +79,7 @@
             </div>
             <div class="col-md-6">
               <div rv-show="user_p:edit_prop | eq 'position'">
-                <input rv-value="user_p:position" placeholder="<%=l(':put_position_here') %>"/>
+                <input rv-value="user_p:position" placeholder="<%=l('put_position_here') %>"/>
                 <a class="emp-item-cancel" value="position"><i class="glyphicon">Cancel</i></a>
                 <a class="emp-item-save" value="position"><i class="glyphicon">Save</i></a>
               </div>
@@ -96,7 +96,7 @@
         <div class="row">
           <div class="col-md-12 profile-item">
             <div class="col-md-2 profile-data-title">
-              <span><%=l(':email_title')%>:</span>              
+              <span><%=l('email_title')%>:</span>              
             </div>
             <div class="col-md-6">
               <span rv-text="user_p:mail"/>
@@ -106,7 +106,7 @@
         <div class="row">
           <div class="col-md-12 profile-item">
             <div class="col-md-2 profile-data-title">
-              <span><%=l(':room_number')%>:</span>
+              <span><%=l('room_number')%>:</span>
               <span rv-hide="user_p:edit_prop | eq 'room_number'" class="edit-emp-item">
                 <a rv-show="user_p:editable | eq 'true'" value="room_number">
                   <i class="glyphicon glyphicon-pencil"/>                
@@ -115,7 +115,7 @@
             </div>
             <div class="col-md-6">
               <div rv-show="user_p:edit_prop | eq 'room_number'">
-                <input rv-value="user_p:room_number" placeholder="<%=l(':put_room_number_here') %>"/>
+                <input rv-value="user_p:room_number" placeholder="<%=l('put_room_number_here') %>"/>
                 <a class="emp-item-cancel" value="room_number"><i class="glyphicon">Cancel</i></a>
                 <a class="emp-item-save" value="room_number"><i class="glyphicon">Save</i></a>
               </div>
@@ -132,7 +132,7 @@
         <div class="row">
           <div class="col-md-12 profile-item">
             <div class="col-md-2 profile-data-title">
-              <span><%=l(':birthday_title')%>:</span>
+              <span><%=l('birthday_title')%>:</span>
               <span rv-hide="user_p:edit_prop | eq 'birthday'" class="edit-emp-item">
                 <a rv-show="user_p:editable | eq 'true'" value="birthday">
                   <i class="glyphicon glyphicon-pencil"/>                
@@ -161,7 +161,7 @@
   </div>
   <div class="row profile-row">
     <div class="col-md-11 col-md-offset-1 edit-emp-item">
-      <span class="emp-item-title"><%=l(':summary_title')%></span>
+      <span class="emp-item-title"><%=l('summary_title')%></span>
       <div class="circle"/>
       <span rv-hide="user_p:edit_prop | eq 'summary'">
         <a rv-show="user_p:editable | eq 'true'"  value="summary"><i class="glyphicon glyphicon-pencil"/></a>
@@ -169,7 +169,7 @@
     </div>
     <div class="col-md-9 col-md-offset-2 profile-lg-item">
       <div rv-show="user_p:edit_prop | eq 'summary'">        
-        <div contentEditable=true class="profile-data-html editable profile-summary" data-ph='<%=l(':put_summary_here') %>' data-button-class="format" rv-html="user_p:summary">
+        <div contentEditable=true class="profile-data-html editable profile-summary" data-ph='<%=l('put_summary_here') %>' data-button-class="format" rv-html="user_p:summary">
         </div>
       </div>
       <div rv-hide="user_p:edit_prop | eq 'summary'">
@@ -190,7 +190,7 @@
     
   <div class="row profile-row">
     <div class="col-md-11 col-md-offset-1 edit-emp-item">
-        <span><%=l(':skills_title')%></span>
+        <span><%=l('skills_title')%></span>
         <div class="circle"/>
         <span rv-hide="user_p:edit_prop | eq 'skills'">
           <a rv-show="user_p:editable | eq 'true'"  value="skills"><i class="glyphicon glyphicon-pencil"/></a>
@@ -198,7 +198,7 @@
     </div>
     <div class="col-md-9 col-md-offset-2 profile-lg-item">
       <div rv-show="user_p:edit_prop | eq 'skills'">        
-        <div contentEditable=true class="profile-data-html editable profile-skills" data-ph='<%=l(':put_skills_here') %>' data-button-class="format" rv-html="user_p:skills">
+        <div contentEditable=true class="profile-data-html editable profile-skills" data-ph='<%=l('put_skills_here') %>' data-button-class="format" rv-html="user_p:skills">
         </div>
       </div>
       <div rv-hide="user_p:edit_prop | eq 'skills'">
@@ -219,7 +219,7 @@
     
   <div class="row profile-row">
     <div class="col-md-offset-1 col-md-2">
-      <span><%=l(':positions_title')%></span>
+      <span><%=l('positions_title')%></span>
       <div class="circle"/>
       <a class="add-position"><span class="glyphicon glyphicon-plus" rv-show="user_p:editable | eq 'true'"></span></a>
     </div>    
@@ -235,7 +235,7 @@
   </div>    
   <div class="row profile-row">
     <div class="col-md-offset-1 col-md-2">
-      <span><%=l(':education_title')%></span>
+      <span><%=l('education_title')%></span>
       <div class="circle"/>
       <a class="add-background"><span class="glyphicon glyphicon-plus" rv-show="user_p:editable | eq 'true'"></span></a>
     </div>    
@@ -251,7 +251,7 @@
   </div>    
   <div class="row profile-row">
     <div class="col-md-offset-1 col-md-2 edit-emp-item">
-      <span><%=l(':coureses_title')%></span>
+      <span><%=l('coureses_title')%></span>
       <div class="circle"/>
       <span rv-hide="user_p:edit_prop | eq 'coureses'">
         <a rv-show="user_p:editable | eq 'true'" value="coureses"><i class="glyphicon glyphicon-pencil"/></a>
@@ -259,7 +259,7 @@
     </div>  
     <div class="col-md-offset-2 col-md-9 profile-lg-item">
       <div rv-show="user_p:edit_prop | eq 'coureses'">
-        <div contentEditable=true class="editable profile-data-htm profile-coureses" data-ph='<%=l(':put_coureses_here') %>' data-prop="coureses" data-button-class="format" data-prop="coureses" rv-html="user_p:coureses">
+        <div contentEditable=true class="editable profile-data-htm profile-coureses" data-ph='<%=l('put_coureses_here') %>' data-prop="coureses" data-button-class="format" data-prop="coureses" rv-html="user_p:coureses">
         </div>        
       </div>
       <div rv-hide="user_p:edit_prop | eq 'coureses'">
@@ -280,7 +280,7 @@
   
   <div class="row profile-row">
     <div class="col-md-offset-1 col-md-2 edit-emp-item">
-      <span><%=l(':languages_title')%></span>
+      <span><%=l('languages_title')%></span>
       <div class="circle"/>
       <span rv-hide="user_p:edit_prop | eq 'extra_languages'">
         <a rv-show="user_p:editable | eq 'true'" value="extra_languages"><i class="glyphicon glyphicon-pencil"/></a>
@@ -290,7 +290,7 @@
     
     <div class="col-md-offset-2 col-md-9 profile-lg-item">      
       <div rv-show="user_p:edit_prop | eq 'extra_languages'">
-        <div contentEditable=true class="editable profile-data-html profile-extra_languages" data-ph='<%=l(':put_languages_here') %>' data-prop="extra_languages" data-button-class="format" data-prop="extra_languages" rv-html="user_p:extra_languages">
+        <div contentEditable=true class="editable profile-data-html profile-extra_languages" data-ph='<%=l('put_languages_here') %>' data-prop="extra_languages" data-button-class="format" data-prop="extra_languages" rv-html="user_p:extra_languages">
         </div>        
       </div>
       <div rv-hide="user_p:edit_prop | eq 'extra_languages'">
