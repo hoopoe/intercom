@@ -1,11 +1,13 @@
 <div id="question-template" class="form-group col-md-12 question-item">
   <span id="questionName">{ t:q }</span>
   <input type="text" class="form-control" rv-value="t:a"/>
+  {t.validationError}
 </div> 
 
-<div id="freeform-template" class="form-group col-md-12 question-item">
+<div id="freeform-template" rv-class-has-error="t.validationError" class="form-group col-md-12 question-item">
   <span>{ t:q }:</span>
-  <textarea class="form-control" rv-value="t:a"></textarea>
+  <textarea class="form-control" rv-value="t:a" ></textarea>
+  <span rv-if="t.validationError">{ t.validationError }</span>  
 </div>
 
 <div id="personal-template" class="form-group col-md-12 question-item">

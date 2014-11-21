@@ -17,7 +17,19 @@ define([
     _tr = tr;
   });
 
-  Question = Backbone.Model.extend({});
+  Question = Backbone.Model.extend({
+    validate: function(attrs, options) {
+      if ( attrs.hasOwnProperty("a")) {
+        var err = this.validateLength( attrs["a"], 1000);
+        if (err) return err;        
+      }      
+    },
+    validateLength: function(prop, len) {      
+      if ( prop.length > len ) {
+        return "Should be less than " + len + " symbols";
+      }
+    },
+  });
   QuestionCollection = Backbone.Collection.extend({
         model: Question
   });
@@ -198,7 +210,12 @@ define([
         this.remove();//todo: redirect
     },        
     submit: function(e) {
-        that = this;
+      that = this;      
+      this.qs.each(function(q) { q.isValid() });        
+      var hasErrors = _.some(this.qs.models, function(q) {
+          return q.validationError;
+      });
+      if (!hasErrors) {
         this.model.set('body', JSON.stringify(that.qs) );            
         this.model.save({}, {
             success: function(model, response) {    
@@ -207,7 +224,10 @@ define([
             error: function(model, response) {
                 console.log("save: failed");
             }
-        });        
+        });
+      } else{
+        console.log("validation failed");
+      }
     }
   });
   return view
