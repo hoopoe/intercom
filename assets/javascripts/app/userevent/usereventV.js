@@ -35,10 +35,10 @@ define([
   });
 
   QuestionsHeaderView = Backbone.View.extend({
-    template: _.template($('#questions-header-template').html()),
+    template: _.template(questionsT),
     render: function() {
         this.$el.html('');
-        this.$el.html(this.template({l:_tr}));
+        this.$el.html($(this.template({l:_tr})).filter('#questions-header-template'));
         rivets.bind(this.el, {
             t: this.model
         });            
@@ -81,57 +81,18 @@ define([
       }
   });
 
-  //todo: remove
-  EmployeeView = Backbone.View.extend({
-      tagName: 'li',
-      template: _.template($('#mgr-emp-li-template').html()),
-      render: function() {
-          this.$el.html('');
-          this.$el.html(this.template);
-          rivets.bind(this.el, {
-              t: this.model
-          });            
-          return this;
-      },
-      save:function(){
-          console.log("save emp");
-      }
-  });
-
   Employee = Backbone.Model.extend({});
   EmployeeCollection = Backbone.Collection.extend({
       model: Employee
   });
 
-  ManagerFormView = Backbone.View.extend({
-      tagName: 'ul',
-      className: 'mgr-emp-view',
-      items: new EmployeeCollection(),
-      initialize: function() {
-          this.items.reset(this.collection);
-      },
-      render: function() {            
-          this.items.each(function(e) {                
-              var empView = new EmployeeView({
-                  model: e                    
-              });
-              this.$el.append(empView.render().el);
-          }, this);            
-          return this;
-      },
-      save:function(){
-          console.log("save manager");
-      }
-  });
-
   var view = Backbone.View.extend({        
-    template: _.template($('#user-event-template').html()), 
-    HRtemplate: _.template($('#hr-emp-view').html()),        
+    template: _.template(defaultT),
+    HRtemplate: _.template(hrT),
     qs: new QuestionCollection(),
     kind:"",
     events: {
-        'click .ue-submit': 'submit',
-        'click .ue-cancel': 'cancel'
+        'click .ue-submit': 'submit'
     },
     initialize: function() {
         this.kind = this.model.get('kind');
@@ -210,8 +171,9 @@ define([
         this.remove();//todo: redirect
     },        
     submit: function(e) {
+      this.model.errors = "";
       that = this;      
-      this.qs.each(function(q) { q.isValid() });        
+      this.qs.each(function(q) { q.isValid() });
       var hasErrors = _.some(this.qs.models, function(q) {
           return q.validationError;
       });
@@ -219,16 +181,33 @@ define([
         this.model.set('body', JSON.stringify(that.qs) );            
         this.model.save({}, {
             success: function(model, response) {    
-                console.log("save done");
+              that.displaySucess();
             },
             error: function(model, response) {
-                console.log("save: failed");
+              that.displayError();
             }
         });
       } else{
-        console.log("validation failed");
+        that.displayError();
+        var errors = this.qs
+          .filter(function(q){return q.validationError})
+          .map(function(q){return q.get('q')});
+        this.model.errors = errors;
       }
+    },
+    displayError: function() {
+      $('.ue-notify').removeClass("ue-notify-ok");
+      $('.ue-notify').addClass("ue-notify-error");
+      $('.ue-notify').show();
+      $('.ue-notify-error').fadeOut(500);
+    },
+    displaySucess: function() {
+      $('.ue-notify').removeClass("ue-notify-error");
+      $('.ue-notify').addClass("ue-notify-ok");
+      $('.ue-notify').show();
+      $('.ue-notify-ok').fadeOut(500);
     }
   });
+
   return view
 });

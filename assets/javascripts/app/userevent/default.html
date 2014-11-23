@@ -1,0 +1,26 @@
+<div class='row ue-container'>
+  <div class="col-md-12">
+    <form class="questions-ph"/>
+  </div>
+</div>
+
+<div class="ue-notify">
+</div>
+
+<div class='row ue-submit-summary'>
+  <div class="col-md-5 submit-summary">
+    
+  </div>
+  <div class="col-md-2 questions-buttons">
+    <a class="ue-submit btn btn-primary">Save</a>
+  </div>
+  <div rf-if="t.errors" class="col-md-5 submit-errors">
+    <ul>
+      <li rv-each-t="ue.errors">
+        <span>{ t }</span>
+      </li>
+    <ul>
+  </div>
+</div>
+
+

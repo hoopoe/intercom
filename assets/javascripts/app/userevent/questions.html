@@ -1,13 +1,38 @@
-<div id="question-template" class="form-group col-md-12 question-item">
+<div id="questions-header-template" class="form-group col-md-12 questions-header">
+  <span class="fio">{t.lastname} </span>
+  <span class="fio"> {t.firstname}</span>
+  <span class="fio" rv-unless="t.lastname" rv-text="t.lastnameRu"></span>
+  <span class="fio" rv-unless="t.firstname" rv-text="t.firstnameRu"></span>
+  <br>
+  <label for="uPosition"><%=l('position_title')%>: </label>
+  <span id="uPosition"> {t.position} </span>
+
+  <span rv-if="t.peons"> (</span>
+    <a rv-each-i="t.peons" rv-href-rooted="i.id" data-root='#user_event/'>
+        {i.name} 
+    </a>
+  <span rv-if="t.peons">)</span>
+  <br/>
+  <label for="uProject"><%=l('project_title')%>: </label>
+  <span id="uProject"> {t.project}</span>
+  <br/>
+  <label for="uExtraProject"><%=l('project_extra_title')%>: </label>
+  <span id="uExtraProject"> {t.extraProject}</span>
+  <br/>
+  <label for="uCreatedOn"><%=l('employment_date')%>: </label>
+  <span id="uCreatedOn"> {t.created_on | date}</span>
+</div> 
+
+<div id="question-template" rv-class-has-error="t.validationError" class="form-group col-md-12 question-item">
   <span id="questionName">{ t:q }</span>
+  <span class="q-has-error" rv-if="t.validationError">({ t.validationError })</span>
   <input type="text" class="form-control" rv-value="t:a"/>
-  {t.validationError}
 </div> 
 
 <div id="freeform-template" rv-class-has-error="t.validationError" class="form-group col-md-12 question-item">
   <span>{ t:q }:</span>
+  <span class="q-has-error" rv-if="t.validationError">({ t.validationError })</span>
   <textarea class="form-control" rv-value="t:a" ></textarea>
-  <span rv-if="t.validationError">{ t.validationError }</span>  
 </div>
 
 <div id="personal-template" class="form-group col-md-12 question-item">
