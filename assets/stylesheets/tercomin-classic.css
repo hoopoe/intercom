@@ -48,6 +48,7 @@ div.profile-lbl *{float:right;}
 .profile-table {table-layout: fixed;}
 div.profile-status{text-align: right;}
 .profile-status h3 {text-decoration: none; border-bottom-width:0px;}
+.profile-status h3 {border-bottom: 0px}
 .profile-notify{opacity: 0;}
 .ui-datepicker-year {display:none;}
 .glyphicon:hover{cursor: pointer;}

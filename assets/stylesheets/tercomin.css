@@ -52,7 +52,9 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 .profile-data-span{word-break: break-all;}
  [contentEditable=true]:empty:not(:focus):before{content:attr(data-ph)}
 
+
 .profile-status h3 {color: #fff; text-decoration: none; }
+.profile-status h3 {border-bottom: 0px}
 .editable {background-color: #fff;}
 .no-editable {background-color: #f6f6f6;}
 .profile-img {  display: block;  margin-left: auto;  margin-right: auto;  margin-top: 5px; margin-bottom: 5px;}
