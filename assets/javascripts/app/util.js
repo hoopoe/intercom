@@ -10,7 +10,6 @@ define([
         }
         window.location = window.location.origin + '/login?back_url=' + window.location.origin + '/tercomin';
 	}
-
 	var getHash = function() {
         var text = "";
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

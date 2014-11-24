@@ -87,7 +87,6 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 
 /*question*/
 .questions-view{list-style-type: none;}
-/*.question-item span{font-weight: bold;}*/
 .question-header span{font-weight: bold;}
 .questions-header span.fio{font-size: 20px;}
 .questions-buttons{text-align: center; display:block !important;}
@@ -141,14 +140,10 @@ a.cv {
 }
 .profile-cv a{color: #fff;}
 
-/*.add-position {float:right;}*/
-
-/*.cv{display:none;}*/
-
 /*employers*/
 .groups-list{display: inline-block; list-style-type: none;}
 div.employer-img img {
-  /*width: 90px;*/
+  width: 90px;
   height: 120px;
   display: block;
   margin-left: auto;
