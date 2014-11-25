@@ -2,6 +2,7 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
   respond_to :json
 
   before_filter :build_event_groups, :except => [:index, :create]
+  before_filter :create_hr_form, :except => [:index, :create]
   before_filter :require_self_or_manager, :only => [:update]
   before_filter :require_self_or_manager_or_hr, :only => [:show]
   before_filter :find_user_event, :except => [:index, :create]
@@ -19,7 +20,9 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
 
   def show
     if @role == :self
-      @response = {:body => @ue.body,
+      @response = {
+      :empForm => @ue.body,
+      :hrForm => @hr_form.body,
       :lastname=>@user.lastname,
       :firstname=>@user.firstname,
       :created_on=>@user.created_on,
@@ -33,7 +36,9 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
       respond_with @response
     else 
       if @role == :mgr
-        @response = {:body => @ue.body,
+        @response = {
+        :mgrForm => @ue.body,
+        :hrForm => @hr_form.body,
         :lastname=>@user.lastname,
         :firstname=>@user.firstname,
         :created_on=>@user.created_on,
@@ -48,10 +53,8 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
         if @role == :hr
           @response = {
             :mgrForms => @ue_by_mgr.map{ |i| i.attributes },
-            # :empForm => @ue.attributes,
             :eventname => @event.name,
             :kind => "hr"}
-            
           @response[:empForm] = @ue ? @ue.attributes: ""
            
           respond_with @response
@@ -117,6 +120,18 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
     
   rescue ActiveRecord::RecordNotFound
     render_404
+  end
+
+  def create_hr_form
+    @hrGroup = Group.find_by_lastname("hr");
+    if @hrGroup.present?
+      @hr_form = UserEvent.find_by_user_id_and_event_id_and_mgr_id(@user.id, @event.id, @hrGroup.id)
+      if @hr_form.blank?
+        @hr_form = UserEvent.new(:user_id => @user.id, :event_id => @event.id, :mgr_id => @hrGroup.id)
+        @hr_form.body = @ev_body['hrForm'].to_json  
+        @hr_form.save!
+      end
+    end
   end
 
   def is_current_is_manager_for_user

@@ -1,8 +1,8 @@
 var empq = [];
-empq.push({"type":"freeform", "q":"Оценка выполнения персональных задач, поставленных на предыдущей аттестации", "a": ""});
-empq.push({"type":"freeform", "q":"Пройденное обучение (корпоративное и самостоятельное)", "a": ""});
+
 empq.push({"type":"personal", "q":"Необходимость личной беседы", "a": 1});
-empq.push({"type":"freeform", "q":"Задачи на ближайший год", "a": ""});
+empq.push({"type":"freeform", "q":"Пройденное обучение (корпоративное и самостоятельное)", "a": ""});
+
 empq.push({"type":"header", "q":"Обратная связь"});
 empq.push({"type":"header", "q":"Что является Вашими сильными сторонами?"});
 empq.push({"type":"quality", "q":"Качеcтво", "a": 1});
@@ -98,6 +98,12 @@ mgrq.push({"q":"Комментарий ", "a": ""});
 
 mgrq.push({"type":"freeform", "q":"Решения и задачи на ближайший год", "a": ""});
 
+var hrForm = [];
+hrForm.push({"q":"Дата проведения ", "a": ""});
+hrForm.push({"type":"freeform", "q":"Задачи на ближайший год", "a": ""});
+hrForm.push({"type":"freeform", "q":"Оценка выполнения персональных задач, поставленных на предыдущей аттестации", "a": ""});
+hrForm.push({"type":"freeform", "q":"Решение", "a": ""});
+
 var groups = [];
 groups.push({"n":"area 8", "m": {"306":"Pomidor Senior"}, "e":{"304":"Ivan Ivanov", "305":"Petr Petrov"}})
 groups.push({"n":"test group", "m": {"306":"Pomidor Senior", "304":"Ivan Ivanov"}, "e":{"308":"Walle Walle", "304":"Ivan Ivanov"}})
@@ -105,6 +111,7 @@ groups.push({"n":"test group", "m": {"306":"Pomidor Senior", "304":"Ivan Ivanov"
 var body = {};
 body['empForm'] = empq;
 body['mgrForm'] = mgrq;
+body['hrForm'] = hrForm;
 
 var Event = Backbone.Model.extend({
     urlRoot: '/tercomin/api/v1/event'
