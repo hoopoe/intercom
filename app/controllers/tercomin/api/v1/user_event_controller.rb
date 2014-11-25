@@ -53,6 +53,7 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
         if @role == :hr
           @response = {
             :mgrForms => @ue_by_mgr.map{ |i| i.attributes },
+            :hrForm => @hr_form.body,
             :eventname => @event.name,
             :kind => "hr"}
           @response[:empForm] = @ue ? @ue.attributes: ""
