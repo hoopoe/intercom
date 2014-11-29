@@ -31,7 +31,7 @@ define([
   Question = Backbone.Model.extend({
     validate: function(attrs, options) {
       if ( attrs.hasOwnProperty("a")) {
-        var err = this.validateLength( attrs["a"], 3);
+        var err = this.validateLength( attrs["a"], 1000);
         if (err) return err;        
       }      
     },
