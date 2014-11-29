@@ -104,9 +104,7 @@ hrForm.push({"type":"freeform", "q":"Задачи на ближайший год
 hrForm.push({"type":"freeform", "q":"Оценка выполнения персональных задач, поставленных на предыдущей аттестации", "a": ""});
 hrForm.push({"type":"freeform", "q":"Решение", "a": ""});
 
-var groups = [];
-groups.push({"n":"area 8", "m": {"306":"Pomidor Senior"}, "e":{"304":"Ivan Ivanov", "305":"Petr Petrov"}})
-groups.push({"n":"test group", "m": {"306":"Pomidor Senior", "304":"Ivan Ivanov"}, "e":{"308":"Walle Walle", "304":"Ivan Ivanov"}})
+var groups = [{"n":"c9","m":{"13":"Pomidor Senior"},"e":{"11":"Ivan Ivanov"}},{"n":"c9","m":{"13":"Pomidor Senior","11":"Ivan Ivanov"},"e":{"15":"Walle Walle"}}]
 
 var body = {};
 body['empForm'] = empq;
