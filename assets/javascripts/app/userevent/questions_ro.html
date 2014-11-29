@@ -1,15 +1,15 @@
-<div id="question-template" class="form-group col-md-12 question-item">
-  <span id="questionName">{ t:q }:</span>
+<div id="question-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
   <span rv-text="t:a"></span>
 </div> 
 
-<div id="freeform-template" class="form-group col-md-12 question-item">
-  <span>{ t:q }:</span>
+<div id="freeform-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
   <div rv-text="t:a"></div>
 </div>
 
-<div id="personal-template" class="form-group col-md-12 question-item">
-  <span>{ t:q }:</span>
+<div id="personal-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
   <span rv-show="t:a | eq 1"><%=l('personal_Yes')%></span>
   <span rv-show="t:a | eq 2"><%=l('personal_No')%></span>
   <span rv-show="t:a | eq 3"><%=l('personal_Not_Now')%></span>
@@ -19,8 +19,8 @@
   <span>{ t:q }</span>
 </div>
 
-<div id="quality-template" class="form-group col-md-12 question-item">
-  <span>{ t:q }:</span>
+<div id="quality-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
   
     <span rv-show="t:a | eq 1"><%=l('qualitya1')%></span>
     <span rv-show="t:a | eq 2"><%=l('qualitya2')%></span>
@@ -37,8 +37,8 @@
   
 </div> 
 
-<div id="interest-template" class="form-group col-md-12 question-item">
-  <span>{ t:q }:</span>
+<div id="interest-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
   
     <span rv-show="t:a | eq 1"><%=l('interest_1')%></span>
     <span rv-show="t:a | eq 2"><%=l('interest_2')%></span>
@@ -46,8 +46,8 @@
   
 </div> 
 
-<div id="correspond-template" class="form-group col-md-12 question-item">
-  <span>{ t:q }:</span>
+<div id="correspond-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
   
     <span rv-show="t:a | eq 1"><%=l('correspond_1')%></span>
     <span rv-show="t:a | eq 2"><%=l('correspond_2')%></span>
@@ -55,8 +55,8 @@
   
 </div> 
 
-<div id="prospects-template" class="form-group col-md-12 question-item">
-  <span>{ t:q }:</span>
+<div id="prospects-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
   
     <span rv-show="t:a | eq 1"><%=l('prospects_1')%></span>
     <span rv-show="t:a | eq 2"><%=l('prospects_2')%></span>
@@ -64,8 +64,8 @@
   
 </div> 
 
-<div id="myqualification-template" class="form-group col-md-12 question-item">
-  <span>{ t:q }:</span>
+<div id="myqualification-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
   
     <span rv-show="t:a | eq 1"><%=l('myqualification_1')%></span>
     <span rv-show="t:a | eq 2"><%=l('myqualification_2')%></span>
@@ -73,16 +73,16 @@
   
 </div>
 
-<div id="info-template" class="form-group col-md-12 question-item">
-  <span>{ t:q }:</span>
+<div id="info-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
   
     <span rv-show="t:a | eq 1"><%=l('info_1')%></span>
     <span rv-show="t:a | eq 2"><%=l('info_2')%></span>      
   
 </div> 
 
-<div id="workspace-template" class="form-group col-md-12 question-item">
-  <span>{ t:q }:</span>
+<div id="workspace-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
   
     <span rv-show="t:a | eq 1"><%=l('workspace_1')%></span>
     <span rv-show="t:a | eq 2"><%=l('workspace_2')%></span>
@@ -90,8 +90,8 @@
   
 </div>
 
-<div id="infra-template" class="form-group col-md-12 question-item">
-  <span>{ t:q }:</span>
+<div id="infra-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
   
     <span rv-show="t:a | eq 1"><%=l('infra_1')%></span>
     <span rv-show="t:a | eq 2"><%=l('infra_2')%></span>
@@ -99,8 +99,8 @@
   
 </div> 
 
-<div id="salary-template" class="form-group col-md-12 question-item">
-  <span>{ t:q }:</span>
+<div id="salary-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
   
     <span rv-show="t:a | eq 1"><%=l('salary_1')%></span>
     <span rv-show="t:a | eq 2"><%=l('salary_2')%></span>
@@ -110,8 +110,8 @@
   
 </div> 
 
-<div id="feedback-template" class="form-group col-md-12 question-item">
-  <span>{ t:q }:</span>
+<div id="feedback-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
   
     <span rv-show="t:a | eq 1"><%=l('feedback_1')%></span>
     <span rv-show="t:a | eq 2"><%=l('feedback_2')%></span>
@@ -120,8 +120,8 @@
   
 </div> 
 
-<div id="help-template" class="form-group col-md-12 question-item">
-  <span>{ t:q }:</span>
+<div id="help-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
   
     <span rv-show="t:a | eq 1"><%=l('help_1')%></span>
     <span rv-show="t:a | eq 2"><%=l('help_2')%></span>
@@ -130,8 +130,8 @@
   
 </div> 
 
-<div id="relationship-template" class="form-group col-md-12 question-item">
-  <span>{ t:q }:</span>
+<div id="relationship-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
   
     <span rv-show="t:a | eq 1"><%=l('relationship_1')%></span>
     <span rv-show="t:a | eq 2"><%=l('relationship_2')%></span>
@@ -139,8 +139,8 @@
   
 </div> 
 
-<div id="bonus-template" class="form-group col-md-12 question-item">
-  <span>{ t:q }</span>
+<div id="bonus-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }</span>
   
     <span rv-show="t:a | eq 1"><%=l('bonus_1')%></span>
     <span rv-show="t:a | eq 2"><%=l('bonus_2')%></span>
@@ -151,8 +151,8 @@
   
 </div> 
 
-<div id="insurance-template" class="form-group col-md-12 question-item">
-  <span>{ t:q }</span>
+<div id="insurance-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }</span>
   
     <span rv-show="t:a | eq 1"><%=l('insurance_1')%></span>
     <span rv-show="t:a | eq 2"><%=l('insurance_2')%></span>
@@ -162,24 +162,24 @@
   
 </div> 
 
-<div id="desire-template" class="form-group col-md-12 question-item">
-  <span>{ t:q }:</span>
+<div id="desire-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
   
     <span rv-show="t:a | eq 1"><%=l('desire_1')%></span>
     <span rv-show="t:a | eq 2"><%=l('desire_2')%></span>      
   
 </div> 
 
-<div id="satisfied-template" class="form-group col-md-12 question-item">
-  <span>{ t:q }:</span>
+<div id="satisfied-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
   
     <span rv-show="t:a | eq 1"><%=l('satisfied_1')%></span>
     <span rv-show="t:a | eq 2"><%=l('satisfied_2')%></span>      
   
 </div> 
 
-<div id="satisfaction-template" class="form-group col-md-12 question-item">
-  <span>{ t:q }:</span>
+<div id="satisfaction-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
   
     <span rv-show="t:a | eq 1"><%=l('satisfaction_1')%></span>
     <span rv-show="t:a | eq 2"><%=l('satisfaction_2')%></span>
@@ -189,8 +189,8 @@
   
 </div> 
 
-<div id="loyality-template" class="form-group col-md-12 question-item">
-  <span>{ t:q }:</span>
+<div id="loyality-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
   
     <span rv-show="t:a | eq 1"><%=l('loyalitya1')%></span>
     <span rv-show="t:a | eq 2"><%=l('loyalitya2')%></span>
@@ -200,8 +200,8 @@
   
 </div> 
 
-<div id="mgr_correspond-template" class="form-group col-md-12 question-item">
-  <span>{ t:q }:</span>
+<div id="mgr_correspond-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
   
     <span rv-show="t:a | eq 1"><%=l('mgr_correspond_1')%></span>
     <span rv-show="t:a | eq 2"><%=l('mgr_correspond_2')%></span>

@@ -31,7 +31,7 @@ define([
   Question = Backbone.Model.extend({
     validate: function(attrs, options) {
       if ( attrs.hasOwnProperty("a")) {
-        var err = this.validateLength( attrs["a"], 1000);
+        var err = this.validateLength( attrs["a"], 3);
         if (err) return err;        
       }      
     },
@@ -145,7 +145,7 @@ define([
     },
     save: function(e) {
       this.model.errors = "";
-      that = this;      
+      that = this;
       this.qs.each(function(q) { q.isValid() });
       var hasErrors = _.some(this.qs.models, function(q) {
           return q.validationError;
@@ -153,8 +153,8 @@ define([
       if (!hasErrors) {
         this.model.set('body', JSON.stringify(that.qs) );
         this.model.save({}, {
-          success: function(model, response) {    
-            that.displaySucess();
+          success: function(model, response) {
+            that.displaySuccess();
           },
           error: function(model, response) {
             that.displayError();
@@ -168,17 +168,22 @@ define([
         this.model.errors = errors;
       }
     },
+    displaySuccess: function() {
+      $('.notify').removeClass("notify-error");
+      $.growl({title: "Success: ", 
+        message: "Employee's info is saved!"},
+        {type: "success"
+      });
+    },
     displayError: function() {
       $('.notify').removeClass("notify-ok");
       $('.notify').addClass("notify-error");
       $('.notify').show();
       $('.notify-error').fadeOut(500);
-    },
-    displaySucess: function() {
-      $('.notify').removeClass("notify-error");
-      $('.notify').addClass("notify-ok");
-      $('.notify').show();
-      $('.notify-ok').fadeOut(500);
+      $.growl({title: "Error: ", 
+        message: "Employee's info is not saved!"},
+        {type: "danger"
+      });
     }
   });
 
@@ -274,14 +279,44 @@ define([
       return this;
     },
     save: function(e) {
-      this.model.set('body', JSON.stringify(this.qs) );
-      this.model.save({}, {
-        success: function(model, response) {    
-          // that.displaySucess();
-        },
-        error: function(model, response) {
-          // that.displayError();
-        }
+      that = this;
+      this.qs.each(function(q) { q.isValid() });
+      var hasErrors = _.some(this.qs.models, function(q) {
+          return q.validationError;
+      });
+      if (!hasErrors) {
+        this.model.set('body', JSON.stringify(this.qs) );
+        this.model.save({}, {
+          success: function(model, response) {    
+            that.displaySuccess();
+          },
+          error: function(model, response) {
+            that.displayError();
+          }
+        });
+      } else{
+        that.displayError();
+        var errors = this.qs
+          .filter(function(q){return q.validationError})
+          .map(function(q){return q.get('q')});
+        this.model.errors = errors;
+      }
+    },
+    displaySuccess: function() {
+      $('.notify').removeClass("notify-error");
+      $.growl({title: "Success: ", 
+        message: "HR info is saved!"},
+        {type: "success"
+      });
+    },
+    displayError: function() {
+      $('.notify').removeClass("notify-ok");
+      $('.notify').addClass("notify-error");
+      $('.notify').show();
+      $('.notify-error').fadeOut(500);
+      $.growl({title: "Error: ", 
+        message: "HR info is not saved!"},
+        {type: "danger"
       });
     }
   });

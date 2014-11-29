@@ -83,8 +83,6 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 .events-view{list-style-type: none;}
 .event-container{margin: 10px;}
 
-
-
 /*question*/
 .questions-view{list-style-type: none;}
 .question-header span{font-weight: bold;}
@@ -92,6 +90,7 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 .questions-buttons{text-align: center; display:block !important;}
 #main .questions-buttons a {color: #fff;}
 .container-hr{background: #e6e6e6;}
+.question-title{font-style: italic;}
 
 /*user_event*/
 .container-ue{margin-top: 5px;}
@@ -106,10 +105,8 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
   font-size:40px;
   color:white;
 }
-
 .notify-error{ background:red;}
 .notify-ok{ background:green;}
-
 .q-has-error {color: red;}
 .errorClass{background: red;}
 

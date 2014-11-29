@@ -74,9 +74,12 @@ div.profile-status{text-align: right;}
 .submit-summary{text-align: right;}
 .submit-errors{color: red;}
 .container-hr{background: #e6e6e6;}
+.question-title{font-style: italic;}
 
-.ue-submit-summary {margin-bottom: 10px; padding-bottom: 10px;}
-.ue-notify {
+/*user_event*/
+.container-ue{margin-top: 5px;}
+.errors-ue{color: red;}
+.notify-ue {
   margin-bottom: 10px; margin-top: 10px;
   position:absolute;
   bottom:0;
@@ -86,10 +89,8 @@ div.profile-status{text-align: right;}
   font-size:40px;
   color:white;
 }
-
-.ue-notify-error{ background:red;}
-.ue-notify-ok{ background:green;}
-
+.notify-error{ background:red;}
+.notify-ok{ background:green;}
 .q-has-error {color: red;}
 .errorClass{background: red;}
 
