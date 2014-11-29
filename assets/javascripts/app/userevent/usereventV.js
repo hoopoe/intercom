@@ -4,10 +4,12 @@ define([
   'text!app/userevent/hr.html',
   'text!app/userevent/questions.html',
   'text!app/userevent/questions_ro.html',
-  'text!app/userevent/hrForm.html',
   'text!app/userevent/manager.html',
-  'text!app/userevent/employee.html'
-], function(i18n, defaultT, hrT, questionsT, questions_ro_T, hrFormT, managerT, employeeT) {
+  'text!app/userevent/manager_ro.html',
+  'text!app/userevent/employee.html',
+  'text!app/userevent/employee_ro.html'
+], function(i18n, defaultT, hrT, questionsT, questions_ro_T,
+  managerT, manager_ro_T, employeeT, employee_ro_T) {
   var i18NOptions = { 
       detectFromHeaders: false,
       lng: document.documentElement.lang || window.navigator.userLanguage || window.navigator.language || 'en-US',
@@ -29,7 +31,7 @@ define([
   Question = Backbone.Model.extend({
     validate: function(attrs, options) {
       if ( attrs.hasOwnProperty("a")) {
-        var err = this.validateLength( attrs["a"], 3);
+        var err = this.validateLength( attrs["a"], 1000);
         if (err) return err;        
       }      
     },
@@ -41,26 +43,6 @@ define([
   });
   QuestionCollection = Backbone.Collection.extend({
         model: Question
-  });
-
-  HRResultView = Backbone.View.extend({
-    template: _.template(hrFormT),
-    qs: new QuestionCollection(),
-    render: function() {
-      this.$el.html('');
-      this.$el.html(this.template({l:_tr}));
-      console.log(this.model);
-      // rivets.bind(this.el, {
-      //     t: this.model
-      // });
-      this.qs.reset(this.model);
-      var qsView = new QuestionsView({
-          collection: this.qs
-      });
-      qsView.render()
-      this.$el.append(qsView.render);       
-      return this;
-    }
   });
 
   QuestionsHeaderView = Backbone.View.extend({
@@ -142,22 +124,23 @@ define([
       else
         data = {'firstname': this.model.get('firstname'),
         'lastname': this.model.get('lastname')};
-
+      if ( this.model.has('peons') )
+        data['peons'] = this.model.get('peons');
       var qHeader = new QuestionsHeaderView({model: data});
-      this.$el.find('.questions-ph').append(qHeader.render().el);
+      this.$el.find('.header-ph').append(qHeader.render().el);
 
       var hrbody = $.parseJSON(this.model.get('hrForm'));
       this.hrqs.reset(hrbody);
       var hrQsView = new QuestionsROView({
           collection: this.hrqs
       });
-      this.$el.find('.questions-ph').append(hrQsView.render().el);
+      this.$el.find('.hr-ph').append(hrQsView.render().el);
 
       this.qs.reset(body);
       var qsView = new QuestionsView({
           collection: this.qs
       });
-      this.$el.find('.questions-ph').append(qsView.render().el);
+      this.$el.find('.general-ph').append(qsView.render().el);
       return this;
     },
     save: function(e) {
@@ -199,6 +182,58 @@ define([
     }
   });
 
+  EmployeeROView = Backbone.View.extend({
+    template: _.template(employee_ro_T),
+    qs: new QuestionCollection(),
+    data: undefined,
+    render: function() {
+      this.$el.html(this.template);
+      var body = $.parseJSON(this.model.body);
+      if (this.model.data)
+        data = $.parseJSON(this.model.data);
+      else
+        data = {'firstname': this.model.get('firstname'),
+        'lastname': this.model.get('lastname')};
+      // if ( this.model.has('peons') )
+      //   data['peons'] = this.model.get('peons');
+
+      var qHeader = new QuestionsHeaderView({model: data});
+      this.$el.find('.emp-header-ph').append(qHeader.render().el);
+
+      this.qs.reset(body);
+      var qsView = new QuestionsROView({
+          collection: this.qs
+      });
+      this.$el.find('.emp-ph').append(qsView.render().el);
+      return this;
+    }
+  });
+
+  ManagerROView = Backbone.View.extend({
+    template: _.template(manager_ro_T),
+    qs: new QuestionCollection(),
+    data: undefined,
+    render: function() {
+      this.$el.html(this.template);
+      var body = $.parseJSON(this.model.body);
+      if (this.model.data)
+        data = $.parseJSON(this.model.data);
+      else
+        data = {'firstname': this.model.get('firstname'),
+        'lastname': this.model.get('lastname')};
+
+      var qHeader = new QuestionsHeaderView({model: data});
+      this.$el.find('.mgr-header-ph').append(qHeader.render().el);
+
+      this.qs.reset(body);
+      var qsView = new QuestionsROView({
+          collection: this.qs
+      });
+      this.$el.find('.mgr-ph').append(qsView.render().el);
+      return this;
+    }
+  });
+
   ManagerView = EmployeeView.extend({
     template: _.template(managerT),
     name: "mgrForm"
@@ -206,18 +241,52 @@ define([
 
   HRView = Backbone.View.extend({
     template: _.template(hrT),
+    qs: new QuestionCollection(),
+    events: {
+      'click .save-ue': 'save'
+    },
     render: function() {
       this.$el.html(this.template);
       rivets.bind(this.el, {
           t: this.model
       });
+
+      if (this.model.get('empForm')) {
+        var empView = new EmployeeROView({
+          model: this.model.get('empForm')
+        });
+        this.$el.find('.left-ph').append(empView.render().el);
+      }
+
+      _.each(this.model.get('mgrForms'), function(form) {
+        var mgrView = new ManagerROView({
+          model: form
+        });
+        this.$el.find('.right-ph').append(mgrView.render().el);
+      }, this);
+
+      var hrbody = $.parseJSON(this.model.get('hrForm'));
+      this.qs.reset(hrbody);
+      var hrQsView = new QuestionsView({
+          collection: this.qs
+      });
+      this.$el.find('.hr-ph').append(hrQsView.render().el);
       return this;
+    },
+    save: function(e) {
+      this.model.set('body', JSON.stringify(this.qs) );
+      this.model.save({}, {
+        success: function(model, response) {    
+          // that.displaySucess();
+        },
+        error: function(model, response) {
+          // that.displayError();
+        }
+      });
     }
   });
 
-  var view = Backbone.View.extend({        
-    template: _.template(defaultT),
-    HRtemplate: _.template(hrT),
+  var view = Backbone.View.extend({
     kind:"",
     initialize: function() {
         this.kind = this.model.get('kind');
@@ -229,44 +298,13 @@ define([
           model: this.model
         });
         this.$el.append(mgrView.render().el);
-
-        // console.log(this.model);
-        // this.$el.html(this.HRtemplate);
-        // rivets.bind(this.el, {
-        //     t: this.model
-        // });
-        // _.each(this.model.get('mgrForms'), function(form){
-        //   var data = $.parseJSON(form.data);
-        //   var body = $.parseJSON(form.body);
-        //   var qs = new QuestionCollection()
-        //   qs.reset(body);
-        //   qs.each(function(i){i.set('hrview', true);});
-        //   var mgrView = new QuestionsView({
-        //       collection: qs,
-        //       model: data
-        //   });
-        //   mgrView.render();
-        //   this.$el.find('.mgrs-ph').append(mgrView.$el);
-        // }, this);
-
-        // var data = $.parseJSON(this.model.get('empForm').data);
-        // var body = $.parseJSON(this.model.get('empForm').body);
-        // var qs = new QuestionCollection()
-        // qs.reset(body);
-        // qs.each(function(i){i.set('hrview', true);});
-        // var empView = new QuestionsView({
-        //     collection: qs,
-        //     model: data
-        // });
-        // empView.render();
-        // this.$el.find('.emp-ph').append(empView.$el);
       }
       else if (this.kind === "mgr") {
         var mgrView = new ManagerView({
           model: this.model
         });
         this.$el.append(mgrView.render().el);
-      } else { //default - employee
+      } else {
         var empView = new EmployeeView({
           model: this.model
         });

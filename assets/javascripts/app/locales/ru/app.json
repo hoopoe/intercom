@@ -1,4 +1,5 @@
 {
+  "field_title": "Заголовок",
   "skills_title": "Технические навыки",
   "positions_title": "Место работы",
   "education_title": "Образование",
@@ -28,7 +29,7 @@
   "error_t_parse_error": "Ошибка парсинга данных",
   "groups_name": "События",
   "personal_Yes": "Да",
-  "personal_No": "Да",
+  "personal_No": "Нет",
   "personal_Not_Now": "Да, но не сейчас (в феврале-марте)",
   "qualitya1": "качество работы (результата)",
   "qualitya2": "продуктивность",

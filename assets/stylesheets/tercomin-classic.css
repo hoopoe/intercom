@@ -73,6 +73,7 @@ div.profile-status{text-align: right;}
 #main .questions-buttons a {color: #fff;}
 .submit-summary{text-align: right;}
 .submit-errors{color: red;}
+.container-hr{background: #e6e6e6;}
 
 .ue-submit-summary {margin-bottom: 10px; padding-bottom: 10px;}
 .ue-notify {
@@ -94,7 +95,6 @@ div.profile-status{text-align: right;}
 
 /*hr*/
 .hr-view div{text-align: center;}
-
 .form-control { font-size: 12px; }
 
 /*employers*/

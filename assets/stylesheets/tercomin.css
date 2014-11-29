@@ -91,6 +91,7 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 .questions-header span.fio{font-size: 20px;}
 .questions-buttons{text-align: center; display:block !important;}
 #main .questions-buttons a {color: #fff;}
+.container-hr{background: #e6e6e6;}
 
 /*user_event*/
 .container-ue{margin-top: 5px;}

@@ -3,8 +3,9 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
 
   before_filter :build_event_groups, :except => [:index, :create]
   before_filter :create_hr_form, :except => [:index, :create]
-  before_filter :require_self_or_manager, :only => [:update]
-  before_filter :require_self_or_manager_or_hr, :only => [:show]
+  # before_filter :require_self_or_manager, :only => [:update]
+  before_filter :require_self_or_manager_or_hr, :only => [:show, :update]
+  
   before_filter :find_user_event, :except => [:index, :create]
   before_filter :require_tercomin_pm, :only => [:destroy]
   
@@ -57,7 +58,6 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
             :eventname => @event.name,
             :kind => "hr"}
           @response[:empForm] = @ue ? @ue.attributes: ""
-           
           respond_with @response
         else
           render_403        
@@ -68,15 +68,21 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
 
   def update
     if params[:body].present?
-      if User.current == @user
+      if @role == :self
         @ue.body = params[:body]
         @ue.save!
         respond_with @ue
       else
-        if @ue.mgr.present?
+        if @role == :mgr
           @ue.body = params[:body]
           @ue.save!
           respond_with @ue  
+        else 
+          if @role == :hr
+            @hr_form.body = params[:body]
+            @hr_form.save!
+            respond_with @hr_form  
+          end
         end
       end
     else

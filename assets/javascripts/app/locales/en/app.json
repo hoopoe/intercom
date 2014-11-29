@@ -1,4 +1,5 @@
 {
+  "field_title": "Title",
   "skills_title": "Skills",
   "positions_title": "Positions",
   "education_title": "Education", 
@@ -28,7 +29,7 @@
   "error_t_parse_error": "Parse json error",
   "groups_name": "Groups",
   "personal_Yes": "Да",
-  "personal_No": "Да",
+  "personal_No": "Нет",
   "personal_Not_Now": "Да, но не сейчас (в феврале-марте)",
   "qualitya1": "качество работы (результата)",
   "qualitya2": "продуктивность",

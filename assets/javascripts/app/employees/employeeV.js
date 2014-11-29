@@ -1,19 +1,19 @@
 define([
-    'i18n',
+  'i18n',
 	'text!employeeTemplate'
 ], function(i18n, EmployeeT) {
-    var i18NOptions = { 
-      detectFromHeaders: false,
-      lng: document.documentElement.lang || window.navigator.userLanguage || window.navigator.language || 'en-US',
-      fallbackLang: 'en',
-      ns: 'app',
-      resGetPath: 'plugin_assets/tercomin/javascripts/app/locales/__lng__/__ns__.json',
-      fallbackLng: false
-      };
-    var _tr = null;
-    i18n.init(i18NOptions, function (tr) {
-        _tr = tr;
-    });
+  var i18NOptions = { 
+    detectFromHeaders: false,
+    lng: document.documentElement.lang || window.navigator.userLanguage || window.navigator.language || 'en-US',
+    fallbackLang: 'en',
+    ns: 'app',
+    resGetPath: 'plugin_assets/tercomin/javascripts/app/locales/__lng__/__ns__.json',
+    fallbackLng: false
+    };
+  var _tr = null;
+  i18n.init(i18NOptions, function (tr) {
+      _tr = tr;
+  });
 	var view = Backbone.View.extend({
         render: function() {
         	var template =  _.template( EmployeeT );
