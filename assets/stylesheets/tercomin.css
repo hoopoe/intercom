@@ -91,6 +91,8 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 #main .questions-buttons a {color: #fff;}
 .container-hr{background: #e6e6e6;}
 .question-title{font-style: italic;}
+.hr-results div.row{margin-bottom: 5px;}
+.hr-results-ro div.row{margin-bottom: 3px; border-bottom:1px solid #ddd;}
 
 /*user_event*/
 .container-ue{margin-top: 5px;}

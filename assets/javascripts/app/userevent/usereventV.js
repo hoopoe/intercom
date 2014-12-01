@@ -284,7 +284,7 @@ define([
       var hasErrors = _.some(this.qs.models, function(q) {
           return q.validationError;
       });
-      if (!hasErrors) {
+      if (!hasErrors) {        
         this.model.set('body', JSON.stringify(this.qs) );
         this.model.save({}, {
           success: function(model, response) {    

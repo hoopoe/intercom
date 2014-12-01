@@ -75,6 +75,8 @@ div.profile-status{text-align: right;}
 .submit-errors{color: red;}
 .container-hr{background: #e6e6e6;}
 .question-title{font-style: italic;}
+.hr-results div.row{margin-bottom: 5px;}
+.hr-results-ro div.row{margin-bottom: 3px; border-bottom:1px solid #ddd;}
 
 /*user_event*/
 .container-ue{margin-top: 5px;}
