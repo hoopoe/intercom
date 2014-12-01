@@ -1,6 +1,6 @@
 define([
-  'app/util',
   'i18n',
+  'app/util',
   'text!profileTemplate',
   'app/profile/background/backgroundsC',
   'app/profile/background/backgroundsV',
@@ -8,7 +8,7 @@ define([
   'app/profile/position/positionsC',
   'app/profile/position/positionsV',
   'app/profile/position/addUpdateV',
-], function(util, i18n, profileT, 
+], function(i18n, util, profileT, 
   BackgroundCollection, BackgroundsView, BackgroundAddUpdateView,
   PositionCollection, PositionsView, PositionAddUpdateView) {
   var i18NOptions = { 
