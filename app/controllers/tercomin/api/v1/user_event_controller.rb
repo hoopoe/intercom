@@ -90,11 +90,8 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
     end    
   end
 
-  def destroy    
-    ue = UserEvent.find_by_user_id_and_event_id(@user.id, @event.id)    
-    if ue.present?
-      ue.destroy
-    end  
+  def destroy
+    UserEvent.where(user_id: @user.id, event_id: @event.id).destroy_all    
     respond_to do |format|
       format.api  { render_api_ok }
     end
