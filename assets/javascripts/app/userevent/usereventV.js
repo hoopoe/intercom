@@ -126,6 +126,8 @@ define([
         'lastname': this.model.get('lastname')};
       if ( this.model.has('peons') )
         data['peons'] = this.model.get('peons');
+      if (this.model.has('created_on'))
+        data['created_on'] = this.model.get('created_on');
       var qHeader = new QuestionsHeaderView({model: data});
       this.$el.find('.header-ph').append(qHeader.render().el);
 

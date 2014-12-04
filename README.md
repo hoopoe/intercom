@@ -5,9 +5,11 @@ Please, install plugin into "~/redmine/plugins/tercomin"
 
 rake redmine:plugins:migrate NAME=tercomin
 
+Required:
+2 redmine groups: "hr" and "lt-prj-tercomin-pm"
+
 Extra:
 rake redmine:tercomin:load_profiles (to load user profiles)
-
 
 Demo: https://damp-thicket-8206.herokuapp.com
 uid: ivan
