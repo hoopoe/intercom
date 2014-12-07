@@ -1,0 +1,27 @@
+<div id="event-groups-template">
+	{evnt:event.name}
+</div>
+
+<div id="event-group-template">
+	Name: <label rv-text="group.name"></label>
+	<div class="row">
+		Managers:
+		<div class="col-md-12 event-group-mgr">
+			<ul>
+			  <li rv-each-m="group.managers">
+			    <a rv-href-rooted="m.ue_id" data-root='#user_event/'>{ m.name }</a>
+			  </li>
+			<ul>
+		</div>
+	<div>
+	<div class="row">
+		Employees:
+		<div class="col-md-12 event-group-emp">
+			<ul>
+			  <li rv-each-e="group.employees">
+			    <a rv-href-rooted="e.ue_id" data-root='#user_event/'>{ e.name }</a>
+			  </li>
+			<ul>
+		</div>
+	<div>
+</div>

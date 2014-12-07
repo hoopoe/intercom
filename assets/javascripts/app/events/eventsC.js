@@ -1,11 +1,9 @@
 define([
-], function() {
-	var ev = Backbone.Model.extend({
-        urlRoot: '/tercomin/api/v1/event'
-    });
-    var collection = Backbone.Collection.extend({
+	'app/events/eventM'
+], function(EventModel) {
+    var Events = Backbone.Collection.extend({
         url: '/tercomin/api/v1/event',
-        model: ev
+        model: EventModel
     });
-    return collection;
+    return Events;
 });

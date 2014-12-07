@@ -7,7 +7,7 @@ define([
                 return name +" should be less than " + len + " symbols";
             }
         },
-        validate: function(attrs, options) {            
+        validate: function(attrs, options) {
             if (attrs['room_number']) {     
                 if (attrs['room_number'].length > 6) {
                     return "Room number should be less than 6 symbols";

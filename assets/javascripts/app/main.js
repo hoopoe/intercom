@@ -77,6 +77,11 @@ define([
         el.href = root + value;
     }
 
+    rivets.binders['href-replace'] = function(el, value) {
+        var root = el.getAttribute('data-replace');
+        el.href = root.replace('%', value);
+    }
+
     rivets.binders['src-strict'] = function(el, value) {
         if (value === 'noavatar')
             value = "";

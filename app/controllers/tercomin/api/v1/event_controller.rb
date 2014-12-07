@@ -1,7 +1,8 @@
 class Tercomin::Api::V1::EventController < ApplicationController
   respond_to :json
   before_filter :require_logged
-  before_filter :require_tercomin_pm, :only => [:create, :show, :destroy]
+  before_filter :require_tercomin_pm, :only => [:create, :destroy, :update]
+  before_filter :require_tercomin_pm_or_hr, :only => [:show]
   before_filter :find_event, :except => [:index, :create]
   accept_api_auth :index, :create, :show
 
@@ -12,10 +13,21 @@ class Tercomin::Api::V1::EventController < ApplicationController
   def show
     respond_with @event  
   end
+
+  def update
+    @event.safe_attributes = params[:event] if params[:event]
+    
+    if @event.save       
+      respond_with @event
+    else        
+      render_validation_errors(@event) 
+    end
+    
+  end
  
   def create  	    
   	@event = Event.new
-    @event.safe_attributes = params[:event]    
+    @event.safe_attributes = params[:event]
   	respond_to do |format|
       if @event.save       
         format.json  { render :text => @event.id, :status => :created}
@@ -55,6 +67,15 @@ class Tercomin::Api::V1::EventController < ApplicationController
   def require_tercomin_pm    
     return unless require_login        
     if !is_ingroup(['lt-prj-tercomin-pm'])
+      render_403
+      return false
+    end
+    true
+  end
+
+  def require_tercomin_pm_or_hr
+    return unless require_login        
+    if (!is_ingroup(['lt-prj-tercomin-pm']) && !is_ingroup(['hr']))
       render_403
       return false
     end

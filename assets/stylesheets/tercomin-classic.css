@@ -64,6 +64,14 @@ div.profile-status{text-align: right;}
 /*events-view*/
 .events-view{list-style-type: none;}
 .events-container{margin: 10px;}
+.event-edit div.row { padding: 10px;}
+.event-info{float: left}
+.event-actions {float: right;}
+#event-group-template {margin: 10px;}
+.event-group-mgr ul{list-style-type: none; background-color: #FFF;}
+.event-group-mgr ul li{display: inline;}
+.event-group-emp ul{list-style-type: none;}
+.event-group-emp ul li{display: inline;}
 
 /*question*/
 .questions-view{list-style-type: none;}

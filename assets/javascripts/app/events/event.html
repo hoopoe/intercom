@@ -1,7 +1,11 @@
-<div class='row event-container'>     
+<div class='row event-container'>   
 	<div class='event-info'>
 	  <label for="eventName"><%=l('field_title')%>:</label>
 	  <a rv-href-rooted="evnt:ue_id" data-root='#user_event/'>{evnt:event.name}</a>
 	</div> 
-	<div class="line-separator-gray"/> 
+	<div class="event-actions">
+		<a rv-show="evnt:admin" rv-href-replace="evnt:event.id" data-replace='#events/%/edit'>Edit</a>
+	  	<a rv-show="evnt:hr" rv-href-replace="evnt:event.id" data-replace='#events/%/show'>Show</a>
+	</div>
 </div>
+<div class="line-separator-gray"/> 
