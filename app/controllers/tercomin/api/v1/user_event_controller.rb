@@ -3,7 +3,6 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
 
   before_filter :build_event_groups, :except => [:index, :create]
   before_filter :create_hr_form, :except => [:index, :create]
-  # before_filter :require_self_or_manager, :only => [:update]
   before_filter :require_self_or_manager_or_hr, :only => [:show, :update]
   
   before_filter :find_user_event, :except => [:index, :create]
@@ -29,11 +28,10 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
       :created_on=>@user.created_on,
       :position=>@uPosition,
       :project=>@uProject,
-      :extraProject=>@uExtraProject,
       :eventName => @event.name,
       :kind => "self"}
       @response[:data] = @profile.data if @profile
-      @response[:peons] = @im_responsible_for
+      @response[:peons] = getMyPeons(@ue.user_id)
       respond_with @response
     else 
       if @role == :mgr
@@ -45,7 +43,6 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
         :created_on=>@user.created_on,
         :position=>@uPosition,
         :project=>@uProject,
-        :extraProject=>@uExtraProject,
         :eventName => @event.name,
         :kind => "mgr"}
         @response[:data] = @profile.data if @profile
@@ -57,7 +54,8 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
             :hrForm => @hr_form.body,
             :eventname => @event.name,
             :kind => "hr"}
-          @response[:empForm] = @ue ? @ue.attributes: ""
+          @response[:empForm] = @ue.attributes if @ue
+          @response[:peons] = getMyPeons(@ue.user_id) if @ue
           respond_with @response
         else
           render_403        
@@ -122,7 +120,7 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
       end
     end
     
-  rescue ActiveRecord::RecordNotFound
+    rescue ActiveRecord::RecordNotFound
     render_404
   end
 
@@ -202,14 +200,6 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
         @ue.save!
       end
       @profile = UserProfile.find_by_user_id(@ue.user_id)
-      my_emps = @ev_groups
-        .map{|i| i['e'] if i['m']
-        .include?(@user.id.to_s)}
-        .compact
-      if my_emps.present? 
-        my_emps_hash = my_emps.reduce({}, :merge) 
-        @im_responsible_for = my_emps_hash.map{ |k,v| { 'id' => "#{k.to_s}_#{@event.id}", 'name' => v } }
-      end
     else      
       if @role == :mgr
         @ue = UserEvent.find_by_user_id_and_event_id_and_mgr_id(@user.id, @event.id, User.current.id)
@@ -244,6 +234,19 @@ class Tercomin::Api::V1::UserEventController < ApplicationController
         end
       end
     end
+  end
+
+  def getMyPeons(user_id)
+    result = Hash.new
+    my_emps = @ev_groups
+        .map{|i| i['e'] if i['m']
+        .include?(user_id.to_s)}
+        .compact
+    if my_emps.present? 
+      my_emps_hash = my_emps.reduce({}, :merge) 
+      result = my_emps_hash.map{ |k,v| { 'id' => "#{k.to_s}_#{@event.id}", 'name' => v } }
+    end
+    result
   end
 
 end  

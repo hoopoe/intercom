@@ -201,9 +201,9 @@ define([
       else
         data = {'firstname': this.model.get('firstname'),
         'lastname': this.model.get('lastname')};
-      // if ( this.model.has('peons') )
-      //   data['peons'] = this.model.get('peons');
-
+      if ( this.model.peons )
+        data['peons'] = this.model.peons;
+      
       var qHeader = new QuestionsHeaderView({model: data});
       this.$el.find('.emp-header-ph').append(qHeader.render().el);
 
@@ -257,10 +257,13 @@ define([
       rivets.bind(this.el, {
           t: this.model
       });
-
+      
       if (this.model.get('empForm')) {
+        var empForm = this.model.get('empForm')
+        if ( this.model.has('peons') )
+          empForm['peons'] = this.model.get('peons');
         var empView = new EmployeeROView({
-          model: this.model.get('empForm')
+          model: empForm
         });
         this.$el.find('.left-ph').append(empView.render().el);
       }
