@@ -38,7 +38,7 @@ namespace :redmine do
             next; # skip header
           end
 
-          if (i > 150) #limit number of employers 
+          if (i > 150) #limit number of employees 
             break 
           end
 
@@ -66,7 +66,7 @@ namespace :redmine do
             next; # skip header
           end
 
-          if (i > 150) #limit number of employers 
+          if (i > 150) #limit number of employees 
             break 
           end
 

@@ -18,10 +18,10 @@ define([
     
 	var appRouter = Backbone.Router.extend({
         routes: {
-            'employers': 'employers',
+            'employees': 'employees',
             'mypage': 'mypage',
             'mypage/(:param)': 'mypage',
-            'employers/(:param)': 'employers',
+            'employees/(:param)': 'employees',
             'events': 'events',
             'user_event/(:u_e)': 'user_event',
             'settings': 'settings',
@@ -50,7 +50,7 @@ define([
                 }
             });
         },
-        employers: function(param) {
+        employees: function(param) {
             var employees = new EmployeeCollection;
             var view = new EmployeesView({
                 collection: employees

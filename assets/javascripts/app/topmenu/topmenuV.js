@@ -48,11 +48,11 @@ define([
             var keywords = $(e.target).val();
             
             if (keywords === '') {
-                Backbone.history.navigate('/employers', {
+                Backbone.history.navigate('/employees', {
                     trigger: true
                 });
             } else {
-                Backbone.history.navigate('/employers/' + keywords, {
+                Backbone.history.navigate('/employees/' + keywords, {
                     trigger: true
                 });
             }
@@ -62,11 +62,11 @@ define([
     searchByClick: function(e) {
         var keywords = $('.search-control').val();
         if (keywords === '') {
-            Backbone.history.navigate('/employers', {
+            Backbone.history.navigate('/employees', {
                 trigger: true
             });
         } else {
-            Backbone.history.navigate('/employers/' + keywords, {
+            Backbone.history.navigate('/employees/' + keywords, {
                 trigger: true
             });
         }

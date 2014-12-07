@@ -2,7 +2,7 @@ define([
 	'app/employees/employeeV',
 ], function(EmployeeView) {
 	var view = Backbone.View.extend({
-        name: "employers",
+        name: "employees",
         initialize: function() {
             this.$el.html('');
             this.$el.append("<div class='employer-list'> </div>");
