@@ -1,5 +1,6 @@
 class Tercomin::Api::V1::EventController < ApplicationController
-  respond_to :json  
+  respond_to :json
+  before_filter :require_logged
   before_filter :require_tercomin_pm, :only => [:create, :show, :destroy]
   before_filter :find_event, :except => [:index, :create]
   accept_api_auth :index, :create, :show
@@ -32,6 +33,12 @@ class Tercomin::Api::V1::EventController < ApplicationController
   end
 
   private
+
+  def require_logged
+    if (!User.current.logged?)
+      respond_with "User is not logged", status: :unprocessable_entity
+    end
+  end
 
   def find_event    
     @event = Event.find(params[:id])

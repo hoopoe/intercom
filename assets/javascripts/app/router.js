@@ -26,7 +26,17 @@ define([
             'user_event/(:u_e)': 'user_event',
             'settings': 'settings',
             'settings/(:param)': 'settings',
-            '*actions': 'mypage'
+            '*actions': 'resolvePage'
+        },
+        resolvePage:function(){
+            if (window.location.search) {
+                var hash = window.location.search.replace('?', '#');
+                window.location = window.location.origin + window.location.pathname + hash;
+            } else {
+                Backbone.history.navigate('/mypage', {
+                    trigger: true
+                });
+            }
         },
         mypage: function(param) {
             var req = {};
@@ -39,7 +49,7 @@ define([
             m.fetch({
                 error: function(m, r) {
                     if (r.status === 422) { //not logged
-                        util.logMeIn();
+                        util.logMeIn('/tercomin?mypage');
                     }
                 },
                 success: function(m, r) {
@@ -71,7 +81,6 @@ define([
             });
         },
         events: function() {
-            // app.events.reset();
             var events = new EventCollection;
             events.fetch({                
                 success: function(m, r) {
@@ -81,7 +90,9 @@ define([
                     util.showView(eventsView);
                 },
                 error: function(m, r) {
-                    console.log(r.responseText);
+                    if (r.status === 422) {
+                        util.logMeIn('/tercomin?events');
+                    }
                 },
             });
         },
@@ -111,7 +122,7 @@ define([
             m.fetch({
                 error: function(m, r) {
                     if (r.status === 422) { //not logged
-                        util.logMeIn();
+                        util.logMeIn('/tercomin?settings');
                     }
                 },
                 success: function(m, r) {

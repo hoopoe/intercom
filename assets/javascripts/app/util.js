@@ -4,11 +4,11 @@ define([
 	var initialize = function() {
 		console.log("test util");
 	}
-	var logMeIn = function() {
+	var logMeIn = function(url) {
 		if (!window.location.origin) {
             window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
         }
-        window.location = window.location.origin + '/login?back_url=' + window.location.origin + '/tercomin';
+        window.location = window.location.origin + '/login?back_url=' + window.location.origin + url;
 	}
 	var getHash = function() {
         var text = "";
