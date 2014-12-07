@@ -153,7 +153,33 @@
               <span rv-show="user_p:edit_prop | eq 'birthday'" rv-text="user_p.validationError" class="emp-item-error"/>
             </div>            
           </div>
-        </div>      
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 profile-item">
+            <div class="col-md-2 profile-data-title">
+              <span><%=l('employment_date')%>:</span>
+              <span rv-hide="user_p:edit_prop | eq 'employmentDate'" class="edit-emp-item">
+                <a rv-show="user_p:editable | eq 'true'" value="employmentDate">
+                  <i class="glyphicon glyphicon-pencil"/>                
+                </a>
+              </span>         
+            </div>
+            <div class="col-md-6">
+              <div rv-show="user_p:edit_prop | eq 'employmentDate'">
+                <input rv-value="user_p:employmentDate" id="employmentDatePicker"/>
+                <a class="emp-item-cancel" value="employmentDate"><i class="glyphicon">Cancel</i></a>
+              </div>
+              <div rv-hide="user_p:edit_prop | eq 'employmentDate'">
+                <span rv-text="user_p:employmentDate" title="mm/dd/yyyy" />
+                <span class="glyphicon glyphicon-floppy-saved profile-notify employmentDate-notify-ok"/>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <span rv-show="user_p:edit_prop | eq 'employmentDate'" rv-text="user_p.validationError" class="emp-item-error"/>
+            </div>            
+          </div>
+        </div>    
       
         </div>  <!--close col-md-8-->
       

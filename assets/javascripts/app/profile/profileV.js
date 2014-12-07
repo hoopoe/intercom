@@ -274,6 +274,18 @@ define([
               }
           });
       }
+      if (prop === 'employmentDate') {
+          var that = this;
+          $("#employmentDatePicker").datepicker({
+              changeYear: true,
+              dateFormat: 'dd/mm/yy',
+              onSelect: function(dateText) {
+                  var data = that.model.get('data');
+                  data.set('employmentDate', dateText);
+                  that.save();
+              }
+          });
+      }
     },
     cancelEmpItem: function(e) {
         var prop = e.currentTarget.getAttribute('value');

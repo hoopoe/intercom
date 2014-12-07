@@ -123,11 +123,18 @@ define([
         data = $.parseJSON(this.model.get('data'));
       else
         data = {'firstname': this.model.get('firstname'),
-        'lastname': this.model.get('lastname')};
+        'lastname': this.model.get('lastname'),
+        'created_on': this.model.get('created_on')};
+
+      if (!data.employmentDate) {
+        data['created_on'] = this.model.get('created_on');
+      } else{
+        data['created_on'] = data.employmentDate;
+      }
+      
       if ( this.model.has('peons') )
         data['peons'] = this.model.get('peons');
-      if (this.model.has('created_on'))
-        data['created_on'] = this.model.get('created_on');
+
       var qHeader = new QuestionsHeaderView({model: data});
       this.$el.find('.header-ph').append(qHeader.render().el);
 

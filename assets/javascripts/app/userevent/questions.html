@@ -20,7 +20,7 @@
   <span id="uExtraProject"> {t.project_extra}</span>
   <br/>
   <label for="uCreatedOn"><%=l('employment_date')%>: </label>
-  <span id="uCreatedOn"> {t.created_on | date}</span>
+  <span id="uCreatedOn" title="dd/mm/yyyy"> {t.created_on}</span>
 </div> 
 
 <div id="question-template" rv-class-has-error="t.validationError" class="form-group col-md-12">
