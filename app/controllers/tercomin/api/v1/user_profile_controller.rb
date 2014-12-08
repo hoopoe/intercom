@@ -106,59 +106,58 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
     end
 
     if (params[:id] == "logged")
-      profile = UserProfile.find_or_create_by_user_id(User.current.id)
+      @profile = UserProfile.find_or_create_by_user_id(User.current.id)
     else
-      profile = UserProfile.find_or_create_by_user_id(params[:id])
+      @profile = UserProfile.find_or_create_by_user_id(params[:id])
     end
 
     if(params.has_key?(:profile))
       #profile data
       if params[:profile][:data].present?
-        if profile.data.present?
-          data = JSON.parse(profile.data)
+        if @profile.data.present?
+          data = JSON.parse(@profile.data)
         else
           data = Hash.new
         end        
         data.merge!(JSON.parse(params[:profile][:data]));
-        profile.data = data.to_json
+        @profile.data = data.to_json
       end
       #profile settings
       if params[:profile][:settings].present?
-        if profile.settings.present?
-          settings = JSON.parse(profile.settings)
+        if @profile.settings.present?
+          settings = JSON.parse(@profile.settings)
         else
           settings = Hash.new
         end      
         settings.merge!(JSON.parse(params[:profile][:settings]));
-        profile.settings = settings.to_json
+        @profile.settings = settings.to_json
       end
       #profile positions
       if params[:profile][:positions].present?       
-        profile.positions = params[:profile][:positions]
+        @profile.positions = params[:profile][:positions]
       end
       #profile backgrounds
       if params[:profile][:backgrounds].present?       
-        profile.backgrounds = params[:profile][:backgrounds]
+        @profile.backgrounds = params[:profile][:backgrounds]
       end
     end
 
     if(params.has_key?(:avatar))
-      user = User.find_by_id(profile.user_id)
+      user = User.find_by_id(@profile.user_id)
       StringIO.open(Base64.strict_decode64(params[:avatar].split(',').pop)) do |data|
         data.class.class_eval { attr_accessor :original_filename, :content_type }
         data.original_filename = "#{user.login}.png"
         data.content_type = "image/png"
-        profile.avatar = data
+        @profile.avatar = data
       end
     end
 
-    if profile.save
-      Rails.logger.info "saved"
+    if @profile.save
+      respond_with @profile
     else
-      Rails.logger.info "failed to save"
+      render_validation_errors(@profile) 
     end
-
-    respond_with profile
+    
   end
 
   private
@@ -174,7 +173,7 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
 
   def is_self_or_last_event_manager # TODO: refactor we need groups page. extract them from Event
     @has_full_access = false
-    if params[:id] == "logged"
+    if (params[:id] == "logged" || User.current.id == params[:id].to_i)
       @has_full_access = true;        
     else      
       e = Event.last
@@ -182,13 +181,13 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
         groups = JSON.parse(e.groups)
         for i in groups          
           if i['m'].keys().include?(User.current.id.to_s)            
-            if i['e'].keys().include?(params[:id])              
+            if i['e'].keys().include?(params[:id])
               @has_full_access = true;
             end
           end          
         end        
       end      
-    end 
+    end
   end
 
   def authorize_self_and_manager

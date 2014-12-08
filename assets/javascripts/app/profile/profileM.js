@@ -64,9 +64,9 @@ define([
       var json = _.clone(this.attributes);      
       for(var attr in json) {
         if((json[attr] instanceof Backbone.Model) && (attr === 'data')) {            
-            json[attr].unset('edit_prop');
-            json[attr].unset('editable');
-            json[attr].unset('fullaccess');
+            // json[attr].unset('edit_prop');
+            // json[attr].unset('editable');
+            // json[attr].unset('fullaccess'); //TODO: we don't need to save it 
             json['profile']['data'] = JSON.stringify(json[attr]);            
         }
       }
