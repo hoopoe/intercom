@@ -3,9 +3,11 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
 
   helper :sort
   include SortHelper
+  
+  before_filter :authorize_self_and_manager, :only => :update
+  before_filter :is_self_or_last_event_manager, :only => :show
 
   accept_api_auth :index, :show, :update
-  before_filter :authorize_self_and_manager, :only => :update
 
   def index
     sort_init 'lastname', 'asc'
@@ -54,17 +56,25 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
     respond_with @response
   end
 
-  def show
+  def show    
     if (params.has_key?(:id))
       if (params[:id] == "logged" && !User.current.logged?)
         respond_with "User is not logged", status: :unprocessable_entity
       else
-        users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname,
-         user_profile_t.data, user_profile_t.settings,
-         user_profile_t.positions,
-         user_profile_t.backgrounds,
-         user_profile_t.avatar_file_name avatar_url")
-        .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
+
+        if @can_view_profile
+          users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname,
+           user_profile_t.data, user_profile_t.settings,
+           user_profile_t.positions,
+           user_profile_t.backgrounds,
+           user_profile_t.avatar_file_name avatar_url")
+          .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
+        else
+          users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname,
+           user_profile_t.data, user_profile_t.settings,           
+           user_profile_t.avatar_file_name avatar_url")
+          .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
+        end
 
         if (params[:id] == "logged")
           users = users.where("#{User.table_name}.id = (?)", User.current.id)
@@ -75,11 +85,12 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
         if users.exists?
           set_avatars(users)
           u = users.first          
-          @response = {:profile => u.attributes, :editable => authorize_self_and_manager()}
+          @response = {:profile => u.attributes, :editable => authorize_self_and_manager(), :fullaccess => @has_full_access}
           respond_with @response
         else          
           render_403
         end
+
       end
     end
   end
@@ -151,13 +162,33 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
   end
 
   private
-  def is_inspecial_group    
+
+  def is_in_system_group    
     if !User.current.logged?
       return false
     end
     currentGroups = User.current.groups.map{ |o| o.lastname }
-    ig = currentGroups & ['hr', 'lt-prj-tercomin-pm', 'lt-prj-tercom-website-pm']  
+    ig = currentGroups & ['hr', 'lt-prj-tercomin-pm', 'lt-prj-tercom-website-pm']    
     return ig.any?
+  end
+
+  def is_self_or_last_event_manager # TODO: refactor we need groups page. extract them from Event
+    @has_full_access = false
+    if params[:id] == "logged"
+      @has_full_access = true;        
+    else      
+      e = Event.last
+      if e.present?
+        groups = JSON.parse(e.groups)
+        for i in groups          
+          if i['m'].keys().include?(User.current.id.to_s)            
+            if i['e'].keys().include?(params[:id])              
+              @has_full_access = true;
+            end
+          end          
+        end        
+      end      
+    end 
   end
 
   def authorize_self_and_manager
@@ -168,11 +199,11 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
         if User.current.id == params[:id].to_i
           return true
         else
-          return is_inspecial_group()
+          return is_in_system_group()
         end
       end
     else
-      return is_inspecial_group()
+      return is_in_system_group()
     end
   end
 

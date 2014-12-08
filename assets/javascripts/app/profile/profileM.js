@@ -53,25 +53,26 @@ define([
             dataModel.set('mail', response.profile.mail);            
             dataModel.set('avatar_url', response.profile.avatar_url);
             dataModel.set('edit_prop', 'None');
-            dataModel.set('editable', response.editable);      
+            dataModel.set('editable', response.editable);
+            dataModel.set('fullaccess', response.fullaccess);
             attr['data'] = dataModel;
-        }
-        // console.log(attr);
+        }        
         return attr;
     };
 
     emp.prototype.toJSON = function() {
       var json = _.clone(this.attributes);      
       for(var attr in json) {
-        if((json[attr] instanceof Backbone.Model) && (attr === 'data')) {          
+        if((json[attr] instanceof Backbone.Model) && (attr === 'data')) {            
+            json[attr].unset('edit_prop');
+            json[attr].unset('editable');
+            json[attr].unset('fullaccess');
             json['profile']['data'] = JSON.stringify(json[attr]);            
-            delete json['profile']['data']['edit_prop']
-            delete json['profile']['data']['editable']
         }
       }
       delete json['data'];
       delete json['positions'];
-      delete json['backgrounds'];
+      delete json['backgrounds'];      
       return json;
     };
 

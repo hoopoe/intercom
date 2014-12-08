@@ -185,7 +185,8 @@
       
     </div>
   </div>
-  <div class="row profile-row">
+
+  <div class="row profile-row" rv-show="user_p:fullaccess">
     <div class="col-md-11 col-md-offset-1 edit-emp-item">
       <span class="emp-item-title"><%=l('summary_title')%></span>
       <div class="circle"/>
@@ -214,7 +215,7 @@
     </div>
   </div>
     
-  <div class="row profile-row">
+  <div class="row profile-row" rv-show="user_p:fullaccess">
     <div class="col-md-11 col-md-offset-1 edit-emp-item">
         <span><%=l('skills_title')%></span>
         <div class="circle"/>
@@ -243,14 +244,15 @@
     </div>
   </div>
     
-  <div class="row profile-row">
+  <div class="row profile-row" rv-show="user_p:fullaccess">
     <div class="col-md-offset-1 col-md-2">
       <span><%=l('positions_title')%></span>
       <div class="circle"/>
       <a class="add-position"><span class="glyphicon glyphicon-plus" rv-show="user_p:editable | eq 'true'"></span></a>
     </div>    
   </div>
-  <div class="row profile-row">
+
+  <div class="row profile-row" rv-show="user_p:fullaccess">
     <div class="col-md-offset-2 col-md-7">
       <div class="positions-ph">
       </div>      
@@ -258,15 +260,17 @@
     <div class="col-md-offset-2 col-md-9">
       <div class="line-separator"/>
     </div>  
-  </div>    
-  <div class="row profile-row">
+  </div>
+
+  <div class="row profile-row" rv-show="user_p:fullaccess">
     <div class="col-md-offset-1 col-md-2">
       <span><%=l('education_title')%></span>
       <div class="circle"/>
       <a class="add-background"><span class="glyphicon glyphicon-plus" rv-show="user_p:editable | eq 'true'"></span></a>
     </div>    
   </div>
-  <div class="row profile-row">
+
+  <div class="row profile-row" rv-show="user_p:fullaccess">
     <div class="col-md-offset-2 col-md-7">
       <div class="backgrounds-ph">
       </div>      
@@ -274,8 +278,9 @@
     <div class="col-md-offset-2 col-md-9">
       <div class="line-separator"/>
     </div>
-  </div>    
-  <div class="row profile-row">
+  </div>
+
+  <div class="row profile-row" rv-show="user_p:fullaccess">
     <div class="col-md-offset-1 col-md-2 edit-emp-item">
       <span><%=l('coureses_title')%></span>
       <div class="circle"/>
@@ -304,7 +309,7 @@
     </div>
   </div>  
   
-  <div class="row profile-row">
+  <div class="row profile-row" rv-show="user_p:fullaccess">
     <div class="col-md-offset-1 col-md-2 edit-emp-item">
       <span><%=l('languages_title')%></span>
       <div class="circle"/>
