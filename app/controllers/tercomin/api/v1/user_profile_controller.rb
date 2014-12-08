@@ -172,7 +172,7 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
   end
 
   def is_self_or_last_event_manager # TODO: refactor we need groups page. extract them from Event
-    @has_full_access = false
+    @has_full_access = is_in_system_group()
     if (params[:id] == "logged" || User.current.id == params[:id].to_i)
       @has_full_access = true;        
     else      
