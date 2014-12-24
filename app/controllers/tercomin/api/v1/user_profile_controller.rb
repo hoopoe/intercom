@@ -62,7 +62,7 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
         respond_with "User is not logged", status: :unprocessable_entity
       else
 
-        if @can_view_profile
+        if @has_full_access
           users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname,
            user_profile_t.data, user_profile_t.settings,
            user_profile_t.positions,
