@@ -8,6 +8,7 @@ namespace :tercomin do
       resources :event, only: [:index, :show, :create, :destroy, :update]
       resources :user_event, only: [:index, :show, :update, :destroy]
       resources :role, only: [:index]
+      resources :locale, only: [:index]
     end
   end
 end
