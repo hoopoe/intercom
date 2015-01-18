@@ -1,3 +1,4 @@
+require 'mime/types'
 class Tercomin::Api::V1::UserProfileController < ApplicationController
   respond_to :json
 
@@ -144,11 +145,20 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
 
     if(params.has_key?(:avatar))
       user = User.find_by_id(@profile.user_id)
-      StringIO.open(Base64.strict_decode64(params[:avatar].split(',').pop)) do |data|
-        data.class.class_eval { attr_accessor :original_filename, :content_type }
-        data.original_filename = "#{user.login}.png"
-        data.content_type = "image/png"
-        @profile.avatar = data
+
+      project = Project.find_by_name("tercomin") #todo: refactor
+      if(project.present?)
+        @attachment = project.attachments.find_or_create_by_description("#{user.login}")
+        @attachment.delete_from_disk()
+        content = params[:avatar].split(',')
+        @attachment.file = Base64.strict_decode64(content.pop)
+        @attachment.author = User.current
+        
+        @attachment.container = project
+        @attachment.content_type = content.pop[/\:(.*?);/,1] #data:image/png;base64,iVBOR
+        @attachment.filename = "#{user.login}.#{MIME::Types[@attachment.content_type].first.extensions.first }" 
+        @attachment.description ="#{user.login}"
+        saved = @attachment.save
       end
     end
 
@@ -207,14 +217,14 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
   end
 
   def set_avatars(users)
-    #set paperclip absolute url for each record
     ids = users.map { |x| x.id }
-    profiles = UserProfile.where(:user_id => ids).all
-    for i in users
-      if profile = profiles.detect{|p| p.user_id == i.id}
-        i.avatar_url = profile.avatar_url
-      else
-        i.avatar_url = "noavatar" #don't have profile at all
+    if project = Project.find_by_name("tercomin") #todo: refactor
+      for i in users
+        if att = project.attachments.find_by_description(i.login)
+          i.avatar_url = "attachments/download/#{att.id}/#{att.filename}" 
+        else
+          i.avatar_url = "noavatar" #don't have profile at all
+        end
       end
     end
   end

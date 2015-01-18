@@ -1,5 +1,4 @@
 # encoding: UTF-8
-require 'faker'
 require 'spreadsheet'
 
 namespace :redmine do
@@ -7,16 +6,16 @@ namespace :redmine do
 
     def createUser(firstName = nil, lastName = nil)      
       user = User.new
-      user.login = Faker::Bitcoin.address
-      user.mail = Faker::Internet.email
+      user.login = "#{lastName}(0...3).map { ('a'..'z').to_a[rand(26)] }.join"
+      user.mail = "nomail"
       if firstName.nil?
-        user.firstname = Faker::Name.name
+        user.firstname = "noname"
       else
         user.firstname = firstName
       end
 
       if lastName.nil?
-        user.lastname = Faker::Name.name
+        user.lastname = "noname"
       else
         user.lastname = lastName
       end      
@@ -105,19 +104,6 @@ namespace :redmine do
               'theme' => t[13]
             }                 
             person.settings = settingsData.to_json
-
-            imagePath = File.expand_path("../../../data/#{imageName}", __FILE__)
-            if File.exists?(imagePath)
-              if Gem.win_platform?
-                #paperclip not working on windows
-              else
-                file = File.open(imagePath)
-                person.avatar = file
-                file.close
-              end
-            else
-              puts "image not found #{imageName}" 
-            end
             person.save!                  
           end
         end
