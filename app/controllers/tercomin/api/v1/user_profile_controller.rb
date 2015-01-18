@@ -22,7 +22,7 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
     end
 
     users = User.select("users.id, users.login, users.mail, users.firstname,
-     users.lastname, user_profile_t.avatar_file_name avatar_url, user_profile_t.data")
+     users.lastname, user_profile_t.avatar_url, user_profile_t.data")
     .joins("LEFT JOIN #{UserProfile.table_name} 
       ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
 
@@ -68,12 +68,12 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
            user_profile_t.data, user_profile_t.settings,
            user_profile_t.positions,
            user_profile_t.backgrounds,
-           user_profile_t.avatar_file_name avatar_url")
+           user_profile_t.avatar_url")
           .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
         else
           users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname,
-           user_profile_t.data, user_profile_t.settings,           
-           user_profile_t.avatar_file_name avatar_url")
+           user_profile_t.avatar_url,
+           user_profile_t.data, user_profile_t.settings")
           .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
         end
 

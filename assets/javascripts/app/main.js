@@ -69,7 +69,7 @@ define([
       if (typeof value === 'boolean') {
         return value === Boolean(args);
       }
-      return value === args;
+      return value == args;
     };
 
     rivets.binders['href-rooted'] = function(el, value) {
