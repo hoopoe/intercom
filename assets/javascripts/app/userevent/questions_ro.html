@@ -164,18 +164,14 @@
 
 <div id="desire-template" class="form-group col-md-12">
   <span class="question-title">{ t:q }:</span>
-  
     <span rv-show="t:a | eq '1'"><%=l('desire_1')%></span>
     <span rv-show="t:a | eq '2'"><%=l('desire_2')%></span>      
-  
 </div> 
 
 <div id="satisfied-template" class="form-group col-md-12">
   <span class="question-title">{ t:q }:</span>
-  
     <span rv-show="t:a | eq '1'"><%=l('satisfied_1')%></span>
     <span rv-show="t:a | eq '2'"><%=l('satisfied_2')%></span>      
-  
 </div> 
 
 <div id="satisfaction-template" class="form-group col-md-12">
@@ -239,4 +235,25 @@
   </div>
 </div> 
 
+<div id="general_ko-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
+  <span rv-show="t:a | eq '1'"><%=l('general_ko_1')%></span>
+  <span rv-show="t:a | eq '2'"><%=l('general_ko_2')%></span>
+  <span rv-show="t:a | eq '3'"><%=l('general_ko_3')%></span>
+</div>
+
+<div id="transport_ko-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
+  
+  <span rv-show="t:a | eq '1'"><%=l('transport_ko_1')%></span>
+  <span rv-show="t:a | eq '2'"><%=l('transport_ko_2')%></span>
+  <span rv-show="t:a | eq '3'"><%=l('transport_ko_3')%></span>
+  <span rv-show="t:a | eq '4'"><%=l('transport_ko_4')%></span>
+</div>
+
+<div id="service_ko-template" class="form-group col-md-12">
+  <span class="question-title">{ t:q }:</span>
+  <span rv-show="t:a | eq '1'"><%=l('service_ko_1')%></span>
+  <span rv-show="t:a | eq '2'"><%=l('service_ko_2')%></span>
+</div>
 
