@@ -1,6 +1,5 @@
 define([
   'i18n',
-  'text!app/userevent/default.html',
   'text!app/userevent/hr.html',
   'text!app/userevent/questions.html',
   'text!app/userevent/questions_ro.html',
@@ -8,7 +7,7 @@ define([
   'text!app/userevent/manager_ro.html',
   'text!app/userevent/employee.html',
   'text!app/userevent/employee_ro.html'
-], function(i18n, defaultT, hrT, questionsT, questions_ro_T,
+], function(i18n, hrT, questionsT, questions_ro_T,
   managerT, manager_ro_T, employeeT, employee_ro_T) {
   var i18NOptions = { 
       detectFromHeaders: false,

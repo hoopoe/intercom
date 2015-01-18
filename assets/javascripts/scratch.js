@@ -134,18 +134,25 @@ t.set('event', evnt)
 t.save()
 
 ///////////////////////////////
-var t = new app.Event
+var empq = [];
+empq.push({"type":"header", "q":"Добрый день,"});
+empq.push({"type":"header", "q":"Вопросы для опроса по Красному озеру:"});
+empq.push({"type":"general_ko", "q":"Планируете ли Вы поехать на Красное Озеро?", "a": 1});
+empq.push({"type":"transport_ko", "q":"Планируете ли Вы поехать на Красное Озеро?", "a": 1});
+empq.push({"type":"service_ko", "q":"Планируете ли Вы поехать на Красное Озеро?", "a": 1});
+empq.push({"type":"freeform", "q":"Пожелания по проживанию в коттедже", "a": ""});
+empq.push({"type":"header", "q":"Спасибо!"});
+
 var body = {};
-body['empForm'] = {};
-body['mgrForm'] = {};
+body['empForm'] = empq;
+
+var Event = Backbone.Model.extend({
+    urlRoot: '/tercomin/api/v1/event'
+});
+
+var t = new Event
 var evnt = {}
 evnt['body'] = JSON.stringify(body);
-evnt['name'] = "Test 2014";
+evnt['name'] = "Красное озеро 2015";
 t.set('event', evnt)
 t.save()
-
-
-////////////////////////////// delete
-var t = new app.Event
-t.set('id', 1)
-t.destroy()
