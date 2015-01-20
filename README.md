@@ -7,6 +7,7 @@ rake redmine:plugins:migrate NAME=tercomin
 
 Required:
 2 redmine groups: "hr" and "lt-prj-tercomin-pm"
+1 project id: "tercomin"
 
 Extra:
 rake redmine:tercomin:load_profiles (to load user profiles)
