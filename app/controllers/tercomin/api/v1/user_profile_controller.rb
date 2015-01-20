@@ -144,22 +144,21 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
     end
 
     if(params.has_key?(:avatar))
-      user = User.find_by_id(@profile.user_id)
-
-      project = Project.find_by_name("tercomin") #todo: refactor
-      if(project.present?)
-        @attachment = project.attachments.find_or_create_by_description("#{user.login}")
-        @attachment.delete_from_disk()
-        content = params[:avatar].split(',')
-        @attachment.file = Base64.strict_decode64(content.pop)
-        @attachment.author = User.current
+      # user = User.find_by_id(@profile.user_id)
+      # project = Project.find_by_identifier("tercomin") #todo: refactor
+      # if(project.present?)
+      #   @attachment = project.attachments.find_or_create_by_description("#{user.login}")
+      #   @attachment.delete_from_disk()
+      #   content = params[:avatar].split(',')
+      #   @attachment.file = Base64.strict_decode64(content.pop)
+      #   @attachment.author = User.current
         
-        @attachment.container = project
-        @attachment.content_type = content.pop[/\:(.*?);/,1] #data:image/png;base64,iVBOR
-        @attachment.filename = "#{user.login}.#{MIME::Types[@attachment.content_type].first.extensions.first }" 
-        @attachment.description ="#{user.login}"
-        saved = @attachment.save
-      end
+      #   @attachment.container = project
+      #   @attachment.content_type = content.pop[/\:(.*?);/,1] #data:image/png;base64,iVBOR
+      #   @attachment.filename = "#{user.login}.#{MIME::Types[@attachment.content_type].first.extensions.first }" 
+      #   @attachment.description ="#{user.login}"
+      #   saved = @attachment.save
+      # end
     end
 
     if @profile.save
@@ -218,13 +217,13 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
 
   def set_avatars(users)
     ids = users.map { |x| x.id }
-    if project = Project.find_by_name("tercomin") #todo: refactor
+    if project = Project.find_by_identifier("tercomin") #todo: refactor
       for i in users
-        if att = project.attachments.find_by_description(i.login)
-          i.avatar_url = "attachments/download/#{att.id}/#{att.filename}" 
-        else
+        # if att = project.attachments.find_by_description(i.login)
+        #   i.avatar_url = "attachments/download/#{att.id}/#{att.filename}" 
+        # else
           i.avatar_url = "noavatar" #don't have profile at all
-        end
+        # end
       end
     end
   end

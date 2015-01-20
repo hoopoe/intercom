@@ -29,9 +29,9 @@ define([
     name: "mypage",
     events: {
       'mousedown .editable': 'editableClick',
-      'dragover .profile-div': 'dragoverHandler',
-      'drop .profile-div': 'dropHandler',
-      'click .profile-img-save': 'profileImgSave',
+      // 'dragover .profile-div': 'dragoverHandler',
+      // 'drop .profile-div': 'dropHandler',
+      // 'click .profile-img-save': 'profileImgSave',
 
       'click .add-position': 'addPosition',
       'click .remove-position': 'removePosition',
@@ -334,32 +334,32 @@ define([
       e.originalEvent.stopPropagation();
       e.originalEvent.preventDefault();
 
-      e.originalEvent.dataTransfer.dropEffect = 'copy';
-      this.pictureFile = e.originalEvent.dataTransfer.files[0];
+      // e.originalEvent.dataTransfer.dropEffect = 'copy';
+      // this.pictureFile = e.originalEvent.dataTransfer.files[0];
 
-      // Read the image file from the local file system and display it in the img tag
-      var reader = new FileReader();
-      reader.onloadend = function() {
-        util.resample(this.result, 290, 330, photoResult);
-      };
+      // // Read the image file from the local file system and display it in the img tag
+      // var reader = new FileReader();
+      // reader.onloadend = function() {
+      //   util.resample(this.result, 290, 330, photoResult);
+      // };
 
-      reader.readAsDataURL(this.pictureFile);
+      // reader.readAsDataURL(this.pictureFile);
 
-      function photoResult(data) {
-        $('.profile-div img').removeClass("no-profile-img");
-        $('.profile-div img').attr('src', data).show();
-        $('.profile-img-save').removeClass("profile-img-save-hide");
-      }
+      // function photoResult(data) {
+      //   $('.profile-div img').removeClass("no-profile-img");
+      //   $('.profile-div img').attr('src', data).show();
+      //   $('.profile-img-save').removeClass("profile-img-save-hide");
+      // }
     },
     profileImgSave: function() {
-      var img = $('.profile-div img').attr('src');
-      this.model.save({
-        avatar: img
-      }, {
-        success: function(model, response) {
-          $('.profile-img-save').addClass("profile-img-save-hide");
-        }
-      });
+      // var img = $('.profile-div img').attr('src');
+      // this.model.save({
+      //   avatar: img
+      // }, {
+      //   success: function(model, response) {
+      //     $('.profile-img-save').addClass("profile-img-save-hide");
+      //   }
+      // });
     },
     save: function() {
       if (!this.model.isValid()) {
