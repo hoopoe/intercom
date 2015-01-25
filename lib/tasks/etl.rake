@@ -6,8 +6,8 @@ namespace :redmine do
 
     def createUser(firstName = nil, lastName = nil)      
       user = User.new
-      user.login = "#{lastName}(0...3).map { ('a'..'z').to_a[rand(26)] }.join"
-      user.mail = "nomail"
+      user.login = "#{lastName}_" + (0...2).map { (1..10).to_a[rand(10)] }.join
+      user.mail = user.login + "@mail.com"
       if firstName.nil?
         user.firstname = "noname"
       else
