@@ -522,7 +522,7 @@ t.save();
 
 //////////////////////
 // var eventId = 2
-var eventId = 14
+var eventId = 2
 var limitReq = 100
 var numIter = 10
 
@@ -611,65 +611,77 @@ for (var j = 0; j < resultIds.length; j++) {
 })(console)
 
 
-var general_ko_t = function(i){
-	if (i == 1)
-		return "Я поеду";
-	if (i == 2)
-		return "Я поеду с семьей";
-	if (i == 3)
-		return "Я не поеду";
-	return "Не определено"
+var general_ko_t = function(i) {
+    if (i == 1)
+        return "Я поеду";
+    if (i == 2)
+        return "Я поеду с семьей";
+    if (i == 3)
+        return "Я не поеду";
+    return "Не определено"
 }
 
-var transport_ko_t = function(i){
-	if (i == 1)
-		return "автобус Петергоф";
-	if (i == 2)
-		return "автобус Ветеранов";
-	if (i == 3)
-		return "На своем а/м";
-	if (i == 4)
-		return "Не планирую";
-	return "Не определено"
+var transport_ko_t = function(i) {
+    if (i == 1)
+        return "автобус Петергоф";
+    if (i == 2)
+        return "автобус Ветеранов";
+    if (i == 3)
+        return "На своем а/м";
+    if (i == 4)
+        return "Не планирую";
+    return "Не определено"
 }
 
-var yn_t = function(i){
-	if (i == 1)
-		return "Да";
-	if (i == 2)
-		return "Нет";
-	return "Не определено"
+var yn_t = function(i) {
+    if (i == 1)
+        return "Да";
+    if (i == 2)
+        return "Нет";
+    return "Не определено"
 }
 
-var data = "id, kind, firstname, lastname, Планируете ли Вы поехать на Красное Озеро?, Как Вы планируете добираться?,Планируете ли пользоваться услугами проката?,Планируете ли пользоваться услугами инструктора?,Пожелания по проживанию в коттедже\n"
+var data = "id; kind; firstname; lastname; firstnameRu; lastnameRu; Планируете ли Вы поехать на Красное Озеро?; Как Вы планируете добираться?; Планируете ли пользоваться услугами проката?; Планируете ли пользоваться услугами инструктора?; Пожелания по проживанию в коттедже\n"
 result.forEach(function(t) {
     var body = "";
-    try {
-        body = JSON.parse(t.get("empForm"));
-    } catch (e) {
-        console.log(t.get("id"));
-        console.log(e.message);
+    var profile = "";
+    if (t.get("empForm") !== undefined) {
+        try {
+            if (typeof t.get("empForm") == 'string') { //self
+                body = JSON.parse(t.get("empForm"));
+                profile = JSON.parse(t.get("data"))
+            } else {
+                body = JSON.parse(t.get("empForm").body);
+                profile = JSON.parse(t.get("empForm").data);
+            }
+        } catch (e) {
+            console.log(e.message);
+        }
+        data += t.get("id") + ";";
+        data += t.get("kind") + ";";
+        data += profile.firstname + ";";
+        data += profile.lastname + ";";
+        data += profile.firstnameRu + ";";
+        data += profile.lastnameRu + ";";
+        data += general_ko_t(_.find(body, function(t) {
+            return t.type === "general_ko"
+        }).a) + ";";
+        data += transport_ko_t(_.find(body, function(t) {
+            return t.type === "transport_ko"
+        }).a) + ";";
+        data += yn_t(_.find(body, function(t) {
+            return t.type === "service_ko"
+        }).a) + ";";
+        data += yn_t(_.find(body, function(t) {
+            return t.type === "instructor_ko"
+        }).a) + ";";
+        data += _.find(body, function(t) {
+            return t.type === "freeform"
+        }).a;
+        data += "\n";
+    } else{
+        console.log("don't have empForm " + t.get("id"));
+        console.log(t);
     }
-    data += t.get("id") + ",";
-    data += t.get("kind") + ",";
-    data += t.get("firstname") + ",";
-    data += t.get("lastname") + ",";
-    data +=general_ko_t(_.find(body, function(t) {
-        return t.type === "general_ko"
-    }).a) + ",";
-    data += transport_ko_t(_.find(body, function(t) {
-        return t.type === "transport_ko"
-    }).a) + ",";
-    data += yn_t(_.find(body, function(t) {
-        return t.type === "service_ko"
-    }).a) + ",";
-    data += yn_t(_.find(body, function(t) {
-        return t.type === "instructor_ko"
-    }).a) + ",";
-    data += _.find(body, function(t) {
-        return t.type === "freeform"
-    }).a;
-    data += "\n";
 });
 console.save(data, "KO.txt");
-
