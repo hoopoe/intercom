@@ -185,8 +185,8 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
     if (params[:id] == "logged" || User.current.id == params[:id].to_i)
       @has_full_access = true;        
     else      
-      e = Event.last
-      if e.present?
+      e = Event.where("events_t.groups IS NOT NULL").last
+      if e.present? && e.groups.present?
         groups = JSON.parse(e.groups)
         for i in groups          
           if i['m'].keys().include?(User.current.id.to_s)            
