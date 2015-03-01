@@ -217,15 +217,15 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
 
   def set_avatars(users)
     ids = users.map { |x| x.id }
-    if project = Project.find_by_identifier("tercomin") #todo: refactor
+    # if project = Project.find_by_identifier("tercomin") #todo: refactor
       for i in users
         # if att = project.attachments.find_by_description(i.login)
         #   i.avatar_url = "attachments/download/#{att.id}/#{att.filename}" 
         # else
-          i.avatar_url = "noavatar" #don't have profile at all
+          i.avatar_url = "plugin_assets/tercomin/images/noavatar.jpg"
         # end
       end
-    end
+    # end
   end
 
   def add_groups(users)

@@ -3,27 +3,6 @@ define([
     'app/topmenu/topmenuV'
 ], function(Router, Topmenu, require) {
     var initialize = function() {
-        $.fn.monthYearPicker = function(options) {
-            options = $.extend({
-                dateFormat: "MM yy",
-                changeMonth: true,
-                changeYear: true,
-                showButtonPanel: true,
-                showAnim: ""
-            }, options);
-
-            function hideDaysFromCalendar() {
-                var thisCalendar = $(this);
-                $('.ui-datepicker-calendar').detach();
-                // Also fix the click event on the Done button.
-                $('.ui-datepicker-close').unbind("click").click(function() {
-                    var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-                    var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-                    thisCalendar.datepicker('setDate', new Date(year, month, 1));
-                });
-            }
-            $(this).datepicker(options).focus(hideDaysFromCalendar);
-        }
         /* alias away the sync method */
         Backbone._sync = Backbone.sync;
 
@@ -104,8 +83,6 @@ define([
         }
 
         rivets.binders['src-strict'] = function(el, value) {
-            if (value === 'noavatar')
-                value = "";
             var img = new Image()
             img.onerror = function() {
                 $(el).attr('src', "plugin_assets/tercomin/images/noavatar.jpg");
