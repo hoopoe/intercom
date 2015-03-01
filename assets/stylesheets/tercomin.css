@@ -72,10 +72,16 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 #main .profile-cv a{color: #fff;}
 #main .profile-cv a:hover{color: #fff; text-decoration: none}
 #main .profile-cv :hover{background-color: #54b4eb;}
-.profile-data-title{min-width: 170px;}
-.profile-item{padding-top: 3px; padding-bottom: 3px;}
+
+/*.profile-employment-date{min-width: 195px;}*/
+/*.profile-item{padding-top: 3px; padding-bottom: 3px;}*/
 .profile-lg-item{padding-top: 10px; padding-bottom: 10px;}
 .profile-row{padding-bottom: 10px;}
+.profile-data-title{ height: 22px;}
+.datepicker-color-year select {color: #628db6;}
+.datepicker-color-year option {color: #628db6;}
+
+
 
 /*positions-view*/
 .positions-view{list-style-type: none;}
