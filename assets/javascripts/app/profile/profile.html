@@ -133,6 +133,57 @@
           </div>
         
       </div>
+
+      <div class="row">        
+          <div class="col-md-3 profile-data-title">
+            <span><%=l('office_title')%>:</span>
+            <span rv-hide="user_p:edit_prop | eq 'office'" class="edit-emp-item">
+            <a rv-show="user_p:editable | eq 'true'" value="office">
+              <i class="glyphicon glyphicon-pencil"/>
+            </a>
+            </span>
+          </div>
+          <div class="col-md-9">
+            <div rv-show="user_p:edit_prop | eq 'office'">
+              <input rv-value="user_p:office" placeholder="<%=l('put_office_here') %>"/>
+              <a class="emp-item-cancel" value="office"><i class="glyphicon">Cancel</i></a>
+              <a class="emp-item-save" value="office"><i class="glyphicon">Save</i></a>
+            </div>
+            <div rv-hide="user_p:edit_prop | eq 'office'">
+              <span rv-text="user_p:office" />
+              <span class="glyphicon glyphicon-floppy-saved profile-notify office-notify-ok"/>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <span rv-show="user_p:edit_prop | eq 'office'" rv-text="user_p.validationError" class="emp-item-error"/>
+          </div>       
+      </div>
+
+      <div class="row">        
+          <div class="col-md-3 profile-data-title">
+            <span><%=l('phone_title')%>:</span>
+            <span rv-hide="user_p:edit_prop | eq 'phone'" class="edit-emp-item">
+            <a rv-show="user_p:editable | eq 'true'" value="phone">
+              <i class="glyphicon glyphicon-pencil"/>
+            </a>
+            </span>
+          </div>
+          <div class="col-md-9">
+            <div rv-show="user_p:edit_prop | eq 'phone'">
+              <input rv-value="user_p:phone" placeholder="<%=l('put_phone_number_here') %>"/>
+              <a class="emp-item-cancel" value="phone"><i class="glyphicon">Cancel</i></a>
+              <a class="emp-item-save" value="phone"><i class="glyphicon">Save</i></a>
+            </div>
+            <div rv-hide="user_p:edit_prop | eq 'phone'">
+              <span rv-text="user_p:phone" />
+              <span class="glyphicon glyphicon-floppy-saved profile-notify phone-notify-ok"/>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <span rv-show="user_p:edit_prop | eq 'phone'" rv-text="user_p.validationError" class="emp-item-error"/>
+          </div>       
+      </div>
+      
       <div class="row">
         
           <div class="col-md-3 profile-data-title">

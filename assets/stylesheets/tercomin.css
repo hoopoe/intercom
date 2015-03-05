@@ -85,9 +85,27 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 
 /*positions-view*/
 .positions-view{list-style-type: none;}
+.position-info label{font-weight: normal;}
+.position-info span#from{font-weight: bold;}
+.position-info span#to{font-weight: bold;}
+.position-container {margin: 10px;}
+.position-buttons {visibility: hidden;}
+.position-buttons {float:right; right: 0px; top: 0px;}
+.position-buttons a{margin-right: 5px; margin-left: 5px;}
+.position-container:hover .position-buttons {visibility: visible;}
+.position-container:hover {background-color: #F6F6F6;}
 
 /*backgrounds-view*/
 .backgrounds-view{list-style-type: none;}
+.background-info label{font-weight: normal;}
+.background-info span#from{font-weight: bold;}
+.background-info span#to{font-weight: bold;}
+.background-container {margin: 10px;}
+.background-buttons {visibility: hidden;}
+.background-buttons {float:right; right: 0px; top: 0px;}
+.background-buttons a{margin-right: 5px; margin-left: 5px;}
+.background-container:hover .background-buttons {visibility: visible;}
+.background-container:hover {background-color: #F6F6F6;}
 
 /*events-view*/
 .events-view{list-style-type: none;}
