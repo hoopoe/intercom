@@ -1,9 +1,11 @@
 class UserProfileRemoveAvatar < ActiveRecord::Migration
   def up
-  	remove_column :user_profile_t, :avatar_file_name
-  	remove_column :user_profile_t, :avatar_content_type
-  	remove_column :user_profile_t, :avatar_file_size
-  	remove_column :user_profile_t, :avatar_updated_at
+    if column_exists? :user_profile_t, :avatar_file_name
+    	remove_column :user_profile_t, :avatar_file_name
+    	remove_column :user_profile_t, :avatar_content_type
+    	remove_column :user_profile_t, :avatar_file_size
+    	remove_column :user_profile_t, :avatar_updated_at
+    end
   end
 
   def down
