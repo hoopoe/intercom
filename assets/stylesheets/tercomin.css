@@ -35,14 +35,24 @@ div.line-separator-gray{background:#8D8D8D;  border-bottom:1px solid #8D8D8D;}
 
 /*profile*/
 div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995dc; float: left; margin: 2px; }
-/*.emp-item-title {padding-right: 60px;}*/
-/*div.profile-lbl {padding-top: 10px;}*/
-/*div.profile-lbl *{float:right;}*/
-/*div.profile-text {padding-top: 10px;}*/
-.profile-img-save {  margin-top: 10px;  text-align: center;    display: block;}
-.profile-img-save-hide {  display: none;}
+
+.avatar-control {visibility: hidden;}
+div.avatar img {width: 100%;}
+.avatar-control {
+  text-align: center;
+  background-color: rgba(94, 90, 92, 0.7);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30px;
+}
+
+.avatar-control .save-wrapper input{display:inline;margin-top: 5px;}
+.avatar:hover .avatar-control {visibility: visible;}
+.avatar-control-save {cursor: pointer;}
+
 .profile-data {  display: inline-block; border:0px;}
-/*.profile-status {background-image: url("../images/status_backgr.png"); width: 472px; height: 101px; text-align: center; padding-top: 10px;}*/
 .profile-status { 
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -61,8 +71,9 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 .profile-status h3 {border-bottom: 0px}
 .editable {background-color: #fff;}
 .no-editable {background-color: #f6f6f6;}
-.profile-img {  display: block;  margin-left: auto;  margin-right: auto;  margin-top: 5px; margin-bottom: 5px;}
+.profile-img {  display: block;  margin-left: auto;  margin-right: auto;  margin-top: 0px; margin-bottom: 0px;}
 .profile-notify{opacity: 0;}
+.profile-header{margin-bottom: 10px;}
 
 .profile-table-header{padding-bottom: 10px;}
 .edit-emp-item{min-width: 190px;}
@@ -73,15 +84,11 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 #main .profile-cv a:hover{color: #fff; text-decoration: none}
 #main .profile-cv :hover{background-color: #54b4eb;}
 
-/*.profile-employment-date{min-width: 195px;}*/
-/*.profile-item{padding-top: 3px; padding-bottom: 3px;}*/
 .profile-lg-item{padding-top: 10px; padding-bottom: 10px;}
 .profile-row{padding-bottom: 10px;}
 .profile-data-title{ height: 22px;}
 .datepicker-color-year select {color: #628db6;}
 .datepicker-color-year option {color: #628db6;}
-
-
 
 /*positions-view*/
 .positions-view{list-style-type: none;}
@@ -150,15 +157,6 @@ div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #1995
 
 /*hr*/
 .hr-view div{text-align: center;}
-
-/*.cv {
-  width: 81px;
-  height: 101px;
-  display: block;
-  background-image: url("../images/cv.png"); 
-  margin-left: 0px;
-  margin-right: auto;  
-}*/
 .profile-cv { text-align: center;}
 
 a.cv { 

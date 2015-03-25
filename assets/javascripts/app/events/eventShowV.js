@@ -50,7 +50,6 @@ define([
             'ue_id': key + '_' + this.model.get('id')
           });
         }
-        // console.log(this.model.get('id'));
 
         var v = new GroupView({
           model: group

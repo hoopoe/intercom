@@ -31,7 +31,7 @@ define([
             'mousedown .editable': 'editableClick',
             // 'dragover .profile-div': 'dragoverHandler',
             // 'drop .profile-div': 'dropHandler',
-            // 'click .profile-img-save': 'profileImgSave',
+            'change .avatar-control-save': 'profileImgSave',
 
             'click .add-position': 'addPosition',
             'click .remove-position': 'removePosition',
@@ -47,6 +47,8 @@ define([
             'change #english_lvl': 'selectLanguage',
         },
         initialize: function() {
+            Backbone.profileEvent.on('avatarUpdated', this.onAvatarUpdated, this);
+
             Backbone.profileEvent.on('positionSubmit', this.onPositionSubmit, this);
             Backbone.profileEvent.on('cancelPositionForm', this.onCancelPositionForm, this);
             Backbone.profileEvent.on('renderPositions', this.onRenderPositions, this);
@@ -281,10 +283,10 @@ define([
                         that.save();
                     },
                     beforeShow: function(input, inst) {
-                        $('#ui-datepicker-div').addClass("datepicker-color-year");                        
+                        $('#ui-datepicker-div').addClass("datepicker-color-year");
                     }
                 });
-                 $("#birthdayPicker").focus(function() {
+                $("#birthdayPicker").focus(function() {
                     $(".ui-datepicker-year").hide();
                     $("#ui-datepicker-div").position({
                         my: "center top",
@@ -387,15 +389,49 @@ define([
             //   $('.profile-img-save').removeClass("profile-img-save-hide");
             // }
         },
-        profileImgSave: function() {
-            // var img = $('.profile-div img').attr('src');
-            // this.model.save({
-            //   avatar: img
-            // }, {
-            //   success: function(model, response) {
-            //     $('.profile-img-save').addClass("profile-img-save-hide");
-            //   }
-            // });
+        profileImgSave: function(e) {
+            var file = _.first(e.currentTarget.files)
+            var blob = file;
+            var url = '/tercomin/api/v1/user_profile?id=' + this.model.get('profile').id +
+                '&name=' + file.name;
+
+            $.ajax(url, {
+                type: 'POST',
+                contentType: 'application/octet-stream',
+                beforeSend: function(jqXhr, settings) {
+                    jqXhr.setRequestHeader('Accept', 'application/json');
+                    settings.data = blob;
+                },
+                xhr: function() {
+                    var xhr = $.ajaxSettings.xhr();
+                    return xhr;
+                },
+                data: blob,
+                cache: false,
+                processData: false,
+                success: function(data, text) {
+                    Backbone.profileEvent.trigger('avatarUpdated', data);
+                    $.growl({
+                        title: "Success: ",
+                        message: "Avatar saved"
+                    }, {
+                        type: "success"
+                    });
+                },
+                error: function(request, status, error) {
+                    $.growl({
+                        title: "Error: ",
+                        message: request.responseText
+                    }, {
+                        type: "danger"
+                    });
+                }
+            });
+
+        },
+        onAvatarUpdated: function(e) {
+            var data = this.model.get("data");
+            data.set('avatar_url', e.url);
         },
         save: function() {
             if (!this.model.isValid()) {
