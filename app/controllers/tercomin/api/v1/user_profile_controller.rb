@@ -127,7 +127,7 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
       format.json {
         if saved
           att_url = {:url => ""}
-          att_url[:url] = get_attachment_url(@attachment)
+          att_url[:url] = attachment_path(@attachment)
           render :text => att_url.to_json, :status => :ok
         else
           render :text => "Cannot save attachment.", :status => :unprocessable_entity
@@ -167,9 +167,9 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
         @profile.backgrounds = params[:profile][:backgrounds]
       end
 
-      if params[:profile][:avatar_url].present?
-        @profile.avatar_url = params[:profile][:avatar_url]
-      end
+      # if params[:profile][:avatar_url].present?
+      #   @profile.avatar_url = params[:profile][:avatar_url]
+      # end
     end
 
     if @profile.save
@@ -248,7 +248,7 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
     if project = Project.find_by_identifier("tercomin")
       for i in users
         if att = project.attachments.find_by_description("#{i.login} image")
-          i.avatar_url = get_thubmnail_url(att)
+          i.avatar_url = thumbnail_path(att)
         else
           if att = project.attachments.find_by_description("anonymous image")
             i.avatar_url = att.id
@@ -263,7 +263,7 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
   def set_avatar(user)
     if project = Project.find_by_identifier("tercomin")
       if att = project.attachments.find_by_description("#{user.login} image")
-        user.avatar_url = get_attachment_url(att)
+        user.avatar_url = attachment_path(att)
       else
         if att = project.attachments.find_by_description("anonymous image")
           user.avatar_url = att.id
@@ -272,15 +272,6 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
         end
       end
     end
-  end
-
-  def get_attachment_url(att)
-    # url_for(:controller => '/attachments', :action => 'download', :id => att, :filename => att.filename, :only_path => false)
-    "attachments/download/#{att.id}"
-  end
-
-  def get_thubmnail_url(att)
-    "/attachments/thumbnail/#{att.id}"
   end
 
   def add_groups(users)
