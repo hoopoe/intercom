@@ -61,8 +61,8 @@ define([
             return moment(value).format('MMM DD, YYYY');
         }
 
-        rivets.formatters.prependRoot = function(value) {
-            return "/tercomin/" + value;
+        rivets.formatters.formatCv = function(value) {
+            return "/tercomin/" + value + "/cv";
         }
 
         rivets.formatters.eq = function(value, args) {

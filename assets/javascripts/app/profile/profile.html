@@ -15,7 +15,7 @@
             <h3>{ user_p:lastname } {user_p:firstname }</h3>
           </div>
           <div class="col-md-2 profile-cv" rv-show="user_p:fullaccess">
-            <a rv-href="user_p:id | prependRoot" class="cv">CV</a>
+            <a rv-href="user_p:id | formatCv" class="cv">CV</a>
           </div>
         </div>
       </div>

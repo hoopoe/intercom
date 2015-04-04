@@ -248,10 +248,10 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
     if project = Project.find_by_identifier("tercomin")
       for i in users
         if att = project.attachments.find_by_description("#{i.login} image")
-          i.avatar_url = thumbnail_path(att)
+          i.avatar_url = thumb_tercomin_path(i)
         else
           if att = project.attachments.find_by_description("anonymous image")
-            i.avatar_url = att.id
+            i.avatar_url = thumb_tercomin_path(User.find_by_lastname("Anonymous"))
           else
             i.avatar_url = "plugin_assets/tercomin/images/noavatar.jpg"
           end
@@ -261,17 +261,7 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
   end
 
   def set_avatar(user)
-    if project = Project.find_by_identifier("tercomin")
-      if att = project.attachments.find_by_description("#{user.login} image")
-        user.avatar_url = attachment_path(att)
-      else
-        if att = project.attachments.find_by_description("anonymous image")
-          user.avatar_url = att.id
-        else
-          user.avatar_url = "plugin_assets/tercomin/images/noavatar.jpg"
-        end
-      end
-    end
+    user.avatar_url = avatar_tercomin_path(user.id)
   end
 
   def add_groups(users)

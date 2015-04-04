@@ -1,5 +1,12 @@
 get 'tercomin', :to => 'tercomin#index'
-get 'tercomin/:id', :to => 'tercomin#show'
+
+resources :tercomin, :controller => 'tercomin', :only => [:avatar, :cv] do
+  member do
+      get 'cv', :action => 'cv', :as => 'cv'
+      get 'avatar', :action => 'avatar', :as => 'avatar'
+      get 'thumb', :action => 'thumb', :as => 'thumb'
+    end
+end
 
 namespace :tercomin do
   namespace :api do

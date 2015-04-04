@@ -2,8 +2,13 @@ require 'zip' #ms word generation
 require 'nokogiri' #ms word generation
 
 class TercominController < ApplicationController  
-	before_filter :find_user_profile, :only => :show
-  before_filter :has_full_access, :only => :show
+	before_filter :find_user_profile, :only => [:cv, :avatar, :thumb]
+  before_filter :has_full_access, :only => :cv
+
+  before_filter :find_project, :only => [:avatar, :thumb]
+  before_filter :find_avatar, :only => [:avatar, :thumb]
+  before_filter :file_readable, :only => [:avatar, :thumb]
+
   respond_to :html
 
   def index   
@@ -20,7 +25,7 @@ class TercominController < ApplicationController
   	end
   end
 
-  def show
+  def cv
     if @has_full_access
       result_file_name = "#{@user.lastname}_#{@user.firstname}.docx"
       @user_profile = UserProfile.find_or_create_by_user_id(params[:id])      
@@ -135,6 +140,27 @@ class TercominController < ApplicationController
     end
   end
 
+  def avatar
+    if stale?(:etag => @attachment.digest)
+      send_file @attachment.diskfile, :filename => filename_for_content_disposition(@attachment.filename),
+                                      :type => detect_content_type(@attachment),
+                                      :disposition => (@attachment.image? ? 'inline' : 'attachment')
+    end
+  end
+
+  def thumb
+    if @attachment.thumbnailable? && thumbnail = @attachment.thumbnail(:size => params[:size])
+      if stale?(:etag => thumbnail)
+        send_file thumbnail,
+          :filename => filename_for_content_disposition(@attachment.filename),
+          :type => detect_content_type(@attachment),
+          :disposition => 'inline'
+      end
+    else
+      render :nothing => true, :status => 404
+    end
+  end
+
   private
   DOCUMENT_FILE_PATH = "word/document.xml"
 
@@ -143,6 +169,36 @@ class TercominController < ApplicationController
     raise ActiveRecord::RecordNotFound if params[:id] && @user.nil? && params[:id] != @user.id
   rescue ActiveRecord::RecordNotFound
     render_404
+  end
+
+  def find_project
+    @project = Project.find_by_identifier("tercomin")
+  rescue ActiveRecord::RecordNotFound
+    render_404
+  end
+
+  def find_avatar
+    if @attachment = @project.attachments.find_by_description("#{@user.login} image")
+    else
+      @attachment = @project.attachments.find_by_description("anonymous image")
+    end
+    raise ActiveRecord::RecordNotFound if @attachment.blank?
+  end
+
+  def file_readable
+    if @attachment.readable?
+      true
+    else
+      render_404
+    end
+  end
+
+  def detect_content_type(attachment)
+    content_type = attachment.content_type
+    if content_type.blank?
+      content_type = Redmine::MimeType.of(attachment.filename)
+    end
+    content_type.to_s
   end
 
   def is_in_system_group    
