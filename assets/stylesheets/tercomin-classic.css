@@ -60,7 +60,7 @@ div.profile-status{text-align: right;}
 .datepicker-color-year option {color: #628db6;}
 
 /*positions*/
-.positions-view{list-style-type: none;}
+.positions-view{list-style-type: none; padding-left: 0px;}
 .position-info label{font-weight: normal;}
 .position-info span#from{font-weight: bold;}
 .position-info span#to{font-weight: bold;}

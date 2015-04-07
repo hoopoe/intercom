@@ -28,9 +28,7 @@ define([
     var view = Backbone.View.extend({
         name: "mypage",
         events: {
-            'mousedown .editable': 'editableClick',
-            // 'dragover .profile-div': 'dragoverHandler',
-            // 'drop .profile-div': 'dropHandler',
+            'mousedown .editable': 'editableClick',            
             'change .avatar-control-save': 'profileImgSave',
 
             'click .add-position': 'addPosition',
@@ -93,10 +91,10 @@ define([
             }).render();
             $('.positions-ph').prepend(this.currentAddOrUpdatePositionView.el);
         },
-        editPosition: function(e) {
+        editPosition: function(e) {            
             e.preventDefault();
             var selectedPositionEl = $(e.currentTarget).parent().parent();
-            var id = $(e.currentTarget).data("id");
+            var id = $(e.currentTarget).data("id");            
             var positions = this.model.get("positions");
             var position = positions.get(id);
             if (position !== undefined) {
@@ -364,31 +362,7 @@ define([
             });
             ntf.fadeTo(1000, 0);
             this.model.get('data').set('edit_prop', "None");
-        },
-        dragoverHandler: function(e) {
-            e.preventDefault();
-        },
-        dropHandler: function(e) {
-            e.originalEvent.stopPropagation();
-            e.originalEvent.preventDefault();
-
-            // e.originalEvent.dataTransfer.dropEffect = 'copy';
-            // this.pictureFile = e.originalEvent.dataTransfer.files[0];
-
-            // // Read the image file from the local file system and display it in the img tag
-            // var reader = new FileReader();
-            // reader.onloadend = function() {
-            //   util.resample(this.result, 290, 330, photoResult);
-            // };
-
-            // reader.readAsDataURL(this.pictureFile);
-
-            // function photoResult(data) {
-            //   $('.profile-div img').removeClass("no-profile-img");
-            //   $('.profile-div img').attr('src', data).show();
-            //   $('.profile-img-save').removeClass("profile-img-save-hide");
-            // }
-        },
+        },        
         profileImgSave: function(e) {
             var file = _.first(e.currentTarget.files)
             var blob = file;

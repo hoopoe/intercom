@@ -13,7 +13,7 @@ define([
         createFromBackgroundPicker: function(e) {
             var that = this;
             $(e.currentTarget).datepicker({
-                dateFormat: 'MM yy',
+                dateFormat: 'M yy',
                 changeMonth: true,
                 changeYear: true,
                 showButtonPanel: false,
@@ -24,11 +24,14 @@ define([
                 },
                 beforeShow: function(input, inst) {
                     $('#ui-datepicker-div').addClass("datepicker-color-year");
-                    var date = moment($(this).val());
-                    var year = date.year();
-                    var month = date.month();
-                    $(this).datepicker('option', 'defaultDate', new Date(year, month, 1));
-                    $(this).datepicker('setDate', new Date(year, month, 1));
+                    var dateText = $(this).val();
+                    var date = moment(dateText);
+                    if (date.isValid()) {
+                        var year = date.year();
+                        var month = date.month();
+                        $(this).datepicker('option', 'defaultDate', new Date(year, month, 1));
+                        $(this).datepicker('setDate', new Date(year, month, 1));
+                    }
                 }
             });
             $(e.currentTarget).focus(function() {
@@ -43,7 +46,7 @@ define([
         createToBackgroundPicker: function(e) {
             var that = this;
             $(e.currentTarget).datepicker({
-                dateFormat: 'MM yy',
+                dateFormat: 'M yy',
                 changeMonth: true,
                 changeYear: true,
                 showButtonPanel: false,
@@ -54,11 +57,14 @@ define([
                 },
                 beforeShow: function(input, inst) {
                     $('#ui-datepicker-div').addClass("datepicker-color-year");
-                    var date = moment($(this).val());
-                    var year = date.year();
-                    var month = date.month();
-                    $(this).datepicker('option', 'defaultDate', new Date(year, month, 1));
-                    $(this).datepicker('setDate', new Date(year, month, 1));
+                    var dateText = $(this).val();
+                    var date = moment(dateText);
+                    if (date.isValid()) {
+                        var year = date.year();
+                        var month = date.month();
+                        $(this).datepicker('option', 'defaultDate', new Date(year, month, 1));
+                        $(this).datepicker('setDate', new Date(year, month, 1));
+                    }
                 }
             });
             $(e.currentTarget).focus(function() {

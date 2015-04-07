@@ -73,10 +73,12 @@ div.avatar img {width: 100%;}
 .no-editable {background-color: #f6f6f6;}
 .profile-img {  display: block;  margin-left: auto;  margin-right: auto;  margin-top: 0px; margin-bottom: 0px;}
 .profile-notify{opacity: 0;}
+.profile-notify:hover{cursor:default !important; }
+/*.profile-notify:hover{cursor:default; }*/
 .profile-header{margin-bottom: 10px;}
 
 .profile-table-header{padding-bottom: 10px;}
-.edit-emp-item{min-width: 190px;}
+/*.edit-emp-item{min-width: 190px;}*/
 .emp-item-error{color:red;}
 .position-container{margin: 10px;}
 .glyphicon:hover{cursor: pointer;}
@@ -86,12 +88,14 @@ div.avatar img {width: 100%;}
 
 .profile-lg-item{padding-top: 10px; padding-bottom: 10px;}
 .profile-row{padding-bottom: 10px;}
-.profile-data-title{ height: 22px;}
+.profile-data-title{ height: 22px; white-space: nowrap;}
+/*.col-fixed-140 {width: 140px;}
+.col-offset-140{padding-left:155px;}*/
 .datepicker-color-year select {color: #628db6;}
 .datepicker-color-year option {color: #628db6;}
 
 /*positions-view*/
-.positions-view{list-style-type: none;}
+.positions-view{list-style-type: none; padding-left: 0px;}
 .position-info label{font-weight: normal;}
 .position-info span#from{font-weight: bold;}
 .position-info span#to{font-weight: bold;}

@@ -57,8 +57,8 @@ define([
             }
         };
 
-        rivets.formatters.date = function(value) {
-            return moment(value).format('MMM DD, YYYY');
+        rivets.formatters.date = function(value) {            
+            return moment(value).format('MMM DD, YYYY');            
         }
 
         rivets.formatters.formatCv = function(value) {
