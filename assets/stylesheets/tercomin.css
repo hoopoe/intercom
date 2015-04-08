@@ -87,7 +87,7 @@ div.avatar img {width: 100%;}
 #main .profile-cv :hover{background-color: #54b4eb;}
 
 .profile-lg-item{padding-top: 10px; padding-bottom: 10px;}
-.profile-row{padding-bottom: 10px;}
+.profile-row{padding-bottom: 10px; white-space: nowrap;}
 .profile-data-title{ height: 22px; white-space: nowrap;}
 /*.col-fixed-140 {width: 140px;}
 .col-offset-140{padding-left:155px;}*/
@@ -215,5 +215,6 @@ div.employer-text{padding-top: 10px;}
 
 /*settings*/
 div.theme-picker >div:first-child{float:left; line-height: 30px; padding-right: 10px}
+.theme-settings {min-width: 150px;}
 
 

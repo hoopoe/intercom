@@ -323,6 +323,7 @@
     </div>
   </div>
 </div>
+
 <div class="row profile-row" rv-show="user_p:fullaccess">
   <div class="col-md-offset-1 col-md-11 edit-emp-item">
     <span><%=l('coureses_title')%></span>
@@ -353,8 +354,43 @@
     </div>
   </div>
 </div>
+
 <div class="row profile-row" rv-show="user_p:fullaccess">
-  <div class="col-md-offset-1 col-md-11 edit-emp-item">
+  <div class="col-md-11 col-md-offset-1 edit-emp-item">
+    <span><%=l('english_title')%></span>
+    <div class="circle">
+    </div>
+    <span rv-hide="user_p:edit_prop | eq 'english_lvl'">
+    <a rv-show="user_p:editable | eq 'true'" value="english_lvl"><i class="glyphicon glyphicon-pencil"/></a>
+    </span>
+  </div>
+  <div class="col-md-9 col-md-offset-2 profile-lg-item">
+    <div rv-show="user_p:edit_prop | eq 'english_lvl'">
+      <select class="form-control" id="english_lvl" rv-enabled="user_p:editable | eq 'true'" value="english_lvl" rv-value="user_p:english_lvl">
+        <option>Basic</option>
+        <option>Pre-intermediate</option>
+        <option>Intermediate</option>
+        <option>Upper-intermediate</option>
+        <option>Advanced</option>
+      </select>
+    </div>
+    <div rv-hide="user_p:edit_prop | eq 'english_lvl'">
+      <span rv-html="user_p:english_lvl" class="profile-data-span" />
+      <span class="glyphicon glyphicon-floppy-saved profile-notify english_lvl-notify-ok"/>
+      <span class="glyphicon glyphicon-floppy-remove profile-notify english_lvl-notify-fail"/>
+    </div>
+  </div>
+  <div class="col-md-offset-2 col-md-9">
+    <div rv-show="user_p:edit_prop | eq 'english_lvl'">
+      <a class="emp-item-cancel" value="english_lvl"><i class="glyphicon">Cancel</i></a>
+      <a class="emp-item-save" value="english_lvl"><i class="glyphicon">Save</i></a>
+      <span rv-show="user_p:edit_prop | eq 'english_lvl'" rv-text="user_p.validationError" class="emp-item-error"/>
+    </div>
+  </div>
+</div>
+
+<div class="row profile-row" rv-show="user_p:fullaccess">
+  <div class="col-md-11 col-md-offset-1 edit-emp-item">
     <span><%=l('languages_title')%></span>
     <div class="circle">
     </div>
@@ -362,7 +398,7 @@
     <a rv-show="user_p:editable | eq 'true'" value="extra_languages"><i class="glyphicon glyphicon-pencil"/></a>
     </span>
   </div>
-  <div class="col-md-offset-2 col-md-9 profile-lg-item">
+  <div class="col-md-9 col-md-offset-2 profile-lg-item">
     <div rv-show="user_p:edit_prop | eq 'extra_languages'">
       <div contentEditable=true class="editable profile-data-html profile-extra_languages" data-ph='<%=l('put_languages_here') %>' data-prop="extra_languages" data-button-class="format" data-prop="extra_languages" rv-html="user_p:extra_languages">
       </div>
@@ -379,19 +415,5 @@
       <a class="emp-item-save" value="extra_languages"><i class="glyphicon">Save</i></a>
       <span rv-show="user_p:edit_prop | eq 'extra_languages'" rv-text="user_p.validationError" class="emp-item-error"/>
     </div>
-  </div>
-  <div class="col-md-offset-2 col-md-9">
-    <div class="col-md-4">
-      <label for="english_lvl">English</label>
-      <span class="glyphicon glyphicon-floppy-saved profile-notify english_lvl-notify-ok"/>
-      <span class="glyphicon glyphicon-floppy-remove profile-notify english_lvl-notify-fail"/>
-      <select class="form-control" id="english_lvl" rv-enabled="user_p:editable | eq 'true'" value="english_lvl" rv-value="user_p:english_lvl">
-        <option>Basic</option>
-        <option>Pre-intermediate</option>
-        <option>Intermediate</option>
-        <option>Upper-intermediate</option>
-        <option>Advanced</option>
-      </select>
-    </div>
-  </div>
+  </div>  
 </div>
