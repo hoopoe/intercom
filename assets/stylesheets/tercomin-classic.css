@@ -38,6 +38,7 @@ div.line-separator {height:1px;  background:#fff;  border-bottom:1px solid #fff;
 .cv{display:none;}
 div.circle {border-radius: 50%/50%; width: 10px; height: 10px; background: #ccc; float: left; margin: 2px}
 div.profile-row{padding: 5px; white-space: nowrap;}
+.profile-row > div{padding-bottom: 10px; white-space: normal;}
 div.profile-text {padding-top: 10px;}
 div.profile-lbl {padding-top: 10px;}
 div.profile-lbl *{float:right;}

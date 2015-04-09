@@ -19,13 +19,14 @@ define([
                 showButtonPanel: false,
                 yearRange: '1930:' + (new Date).getFullYear(),
                 onChangeMonthYear: function(year, month, inst) {
-                    var date = moment(year + "-" + month + "-01");
+                    var t = new Date(inst.selectedYear, inst.selectedMonth, 1);
+                    var date = moment(t);                                    
                     that.model.set('from', date.format("MMM YYYY"));
                 },
                 beforeShow: function(input, inst) {
                     $('#ui-datepicker-div').addClass("datepicker-color-year");
                     var dateText = $(this).val();
-                    var date = moment(dateText);
+                    var date = moment(dateText, ["MMMM YYYY", "MMM YYYY"]);
                     if (date.isValid()) {
                         var year = date.year();
                         var month = date.month();
@@ -52,13 +53,14 @@ define([
                 showButtonPanel: false,
                 yearRange: '1930:' + (new Date).getFullYear(),
                 onChangeMonthYear: function(year, month, inst) {
-                    var date = moment(year + "-" + month + "-01");
+                    var t = new Date(inst.selectedYear, inst.selectedMonth, 1);
+                    var date = moment(t);
                     that.model.set('to', date.format("MMM YYYY"));
                 },
                 beforeShow: function(input, inst) {
                     $('#ui-datepicker-div').addClass("datepicker-color-year");
                     var dateText = $(this).val();
-                    var date = moment(dateText);
+                    var date = moment(dateText, ["MMMM YYYY", "MMM YYYY"]);
                     if (date.isValid()) {
                         var year = date.year();
                         var month = date.month();

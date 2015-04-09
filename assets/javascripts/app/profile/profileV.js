@@ -28,7 +28,7 @@ define([
     var view = Backbone.View.extend({
         name: "mypage",
         events: {
-            'mousedown .editable': 'editableClick',            
+            'mousedown .editable': 'editableClick',
             'change .avatar-control-save': 'profileImgSave',
 
             'click .add-position': 'addPosition',
@@ -91,10 +91,10 @@ define([
             }).render();
             $('.positions-ph').prepend(this.currentAddOrUpdatePositionView.el);
         },
-        editPosition: function(e) {            
+        editPosition: function(e) {
             e.preventDefault();
             var selectedPositionEl = $(e.currentTarget).parent().parent();
-            var id = $(e.currentTarget).data("id");            
+            var id = $(e.currentTarget).data("id");
             var positions = this.model.get("positions");
             var position = positions.get(id);
             if (position !== undefined) {
@@ -273,9 +273,10 @@ define([
                 $("#birthdayPicker").datepicker({
                     changeYear: true,
                     changeMonth: true,
-                    dateFormat: 'd M',
+                    dateFormat: 'd MM',
                     yearRange: '1925:' + ((new Date).getFullYear() - 14),
                     onClose: function(dateText) {
+                        // console.log(dateText);
                         var data = that.model.get('data');
                         data.set('birthday', dateText);
                         that.save();
@@ -296,23 +297,22 @@ define([
             if (prop === 'employmentDate') {
                 var that = this;
                 $("#employmentDatePicker").datepicker({
-                    dateFormat: 'MM yy',
+                    dateFormat: 'M yy',
                     changeMonth: true,
                     changeYear: true,
                     showButtonPanel: false,
                     yearRange: '1991:' + (new Date).getFullYear(),
-                    onClose: function(dateText, inst) {
-                        var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-                        var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-                        $(this).val($.datepicker.formatDate('MM yy', new Date(year, month, 1)));
-                        var dateSelected = $(this).val();
+                    onClose: function(dateText, inst) {                        
+                        var t = new Date(inst.selectedYear, inst.selectedMonth, 1);
+                        var dateSelected = moment(t);
                         var data = that.model.get('data');
-                        data.set('employmentDate', dateSelected);
+                        data.set('employmentDate', dateSelected.format("MMM YYYY"));
                         that.save();
                     },
                     beforeShow: function(input, inst) {
                         $('#ui-datepicker-div').addClass("datepicker-color-year");
-                        var date = moment($(this).val());
+                        var dateText = $(this).val();
+                        var date = moment(dateText, ["MMMM YYYY", "MMM YYYY"]);
                         var year = date.year();
                         var month = date.month();
                         $(this).datepicker('option', 'defaultDate', new Date(year, month, 1));
@@ -362,7 +362,7 @@ define([
             });
             ntf.fadeTo(1000, 0);
             this.model.get('data').set('edit_prop', "None");
-        },        
+        },
         profileImgSave: function(e) {
             var file = _.first(e.currentTarget.files)
             var blob = file;

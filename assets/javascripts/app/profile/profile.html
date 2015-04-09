@@ -235,9 +235,10 @@
 </div>
 <div class="row profile-row" rv-show="user_p:fullaccess">
   <div class="col-md-11 col-md-offset-1 edit-emp-item">
-    <span class="emp-item-title"><%=l('summary_title')%></span>
-    <div class="circle">
+  <div class="circle">
     </div>
+    <span class="emp-item-title"><%=l('summary_title')%></span>
+    
     <span rv-hide="user_p:edit_prop | eq 'summary'">
     <a rv-show="user_p:editable | eq 'true'"  value="summary"><i class="glyphicon glyphicon-pencil"/></a>
     </span>
@@ -320,7 +321,7 @@
   </div>
 </div>
 <div class="row profile-row" rv-show="user_p:fullaccess">
-  <div class="col-md-offset-2 col-md-7">
+  <div class="col-md-offset-2 col-md-8">
     <div class="backgrounds-ph">
     </div>
   </div>
@@ -391,6 +392,8 @@
       <a class="emp-item-cancel" value="english_lvl"><i class="glyphicon">Cancel</i></a>
       <a class="emp-item-save" value="english_lvl"><i class="glyphicon">Save</i></a>
       <span rv-show="user_p:edit_prop | eq 'english_lvl'" rv-text="user_p.validationError" class="emp-item-error"/>
+    </div>
+    <div class="line-separator">
     </div>
   </div>
 </div>
