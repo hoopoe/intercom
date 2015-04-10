@@ -62,7 +62,7 @@ define([
             this.$el.html('');
             this.$el.html(template({
                 l: _tr
-            }));
+            }));            
             rivets.bind(this.el, {
                 user_p: this.model.get('data')
             });
@@ -404,8 +404,10 @@ define([
 
         },
         onAvatarUpdated: function(e) {
-            var data = this.model.get("data");
-            data.set('avatar_url', e.url);
+            //image caching workaround
+            var d = new Date();
+            var data = this.model.get("data");            
+            data.set('avatar_url', e.url + "?" +d.getTime());            
         },
         save: function() {
             if (!this.model.isValid()) {

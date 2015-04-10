@@ -126,8 +126,8 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
     respond_to do |format|
       format.json {
         if saved
-          att_url = {:url => ""}
-          att_url[:url] = attachment_path(@attachment)
+          att_url = {:url => ""}          
+          att_url[:url] = avatar_tercomin_path(user.id)          
           render :text => att_url.to_json, :status => :ok
         else
           render :text => "Cannot save attachment.", :status => :unprocessable_entity
