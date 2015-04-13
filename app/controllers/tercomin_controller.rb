@@ -71,7 +71,8 @@ class TercominController < ApplicationController
                       replaceNodeContent(row, "[Work_Name]", i['companyName'])
                       replaceNodeContent(row, "[Work_Project]", i['project'])
                       replaceNodeContent(row, "[Work_Position]", i['position'])
-                      replaceNodeContent(row, "[Work_Resp]", i['resp'])                    
+                      replaceNodeContent(row, "[Work_Resp]", i['resp'])
+                      replaceNodeContent(row, "[Work_TS]", i['techSummary'])
                       tableNode.add_child(row)
                     end
                   end
@@ -121,10 +122,7 @@ class TercominController < ApplicationController
                     doc = doc.force_encoding("UTF-8").gsub("[Languages_Extra]", tmp.xpath("//text()").to_s)
                   end
                 end
-              
-                # doc = doc.gsub("[Certificates]", "MS")
-                # doc = doc.gsub("[Languages]", "intermediate")
-                # doc = doc.gsub("[Languages_Extra]", "Suomi primary")
+
                 out.write doc        
               else
                 out.write e.get_input_stream.read

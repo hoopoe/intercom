@@ -17,7 +17,7 @@ define([
     save: function() {
       if (!this.model.isValid()) {
         var msg = this.model.validationError;
-        $.growl({
+        $.notify({
           title: "Error: ",
           message: msg
         }, {
@@ -26,7 +26,7 @@ define([
       } else {
         this.model.save({}, {
           success: function(model, response) {
-            $.growl({
+            $.notify({
               title: "Success: ",
               message: "Event saved!"
             }, {
@@ -34,7 +34,7 @@ define([
             });
           },
           error: function(model, response) {
-            $.growl({
+            $.notify({
               title: "Error: ",
               message: "Server error"
             }, {

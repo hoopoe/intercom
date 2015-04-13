@@ -178,7 +178,7 @@ define([
     },
     displaySuccess: function() {
       $('.notify').removeClass("notify-error");
-      $.growl({title: "Success: ", 
+      $.notify({title: "Success: ", 
         message: "Employee's info is saved!"},
         {type: "success"
       });
@@ -188,7 +188,7 @@ define([
       $('.notify').addClass("notify-error");
       $('.notify').show();
       $('.notify-error').fadeOut(500);
-      $.growl({title: "Error: ", 
+      $.notify({title: "Error: ", 
         message: "Employee's info is not saved!"},
         {type: "danger"
       });
@@ -315,7 +315,7 @@ define([
     },
     displaySuccess: function() {
       $('.notify').removeClass("notify-error");
-      $.growl({title: "Success: ", 
+      $.notify({title: "Success: ", 
         message: "HR info is saved!"},
         {type: "success"
       });
@@ -325,7 +325,7 @@ define([
       $('.notify').addClass("notify-error");
       $('.notify').show();
       $('.notify-error').fadeOut(500);
-      $.growl({title: "Error: ", 
+      $.notify({title: "Error: ", 
         message: "HR info is not saved!"},
         {type: "danger"
       });

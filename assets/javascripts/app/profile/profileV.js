@@ -385,15 +385,15 @@ define([
                 processData: false,
                 success: function(data, text) {
                     Backbone.profileEvent.trigger('avatarUpdated', data);
-                    $.growl({
+                    $.notify({
                         title: "Success: ",
                         message: "Avatar saved"
                     }, {
-                        type: "success"
+                        type: "success"                        
                     });
                 },
                 error: function(request, status, error) {
-                    $.growl({
+                    $.notify({
                         title: "Error: ",
                         message: request.responseText
                     }, {

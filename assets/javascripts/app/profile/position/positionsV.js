@@ -9,17 +9,20 @@ define([
             this.editable = e;
         },
         render: function() {
-            this.collection.comparator = function(a, b) {
-                var left = a.get("to").substr(a.get("to").lastIndexOf(" "));
-                var right = b.get("to").substr(b.get("to").lastIndexOf(" "));
-                if (left > right) {
-                    return -1;
-                }
-                if (right > left) {
-                    return 1;
+            this.collection.comparator = function(a, b) {            
+                var left = moment(a.get("to"), ["MMMM YYYY", "MMM YYYY"]);
+                var right = moment(b.get("to"), ["MMMM YYYY", "MMM YYYY"]);
+                if (left.isValid() && right.isValid) {
+                    if (left > right) {
+                        return -1;
+                    }
+                    if (right > left) {
+                        return 1;
+                    }
                 }
                 return 0;
             };
+            // console.log(this.collection);
             this.collection.sort();
             this.collection.each(function(position) {
                 position.set('editable', this.editable);
