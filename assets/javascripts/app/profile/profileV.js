@@ -62,7 +62,7 @@ define([
             this.$el.html('');
             this.$el.html(template({
                 l: _tr
-            }));            
+            }));
             rivets.bind(this.el, {
                 user_p: this.model.get('data')
             });
@@ -108,20 +108,25 @@ define([
             }
         },
         removePosition: function(e) {
-            e.preventDefault();
+            var that = this;
             var id = $(e.currentTarget).data("id");
-            var positions = this.model.get("positions");
-            positions.remove(id);
-            this.model.set('profile', {
-                'positions': JSON.stringify(positions)
-            });
-            this.model.save({}, {
-                success: function(model, response) {
-                    Backbone.profileEvent.trigger('renderPositions');
-                },
-                error: function(model, response) {
-                    console.log("save: failed");
+            $(document).on('confirm:complete.position', function(e, answer) {
+                if (answer) {
+                    var positions = that.model.get("positions");
+                    positions.remove(id);
+                    that.model.set('profile', {
+                        'positions': JSON.stringify(positions)
+                    });
+                    that.model.save({}, {
+                        success: function(model, response) {
+                            Backbone.profileEvent.trigger('renderPositions');
+                        },
+                        error: function(model, response) {
+                            console.log("save: failed");
+                        }
+                    });
                 }
+                $(document).off('confirm:complete.position');
             });
         },
         onPositionSubmit: function(positionModel) {
@@ -197,21 +202,26 @@ define([
                 selectedBackgroundEl.append(this.currentAddOrUpdateBackgroundView.el);
             }
         },
-        removeBackground: function(e) {
-            e.preventDefault();
+        removeBackground: function(e) {            
+            var that = this;
             var id = $(e.currentTarget).data("id");
-            var backgrounds = this.model.get("backgrounds");
-            backgrounds.remove(id);
-            this.model.set('profile', {
-                'backgrounds': JSON.stringify(backgrounds)
-            });
-            this.model.save({}, {
-                success: function(model, response) {
-                    Backbone.profileEvent.trigger('renderBackgrounds');
-                },
-                error: function(model, response) {
-                    console.log("save backgrounds failed");
+            $(document).on('confirm:complete.background', function(e, answer) {
+                if (answer) {
+                    var backgrounds = that.model.get("backgrounds");
+                    backgrounds.remove(id);
+                    that.model.set('profile', {
+                        'backgrounds': JSON.stringify(backgrounds)
+                    });
+                    that.model.save({}, {
+                        success: function(model, response) {
+                            Backbone.profileEvent.trigger('renderBackgrounds');
+                        },
+                        error: function(model, response) {
+                            console.log("save backgrounds failed");
+                        }
+                    });
                 }
+                $(document).off('confirm:complete.background');
             });
         },
         onBackgroundSubmit: function(backgroundModel) {
@@ -302,7 +312,7 @@ define([
                     changeYear: true,
                     showButtonPanel: false,
                     yearRange: '1991:' + (new Date).getFullYear(),
-                    onClose: function(dateText, inst) {                        
+                    onClose: function(dateText, inst) {
                         var t = new Date(inst.selectedYear, inst.selectedMonth, 1);
                         var dateSelected = moment(t);
                         var data = that.model.get('data');
@@ -389,7 +399,7 @@ define([
                         title: "Success: ",
                         message: "Avatar saved"
                     }, {
-                        type: "success"                        
+                        type: "success"
                     });
                 },
                 error: function(request, status, error) {
@@ -406,8 +416,8 @@ define([
         onAvatarUpdated: function(e) {
             //image caching workaround
             var d = new Date();
-            var data = this.model.get("data");            
-            data.set('avatar_url', e.url + "?" +d.getTime());            
+            var data = this.model.get("data");
+            data.set('avatar_url', e.url + "?" + d.getTime());
         },
         save: function() {
             if (!this.model.isValid()) {
