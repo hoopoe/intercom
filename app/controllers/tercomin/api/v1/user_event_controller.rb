@@ -1,4 +1,4 @@
-class Tercomin::Api::V1::UserEventController < ApplicationController
+class Tercomin::Api::V1::UserEventController < TercominBaseController
   respond_to :json
 
   before_filter :build_event_groups, :except => [:index, :create]

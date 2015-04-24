@@ -1,4 +1,4 @@
-class Tercomin::Api::V1::EventController < ApplicationController
+class Tercomin::Api::V1::EventController < TercominBaseController
   respond_to :json
   before_filter :require_logged
   before_filter :require_tercomin_pm, :only => [:create, :destroy, :update]

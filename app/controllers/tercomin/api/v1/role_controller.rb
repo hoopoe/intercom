@@ -1,4 +1,4 @@
-class Tercomin::Api::V1::RoleController < ApplicationController
+class Tercomin::Api::V1::RoleController < TercominBaseController
 	respond_to :json
 	before_filter :require_logged
 

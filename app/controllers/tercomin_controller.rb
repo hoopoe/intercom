@@ -1,7 +1,7 @@
 require 'zip' #ms word generation
 require 'nokogiri' #ms word generation
 
-class TercominController < ApplicationController  
+class TercominController < TercominBaseController  
 	before_filter :find_user_profile, :only => [:cv, :avatar, :thumb]
   before_filter :has_full_access, :only => :cv
 

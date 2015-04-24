@@ -1,4 +1,4 @@
-class Tercomin::Api::V1::LocaleController < ApplicationController
+class Tercomin::Api::V1::LocaleController < TercominBaseController
   respond_to :json
   
   before_filter :require_tercomin_pm, :only => [:index]

@@ -70,7 +70,7 @@ div.profile-status{text-align: right;}
 .position-buttons {float:right; right: 0px; top: 0px;}
 .position-buttons a{margin-right: 5px; margin-left: 5px;}
 .position-container:hover .position-buttons {visibility: visible;}
-.position-container:hover {background-color: #eee;}
+.position-container:hover {background-color: #E6E6E6;}
 
 /*backgrounds*/
 .backgrounds-view{list-style-type: none;}
@@ -82,7 +82,7 @@ div.profile-status{text-align: right;}
 .background-buttons {float:right; right: 0px; top: 0px;}
 .background-buttons a{margin-right: 5px; margin-left: 5px;}
 .background-container:hover .background-buttons {visibility: visible;}
-.background-container:hover {background-color: #F6F6F6;}
+.background-container:hover {background-color: #E6E6E6;}
 
 /*events-view*/
 .events-view{list-style-type: none;}

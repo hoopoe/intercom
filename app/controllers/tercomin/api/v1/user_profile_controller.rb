@@ -1,6 +1,6 @@
 require 'mime/types'
 
-class Tercomin::Api::V1::UserProfileController < ApplicationController
+class Tercomin::Api::V1::UserProfileController < TercominBaseController
   respond_to :json
 
   helper :sort
@@ -20,9 +20,10 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
     if (params[:page])
       @offset = @limit * (params[:page].to_i - 1)
     end
-
+    
     users = User.select("users.id, users.login, users.mail, users.firstname,
      users.lastname, user_profile_t.avatar_url, user_profile_t.data")
+    .where("#{User.table_name}.id IN (SELECT gu.user_id FROM groups_users gu WHERE gu.group_id IN (?) )", get_allowed_group_ids())
     .joins("LEFT JOIN #{UserProfile.table_name}
       ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
 
@@ -33,7 +34,7 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
         where_clause = ""
         q.each_with_index do |i, index|
           if index == 0
-            where_clause  = "LOWER(#{User.table_name}.firstname) LIKE LOWER('#{q[index]}')
+            where_clause = "LOWER(#{User.table_name}.firstname) LIKE LOWER('#{q[index]}')
             or LOWER(#{User.table_name}.lastname) LIKE LOWER('#{q[index]}')"
           end
           where_clause = where_clause +
@@ -69,11 +70,13 @@ class Tercomin::Api::V1::UserProfileController < ApplicationController
            user_profile_t.positions,
            user_profile_t.backgrounds,
            user_profile_t.avatar_url")
+          .where("#{User.table_name}.id IN (SELECT gu.user_id FROM groups_users gu WHERE gu.group_id IN (?) )", get_allowed_group_ids())
           .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
         else
           users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname,
            user_profile_t.avatar_url,
            user_profile_t.data, user_profile_t.settings")
+          .where("#{User.table_name}.id IN (SELECT gu.user_id FROM groups_users gu WHERE gu.group_id IN (?) )", get_allowed_group_ids())
           .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
         end
 
