@@ -1,12 +1,14 @@
 require File.expand_path('../../test_helper', __FILE__)
 
-
-class Redmine::ApiTest::UserProfileTest < Redmine::ApiTest::Base
-  set_fixture_class :user_profile_t => UserProfile
-  fixtures :users, :user_profile_t
+class Redmine::ApiTest::UserProfileTest < Redmine::ApiTest::Base  
+  fixtures :users
     
   def setup
     @controller = Tercomin::Api::V1::UserProfileController.new
+    Setting.rest_api_enabled = '1'
+    g = Group.generate!(:name => 'lt-all')  
+    u = User.find_by_login('admin')   
+    g.users << u
   end
 
   def test_api_offset_and_limit_without_params
@@ -15,14 +17,14 @@ class Redmine::ApiTest::UserProfileTest < Redmine::ApiTest::Base
 
   context "with offset and limit" do
     should "use the params" do
-      get '/tercomin/api/v1/user_profile.json?offset=2&limit=3'
+      get '/tercomin/api/v1/user_profile.json?offset=2&limit=3', {}, credentials('admin')
       assert_equal 2, assigns(:offset)
       assert_equal 3, assigns(:limit)
     end
   end
   
-  test "GET /tercomin/api/v1/user_profile.json should return profiles" do
-    get '/tercomin/api/v1/user_profile.json'
+  test "get_profiles" do    
+    get '/tercomin/api/v1/user_profile.json', {}, credentials('admin')
     assert_response :success
     assert_equal 'application/json', response.content_type
     profiles = MultiJson.load(response.body)
@@ -30,14 +32,14 @@ class Redmine::ApiTest::UserProfileTest < Redmine::ApiTest::Base
   end
 
 
-  test "GET /tercomin/api/v1/user_profile/1.json should return admin profile" do
-    get '/tercomin/api/v1/user_profile/1.json'
+  test "get_admin_profile" do    
+    get '/tercomin/api/v1/user_profile/1.json', {}, credentials('admin')
     assert_response :success
     profiles = MultiJson.load(response.body)    
     assert_equal 'admin', profiles["profile"]["login"]
   end
 
-  test "PUT /tercomin/api/v1/user_profile/1.json should require authentication" do
+  test "update_profile_require_authentication" do
     put '/tercomin/api/v1/user_profile/1.json', {
         :id => 1,
         :user => {
