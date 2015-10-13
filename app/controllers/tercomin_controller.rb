@@ -9,8 +9,6 @@ class TercominController < TercominBaseController
   before_filter :find_avatar, :only => [:avatar, :thumb]
   before_filter :file_readable, :only => [:avatar, :thumb]
 
-  respond_to :html
-
   def index   
   	@themeName = "default"
   	if User.current.logged?
@@ -28,7 +26,7 @@ class TercominController < TercominBaseController
   def cv
     if @has_full_access
       result_file_name = "#{@user.lastname}_#{@user.firstname}.docx"
-      @user_profile = UserProfile.find_or_create_by_user_id(params[:id])      
+      @user_profile = UserProfile.find_or_create_by(:user_id => params[:id])      
       filename = template_tag("cv.docx", :plugin => 'tercomin')
       zf = Zip::File.new(filename)    
 

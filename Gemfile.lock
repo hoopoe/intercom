@@ -1,9 +1,6 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    mini_portile (0.6.2)
-    nokogiri (1.6.5)
-      mini_portile (~> 0.6.0)
     ruby-ole (1.2.11.8)
     rubyzip (1.1.6)
     spreadsheet (1.0.0)
@@ -13,6 +10,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  nokogiri
   rubyzip
   spreadsheet
+
+BUNDLED WITH
+   1.10.6

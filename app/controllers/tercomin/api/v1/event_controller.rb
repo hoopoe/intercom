@@ -1,5 +1,4 @@
 class Tercomin::Api::V1::EventController < TercominBaseController
-  respond_to :json
   before_filter :require_logged
   before_filter :require_tercomin_pm, :only => [:create, :destroy, :update]
   before_filter :require_tercomin_pm_or_hr, :only => [:show]
@@ -7,7 +6,9 @@ class Tercomin::Api::V1::EventController < TercominBaseController
   accept_api_auth :index, :create, :show
 
   def index
-  	respond_with Event.all
+    respond_to do |format|
+      format.json { render :json => Event.all}
+    end
   end
 
   def show

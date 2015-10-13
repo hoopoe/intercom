@@ -1,7 +1,6 @@
 require 'mime/types'
 
 class Tercomin::Api::V1::UserProfileController < TercominBaseController
-  respond_to :json
 
   helper :sort
   include SortHelper
@@ -20,8 +19,8 @@ class Tercomin::Api::V1::UserProfileController < TercominBaseController
     if (params[:page])
       @offset = @limit * (params[:page].to_i - 1)
     end
-    
-    users = User.select("users.id, users.login, users.mail, users.firstname,
+    #todo: add users.mail 
+    users = User.select("users.id, users.login, users.firstname,
      users.lastname, user_profile_t.avatar_url, user_profile_t.data")
     .where("#{User.table_name}.id IN (SELECT gu.user_id FROM groups_users gu WHERE gu.group_id IN (?) )", get_allowed_group_ids())
     .joins("LEFT JOIN #{UserProfile.table_name}
@@ -51,11 +50,14 @@ class Tercomin::Api::V1::UserProfileController < TercominBaseController
     .offset(@offset)
     .all
 
-    add_groups(users)
+    #todo: add groups
+    # add_groups(users) 
     set_avatars(users)
 
     @response = users.map{|i| i.attributes}
-    respond_with @response
+    respond_to do |format|
+      format.json { render :json => @response}
+    end
   end
 
   def show
@@ -65,7 +67,7 @@ class Tercomin::Api::V1::UserProfileController < TercominBaseController
       else
 
         if @has_full_access
-          users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname,
+          users = User.select("users.id, users.login, users.firstname, users.lastname,
            user_profile_t.data, user_profile_t.settings,
            user_profile_t.positions,
            user_profile_t.backgrounds,
@@ -73,7 +75,7 @@ class Tercomin::Api::V1::UserProfileController < TercominBaseController
           .where("#{User.table_name}.id IN (SELECT gu.user_id FROM groups_users gu WHERE gu.group_id IN (?) )", get_allowed_group_ids())
           .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")
         else
-          users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname,
+          users = User.select("users.id, users.login, users.firstname, users.lastname,
            user_profile_t.avatar_url,
            user_profile_t.data, user_profile_t.settings")
           .where("#{User.table_name}.id IN (SELECT gu.user_id FROM groups_users gu WHERE gu.group_id IN (?) )", get_allowed_group_ids())
@@ -94,7 +96,10 @@ class Tercomin::Api::V1::UserProfileController < TercominBaseController
             :profile => u.attributes,
             :editable => authorize_self_and_hr(),
           :fullaccess => @has_full_access}
-          respond_with @response
+#          respond_with @response
+          respond_to do |format|
+            format.json { render :json => @response}
+          end
         else
           render_403
         end
@@ -176,7 +181,9 @@ class Tercomin::Api::V1::UserProfileController < TercominBaseController
     end
 
     if @profile.save
-      respond_with @profile
+      respond_to do |format|
+        format.json { render :json => @profile}
+      end
     else
       render_validation_errors(@profile)
     end
@@ -196,9 +203,9 @@ class Tercomin::Api::V1::UserProfileController < TercominBaseController
     end
 
     if (params[:id] == "logged")
-      @profile = UserProfile.find_or_create_by_user_id(User.current.id)
+      @profile = UserProfile.find_or_create_by(:user_id => User.current.id)
     else
-      @profile = UserProfile.find_or_create_by_user_id(params[:id].to_i)
+      @profile = UserProfile.find_or_create_by(:user_id => params[:id].to_i)
     end
   end
 

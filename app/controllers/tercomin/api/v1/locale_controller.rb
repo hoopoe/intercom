@@ -1,6 +1,4 @@
 class Tercomin::Api::V1::LocaleController < TercominBaseController
-  respond_to :json
-  
   before_filter :require_tercomin_pm, :only => [:index]
   accept_api_auth :index #api is disabled by admins ))
 

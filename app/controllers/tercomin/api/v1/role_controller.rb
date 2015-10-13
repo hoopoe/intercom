@@ -1,5 +1,4 @@
 class Tercomin::Api::V1::RoleController < TercominBaseController
-	respond_to :json
 	before_filter :require_logged
 
 	def index
@@ -13,7 +12,9 @@ class Tercomin::Api::V1::RoleController < TercominBaseController
 	      	@response[:role] = "admin"
 		end
 
-	    respond_with @response
+	    respond_to do |format|
+	      format.json { render :json => @response}
+	    end
 	end
 
 private
