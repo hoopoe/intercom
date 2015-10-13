@@ -2,7 +2,7 @@ require File.expand_path('../../test_helper', __FILE__)
 
 class UserProfileTest < ActiveSupport::TestCase
 
-  should "create" do    
+  def test_create
     User.delete_all
     user = User.generate!(:firstname => 'First Test User')
     userProfile = UserProfile.generate!(:user_id => user.id, 
@@ -10,7 +10,7 @@ class UserProfileTest < ActiveSupport::TestCase
     assert_equal 1, User.count(:all, :conditions => {:firstname => 'First Test User'})
   end
 
-  should "search" do
+  def test_search
     User.delete_all
     UserProfile.delete_all
 

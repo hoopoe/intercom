@@ -1,4 +1,5 @@
 class Tercomin::Api::V1::EventController < TercominBaseController
+  # include Redmine::SafeAttributes
   before_filter :require_logged
   before_filter :require_tercomin_pm, :only => [:create, :destroy, :update]
   before_filter :require_tercomin_pm_or_hr, :only => [:show]
@@ -7,7 +8,7 @@ class Tercomin::Api::V1::EventController < TercominBaseController
 
   def index
     respond_to do |format|
-      format.json { render :json => Event.all}
+      format.json { render :json => Event.all.map { |t| {:event => t} }}
     end
   end
 
@@ -16,6 +17,7 @@ class Tercomin::Api::V1::EventController < TercominBaseController
   end
 
   def update
+
     @event.safe_attributes = params[:event] if params[:event]
     
     if @event.save       
@@ -27,8 +29,9 @@ class Tercomin::Api::V1::EventController < TercominBaseController
   end
  
   def create  	    
-  	@event = Event.new
-    @event.safe_attributes = params[:event]
+  	@event = Event.new(event_params)
+    # @event.safe_attributes = params[:event]
+
   	respond_to do |format|
       if @event.save       
         format.json  { render :text => @event.id, :status => :created}
@@ -46,6 +49,10 @@ class Tercomin::Api::V1::EventController < TercominBaseController
   end
 
   private
+
+  def event_params    
+    params.require(:event).permit(:body, :name)
+  end
 
   def require_logged
     if (!User.current.logged?)
