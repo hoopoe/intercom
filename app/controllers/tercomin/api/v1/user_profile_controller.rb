@@ -51,7 +51,7 @@ class Tercomin::Api::V1::UserProfileController < TercominBaseController
     .all
 
     #todo: add groups
-    add_groups(users) 
+    # add_groups(users) 
     set_avatars(users)
 
     @response = users.map{|i| i.attributes}
