@@ -15,12 +15,10 @@ class Redmine::ApiTest::UserProfileTest < Redmine::ApiTest::Base
     assert_equal [0, 25], @controller.api_offset_and_limit({})    
   end
 
-  context "with offset and limit" do
-    should "use the params" do
-      get '/tercomin/api/v1/user_profile.json?offset=2&limit=3', {}, credentials('admin')
-      assert_equal 2, assigns(:offset)
-      assert_equal 3, assigns(:limit)
-    end
+  test "use the params" do
+    get '/tercomin/api/v1/user_profile.json?offset=2&limit=3', {}, credentials('admin')
+    assert_equal 2, assigns(:offset)
+    assert_equal 3, assigns(:limit)
   end
   
   test "get_profiles" do    
