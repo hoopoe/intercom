@@ -13,29 +13,29 @@ class Tercomin::Api::V1::EventController < TercominBaseController
   end
 
   def show
-    respond_with @event  
+    respond_to do |format|
+      format.json { render :json => {:event => @event} }
+    end
   end
 
   def update
-
-    @event.safe_attributes = params[:event] if params[:event]
-    
-    if @event.save       
-      respond_with @event
-    else        
-      render_validation_errors(@event) 
+    @event.update_attributes(event_params);
+    if @event.save
+      respond_to do |format|
+        format.json { render :json => @event}
+      end
+    else
+      render_validation_errors(@event)
     end
-    
-  end
- 
-  def create  	    
-  	@event = Event.new(event_params)
-    # @event.safe_attributes = params[:event]
 
-  	respond_to do |format|
-      if @event.save       
+  end
+
+  def create
+    @event = Event.new(event_params)
+    respond_to do |format|
+      if @event.save
         format.json  { render :text => @event.id, :status => :created}
-      else        
+      else
         format.json  { render_validation_errors(@event) }
       end
     end
@@ -50,8 +50,8 @@ class Tercomin::Api::V1::EventController < TercominBaseController
 
   private
 
-  def event_params    
-    params.require(:event).permit(:body, :name)
+  def event_params
+    params.require(:event).permit(:body, :name, :groups)
   end
 
   def require_logged
@@ -60,20 +60,20 @@ class Tercomin::Api::V1::EventController < TercominBaseController
     end
   end
 
-  def find_event    
+  def find_event
     @event = Event.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     render_404
   end
 
   def is_ingroup(groupNames)
-    userGroups = User.current.groups.map{ |o| o.lastname }    
+    userGroups = User.current.groups.map{ |o| o.lastname }
     ig = userGroups & groupNames
     return ig.any?
   end
 
-  def require_tercomin_pm    
-    return unless require_login        
+  def require_tercomin_pm
+    return unless require_login
     if !is_ingroup(['lt-prj-tercomin-pm'])
       render_403
       return false
@@ -82,12 +82,12 @@ class Tercomin::Api::V1::EventController < TercominBaseController
   end
 
   def require_tercomin_pm_or_hr
-    return unless require_login        
+    return unless require_login
     if (!is_ingroup(['lt-prj-tercomin-pm']) && !is_ingroup(['hr']))
       render_403
       return false
     end
     true
   end
-  
+
 end

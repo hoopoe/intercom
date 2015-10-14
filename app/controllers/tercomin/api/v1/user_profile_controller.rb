@@ -51,7 +51,7 @@ class Tercomin::Api::V1::UserProfileController < TercominBaseController
     .all
 
     #todo: add groups
-    # add_groups(users) 
+    add_groups(users) 
     set_avatars(users)
 
     @response = users.map{|i| i.attributes}
@@ -92,11 +92,12 @@ class Tercomin::Api::V1::UserProfileController < TercominBaseController
           # set_avatars(users)
           u = users.first
           set_avatar(u)
+          
           @response = {
             :profile => u.attributes,
             :editable => authorize_self_and_hr(),
           :fullaccess => @has_full_access}
-#          respond_with @response
+
           respond_to do |format|
             format.json { render :json => @response}
           end
@@ -182,7 +183,7 @@ class Tercomin::Api::V1::UserProfileController < TercominBaseController
 
     if @profile.save
       respond_to do |format|
-        format.json { render :json => @profile}
+        format.json { render :json => {:profile => @profile} }
       end
     else
       render_validation_errors(@profile)

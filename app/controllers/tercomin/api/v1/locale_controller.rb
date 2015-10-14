@@ -3,7 +3,9 @@ class Tercomin::Api::V1::LocaleController < TercominBaseController
   accept_api_auth :index #api is disabled by admins ))
 
   def index
-  	respond_with "put locales here. TBD"
+    respond_to do |format|
+      format.json { render :json => "put locales here. TBD"}
+    end
   end
 
   private  
