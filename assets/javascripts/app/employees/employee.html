@@ -9,26 +9,23 @@
         </div>
         <div class="col-md-10 employer-text">
           <a rv-href-rooted="emp:id" data-root='#mypage/'>
-            {emp:lastname} {emp:firstname}
+            {emp:lastname} {emp:firstname} 
           </a>
           <br>
-          <label>e-mail:</label>
-          <label>{emp:mail}</label>
+            <label>e-mail:</label>
+            <label>{emp:mail}</label>
+          <br>          
+            <label><%=l('position_title')%>:</label>
+            <label>{emp:position}</label>
           <br>
-          <label><%=l('project_title')%>:</label>
-          
-             <label>{emp:project}</label>
-          
+            <label><%=l('project_title')%>:</label>          
+            <label>{emp:project}</label>          
           <br>
-          <label><%=l('project_extra_title')%>:</label>
-          
-             <label>{emp:project_extra}</label>
-          
+            <label><%=l('project_extra_title')%>:</label>          
+            <label>{emp:project_extra}</label>          
           <br>
-          <label><%=l('room_number')%>:</label>
-          
-             <label>{emp:room_number}</label>
-          
+            <label><%=l('room_number')%>:</label>          
+            <label>{emp:room_number}</label>          
           <br/>
           <label><%=l('groups_name')%>:</label>
           <ul class="groups-list">

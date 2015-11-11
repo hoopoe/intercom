@@ -4,21 +4,20 @@
       <div class="col-md-4">
         <a rv-href-rooted="emp:id" data-root='#mypage/'>
           {emp:lastname} {emp:firstname}
-        </a>
+        </a>        
         <br/>
         <label>e-mail:</label>
         <label>{emp:mail}</label>
       </div>
       <div class="col-md-4">
-        <label><%=l('project_title')%>:</label>
-        
-           <label>{emp:project}</label>
-        
+          <label><%=l('position_title')%>:</label>
+          <label>{emp:position}</label>
+        <br>
+          <label><%=l('project_title')%>:</label>        
+          <label>{emp:project}</label>        
         <br/>
-        <label><%=l('project_extra_title')%>:</label>
-        
-           <label>{emp:project_extra}</label>
-        
+          <label><%=l('project_extra_title')%>:</label>      
+          <label>{emp:project_extra}</label>      
       </div>
       <div class="col-md-4">
         <label><%=l('room_number')%>:</label>
