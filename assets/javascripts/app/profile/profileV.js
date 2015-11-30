@@ -24,6 +24,7 @@ define([
         _tr = tr;
     });
     Backbone.profileEvent = _.extend({}, Backbone.Events);
+    console.log("test 1");
 
     var view = Backbone.View.extend({
         name: "mypage",
@@ -44,7 +45,7 @@ define([
             'click .emp-item-save': 'saveEmpItem',
             'change #english_lvl': 'selectLanguage',
         },
-        initialize: function() {
+        initialize: function() {            
             Backbone.profileEvent.on('avatarUpdated', this.onAvatarUpdated, this);
 
             Backbone.profileEvent.on('positionSubmit', this.onPositionSubmit, this);
@@ -275,9 +276,9 @@ define([
             data.set(prop, lvl);
             this.save();
         },
-        editEmpItem: function(e) {
-            var prop = e.currentTarget.getAttribute('value');
-            var dataModel = this.model.get('data').set('edit_prop', prop);
+        editEmpItem: function(e) {            
+            var prop = e.currentTarget.getAttribute('value');            
+            var dataModel = this.model.get('data').set('edit_prop', prop);            
             if (prop === 'birthday') {
                 var that = this; //todo: refactor tt
                 $("#birthdayPicker").datepicker({
@@ -346,8 +347,9 @@ define([
             this.model.get('data').set('edit_prop', "None");
             dataModel.isValid(); //remove validataion error
         },
-        saveEmpItem: function(e) {
-            var prop = e.currentTarget.getAttribute('value');
+        saveEmpItem: function(e) {                        
+            // console.log(this.model.get('data'));
+            var prop = e.currentTarget.getAttribute('value');            
             var dataModel = this.model.get('data').set('edit_prop', prop);
             if (prop === 'summary' || prop === 'skills' || prop == 'coureses' || prop === 'extra_languages') {
                 var tmp = $('.profile-' + prop);
@@ -364,7 +366,7 @@ define([
                 this.save();
             }
         },
-        onEditItemCompleted: function() {
+        onEditItemCompleted: function() {                    
             var prop = this.model.get('data').get('edit_prop');
             var ntf = $('.' + prop + '-notify-ok');
             ntf.animate({
@@ -420,7 +422,7 @@ define([
             data.set('avatar_url', e.url + "?" + d.getTime());
         },
         save: function() {
-            if (!this.model.isValid()) {
+            if (!this.model.isValid()) {                
                 var prop = this.model.get('data').get('edit_prop');
                 var ntf = $('.' + prop + '-notify-fail');
                 ntf.animate({
@@ -428,9 +430,9 @@ define([
                 });
                 ntf.fadeTo(1000, 0);
                 this.model.get('data').set('edit_prop', "None");
-            } else {
+            } else {                
                 this.model.save({}, {
-                    success: function(model, response) {
+                    success: function(model, response) {                        
                         Backbone.profileEvent.trigger('editItemCompleted', this.model);
                     },
                     error: function(model, response) {},

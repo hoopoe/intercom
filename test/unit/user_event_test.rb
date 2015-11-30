@@ -68,16 +68,18 @@ class UserEventTest < ActiveSupport::TestCase
     ue.event = @e
     ue.save!
 
-    UserProfile.create!(:user_id => @u.id, :data => "test")
-
+    UserProfile.create!(:user_id => @u.id, :data => "UP test")  
     
-    puts UserEvent
-    .select("user_events_t.body, user_profile_t.user_id, user_profile_t.data")
+    # .select("user_events_t.body, user_profile_t.user_id, user_profile_t.data")
+    t = UserEvent  
+    .select("*")
     .joins("LEFT JOIN #{UserProfile.table_name} 
       ON #{UserEvent.table_name}.user_id = #{UserProfile.table_name}.user_id")
-    .all
-    .to_json
-    
+    .all    
+
+    assert_equal 2, t.count
+
+    puts t.to_json
   end
 
   private
