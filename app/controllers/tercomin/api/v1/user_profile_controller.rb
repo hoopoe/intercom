@@ -90,9 +90,8 @@ class Tercomin::Api::V1::UserProfileController < TercominBaseController
         end
 
         if users.exists?
-          # set_avatars(users)
           u = users.first
-          set_avatar(u)
+          u.avatar_url = avatar_tercomin_path(u.id)
           
           @response = {
             :profile => u.attributes,
@@ -177,7 +176,7 @@ class Tercomin::Api::V1::UserProfileController < TercominBaseController
         @profile.backgrounds = params[:profile][:backgrounds]
       end
     end
-
+    @profile.avatar_url = avatar_tercomin_path(@profile.user_id)
     @response = {
             :profile => @profile,
             :editable => authorize_self_and_hr(),
@@ -271,10 +270,6 @@ class Tercomin::Api::V1::UserProfileController < TercominBaseController
         end
       end
     end
-  end
-
-  def set_avatar(user)
-    user.avatar_url = avatar_tercomin_path(user.id)
   end
 
   def add_groups(users)
