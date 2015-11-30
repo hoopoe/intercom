@@ -43,16 +43,17 @@ define([
         }        
 
         if (response) {            
-            var data;
-            if (response.profile.data)
+            var data = undefined;
+            if (response.profile.data) {
                 data = $.parseJSON(response.profile.data); 
-                    
+            }
+            
             var dataModel = new EmployerData(data);            
-            dataModel.set('id', response.profile.id);
-            dataModel.set('firstname', response.profile.firstname);
-            dataModel.set('lastname', response.profile.lastname);
-            dataModel.set('mail', response.profile.mail);            
-            dataModel.set('avatar_url', response.profile.avatar_url);
+            // dataModel.set('id', response.profile.id);
+            // dataModel.set('firstname', response.profile.firstname);
+            // dataModel.set('lastname', response.profile.lastname);
+            // dataModel.set('mail', response.profile.mail);            
+            // dataModel.set('avatar_url', response.profile.avatar_url);
             dataModel.set('edit_prop', 'None');
             dataModel.set('editable', response.editable);
             dataModel.set('fullaccess', response.fullaccess);

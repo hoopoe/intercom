@@ -24,7 +24,6 @@ define([
         _tr = tr;
     });
     Backbone.profileEvent = _.extend({}, Backbone.Events);
-    console.log("test 1");
 
     var view = Backbone.View.extend({
         name: "mypage",
@@ -348,7 +347,6 @@ define([
             dataModel.isValid(); //remove validataion error
         },
         saveEmpItem: function(e) {                        
-            // console.log(this.model.get('data'));
             var prop = e.currentTarget.getAttribute('value');            
             var dataModel = this.model.get('data').set('edit_prop', prop);
             if (prop === 'summary' || prop === 'skills' || prop == 'coureses' || prop === 'extra_languages') {
@@ -366,7 +364,10 @@ define([
                 this.save();
             }
         },
-        onEditItemCompleted: function() {                    
+        onEditItemCompleted: function() {
+            rivets.bind(this.el, {
+                user_p: this.model.get('data')
+            });          
             var prop = this.model.get('data').get('edit_prop');
             var ntf = $('.' + prop + '-notify-ok');
             ntf.animate({

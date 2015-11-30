@@ -6,7 +6,8 @@ class Tercomin::Api::V1::UserProfileController < TercominBaseController
   include SortHelper
 
   before_filter :authorize_self_and_hr, :only => [:update, :upload]
-  before_filter :is_self_or_last_event_manager, :only => :show
+  # before_filter :is_self_or_last_event_manager, :only => :show
+  before_filter :is_self_or_last_event_manager, :only => [:update, :show]
   before_filter :set_profile, :only => [:update, :upload]
 
   accept_api_auth :index, :show, :update, :upload
@@ -96,8 +97,8 @@ class Tercomin::Api::V1::UserProfileController < TercominBaseController
           @response = {
             :profile => u.attributes,
             :editable => authorize_self_and_hr(),
-          :fullaccess => @has_full_access}
-
+            :fullaccess => @has_full_access}
+          
           respond_to do |format|
             format.json { render :json => @response}
           end
@@ -175,15 +176,16 @@ class Tercomin::Api::V1::UserProfileController < TercominBaseController
       if params[:profile][:backgrounds].present?
         @profile.backgrounds = params[:profile][:backgrounds]
       end
-
-      # if params[:profile][:avatar_url].present?
-      #   @profile.avatar_url = params[:profile][:avatar_url]
-      # end
     end
+
+    @response = {
+            :profile => @profile,
+            :editable => authorize_self_and_hr(),
+            :fullaccess => @has_full_access}
 
     if @profile.save
       respond_to do |format|
-        format.json { render :json => {:profile => @profile} }
+        format.json { render :json => @response }
       end
     else
       render_validation_errors(@profile)
