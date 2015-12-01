@@ -78,8 +78,6 @@ class UserEventTest < ActiveSupport::TestCase
     .all    
 
     assert_equal 2, t.count
-
-    puts t.to_json
   end
 
   private
