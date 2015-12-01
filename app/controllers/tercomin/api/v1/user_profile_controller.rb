@@ -149,13 +149,14 @@ class Tercomin::Api::V1::UserProfileController < TercominBaseController
     if(params.has_key?(:profile))
       #profile data
       if params[:profile][:data].present?
-        if @profile.data.present?
-          data = JSON.parse(@profile.data)
-        else
-          data = Hash.new
-        end
-        data.merge!(JSON.parse(params[:profile][:data]));
-        @profile.data = data.to_json
+        # if @profile.data.present?
+          data = JSON.parse(params[:profile][:data])
+          @profile.data = data.to_json
+        # else
+          # data = Hash.new
+        # end
+        # data.merge!(JSON.parse(params[:profile][:data]));
+        # @profile.data = data.to_json
       end
       #profile settings
       if params[:profile][:settings].present?

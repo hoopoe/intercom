@@ -49,10 +49,12 @@ define([
 
             Backbone.profileEvent.on('positionSubmit', this.onPositionSubmit, this);
             Backbone.profileEvent.on('cancelPositionForm', this.onCancelPositionForm, this);
-            Backbone.profileEvent.on('renderPositions', this.onRenderPositions, this);
+            // Backbone.profileEvent.on('renderPositions', this.onRenderPositions, this);
+            Backbone.profileEvent.on('renderPositions', this.rebindAndUpdate, this);
 
             Backbone.profileEvent.on('backgroundSubmit', this.onBackgroundSubmit, this);
-            Backbone.profileEvent.on('renderBackgrounds', this.onRenderBackgrounds, this);
+            // Backbone.profileEvent.on('renderBackgrounds', this.onRenderBackgrounds, this);
+            Backbone.profileEvent.on('renderBackgrounds', this.rebindAndUpdate, this);
             Backbone.profileEvent.on('editItemCompleted', this.onEditItemCompleted, this);
             _.bindAll(this, 'save');
             this.model.bind('save', this.save);
@@ -63,12 +65,15 @@ define([
             this.$el.html(template({
                 l: _tr
             }));
+            this.rebindAndUpdate();
+            return this;
+        },
+        rebindAndUpdate: function() {
             rivets.bind(this.el, {
                 user_p: this.model.get('data')
             });
             this.onRenderPositions();
             this.onRenderBackgrounds();
-            return this;
         },
         onCancelPositionForm: function(data) {
             Backbone.profileEvent.trigger('renderPositions');
@@ -286,7 +291,6 @@ define([
                     dateFormat: 'd MM',
                     yearRange: '1925:' + ((new Date).getFullYear() - 14),
                     onClose: function(dateText) {
-                        // console.log(dateText);
                         var data = that.model.get('data');
                         data.set('birthday', dateText);
                         that.save();
@@ -364,17 +368,17 @@ define([
                 this.save();
             }
         },
-        onEditItemCompleted: function() {
-            rivets.bind(this.el, {
-                user_p: this.model.get('data')
-            });          
-            var prop = this.model.get('data').get('edit_prop');
+        onEditItemCompleted: function(prop) {
             var ntf = $('.' + prop + '-notify-ok');
             ntf.animate({
                 opacity: 1
             });
             ntf.fadeTo(1000, 0);
-            this.model.get('data').set('edit_prop', "None");
+
+            rivets.bind(this.el, {
+                user_p: this.model.get('data')
+            });   
+            this.rebindAndUpdate();
         },
         profileImgSave: function(e) {
             var file = _.first(e.currentTarget.files)
@@ -423,8 +427,8 @@ define([
             data.set('avatar_url', e.url + "?" + d.getTime());
         },
         save: function() {
+            var prop = this.model.get('data').get('edit_prop');
             if (!this.model.isValid()) {                
-                var prop = this.model.get('data').get('edit_prop');
                 var ntf = $('.' + prop + '-notify-fail');
                 ntf.animate({
                     opacity: 1
@@ -434,7 +438,7 @@ define([
             } else {                
                 this.model.save({}, {
                     success: function(model, response) {                        
-                        Backbone.profileEvent.trigger('editItemCompleted', this.model);
+                        Backbone.profileEvent.trigger('editItemCompleted', prop);
                     },
                     error: function(model, response) {},
                 });
