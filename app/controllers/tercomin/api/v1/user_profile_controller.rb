@@ -178,6 +178,7 @@ class Tercomin::Api::V1::UserProfileController < TercominBaseController
       end
     end
     @profile.avatar_url = avatar_tercomin_path(@profile.user_id)
+    @profile.id = @profile.user_id #todo: warkaround should be like show
     @response = {
             :profile => @profile,
             :editable => authorize_self_and_hr(),
