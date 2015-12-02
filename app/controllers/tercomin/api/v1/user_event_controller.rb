@@ -1,23 +1,33 @@
 class Tercomin::Api::V1::UserEventController < TercominBaseController
 
-  before_filter :build_event_groups, :except => [:index, :create]
-  before_filter :create_hr_form, :except => [:index, :create]
+  before_filter :build_event_groups, :except => [:index, :create, :search]
+  before_filter :create_hr_form, :except => [:index, :create, :search]
   before_filter :require_self_or_manager_or_hr, :only => [:show, :update]
 
-  before_filter :find_user_event, :except => [:index, :create]
+  before_filter :find_user_event, :except => [:index, :create, :search]
   before_filter :require_tercomin_pm, :only => [:destroy]
 
   accept_api_auth :index, :show
 
   def index
     @offset, @limit = api_offset_and_limit
-    responce = UserEvent.limit(@limit)
+    response = UserEvent.limit(@limit)
     .offset(@offset)
     .all
     .map{|i| {'uid' => i.user_id, 'eid' => i.event_id, 'body' => 'hidden'}}
 
     respond_to do |format|
       format.json { render :json => response}
+    end
+  end
+
+  def search
+    respond_to do |format|
+      format.json { render :json => UserEvent
+        .joins(:event)
+        .select("user_events_t.user_id, user_events_t.event_id, events_t.name")
+        .group("user_events_t.user_id, user_events_t.event_id, events_t.name")
+      }
     end
   end
 
