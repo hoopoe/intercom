@@ -12,12 +12,13 @@ define([
   'app/events/eventShowV',
   'app/userevent/usereventM',
   'app/userevent/usereventV',
+  'app/userevent/usereventsC',
   'app/settings/settingsV',
   'app/role/roleM'
 ], function(util, TopMenu, ProfileModel, ProfileView,
   EmployeeCollection, EmployeesView,
   EventModel, EventCollection, EventsView, EventEditView, EventShowView,
-  UserEvent, UserEventView,
+  UserEvent, UserEventView, UserEvents,
   SettingsView, RoleModel) {
 
   var appRouter = Backbone.Router.extend({
@@ -68,6 +69,7 @@ define([
     },
     employees: function(param) {
       var employees = new EmployeeCollection;
+      var user_events = new UserEvents;
       var view = new EmployeesView({
         collection: employees
       });
@@ -78,11 +80,28 @@ define([
       }
       employees.fetch({
         data: req,
-        error: function(m, r) {
-          console.log(r.responseText);
-        },
-        success: function() {
+        success: function(r, d, s) {
           util.currentView.initScroll(req);
+          user_events.fetch({
+            data: {
+              ids: JSON.stringify(r.pluck("id"))
+            },
+            success: function(r, d) {
+              _.each(d, function(t) {
+                var emp = this.get(t.user_id);
+                if (emp) {
+                  var evts = emp.get("events");
+                  evts.add({ueid: t.user_id + '_' + t.event_id, name: t.name});
+                }
+              }, employees);
+            },
+            error: function(m, r) {
+              console.log(r);
+            }
+          })
+        },
+        error: function(m, r) {
+          console.log(r);
         }
       });
     },
@@ -125,7 +144,7 @@ define([
           });
           util.showView(view);
         },
-        error:function(m, r) {
+        error: function(m, r) {
           console.log(r);
         }
       });
@@ -140,7 +159,7 @@ define([
           });
           util.showView(view);
         },
-        error:function(m, r) {
+        error: function(m, r) {
           console.log(r);
         }
       });

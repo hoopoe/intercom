@@ -28,9 +28,9 @@
         <br/>
         <label><%=l('groups_name')%>:</label>
           <ul class="groups-list">
-            <li rv-each-i="emp:events">
-              <a rv-href-rooted="i.ueid" data-root='#user_event/'>
-                {i.name} 
+            <li rv-each-i="emp:events:models">
+              <a rv-href-rooted="i:ueid" data-root='#user_event/'>
+                {i:name} 
               </a>
             </li>
           <ul>

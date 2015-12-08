@@ -27,6 +27,7 @@ class Tercomin::Api::V1::UserEventController < TercominBaseController
         .joins(:event)
         .select("user_events_t.user_id, user_events_t.event_id, events_t.name")
         .group("user_events_t.user_id, user_events_t.event_id, events_t.name")
+        .order("user_events_t.event_id DESC")
       }
     end
   end
