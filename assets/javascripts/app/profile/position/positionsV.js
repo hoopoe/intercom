@@ -22,7 +22,6 @@ define([
                 }
                 return 0;
             };
-            // console.log(this.collection);
             this.collection.sort();
             this.collection.each(function(position) {
                 position.set('editable', this.editable);

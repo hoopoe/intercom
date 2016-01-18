@@ -27,10 +27,10 @@ define([
               'mail':'',
               'project':'',
               'project_extra':'',
-              'room_number':'',
-              'events':[]
+              'room_number':''
             }
           });
+
           var data = JSON.parse(this.model.get('data'));
           var d = new Data(data);
           d.set('id', this.model.get('id'));

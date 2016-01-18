@@ -9,6 +9,7 @@ define([
             this.listenTo(this.collection, 'add', this.add);
         },
         add: function(item) {
+            item.set("events", new Backbone.Collection()); //add events by second api call, see router.js(employees)
             var view = new EmployeeView({
                 model: item
             });

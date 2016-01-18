@@ -1,32 +1,35 @@
 class Tercomin::Api::V1::RoleController < TercominBaseController
-	respond_to :json
-	before_filter :require_logged
+  before_filter :require_logged
 
-	def index
-	    @response = {:role => "user" }
+  def index
+    @response = {:role => "user" }
 
-	    if(is_ingroup(['hr']))
-	      	@response[:role] = "hr"
-		end
+    if(is_ingroup(['hr']))
+      @response[:role] = "hr"
+    end
 
-		if(is_ingroup(['lt-prj-tercomin-pm']))
-	      	@response[:role] = "admin"
-		end
+    if(is_ingroup(['lt-prj-tercomin-pm']))
+      @response[:role] = "admin"
+    end
 
-	    respond_with @response
-	end
-
-private
-
-  def require_logged
-    if (!User.current.logged?)
-      respond_with "User is not logged", status: :unprocessable_entity
+    respond_to do |format|
+      format.json { render :json => @response}
     end
   end
 
-	def is_ingroup(groupNames)
-	    userGroups = User.current.groups.map{ |o| o.lastname }
-	    ig = userGroups & groupNames
-	    return ig.any?
-	  end
+  private
+
+  def require_logged
+    if (!User.current.logged?)
+      respond_to do |format|
+        format.json { render :json => "User is not logged", status: :unprocessable_entity}
+      end
+    end
+  end
+
+  def is_ingroup(groupNames)
+    userGroups = User.current.groups.map{ |o| o.lastname }
+    ig = userGroups & groupNames
+    return ig.any?
+  end
 end

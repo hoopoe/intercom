@@ -10,11 +10,12 @@ class UserEventTest < ActiveSupport::TestCase
     Event.delete_all
   end
 
-  should "create" do        
+  def test_new        
     assert_equal 1, UserEvent.count(:all, :conditions => {:body => 'ev body'})
   end
 
-  should "create with mgr" do    
+  def test_create_with_mgr
+    UserEvent.delete_all
     ue = UserEvent.new(:body => "test")
     ue.user = @u
     ue.mgr = @u
@@ -23,7 +24,7 @@ class UserEventTest < ActiveSupport::TestCase
     assert_equal 1, UserEvent.count(:all, :conditions => {:mgr_id => @u.id})
   end
 
-  should "search for uid eid mgr" do    
+  def test_search_for_uid_eid_mgr
     ue = UserEvent.new(:body => "test 1")
     ue.user = @u
     ue.mgr = @u
@@ -34,13 +35,13 @@ class UserEventTest < ActiveSupport::TestCase
     assert_equal "ev body", UserEvent.find_by_user_id_and_event_id_and_mgr_id(@u.id, @e.id, nil).body
   end
 
-  should "update" do
+  def test_update
     @ue.body = "update"
     @ue.save!
     assert_equal "update", UserEvent.find_by_user_id_and_event_id_and_mgr_id(@u.id, @e.id, nil).body
   end
 
-  should "build user groups map" do
+  def test_build_user_groups_map
     e1 = Event.create!(:body => "Red body", :name => "Red" )
     e2 = Event.create!(:body => "Blue body", :name => "Blue" )
 
@@ -59,7 +60,7 @@ class UserEventTest < ActiveSupport::TestCase
     assert_equal 1, t.count
   end
 
-  should "join profiles" do
+  def test_join_profiles
     
     ue = UserEvent.new(:body => "test 1")
     ue.user = @u
@@ -67,16 +68,16 @@ class UserEventTest < ActiveSupport::TestCase
     ue.event = @e
     ue.save!
 
-    UserProfile.create!(:user_id => @u.id, :data => "test")
-
+    UserProfile.create!(:user_id => @u.id, :data => "UP test")  
     
-    puts UserEvent
-    .select("user_events_t.body, user_profile_t.user_id, user_profile_t.data")
+    # .select("user_events_t.body, user_profile_t.user_id, user_profile_t.data")
+    t = UserEvent  
+    .select("*")
     .joins("LEFT JOIN #{UserProfile.table_name} 
       ON #{UserEvent.table_name}.user_id = #{UserProfile.table_name}.user_id")
-    .all
-    .to_json
-    
+    .all    
+
+    assert_equal 2, t.count
   end
 
   private

@@ -1,42 +1,41 @@
 class Tercomin::Api::V1::UserEventController < TercominBaseController
-  respond_to :json
 
-  before_filter :build_event_groups, :except => [:index, :create]
-  before_filter :create_hr_form, :except => [:index, :create]
+  before_filter :build_event_groups, :except => [:index, :create, :search]
+  before_filter :create_hr_form, :except => [:index, :create, :search]
   before_filter :require_self_or_manager_or_hr, :only => [:show, :update]
-  
-  before_filter :find_user_event, :except => [:index, :create]
+
+  before_filter :find_user_event, :except => [:index, :create, :search]
   before_filter :require_tercomin_pm, :only => [:destroy]
-  
+
   accept_api_auth :index, :show
-  
+
   def index
-    @offset, @limit = api_offset_and_limit   
-  	respond_with UserEvent.limit(@limit)
+    @offset, @limit = api_offset_and_limit
+    response = UserEvent.limit(@limit)
     .offset(@offset)
     .all
     .map{|i| {'uid' => i.user_id, 'eid' => i.event_id, 'body' => 'hidden'}}
+
+    respond_to do |format|
+      format.json { render :json => response}
+    end
+  end
+
+  def search
+    respond_to do |format|
+      format.json { render :json => UserEvent
+        .joins(:event)
+        .select("user_events_t.user_id, user_events_t.event_id, events_t.name")
+        .group("user_events_t.user_id, user_events_t.event_id, events_t.name")
+        .order("user_events_t.event_id DESC")
+      }
+    end
   end
 
   def show
     if @role == :self
       @response = {
-      :empForm => @ue.body,
-      :hrForm => @hr_form.body,
-      :lastname=>@user.lastname,
-      :firstname=>@user.firstname,
-      :created_on=>@user.created_on,
-      :position=>@uPosition,
-      :project=>@uProject,
-      :eventName => @event.name,
-      :kind => "self"}
-      @response[:data] = @profile.data if @profile
-      @response[:peons] = getMyPeons(@ue.user_id)
-      respond_with @response
-    else 
-      if @role == :mgr
-        @response = {
-        :mgrForm => @ue.body,
+        :empForm => @ue.body,
         :hrForm => @hr_form.body,
         :lastname=>@user.lastname,
         :firstname=>@user.firstname,
@@ -44,21 +43,42 @@ class Tercomin::Api::V1::UserEventController < TercominBaseController
         :position=>@uPosition,
         :project=>@uProject,
         :eventName => @event.name,
+      :kind => "self"}
+      @response[:data] = @profile.data if @profile
+      @response[:peons] = getMyPeons(@ue.user_id)
+      respond_to do |format|
+        format.json { render :json => @response}
+      end
+    else
+      if @role == :mgr
+        @response = {
+          :mgrForm => @ue.body,
+          :hrForm => @hr_form.body,
+          :lastname=>@user.lastname,
+          :firstname=>@user.firstname,
+          :created_on=>@user.created_on,
+          :position=>@uPosition,
+          :project=>@uProject,
+          :eventName => @event.name,
         :kind => "mgr"}
         @response[:data] = @profile.data if @profile
-        respond_with @response
+        respond_to do |format|
+          format.json { render :json => @response}
+        end
       else
         if @role == :hr
           @response = {
             :mgrForms => @ue_by_mgr.map{ |i| i.attributes },
             :hrForm => @hr_form.body,
             :eventname => @event.name,
-            :kind => "hr"}
+          :kind => "hr"}
           @response[:empForm] = @ue.attributes if @ue
           @response[:peons] = getMyPeons(@ue.user_id) if @ue
-          respond_with @response
+          respond_to do |format|
+            format.json { render :json => @response}
+          end
         else
-          render_403        
+          render_403
         end
       end
     end
@@ -69,39 +89,45 @@ class Tercomin::Api::V1::UserEventController < TercominBaseController
       if @role == :self
         @ue.body = params[:body]
         @ue.save!
-        respond_with @ue
+        respond_to do |format|
+          format.json { render :json => @ue}
+        end
       else
         if @role == :mgr
           @ue.body = params[:body]
           @ue.save!
-          respond_with @ue  
-        else 
+          respond_to do |format|
+            format.json { render :json => @ue}
+          end
+        else
           if @role == :hr
             @hr_form.body = params[:body]
             @hr_form.save!
-            respond_with @hr_form  
+            respond_to do |format|
+              format.json { render :json => @hr_form}
+            end
           end
         end
       end
     else
       render_403
-    end    
+    end
   end
 
   def destroy
-    UserEvent.where(user_id: @user.id, event_id: @event.id).destroy_all    
+    UserEvent.where(user_id: @user.id, event_id: @event.id).destroy_all
     respond_to do |format|
       format.api  { render_api_ok }
     end
   end
 
   private
-  def build_event_groups  	
-  	tmp = params[:id].split('_')
-  	event_id = tmp.pop
-  	user_id = tmp.pop
+  def build_event_groups
+    tmp = params[:id].split('_')
+    event_id = tmp.pop
+    user_id = tmp.pop
     @user = User.find(user_id)
-  	@event = Event.find(event_id)
+    @event = Event.find(event_id)
 
     @ev_groups = []
     if @event.groups.present?
@@ -113,14 +139,14 @@ class Tercomin::Api::V1::UserEventController < TercominBaseController
     end
 
     if @event.body.present?
-        begin
-          @ev_body = JSON.parse(@event.body)
-        rescue JSON::ParserError => e
-          Rails.logger.info "can't parse event body"
+      begin
+        @ev_body = JSON.parse(@event.body)
+      rescue JSON::ParserError => e
+        Rails.logger.info "can't parse event body"
       end
     end
-    
-    rescue ActiveRecord::RecordNotFound
+
+  rescue ActiveRecord::RecordNotFound
     render_404
   end
 
@@ -130,7 +156,7 @@ class Tercomin::Api::V1::UserEventController < TercominBaseController
       @hr_form = UserEvent.find_by_user_id_and_event_id_and_mgr_id(@user.id, @event.id, @hrGroup.id)
       if @hr_form.blank?
         @hr_form = UserEvent.new(:user_id => @user.id, :event_id => @event.id, :mgr_id => @hrGroup.id)
-        @hr_form.body = @ev_body['hrForm'].to_json  
+        @hr_form.body = @ev_body['hrForm'].to_json
         @hr_form.save!
       end
     end
@@ -142,13 +168,13 @@ class Tercomin::Api::V1::UserEventController < TercominBaseController
   end
 
   def is_ingroup(groupNames)
-    userGroups = User.current.groups.map{ |o| o.lastname }    
+    userGroups = User.current.groups.map{ |o| o.lastname }
     ig = userGroups & groupNames
     return ig.any?
   end
 
-  def require_tercomin_pm    
-    return unless require_login        
+  def require_tercomin_pm
+    return unless require_login
     if !is_ingroup(['lt-prj-tercomin-pm'])
       render_403
       return false
@@ -157,14 +183,14 @@ class Tercomin::Api::V1::UserEventController < TercominBaseController
   end
 
   def set_current_role
-      @role = :hr if is_ingroup(['hr'])
-      @role = :mgr if is_current_is_manager_for_user
-      @role = :self if @user.id == User.current.id
+    @role = :hr if is_ingroup(['hr'])
+    @role = :mgr if is_current_is_manager_for_user
+    @role = :self if @user.id == User.current.id
   end
 
-  def require_self_or_manager    
+  def require_self_or_manager
     return unless require_login
-    set_current_role       
+    set_current_role
     if (@role == :self && @role == :mgr)
       render_403
       return false
@@ -196,41 +222,41 @@ class Tercomin::Api::V1::UserEventController < TercominBaseController
       @ue = UserEvent.find_by_user_id_and_event_id_and_mgr_id(@user.id, @event.id, nil)
       if @ue.blank?
         @ue = UserEvent.new(:user_id => @user.id, :event_id => @event.id, :mgr_id => nil)
-        @ue.body = @ev_body['empForm'].to_json  
+        @ue.body = @ev_body['empForm'].to_json
         @ue.save!
       end
       @profile = UserProfile.find_by_user_id(@ue.user_id)
-    else      
+    else
       if @role == :mgr
         @ue = UserEvent.find_by_user_id_and_event_id_and_mgr_id(@user.id, @event.id, User.current.id)
         if @ue.blank?
           @ue = UserEvent.new(:user_id => @user.id, :event_id => @event.id, :mgr_id => User.current.id)
-          @ue.body = @ev_body['mgrForm'].to_json  
+          @ue.body = @ev_body['mgrForm'].to_json
           @ue.save!
         end
         @profile = UserProfile.find_by_user_id(@ue.user_id)
       else
         if @role == :hr
           @ue = UserEvent
-            .select("user_events_t.body, user_profile_t.data, user_events_t.user_id, 
+          .select("user_events_t.body, user_profile_t.data, user_events_t.user_id,
               user_events_t.mgr_id")
-            .joins("INNER JOIN #{UserProfile.table_name} 
+          .joins("INNER JOIN #{UserProfile.table_name}
               ON #{UserEvent.table_name}.user_id = #{UserProfile.table_name}.user_id")
-            .where("#{UserEvent.table_name}.user_id = :uid
+          .where("#{UserEvent.table_name}.user_id = :uid
               and #{UserEvent.table_name}.event_id = :eid
               and #{UserEvent.table_name}.mgr_id IS :mid",
-             {:uid => @user.id, :eid => @event.id, :mid => nil})
-            .limit(1)
-            .first
+                 {:uid => @user.id, :eid => @event.id, :mid => nil})
+          .limit(1)
+          .first
           @ue_by_mgr = UserEvent
-            .select("user_events_t.body, user_profile_t.data, user_events_t.user_id, 
+          .select("user_events_t.body, user_profile_t.data, user_events_t.user_id,
               user_events_t.mgr_id")
-            .joins("INNER JOIN #{UserProfile.table_name} 
+          .joins("INNER JOIN #{UserProfile.table_name}
               ON #{UserEvent.table_name}.mgr_id = #{UserProfile.table_name}.user_id")
-            .where("#{UserEvent.table_name}.user_id = :uid
+          .where("#{UserEvent.table_name}.user_id = :uid
               and #{UserEvent.table_name}.event_id = :eid",
-             {:uid => @user.id, :eid => @event.id})
-            .all
+                 {:uid => @user.id, :eid => @event.id})
+          .all
         end
       end
     end
@@ -239,14 +265,14 @@ class Tercomin::Api::V1::UserEventController < TercominBaseController
   def getMyPeons(user_id)
     result = Hash.new
     my_emps = @ev_groups
-        .map{|i| i['e'] if i['m']
-        .include?(user_id.to_s)}
-        .compact
-    if my_emps.present? 
-      my_emps_hash = my_emps.reduce({}, :merge) 
+    .map{|i| i['e'] if i['m']
+    .include?(user_id.to_s)}
+    .compact
+    if my_emps.present?
+      my_emps_hash = my_emps.reduce({}, :merge)
       result = my_emps_hash.map{ |k,v| { 'id' => "#{k.to_s}_#{@event.id}", 'name' => v } }
     end
     result
   end
 
-end  
+end

@@ -1,13 +1,16 @@
 language: ruby
 rvm:
-- 2.1.0
-- 2.0.0
-- 1.9.3
+- 2.2.3
+# - 2.1.0
+# - 2.0.0
+# - 1.9.3
 branches:
   only:
-  - master
+  # - master
+  - migrate_to_redmine_3_0_4
 env:
-- REDMINE_VERSION=2.5.1 VERBOSE=yes
+# - REDMINE_VERSION=2.5.1 VERBOSE=yes
+- REDMINE_VERSION=3.0.4 VERBOSE=yes
 script:
 - export PLUGIN=tercomin
 - export WORKSPACE=$(pwd)/workspace
@@ -18,9 +21,3 @@ script:
 - bash -x ./.travis-init.sh -i || exit 1
 - bash -x ./.travis-init.sh -t || exit 1
 - bash -x ./.travis-init.sh -u || exit 1
-# deploy:
-#   provider: heroku
-#   api_key:    
-#     secure: UJJS/ekV2QqzulUmFUko/DgVojLBfZeBpSVSIT1Nf/b7opNLLSMbVwsBsMGThWI+hYpLB8z8IZ0a8RkaLCx8vC5F/xPi4ATXRvhXsJbBol8LYddLfFyxOmAatGvEll5dy2GR9w5Q9H154KwrapWNQh7bRrA0sxNniC3n1183lRs=
-#   on:
-#     rvm: 2.0.0

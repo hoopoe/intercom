@@ -42,10 +42,12 @@ define([
             attr['backgrounds'] = tmp;
         }        
 
-        if (response) {
-            var data;
-            if (response.profile.data)
-                data = $.parseJSON(response.profile.data);                            
+        if (response) {            
+            var data = undefined;
+            if (response.profile.data) {
+                data = $.parseJSON(response.profile.data); 
+            }
+            
             var dataModel = new EmployerData(data);            
             dataModel.set('id', response.profile.id);
             dataModel.set('firstname', response.profile.firstname);
@@ -61,18 +63,22 @@ define([
     };
 
     emp.prototype.toJSON = function() {
-      var json = _.clone(this.attributes);      
+      var json = _.clone(this.attributes);    
+      
       for(var attr in json) {
-        if((json[attr] instanceof Backbone.Model) && (attr === 'data')) {            
-            // json[attr].unset('edit_prop');
-            // json[attr].unset('editable');
-            // json[attr].unset('fullaccess'); //TODO: we don't need to save it 
-            json['profile']['data'] = JSON.stringify(json[attr]);            
+        if((json[attr] instanceof Backbone.Model) && (attr === 'data')) { 
+            var generalData = $.extend(true, {}, json[attr]);
+            generalData.unset('edit_prop');
+            generalData.unset('editable');
+            generalData.unset('fullaccess');
+            json['profile']['data'] = JSON.stringify(generalData);
         }
       }
+      delete json['editable'];
+      delete json['fullaccess'];
       delete json['data'];
       delete json['positions'];
-      delete json['backgrounds'];      
+      delete json['backgrounds'];
       return json;
     };
 

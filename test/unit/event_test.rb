@@ -2,7 +2,7 @@ require File.expand_path('../../test_helper', __FILE__)
 
 class EventTest < ActiveSupport::TestCase
 
-  should "create" do    
+  def test_new    
     Event.delete_all
     event = Event.new(:name => "Attestation")
     event.save!    

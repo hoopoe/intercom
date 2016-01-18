@@ -44,15 +44,17 @@ define([
             'click .emp-item-save': 'saveEmpItem',
             'change #english_lvl': 'selectLanguage',
         },
-        initialize: function() {
+        initialize: function() {            
             Backbone.profileEvent.on('avatarUpdated', this.onAvatarUpdated, this);
 
             Backbone.profileEvent.on('positionSubmit', this.onPositionSubmit, this);
             Backbone.profileEvent.on('cancelPositionForm', this.onCancelPositionForm, this);
-            Backbone.profileEvent.on('renderPositions', this.onRenderPositions, this);
+            // Backbone.profileEvent.on('renderPositions', this.onRenderPositions, this);
+            Backbone.profileEvent.on('renderPositions', this.rebindAndUpdate, this);
 
             Backbone.profileEvent.on('backgroundSubmit', this.onBackgroundSubmit, this);
-            Backbone.profileEvent.on('renderBackgrounds', this.onRenderBackgrounds, this);
+            // Backbone.profileEvent.on('renderBackgrounds', this.onRenderBackgrounds, this);
+            Backbone.profileEvent.on('renderBackgrounds', this.rebindAndUpdate, this);
             Backbone.profileEvent.on('editItemCompleted', this.onEditItemCompleted, this);
             _.bindAll(this, 'save');
             this.model.bind('save', this.save);
@@ -63,12 +65,15 @@ define([
             this.$el.html(template({
                 l: _tr
             }));
+            this.rebindAndUpdate();
+            return this;
+        },
+        rebindAndUpdate: function() {
             rivets.bind(this.el, {
                 user_p: this.model.get('data')
             });
             this.onRenderPositions();
             this.onRenderBackgrounds();
-            return this;
         },
         onCancelPositionForm: function(data) {
             Backbone.profileEvent.trigger('renderPositions');
@@ -275,9 +280,9 @@ define([
             data.set(prop, lvl);
             this.save();
         },
-        editEmpItem: function(e) {
-            var prop = e.currentTarget.getAttribute('value');
-            var dataModel = this.model.get('data').set('edit_prop', prop);
+        editEmpItem: function(e) {            
+            var prop = e.currentTarget.getAttribute('value');            
+            var dataModel = this.model.get('data').set('edit_prop', prop);            
             if (prop === 'birthday') {
                 var that = this; //todo: refactor tt
                 $("#birthdayPicker").datepicker({
@@ -286,7 +291,6 @@ define([
                     dateFormat: 'd MM',
                     yearRange: '1925:' + ((new Date).getFullYear() - 14),
                     onClose: function(dateText) {
-                        // console.log(dateText);
                         var data = that.model.get('data');
                         data.set('birthday', dateText);
                         that.save();
@@ -346,8 +350,8 @@ define([
             this.model.get('data').set('edit_prop', "None");
             dataModel.isValid(); //remove validataion error
         },
-        saveEmpItem: function(e) {
-            var prop = e.currentTarget.getAttribute('value');
+        saveEmpItem: function(e) {                        
+            var prop = e.currentTarget.getAttribute('value');            
             var dataModel = this.model.get('data').set('edit_prop', prop);
             if (prop === 'summary' || prop === 'skills' || prop == 'coureses' || prop === 'extra_languages') {
                 var tmp = $('.profile-' + prop);
@@ -364,14 +368,17 @@ define([
                 this.save();
             }
         },
-        onEditItemCompleted: function() {
-            var prop = this.model.get('data').get('edit_prop');
+        onEditItemCompleted: function(prop) {
             var ntf = $('.' + prop + '-notify-ok');
             ntf.animate({
                 opacity: 1
             });
             ntf.fadeTo(1000, 0);
-            this.model.get('data').set('edit_prop', "None");
+
+            rivets.bind(this.el, {
+                user_p: this.model.get('data')
+            });   
+            this.rebindAndUpdate();
         },
         profileImgSave: function(e) {
             var file = _.first(e.currentTarget.files)
@@ -420,18 +427,18 @@ define([
             data.set('avatar_url', e.url + "?" + d.getTime());
         },
         save: function() {
-            if (!this.model.isValid()) {
-                var prop = this.model.get('data').get('edit_prop');
+            var prop = this.model.get('data').get('edit_prop');
+            if (!this.model.isValid()) {                
                 var ntf = $('.' + prop + '-notify-fail');
                 ntf.animate({
                     opacity: 1
                 });
                 ntf.fadeTo(1000, 0);
                 this.model.get('data').set('edit_prop', "None");
-            } else {
+            } else {                
                 this.model.save({}, {
-                    success: function(model, response) {
-                        Backbone.profileEvent.trigger('editItemCompleted', this.model);
+                    success: function(model, response) {                        
+                        Backbone.profileEvent.trigger('editItemCompleted', prop);
                     },
                     error: function(model, response) {},
                 });
