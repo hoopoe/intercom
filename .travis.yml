@@ -6,8 +6,8 @@ rvm:
 # - 1.9.3
 branches:
   only:
-  # - master
-  - migrate_to_redmine_3_0_4
+  - master
+  # - migrate_to_redmine_3_0_4
 env:
 # - REDMINE_VERSION=2.5.1 VERBOSE=yes
 - REDMINE_VERSION=3.0.4 VERBOSE=yes

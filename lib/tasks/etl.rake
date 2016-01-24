@@ -111,24 +111,5 @@ namespace :redmine do
         puts "File not exist"
       end      
     end
-
-    task :check_profiles => :environment do
-      puts "start...."
-      @users = User.select("users.id, users.login, users.mail, users.firstname, users.lastname, user_profile_t.skills, user_profile_t.avatar_file_name avatar")
-      .joins("LEFT JOIN #{UserProfile.table_name} ON #{User.table_name}.id = #{UserProfile.table_name}.user_id")  
-
-      ids = @users.all.map { |x| x.id }
-      @profiles = UserProfile.where(:user_id => ids)
-      
-      for i in @users        
-        if profile = @profiles.find_by_user_id(i)          
-          i.avatar = profile.avatar_url
-        end        
-      end
-
-      for i in @users
-        puts i.avatar
-      end
-    end
   end
 end
